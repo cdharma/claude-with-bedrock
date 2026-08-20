@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "claude-code-with-bedrock"
-version = "2.5.2"
+version = "2.5.3"
 description = "Deploy and manage Claude Code on Amazon Bedrock"
 authors = ["Claude Code Team <claude-code@example.com>"]
 readme = "../README.md"
@@ -50,7 +50,7 @@ nuitka = "^4.0.8"
 ordered-set = "^4.1.0"
 zstandard = "^0.25.0"
 pyinstaller = "^6.19.0"
-ruff = "^0.15.10"
+ruff = ">=0.15.10,<0.17.0"
 mypy = ">=1.20,<3.0"
 types-requests = "*"
 pre-commit = "^4.5.1"
@@ -74,6 +74,9 @@ select = [
     "B",  # flake8-bugbear
     "C4", # flake8-comprehensions
     "UP", # pyupgrade
+    # Single flake8-bandit rule rather than all of "S": the rest of the family
+    # has a known backlog tracked in .github/workflows/bandit.yml.
+    "S506", # unsafe YAML load — use tests/cfn_yaml.py helpers or safe_load
 ]
 ignore = [
     "E501",  # line too long — enforced by formatter, not linter
