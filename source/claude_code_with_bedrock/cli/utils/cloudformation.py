@@ -45,6 +45,20 @@ class CloudFormationManager:
     Replaces subprocess calls with boto3 SDK for better error handling and performance.
     """
 
+    # Outcomes from _wait_for_stack. These exist so callers can tell a client-side
+    # timeout (CloudFormation still working) apart from a real failure — conflating
+    # them made healthy operations look broken.
+    WAIT_SUCCESS = "success"
+    WAIT_FAILED = "failed"
+    WAIT_ROLLBACK = "rollback"
+    WAIT_TIMEOUT = "timeout"
+    WAIT_GONE = "gone"
+
+    # Seconds between waiter polls. Each waited stack also runs an event-streaming
+    # thread polling describe_stack_events, so concurrent waits multiply API calls;
+    # callers deploying in parallel should pass a larger poll_delay.
+    POLL_DELAY_SECONDS = 5
+
     def __init__(self, region: str, profile: str = None):
         """
         Initialize CloudFormation manager.
@@ -84,6 +98,7 @@ class CloudFormationManager:
         on_event: Callable = None,
         timeout: int = 3600,
         disable_rollback: bool = False,
+        poll_delay: int = None,
     ) -> StackDeploymentResult:
         """
         Deploy or update a CloudFormation stack.
@@ -100,6 +115,8 @@ class CloudFormationManager:
             on_event: Callback for stack events
             timeout: Timeout in seconds
             disable_rollback: Disable automatic rollback on failure
+            poll_delay: Seconds between waiter polls (default POLL_DELAY_SECONDS).
+                Raise it when deploying several stacks concurrently.
 
         Returns:
             StackDeploymentResult with success status and outputs
@@ -124,11 +141,34 @@ class CloudFormationManager:
             # Check if stack exists
             exists, current_status = self._check_stack_exists(stack_name)
 
+            # A stack mid-operation accepts neither create nor update. Without this
+            # check, update_stack is attempted and CloudFormation answers with an
+            # opaque "cannot update a stack in CREATE_IN_PROGRESS". Common after an
+            # interrupted run or a destroy whose wait timed out.
+            if current_status and current_status.endswith("_IN_PROGRESS"):
+                return StackDeploymentResult(
+                    success=False,
+                    error=(
+                        f"Stack {stack_name} is {current_status}; CloudFormation cannot start "
+                        f"another operation until it settles. Wait for it to finish, then re-run."
+                    ),
+                )
+
             # Handle ROLLBACK_COMPLETE state
             if current_status == "ROLLBACK_COMPLETE":
                 if on_event:
                     on_event({"message": f"Stack {stack_name} is in ROLLBACK_COMPLETE state. Deleting..."})
-                self.delete_stack(stack_name, force=True)
+                # The result must be checked. Assuming success and calling create_stack
+                # on a stack that is still there fails with a confusing AlreadyExists.
+                delete_result = self.delete_stack(stack_name, force=True)
+                if not delete_result.success:
+                    return StackDeploymentResult(
+                        success=False,
+                        error=(
+                            f"Stack {stack_name} was in ROLLBACK_COMPLETE and could not be deleted "
+                            f"before recreating: {delete_result.error or 'no error detail returned'}"
+                        ),
+                    )
                 exists = False
 
             # Prepare parameters
@@ -173,15 +213,26 @@ class CloudFormationManager:
                     raise
 
             # Wait for completion with event streaming
-            success = self._wait_for_stack(stack_name, wait_status, timeout, on_event)
+            outcome = self._wait_for_stack(stack_name, wait_status, timeout, on_event, poll_delay=poll_delay)
 
-            if success:
+            if outcome == self.WAIT_SUCCESS:
                 outputs = self.get_stack_outputs(stack_name)
                 return StackDeploymentResult(success=True, stack_id=stack_id, outputs=outputs)
-            else:
-                # Get failure reason
-                error = self._get_stack_failure_reason(stack_name)
-                return StackDeploymentResult(success=False, error=error)
+
+            if outcome == self.WAIT_TIMEOUT:
+                # Distinguish this from a failure: the operation is still running, so
+                # the failure-reason lookup would find nothing and report "Unknown".
+                return StackDeploymentResult(
+                    success=False,
+                    error=(
+                        f"Timed out after {timeout}s waiting for {stack_name}; the operation is "
+                        f"still in progress in CloudFormation. Re-run once it settles — do not "
+                        f"delete its resources by hand."
+                    ),
+                )
+
+            error = self._get_stack_failure_reason(stack_name)
+            return StackDeploymentResult(success=False, error=f"[{outcome}] {error}")
 
         except ClientError as e:
             error_code = e.response["Error"]["Code"]
@@ -251,7 +302,8 @@ class CloudFormationManager:
             self.cf_client.delete_stack(**params)
 
             # Wait for deletion
-            success = self._wait_for_stack(stack_name, "stack_delete_complete", timeout, on_event)
+            outcome = self._wait_for_stack(stack_name, "stack_delete_complete", timeout, on_event)
+            success = outcome in (self.WAIT_SUCCESS, self.WAIT_GONE)
 
             return StackDeletionResult(success=success)
 
@@ -606,7 +658,9 @@ class CloudFormationManager:
                 return False, None
             raise
 
-    def _wait_for_stack(self, stack_name: str, waiter_name: str, timeout: int, on_event: Callable = None) -> bool:
+    def _wait_for_stack(
+        self, stack_name: str, waiter_name: str, timeout: int, on_event: Callable = None, poll_delay: int = None
+    ) -> str:
         """
         Wait for stack operation to complete with event streaming.
 
@@ -615,29 +669,43 @@ class CloudFormationManager:
             waiter_name: Name of the waiter (e.g., 'stack_create_complete')
             timeout: Timeout in seconds
             on_event: Callback for stack events
+            poll_delay: Seconds between waiter polls. Defaults to POLL_DELAY_SECONDS.
+                Raise it when several stacks are waited on concurrently — each waiter
+                polls describe_stacks and each event stream polls
+                describe_stack_events, and the latter throttles readily.
 
         Returns:
-            True if successful, False otherwise
+            One of WAIT_SUCCESS, WAIT_FAILED, WAIT_ROLLBACK, WAIT_TIMEOUT or
+            WAIT_GONE. Previously this returned a bool and every failure branch
+            returned the same value, so a client-side timeout was indistinguishable
+            from a genuine stack failure — callers then reported healthy in-progress
+            operations as failures and advised manual cleanup.
         """
         # Stream events while waiting
         if on_event:
             self._start_event_streaming(stack_name, on_event)
 
+        delay = poll_delay or self.POLL_DELAY_SECONDS
         try:
             waiter = self.cf_client.get_waiter(waiter_name)
-            waiter.wait(StackName=stack_name, WaiterConfig={"Delay": 5, "MaxAttempts": timeout // 5})
-            return True
+            waiter.wait(StackName=stack_name, WaiterConfig={"Delay": delay, "MaxAttempts": max(1, timeout // delay)})
+            return self.WAIT_SUCCESS
         except WaiterError:
-            # Check if it's a timeout or actual failure
             final_status = self.get_stack_status(stack_name)
-            if final_status and "FAILED" in final_status:
-                return False
-            elif final_status and "ROLLBACK" in final_status:
-                return False
-            # Might be timeout
-            return False
+            if final_status is None:
+                # No stack left. Success for a delete; for create/update the stack
+                # vanished mid-flight, which is still not a client-side timeout.
+                return self.WAIT_GONE
+            if "ROLLBACK" in final_status:
+                return self.WAIT_ROLLBACK
+            if "FAILED" in final_status:
+                return self.WAIT_FAILED
+            if final_status.endswith("_IN_PROGRESS"):
+                # We stopped waiting; CloudFormation has not stopped working.
+                return self.WAIT_TIMEOUT
+            return self.WAIT_FAILED
         except Exception:
-            return False
+            return self.WAIT_FAILED
 
     def _start_event_streaming(self, stack_name: str, on_event: Callable):
         """Start streaming stack events in a separate thread."""
