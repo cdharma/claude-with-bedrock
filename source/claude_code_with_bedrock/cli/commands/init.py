@@ -988,7 +988,7 @@ class InitCommand(Command):
             saved_region = config.get("aws", {}).get("region", current_region)
 
             region = questionary.select(
-                "Select AWS Region for infrastructure deployment (Cognito, IAM, monitoring):",
+                "Select AWS Region for infrastructure deployment (IAM, monitoring, quota):",
                 choices=common_regions,
                 default=saved_region if saved_region in common_regions else "us-east-1",
                 instruction="(This is where your authentication and monitoring resources will be created)",
@@ -2675,8 +2675,12 @@ class InitCommand(Command):
                 else "Session Files (temporary)"
             ),
         )
-        table.add_row("Infrastructure Region", f"{config['aws']['region']} (Cognito, IAM, Monitoring)")
-        table.add_row("Identity Pool", config["aws"]["identity_pool_name"])
+        table.add_row("Infrastructure Region", f"{config['aws']['region']} (IAM, Monitoring, Quota)")
+        if config.get("auth_type") == "idc":
+            # No identity pool exists on this path; the value prefixes resource names.
+            table.add_row("Resource Name Prefix", config["aws"]["identity_pool_name"])
+        else:
+            table.add_row("Identity Pool", config["aws"]["identity_pool_name"])
         table.add_row("Monitoring", "✓ Enabled" if config["monitoring"]["enabled"] else "✗ Disabled")
         if config.get("monitoring", {}).get("enabled"):
             mode = config.get("monitoring", {}).get("mode", "sidecar")
@@ -2685,14 +2689,23 @@ class InitCommand(Command):
 
             quota_config = config.get("quota", {})
             if quota_config.get("enabled", False):
-                monthly = quota_config.get("monthly_limit", 225000000)
-                daily = quota_config.get("daily_limit")
                 monthly_mode = quota_config.get("monthly_enforcement_mode", "block")
                 daily_mode = quota_config.get("daily_enforcement_mode", "alert")
                 check_interval = quota_config.get("check_interval", 30)
-                quota_status = f"✓ Monthly: {monthly:,} ({monthly_mode})"
-                if daily:
-                    quota_status += f"\n  Daily: {daily:,} ({daily_mode})"
+                # Read whichever limit the admin actually configured. Reading the token
+                # limit unconditionally printed "Monthly: 0" for a cost-based budget.
+                if quota_config.get("limit_type") == "cost":
+                    monthly = quota_config.get("monthly_cost_limit", 0)
+                    daily = quota_config.get("daily_cost_limit", 0)
+                    quota_status = f"✓ Monthly: ${monthly:,.2f}/user ({monthly_mode})"
+                    if daily:
+                        quota_status += f"\n  Daily: ${daily:,.2f}/user ({daily_mode})"
+                else:
+                    monthly = quota_config.get("monthly_limit", 225000000)
+                    daily = quota_config.get("daily_limit")
+                    quota_status = f"✓ Monthly: {monthly:,} tokens ({monthly_mode})"
+                    if daily:
+                        quota_status += f"\n  Daily: {daily:,} tokens ({daily_mode})"
                 quota_status += f"\n  Re-check: {check_interval} min"
                 table.add_row("Quota Monitoring", quota_status)
             else:
@@ -2772,7 +2785,11 @@ class InitCommand(Command):
 
         # Show what will be created
         console.print("\n[bold yellow]Resources to be created:[/bold yellow]")
-        if config.get("federation_type") == "direct":
+        # IDC creates neither: bedrock-auth-idc.yaml contains no Cognito resource and
+        # no OIDC provider. It uses identity_pool_name only to name the managed policy.
+        if config.get("auth_type") == "idc":
+            console.print("• IAM federated role for IAM Identity Center (no Cognito pool, no OIDC provider)")
+        elif config.get("federation_type") == "direct":
             console.print("• IAM OIDC Provider for authentication")
         else:
             console.print("• Cognito Identity Pool for authentication")
