@@ -200,6 +200,42 @@ func (a *credentialApp) runIDCLogin() int {
 // auth helpers below), caches the SSO token, then exchanges it for role
 // credentials via STS.
 func (a *credentialApp) runIDC() int {
+	creds, code := a.resolveIDCCredentials()
+	if code != 0 {
+		return code
+	}
+
+	// Output credential_process JSON.
+	out := passthroughOutput{
+		Version:         1,
+		AccessKeyID:     creds.AccessKeyID,
+		SecretAccessKey: creds.SecretAccessKey,
+		SessionToken:    creds.SessionToken,
+	}
+	if creds.CanExpire {
+		out.Expiration = creds.Expires.UTC().Format(time.RFC3339)
+	}
+
+	data, err := json.Marshal(out)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error: failed to marshal credentials: %v\n", err)
+		return 1
+	}
+	fmt.Println(string(data))
+	return 0
+}
+
+// resolveIDCCredentials drives the IDC device-authorization flow when needed,
+// exchanges the cached SSO token for role credentials, enforces quota and writes
+// the OTEL attribution cache. It returns the resolved credentials and 0, or the
+// zero value and a non-zero exit code.
+//
+// Extracted from runIDC so the --desktop helper can reuse the IDC path. The
+// desktop helper previously fell through to run() (the OIDC flow) for IDC
+// profiles, which fails with "unknown provider type" because IDC profiles have
+// no provider_type. IDC also never populates the credential cache that the
+// desktop helper checks first, so that fallthrough was unconditional.
+func (a *credentialApp) resolveIDCCredentials() (aws.Credentials, int) {
 	debugPrint("IDC active SSO mode for profile '%s'", a.profile)
 
 	// 120s timeout allows time for user to approve in browser.
@@ -208,7 +244,7 @@ func (a *credentialApp) runIDC() int {
 
 	s, code := a.resolveIDCSettings(ctx)
 	if code != 0 {
-		return code
+		return aws.Credentials{}, code
 	}
 	region := s.region
 	startURL := s.startURL
@@ -232,7 +268,7 @@ func (a *credentialApp) runIDC() int {
 		fmt.Fprintln(os.Stderr, "  - idc_start_url is correct in config.json")
 		fmt.Fprintln(os.Stderr, "  - Your network can reach the SSO portal")
 		fmt.Fprintln(os.Stderr, "  - You approved the request in your browser")
-		return 1
+		return aws.Credentials{}, 1
 	}
 
 	// Create SSO role credentials provider with token lifecycle management.
@@ -251,7 +287,7 @@ func (a *credentialApp) runIDC() int {
 		fmt.Fprintln(os.Stderr, "If credential retrieval failed, ensure:")
 		fmt.Fprintln(os.Stderr, "  - idc_account_id and idc_permission_set_name are correct in config.json")
 		fmt.Fprintln(os.Stderr, "  - You have permission to assume the configured role")
-		return 1
+		return aws.Credentials{}, 1
 	}
 
 	debugPrint("IDC credentials retrieved successfully (key=%s...)", creds.AccessKeyID[:8])
@@ -268,7 +304,7 @@ func (a *credentialApp) runIDC() int {
 		)
 		if !qr.Allowed {
 			printQuotaBlocked(qr)
-			return 1
+			return aws.Credentials{}, 1
 		}
 		printQuotaWarning(qr)
 	}
@@ -278,24 +314,7 @@ func (a *credentialApp) runIDC() int {
 	// credential_process (which would recurse back into this binary).
 	a.writeOtelCacheFromIDC(creds, region)
 
-	// Output credential_process JSON.
-	out := passthroughOutput{
-		Version:         1,
-		AccessKeyID:     creds.AccessKeyID,
-		SecretAccessKey: creds.SecretAccessKey,
-		SessionToken:    creds.SessionToken,
-	}
-	if creds.CanExpire {
-		out.Expiration = creds.Expires.UTC().Format(time.RFC3339)
-	}
-
-	data, err := json.Marshal(out)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error: failed to marshal credentials: %v\n", err)
-		return 1
-	}
-	fmt.Println(string(data))
-	return 0
+	return creds, 0
 }
 
 // writeOtelCacheFromIDC resolves user identity via STS GetCallerIdentity

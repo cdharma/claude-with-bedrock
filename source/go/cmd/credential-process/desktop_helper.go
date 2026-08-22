@@ -31,6 +31,20 @@ func (a *credentialApp) runDesktopHelper() int {
 	// Determine if we can open a browser
 	allowInteractive := helperContext == "" || helperContext == "interactive"
 
+	// IDC profiles must use the IDC path. main() dispatches --desktop before its
+	// own `if cfg.IsIDC()` auth dispatch, and the shared fallbacks below call
+	// a.run() (the OIDC flow), which fails with "unknown provider type" because
+	// IDC profiles carry no provider_type. IDC also never writes the credential
+	// cache that getCachedCredentials() reads, so without this branch every
+	// invocation on an IDC profile fails.
+	if a.cfg.IsIDC() {
+		creds, code := a.resolveIDCCredentials()
+		if code != 0 {
+			return code
+		}
+		return a.emitDesktopToken(creds.AccessKeyID, creds.SecretAccessKey, creds.SessionToken)
+	}
+
 	// Try cached credentials first
 	creds := a.getCachedCredentials()
 
@@ -104,13 +118,19 @@ func (a *credentialApp) runDesktopHelper() int {
 		}
 	}
 
-	// Generate Bedrock bearer token from AWS credentials
+	return a.emitDesktopToken(creds.AccessKeyID, creds.SecretAccessKey, creds.SessionToken)
+}
+
+// emitDesktopToken generates a Bedrock bearer token from the supplied AWS
+// credentials and prints it in the shape Claude Desktop's
+// inferenceCredentialHelper expects. Shared by the OIDC and IDC paths.
+func (a *credentialApp) emitDesktopToken(accessKeyID, secretAccessKey, sessionToken string) int {
 	region := a.cfg.AWSRegion
 	if region == "" {
 		region = "us-east-1"
 	}
 
-	token, err := generateBedrockToken(creds.AccessKeyID, creds.SecretAccessKey, creds.SessionToken, region)
+	token, err := generateBedrockToken(accessKeyID, secretAccessKey, sessionToken, region)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error generating Bedrock token: %v\n", err)
 		return 1
