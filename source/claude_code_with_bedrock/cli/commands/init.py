@@ -318,11 +318,20 @@ class InitCommand(Command):
 
         go_present = self._check_go_version()
         if go_present:
-            console.print("  [green]✓[/green] Go 1.23+ installed [dim](used for OTEL collector sidecar build)[/dim]")
-        else:
             console.print(
-                "  [yellow]⚠[/yellow] Go 1.23+ not found [dim](optional — only needed for building "
-                "the OpenTelemetry collector sidecar)[/dim]"
+                "  [green]✓[/green] Go 1.23+ installed [dim](cross-compiles client binaries + OTEL collector sidecar)[/dim]"
+            )
+        else:
+            # Go is NOT merely optional: without it `ccwb package` falls back to the
+            # legacy PyInstaller/Nuitka builder, which cannot cross-compile. Only the
+            # host platform gets a binary — Windows then requires CodeBuild, and
+            # CodeBuild's Windows containers exist in just 8 regions.
+            console.print(
+                "  [yellow]⚠[/yellow] Go 1.23+ not found [dim](needed to build binaries for any platform "
+                "other than this one, and for the OTEL collector sidecar)[/dim]"
+            )
+            console.print(
+                "     [dim]Without Go, Windows binaries require AWS CodeBuild. Install from https://go.dev/dl/[/dim]"
             )
 
         # Bedrock access is optional (deployment user may not have direct Bedrock permissions)
