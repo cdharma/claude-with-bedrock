@@ -4,6 +4,7 @@
 """Quota policy CRUD operations for fine-grained quota management."""
 
 from datetime import datetime, timezone
+from decimal import Decimal
 from typing import Any
 
 import boto3
@@ -113,6 +114,8 @@ class QuotaPolicyManager:
         identifier: str,
         monthly_token_limit: int,
         daily_token_limit: int | None = None,
+        monthly_cost_limit: float | None = None,
+        daily_cost_limit: float | None = None,
         warning_threshold_80: int | None = None,
         warning_threshold_90: int | None = None,
         enforcement_mode: EnforcementMode = EnforcementMode.ALERT,
@@ -127,6 +130,10 @@ class QuotaPolicyManager:
             identifier: Policy identifier (email for user, group name for group, "default" for default).
             monthly_token_limit: Monthly token limit.
             daily_token_limit: Optional daily token limit.
+            monthly_cost_limit: Optional monthly spend limit in USD. Required for
+                cost-based deployments: without it the stored policy carries no cost
+                cap, and a cost-limited user resolves as unlimited.
+            daily_cost_limit: Optional daily spend limit in USD.
             warning_threshold_80: Optional 80% warning threshold. Auto-calculated if not provided.
             warning_threshold_90: Optional 90% warning threshold. Auto-calculated if not provided.
             enforcement_mode: Alert or block mode (default: alert).
@@ -156,6 +163,8 @@ class QuotaPolicyManager:
             identifier=identifier,
             monthly_token_limit=monthly_token_limit,
             daily_token_limit=daily_token_limit,
+            monthly_cost_limit=monthly_cost_limit,
+            daily_cost_limit=daily_cost_limit,
             warning_threshold_80=warning_threshold_80,
             warning_threshold_90=warning_threshold_90,
             enforcement_mode=enforcement_mode,
@@ -211,6 +220,8 @@ class QuotaPolicyManager:
         identifier: str,
         monthly_token_limit: int | None = None,
         daily_token_limit: int | None = None,
+        monthly_cost_limit: float | None = None,
+        daily_cost_limit: float | None = None,
         warning_threshold_80: int | None = None,
         warning_threshold_90: int | None = None,
         enforcement_mode: EnforcementMode | None = None,
@@ -224,6 +235,8 @@ class QuotaPolicyManager:
             identifier: Policy identifier.
             monthly_token_limit: New monthly token limit (optional).
             daily_token_limit: New daily token limit (optional).
+            monthly_cost_limit: New monthly spend limit in USD (optional).
+            daily_cost_limit: New daily spend limit in USD (optional).
             warning_threshold_80: New 80% threshold (optional).
             warning_threshold_90: New 90% threshold (optional).
             enforcement_mode: New enforcement mode (optional).
@@ -263,6 +276,16 @@ class QuotaPolicyManager:
         if daily_token_limit is not None:
             update_parts.append("daily_token_limit = :daily_limit")
             expression_values[":daily_limit"] = daily_token_limit
+
+        # boto3 rejects float for Number attributes; Decimal(str(x)) also avoids
+        # binary-float artefacts such as 0.1 -> 0.10000000000000000555.
+        if monthly_cost_limit is not None:
+            update_parts.append("monthly_cost_limit = :monthly_cost")
+            expression_values[":monthly_cost"] = Decimal(str(monthly_cost_limit))
+
+        if daily_cost_limit is not None:
+            update_parts.append("daily_cost_limit = :daily_cost")
+            expression_values[":daily_cost"] = Decimal(str(daily_cost_limit))
 
         if warning_threshold_80 is not None:
             update_parts.append("warning_threshold_80 = :warn_80")
