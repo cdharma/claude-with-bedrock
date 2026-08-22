@@ -1213,6 +1213,8 @@ class InitCommand(Command):
                 # IDC path: quota enforcement works via credential-process binary
                 # (SigV4-signed requests to quota API). Show the option with clear tradeoff.
                 # None path: no per-user identity → cannot enforce quotas.
+                # The 'none' auth branch never prompts, so seed a value for the guard below.
+                enable_quota_monitoring = False
                 if config.get("auth_type") == "none":
                     if "quota" not in config:
                         config["quota"] = {}
@@ -1263,7 +1265,12 @@ class InitCommand(Command):
                     if enable_quota_monitoring:
                         console.print("\n[yellow]Configure quota limits and thresholds[/yellow]")
 
-                    # Limit type selection
+                # Limit type, budgets and enforcement modes apply to every auth mode that
+                # supports quota. These prompts used to live inside the OIDC `else` branch, so
+                # on the IDC path the wizard printed 'Configure quota limits and thresholds'
+                # and then asked nothing — silently keeping the defaults (token-based, 300M,
+                # block) no matter what the admin intended.
+                if enable_quota_monitoring:
                     limit_type = questionary.select(
                         "How do you want to limit usage?",
                         choices=[
