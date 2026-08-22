@@ -61,6 +61,11 @@ parameters.json
 # ccwb deployment config
 source/.ccwb-config/
 
+# Local deployment records. Contain real account IDs, tenant IDs, IDC instance ARNs
+# and SAML metadata, which docs/CLAUDE.md prohibits in tracked documentation.
+ccwb/
+saml/
+
 guidance-submission/
 tests/
 !tests/e2e/
