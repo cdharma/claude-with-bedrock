@@ -228,6 +228,25 @@ class DestroyCommand(Command):
         # return 1 on failure. The summary above still surfaces what to clean up.
         return 1 if stacks_with_failures else 0
 
+    # Per-stack deletion budgets, matched on the stack-name suffix. The monitoring
+    # stack has to drain an ECS service, delete an ALB and wait for ENI detachment,
+    # which routinely runs past 10 minutes; networking then waits on the NAT gateway.
+    STACK_DELETE_TIMEOUT_DEFAULT = 600
+    STACK_DELETE_TIMEOUTS = {
+        "monitoring": 1500,
+        "networking": 1200,
+        "analytics": 900,
+        "distribution": 900,
+    }
+
+    @classmethod
+    def _delete_timeout(cls, stack_name: str) -> int:
+        """Deletion budget for a stack, chosen by its name suffix."""
+        for suffix, seconds in cls.STACK_DELETE_TIMEOUTS.items():
+            if stack_name.endswith(f"-{suffix}"):
+                return seconds
+        return cls.STACK_DELETE_TIMEOUT_DEFAULT
+
     def _delete_stack(self, stack_name: str, region: str, console: Console) -> int:
         """Delete a CloudFormation stack using boto3.
 
@@ -235,6 +254,7 @@ class DestroyCommand(Command):
             0: Success (stack deleted or doesn't exist)
             1: Partial success (DELETE_FAILED - some resources need manual cleanup)
             2: Actual error (permissions, network, etc.)
+            3: Timed out while still DELETE_IN_PROGRESS (not a failure)
         """
         cf_manager = CloudFormationManager(region=region)
 
@@ -260,14 +280,19 @@ class DestroyCommand(Command):
         ) as progress:
             task = progress.add_task(f"Deleting stack {stack_name}...", total=None)
 
-            # Delete the stack with event tracking
+            # Delete the stack with event tracking.
+            #
+            # The timeout must accommodate the slowest stack. The monitoring stack
+            # drains an ECS service, deletes an ALB and waits on ENI cleanup, which
+            # regularly exceeds 10 minutes; a 5-minute budget reported a spurious
+            # failure while CloudFormation was still working normally.
             result = cf_manager.delete_stack(
                 stack_name=stack_name,
                 force=True,
                 on_event=lambda e: progress.update(
                     task, description=f"Deleting {e.get('LogicalResourceId', stack_name)}..."
                 ),
-                timeout=300,
+                timeout=self._delete_timeout(stack_name),
             )
 
             progress.update(task, completed=True)
@@ -275,13 +300,33 @@ class DestroyCommand(Command):
             if result.success:
                 return 0
 
-            # Check if it ended up in DELETE_FAILED (some resources retained)
+            # Re-read the status before calling anything a failure. Deletion is
+            # asynchronous: CloudFormation keeps going after we stop waiting.
             new_status = cf_manager.get_stack_status(stack_name)
+
+            if new_status is None:
+                # The stack is gone — it finished while we were waiting. Not a failure.
+                return 0
+
             if new_status == "DELETE_FAILED":
                 return 1  # Not an error, just needs manual cleanup
 
-            # Actual error
-            console.print(f"[red]Error deleting stack: {result.error}[/red]")
+            if new_status == "DELETE_IN_PROGRESS":
+                # We timed out, CloudFormation has not. Reporting "manual cleanup" here
+                # invites the user to hand-delete resources mid-flight, which is how a
+                # healthy delete becomes a genuinely stuck one.
+                console.print(
+                    f"[yellow]Still deleting after "
+                    f"{self._delete_timeout(stack_name)}s — "
+                    f"CloudFormation is continuing in the background.[/yellow]"
+                )
+                console.print("[dim]  Do not delete its resources by hand; re-run 'ccwb destroy' to confirm.[/dim]")
+                return 3
+
+            # Actual error. result.error is None on timeout, so never print a bare None.
+            console.print(
+                f"[red]Error deleting stack ({new_status}): {result.error or 'no error detail returned'}[/red]"
+            )
             return 2
 
     def _get_failed_resources(self, stack_name: str, region: str) -> list[dict]:
