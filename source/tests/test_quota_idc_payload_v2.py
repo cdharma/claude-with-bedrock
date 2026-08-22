@@ -67,9 +67,7 @@ class TestPayloadV2IdentityResolution:
     def test_directory_backed_idc_bare_username_resolves(self):
         """Built-in Identity Center directory: bare username, no @."""
         event = _http_api_event(
-            user_arn=(
-                "arn:aws:sts::123456789012:assumed-role/AWSReservedSSO_BedrockDeveloperAccess_abc123/b.simon"
-            )
+            user_arn=("arn:aws:sts::123456789012:assumed-role/AWSReservedSSO_BedrockDeveloperAccess_abc123/b.simon")
         )
         assert _reason(event) != "missing_identity"
 
