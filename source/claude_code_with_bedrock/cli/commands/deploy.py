@@ -342,6 +342,27 @@ def _poll_websearch_target_ready(
     return False
 
 
+class _NullProgress:
+    """No-op stand-in for rich.Progress used by parallel deploy workers.
+
+    Concurrent Progress instances writing to one console interleave their spinner
+    frames and produce unreadable output, so parallel mode swaps the real progress
+    display for this and prints plain status lines instead.
+    """
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
+
+    def add_task(self, *args, **kwargs):
+        return 0
+
+    def update(self, *args, **kwargs):
+        return None
+
+
 class DeployCommand(Command):
     name = "deploy"
     description = "Deploy AWS infrastructure (auth, monitoring, dashboards)"
@@ -360,7 +381,35 @@ class DeployCommand(Command):
         ),
         option("dry-run", description="Show what would be deployed without executing", flag=True),
         option("show-commands", description="Show AWS CLI commands instead of executing", flag=True),
+        option(
+            "parallel",
+            description="Deploy independent stacks concurrently (faster; per-stack progress spinners are suppressed)",
+            flag=True,
+        ),
     ]
+
+    # Dependency waves for --parallel. Every stack in a wave is independent of every
+    # other stack in the same wave; each wave must complete before the next begins.
+    #
+    # Derived from the cross-stack output reads in _deploy_stack:
+    #   monitoring, distribution  <- networking outputs
+    #   quota, bootstrap          <- s3bucket outputs
+    #   analytics, dashboards     <- monitoring outputs
+    #
+    # A stack absent from stacks_to_deploy is simply skipped, so the waves stay valid
+    # for every feature combination. Anything not listed here runs in the final wave
+    # on its own, which is the conservative default for a newly added stack.
+    DEPLOY_WAVES = [
+        ["auth", "networking", "s3bucket", "codebuild"],
+        ["monitoring", "distribution", "quota", "bootstrap"],
+        ["dashboard", "cowork-dashboard", "analytics", "websearch"],
+    ]
+
+    # Waiter poll interval when deploying concurrently. Each in-flight stack runs its
+    # own waiter (describe_stacks) plus an event-streaming thread
+    # (describe_stack_events), so N concurrent stacks multiply the API call rate.
+    # describe_stack_events throttles readily, so back off from the 5s default.
+    PARALLEL_POLL_DELAY = 15
 
     def handle(self) -> int:
         """Execute the deploy command."""
@@ -621,29 +670,32 @@ class DeployCommand(Command):
         # Deploy stacks
         console.print("\n[bold]Deploying stacks...[/bold]\n")
 
-        failed = False
-        for stack_type, description in stacks_to_deploy:
-            console.print(f"[bold]{description}[/bold]")
+        if self.option("parallel"):
+            failed = self._deploy_in_waves(stacks_to_deploy, profile, console)
+        else:
+            failed = False
+            for stack_type, description in stacks_to_deploy:
+                console.print(f"[bold]{description}[/bold]")
 
-            result = self._deploy_stack(stack_type, profile, console, cf_manager)
-            if result != 0:
-                if stack_type == "websearch":
-                    # Web search is an optional add-on. A failure here must not mark
-                    # the whole platform deploy as failed or abort stacks that follow;
-                    # surface it clearly with remediation and continue. (Running
-                    # 'ccwb deploy websearch' explicitly still returns non-zero.)
-                    console.print(
-                        "[yellow]⚠ Web search gateway deploy failed — this is optional and does not "
-                        "block the rest of the deployment.[/yellow]\n"
-                        "[dim]  Re-run 'ccwb deploy websearch' to retry, or "
-                        "'ccwb destroy websearch' to clean up.[/dim]"
-                    )
-                    console.print("")
-                    continue
-                failed = True
-                console.print(f"[red]Failed to deploy {stack_type} stack[/red]")
-                break
-            console.print("")
+                result = self._deploy_stack(stack_type, profile, console, cf_manager)
+                if result != 0:
+                    if stack_type == "websearch":
+                        # Web search is an optional add-on. A failure here must not mark
+                        # the whole platform deploy as failed or abort stacks that follow;
+                        # surface it clearly with remediation and continue. (Running
+                        # 'ccwb deploy websearch' explicitly still returns non-zero.)
+                        console.print(
+                            "[yellow]⚠ Web search gateway deploy failed — this is optional and does not "
+                            "block the rest of the deployment.[/yellow]\n"
+                            "[dim]  Re-run 'ccwb deploy websearch' to retry, or "
+                            "'ccwb destroy websearch' to clean up.[/dim]"
+                        )
+                        console.print("")
+                        continue
+                    failed = True
+                    console.print(f"[red]Failed to deploy {stack_type} stack[/red]")
+                    break
+                console.print("")
 
         if failed:
             console.print("\n[red]Deployment failed. Check the errors above.[/red]")
@@ -756,13 +808,114 @@ class DeployCommand(Command):
                 result.append({"ParameterKey": key, "ParameterValue": value})
         return result
 
-    def _deploy_stack(self, stack_type: str, profile, console: Console, cf_manager: CloudFormationManager) -> int:
+    @classmethod
+    def _plan_waves(cls, stacks_to_deploy: list[tuple[str, str]]) -> list[list[tuple[str, str]]]:
+        """Group the selected stacks into dependency waves.
+
+        Stacks are matched against DEPLOY_WAVES in order. Anything not listed there
+        is appended as its own trailing wave rather than silently joining an existing
+        one — a new stack of unknown dependencies must not be assumed independent.
+        """
+        by_type = dict(stacks_to_deploy)
+        planned: list[list[tuple[str, str]]] = []
+        placed: set[str] = set()
+
+        for wave in cls.DEPLOY_WAVES:
+            members = [(st, by_type[st]) for st in wave if st in by_type]
+            if members:
+                planned.append(members)
+                placed.update(st for st, _ in members)
+
+        for stack_type, description in stacks_to_deploy:
+            if stack_type not in placed:
+                planned.append([(stack_type, description)])
+
+        return planned
+
+    def _deploy_in_waves(self, stacks_to_deploy: list[tuple[str, str]], profile, console: Console) -> bool:
+        """Deploy stacks wave by wave, concurrently within each wave.
+
+        Returns True if the deployment failed.
+
+        Each worker builds its own CloudFormationManager so no boto3 client is shared
+        across threads. Per-stack rich spinners are suppressed because concurrent
+        Progress instances on one console interleave into unreadable output; plain
+        start/finish lines are printed instead.
+        """
+        from concurrent.futures import ThreadPoolExecutor
+
+        waves = self._plan_waves(stacks_to_deploy)
+        console.print(
+            f"[dim]Parallel mode: {len(stacks_to_deploy)} stack(s) in {len(waves)} wave(s), "
+            f"poll interval {self.PARALLEL_POLL_DELAY}s[/dim]\n"
+        )
+
+        for index, wave in enumerate(waves, start=1):
+            names = ", ".join(st for st, _ in wave)
+            console.print(f"[bold]Wave {index}/{len(waves)}:[/bold] {names}")
+
+            def run(item):
+                stack_type, description = item
+                # Fresh manager per thread — boto3 sessions are not designed to be
+                # shared across threads.
+                mgr = CloudFormationManager(region=profile.aws_region)
+                console.print(f"  [dim]→ {description}[/dim]")
+                try:
+                    code = self._deploy_stack(
+                        stack_type, profile, console, mgr, parallel=True, poll_delay=self.PARALLEL_POLL_DELAY
+                    )
+                except Exception as e:  # a worker must never take down the wave
+                    console.print(f"  [red]✗ {stack_type}: {e}[/red]")
+                    return stack_type, 1
+                return stack_type, code
+
+            with ThreadPoolExecutor(max_workers=len(wave)) as pool:
+                results = list(pool.map(run, wave))
+
+            hard_failures = []
+            for stack_type, code in results:
+                if code == 0:
+                    continue
+                if stack_type == "websearch":
+                    # Optional add-on: never blocks the rest of the deployment.
+                    console.print(
+                        "[yellow]⚠ Web search gateway deploy failed — this is optional and does not "
+                        "block the rest of the deployment.[/yellow]\n"
+                        "[dim]  Re-run 'ccwb deploy websearch' to retry, or "
+                        "'ccwb destroy websearch' to clean up.[/dim]"
+                    )
+                    continue
+                hard_failures.append(stack_type)
+
+            if hard_failures:
+                console.print(f"\n[red]Failed to deploy: {', '.join(hard_failures)}[/red]")
+                console.print("[dim]Later waves were not started — they depend on this one.[/dim]")
+                return True
+
+            console.print("")
+
+        return False
+
+    def _deploy_stack(
+        self,
+        stack_type: str,
+        profile,
+        console: Console,
+        cf_manager: CloudFormationManager,
+        parallel: bool = False,
+        poll_delay: int = None,
+    ) -> int:
         """Deploy a CloudFormation stack using boto3."""
         project_root = Path(__file__).parents[4]
 
-        with Progress(
-            SpinnerColumn(), TextColumn("[progress.description]{task.description}"), console=console
-        ) as progress:
+        # Concurrent rich Progress instances on one console interleave into
+        # unreadable output, so parallel workers use a no-op stand-in.
+        progress_cm = (
+            _NullProgress()
+            if parallel
+            else Progress(SpinnerColumn(), TextColumn("[progress.description]{task.description}"), console=console)
+        )
+        with progress_cm as progress:
             # Common deployment function
             def deploy_with_cf(
                 template_path, stack_name, params, capabilities=None, task_description="Deploying stack...", cf=None
@@ -786,6 +939,7 @@ class DeployCommand(Command):
                         parameters=boto3_params,
                         capabilities=capabilities or ["CAPABILITY_NAMED_IAM"],
                         tags=profile.tags if profile.tags else None,
+                        poll_delay=poll_delay,
                         on_event=lambda e: progress.update(
                             task,
                             description=f"{e.get('LogicalResourceId', 'Stack')} - {e.get('ResourceStatus', '')}"
