@@ -12,6 +12,7 @@ from pathlib import Path
 
 import boto3
 from boto3.s3.transfer import TransferConfig
+from botocore.config import Config as BotoConfig
 from botocore.exceptions import ClientError
 from cleo.commands.command import Command
 from cleo.helpers import option
@@ -68,6 +69,26 @@ class DistributeCommand(Command):
         multipart_chunksize=1024 * 1024 * 64,  # 64MB chunks if multipart is needed
         use_threads=True,
     )
+
+    @staticmethod
+    def _s3_client(region: str):
+        """S3 client pinned to the regional endpoint.
+
+        Presigned URLs must carry the regional host. With only ``region_name`` set,
+        boto3 signs against the global virtual-hosted form
+        ``<bucket>.s3.amazonaws.com``. For any bucket outside ``us-east-1`` S3
+        answers that with a 307 redirect to the regional endpoint, and because
+        ``host`` is a signed header the redirect invalidates the signature — every
+        generated URL then fails with 403 Forbidden. Pinning the endpoint and
+        forcing SigV4 keeps the signed host and the requested host identical.
+        """
+        suffix = "amazonaws.com.cn" if region.startswith("cn-") else "amazonaws.com"
+        return boto3.client(
+            "s3",
+            region_name=region,
+            endpoint_url=f"https://s3.{region}.{suffix}",
+            config=BotoConfig(signature_version="s3v4", s3={"addressing_style": "virtual"}),
+        )
 
     options = [
         option("expires-hours", description="URL expiration time in hours (1-168)", flag=False, default="48"),
@@ -679,7 +700,7 @@ class DistributeCommand(Command):
         release_datetime = f"{release_date} {release_time}"
 
         # Clean up old packages in S3 to prevent stale platform packages from appearing
-        s3 = boto3.client("s3", region_name=profile.aws_region)
+        s3 = self._s3_client(profile.aws_region)
         console.print("\n[dim]Cleaning up old packages from S3...[/dim]")
 
         # Delete all existing packages/*/latest.zip files
@@ -1051,7 +1072,7 @@ class DistributeCommand(Command):
                 config = self.S3_TRANSFER_CONFIG
 
                 # Create S3 client
-                s3 = boto3.client("s3", region_name=profile.aws_region)
+                s3 = self._s3_client(profile.aws_region)
 
                 # Close the spinner progress and create a new one with upload progress
                 progress.stop()
@@ -1265,7 +1286,7 @@ class DistributeCommand(Command):
             try:
                 stack_outputs = get_stack_outputs(dist_stack_name, profile.aws_region)
                 bucket_name = stack_outputs.get("DistributionBucket")
-                s3 = boto3.client("s3", region_name=profile.aws_region)
+                s3 = self._s3_client(profile.aws_region)
             except Exception as e:
                 console.print(f"[red]Error getting distribution stack: {e}[/red]")
                 return 1
@@ -1542,6 +1563,20 @@ class DistributeCommand(Command):
         return archive_path
 
     # Platform-to-files mapping for per-OS packages
+    # Claude Desktop (Cowork 3P) artifacts, per platform. package.py always emits
+    # these when cowork_3p_enabled, but they used to be absent from the per-OS
+    # archives, so install.bat/install.sh silently skipped their `if exist` copy and
+    # Claude Desktop could not be configured from a distributed package at all.
+    # cowork-3p-config.json is platform-neutral and ships everywhere.
+    # See .claude/rules/distribution-manifest-parity.md.
+    COWORK_FILES = {
+        "windows": ["cowork-credential-helper.cmd", "cowork-3p.reg", "cowork-3p-config.json"],
+        "linux-x64": ["cowork-credential-helper.sh", "cowork-3p-config.json"],
+        "linux-arm64": ["cowork-credential-helper.sh", "cowork-3p-config.json"],
+        "macos-arm64": ["cowork-credential-helper.sh", "cowork-3p.mobileconfig", "cowork-3p-config.json"],
+        "macos-intel": ["cowork-credential-helper.sh", "cowork-3p.mobileconfig", "cowork-3p-config.json"],
+    }
+
     PLATFORM_FILES = {
         "windows": {
             "binaries": ["credential-process-windows.exe", "otel-helper-windows.exe"],
@@ -1611,6 +1646,13 @@ class DistributeCommand(Command):
                     src = package_path / sf
                     if src.exists():
                         zf.writestr(f"claude-code-package/{sf}", self._read_file_with_retry(src))
+
+                # Add Claude Desktop (Cowork 3P) artifacts for this platform. Absent
+                # from the package when cowork_3p_enabled is False, hence exists().
+                for cf in self.COWORK_FILES.get(platform, []):
+                    src = package_path / cf
+                    if src.exists():
+                        zf.writestr(f"claude-code-package/{cf}", self._read_file_with_retry(src))
 
                 # Add claude-settings
                 settings_dir = package_path / "claude-settings"
