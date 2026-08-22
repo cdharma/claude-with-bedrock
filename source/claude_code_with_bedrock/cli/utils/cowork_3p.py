@@ -48,6 +48,56 @@ def derive_model_aliases() -> list[str]:
     return list(COWORK_DEFAULT_ALIASES)
 
 
+def build_inference_models_explicit(model_aliases: list[str], cris_prefix: str) -> list[dict[str, str | bool] | str]:
+    """Resolve tier aliases to explicit CRIS model IDs, tagged with their tier.
+
+    Bare aliases ("opus", "sonnet", "haiku") are resolved by Claude Desktop, which
+    derives a CRIS prefix from ``inferenceBedrockRegion``. That ignores the admin's
+    ``cross_region_profile`` and can produce model IDs that do not exist: with
+    ``ap-south-1`` Desktop asks for ``apac.anthropic.claude-opus-5``, and Bedrock
+    rejects it with ``400 The provided model identifier is invalid``. There is no
+    ``apac`` Opus 5 profile — only ``global`` and ``us``.
+
+    Pinning IDs from ``resolve_model_for_tier()`` keeps Claude Desktop on the same
+    routing geography that Claude Code already gets via its ``ANTHROPIC_DEFAULT_*``
+    env vars, which use this same resolver.
+
+    Args:
+        model_aliases: Tier aliases and/or explicit CRIS model IDs.
+        cris_prefix: The profile's ``cross_region_profile`` (e.g. "global", "us",
+            "apac", "eu").
+
+    Returns:
+        List for the ``inferenceModels`` MDM key. Tier aliases become object entries
+        with ``anthropicFamilyTier``; anything already explicit is passed through.
+        A tier with no model in the requested geography is dropped rather than
+        emitted as a bare alias, since that would reintroduce the wrong-prefix bug.
+    """
+    from claude_code_with_bedrock.models import resolve_model_for_tier
+
+    models: list[dict[str, str | bool] | str] = []
+    tier_seen: dict[str, bool] = {}
+
+    for alias in model_aliases:
+        tier = FAMILY_TIER_MAP.get(alias)
+        if not tier:
+            # Already an explicit model ID — leave it alone.
+            models.append(alias)
+            continue
+
+        model_id = resolve_model_for_tier(tier, cris_prefix)
+        if not model_id:
+            continue
+
+        entry: dict[str, str | bool] = {"name": model_id, "anthropicFamilyTier": tier}
+        if tier not in tier_seen:
+            entry["isFamilyDefault"] = True
+            tier_seen[tier] = True
+        models.append(entry)
+
+    return models
+
+
 def build_inference_models(model_aliases: list[str]) -> list[dict[str, str | bool]]:
     """Build inferenceModels entries with anthropicFamilyTier and isFamilyDefault.
 
@@ -155,6 +205,7 @@ def build_mdm_config(
     extra_keys: dict[str, str] | None = None,
     credential_mode: str = "helper",
     credential_helper_ttl_sec: int = 3500,
+    cris_prefix: str | None = None,
 ) -> dict:
     """Build the base CoWork 3P MDM configuration dictionary.
 
@@ -183,6 +234,11 @@ def build_mdm_config(
         credential_helper_ttl_sec: Cache TTL for the credential helper output in
             seconds (default: 3500, slightly under the 1h STS token lifetime to
             ensure refresh happens before expiry).
+        cris_prefix: The deployment's ``cross_region_profile`` (e.g. "global", "us").
+            When supplied, tier aliases are resolved to explicit CRIS model IDs so
+            Claude Desktop cannot derive a prefix that has no such model. Omit only
+            for callers with no profile context, which keeps the legacy
+            alias-passthrough behaviour.
 
     Returns:
         Dictionary of MDM configuration key-value pairs.
@@ -190,7 +246,11 @@ def build_mdm_config(
     config = {
         "inferenceProvider": "bedrock",
         "inferenceBedrockRegion": bedrock_region,
-        "inferenceModels": build_inference_models(model_aliases),
+        "inferenceModels": (
+            build_inference_models_explicit(model_aliases, cris_prefix)
+            if cris_prefix
+            else build_inference_models(model_aliases)
+        ),
         "isClaudeCodeForDesktopEnabled": True,
         "isDesktopExtensionEnabled": True,
         "isDesktopExtensionDirectoryEnabled": True,
