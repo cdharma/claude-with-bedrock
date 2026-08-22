@@ -300,8 +300,14 @@ Resources:
       HealthCheckEnabled: true
       HealthCheckPath: /
       HealthCheckProtocol: HTTP
-      HealthCheckIntervalSeconds: 30
-      HealthCheckTimeoutSeconds: 10
+      # 10s x 2 checks = ~20s to healthy, against 30s x 2 = ~60s before. CloudFormation
+      # waits for the ECS service to reach steady state, which waits on the target
+      # passing HealthyThresholdCount checks, so this comes straight off every deploy.
+      # The collector is a single Fargate task one network hop away; 10s is not tight.
+      # UnhealthyThresholdCount stays at 3 so a transient blip cannot flap the target
+      # out of service — faster to mark healthy, no quicker to mark unhealthy.
+      HealthCheckIntervalSeconds: 10
+      HealthCheckTimeoutSeconds: 5
       HealthyThresholdCount: 2
       UnhealthyThresholdCount: 3
       Matcher:

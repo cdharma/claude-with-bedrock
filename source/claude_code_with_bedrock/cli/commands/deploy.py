@@ -1991,7 +1991,16 @@ class DeployCommand(Command):
 
         if outputs:
             console.print("\n[bold]Authentication Stack:[/bold]")
-            console.print(f"• Federation Type: [cyan]{outputs.get('FederationType', 'cognito')}[/cyan]")
+            # IDC federates via role chaining from the SSO role; there is no Cognito
+            # identity pool and no OIDC provider, so defaulting the label to "cognito"
+            # described infrastructure that was never created.
+            if getattr(profile, "effective_auth_type", getattr(profile, "auth_type", None)) == "idc":
+                console.print("• Federation: [cyan]IAM Identity Center (role chaining)[/cyan]")
+                console.print(
+                    f"• Federated Role: [cyan]{outputs.get('RoleArn', outputs.get('RoleName', 'N/A'))}[/cyan]"
+                )
+            else:
+                console.print(f"• Federation Type: [cyan]{outputs.get('FederationType', 'cognito')}[/cyan]")
             if outputs.get("FederationType") == "direct" or outputs.get("DirectSTSRoleArn", "").startswith("arn:"):
                 console.print(f"• Direct STS Role ARN: [cyan]{outputs.get('DirectSTSRoleArn', 'N/A')}[/cyan]")
             if outputs.get("IdentityPoolId"):
@@ -2062,9 +2071,19 @@ class DeployCommand(Command):
                     daily_limit = getattr(profile, "daily_token_limit", None)
                     daily_mode = getattr(profile, "daily_enforcement_mode", "alert")
 
-                    console.print(f"• Monthly Limit: [cyan]{monthly_limit:,}[/cyan] tokens ({monthly_mode})")
-                    if daily_limit:
-                        console.print(f"• Daily Limit: [cyan]{daily_limit:,}[/cyan] tokens ({daily_mode})")
+                    # Report whichever limit the admin configured. Printing the token
+                    # limit unconditionally showed "Monthly Limit: 0 tokens" for a
+                    # cost-based budget, which reads as a broken deployment.
+                    if getattr(profile, "quota_limit_type", "token") == "cost":
+                        monthly_cost = getattr(profile, "monthly_cost_limit_usd", 0) or 0
+                        daily_cost = getattr(profile, "daily_cost_limit_usd", 0) or 0
+                        console.print(f"• Monthly Limit: [cyan]${monthly_cost:,.2f}[/cyan]/user ({monthly_mode})")
+                        if daily_cost:
+                            console.print(f"• Daily Limit: [cyan]${daily_cost:,.2f}[/cyan]/user ({daily_mode})")
+                    else:
+                        console.print(f"• Monthly Limit: [cyan]{monthly_limit:,}[/cyan] tokens ({monthly_mode})")
+                        if daily_limit:
+                            console.print(f"• Daily Limit: [cyan]{daily_limit:,}[/cyan] tokens ({daily_mode})")
 
                     # Save quota outputs to profile for test command and credential provider
                     if quota_endpoint and quota_endpoint != "N/A":
@@ -2094,6 +2113,14 @@ class DeployCommand(Command):
             daily_limit = getattr(profile, "daily_token_limit", None)
             monthly_enforcement = getattr(profile, "monthly_enforcement_mode", "block")
 
+            # Cost-based deployments must persist the cost caps too. Writing only the
+            # token limits produced a policy with no cost fields at all, so once
+            # fine-grained quotas were enabled the Lambda read a cost limit of 0 and
+            # treated every user as unlimited — silently losing the budget.
+            cost_mode = getattr(profile, "quota_limit_type", "token") == "cost"
+            monthly_cost = getattr(profile, "monthly_cost_limit_usd", 0) or 0
+            daily_cost = getattr(profile, "daily_cost_limit_usd", 0) or 0
+
             enforcement_mode = EnforcementMode.BLOCK if monthly_enforcement == "block" else EnforcementMode.ALERT
 
             try:
@@ -2102,11 +2129,18 @@ class DeployCommand(Command):
                     identifier="default",
                     monthly_token_limit=monthly_limit,
                     daily_token_limit=daily_limit,
+                    monthly_cost_limit=monthly_cost if cost_mode else None,
+                    daily_cost_limit=daily_cost if cost_mode and daily_cost else None,
                     enforcement_mode=enforcement_mode,
                 )
+                if cost_mode:
+                    summary = f"monthly: ${monthly_cost:,.2f}/user"
+                    if daily_cost:
+                        summary += f", daily: ${daily_cost:,.2f}/user"
+                else:
+                    summary = f"monthly: {monthly_limit:,} tokens"
                 console.print(
-                    f"[green]Created default quota policy "
-                    f"(monthly: {monthly_limit:,} tokens, enforcement: {monthly_enforcement})[/green]"
+                    f"[green]Created default quota policy ({summary}, enforcement: {monthly_enforcement})[/green]"
                 )
             except PolicyAlreadyExistsError:
                 console.print("[dim]Default quota policy already exists (skipping)[/dim]")
