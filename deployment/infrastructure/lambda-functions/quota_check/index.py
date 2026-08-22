@@ -72,23 +72,53 @@ def lambda_handler(event, context):
             email = jwt_claims.get("email")
             groups = extract_groups_from_claims(jwt_claims)
 
-        # Path 2: IAM identity (IDC users) — extract identity from caller ARN
+        # Path 2: IAM identity (IDC users) — extract identity from the caller ARN.
         # ARN format: arn:aws:sts::ACCOUNT:assumed-role/AWSReservedSSO_.../user@company.com
-        # OR:         arn:aws:sts::ACCOUNT:assumed-role/AWSReservedSSO_.../username (non-email IDC usernames)
+        # OR:         arn:aws:sts::ACCOUNT:assumed-role/AWSReservedSSO_.../username
+        #
+        # The quota API is an API Gateway HTTP API using payload format 2.0, where the
+        # IAM caller lives under requestContext.authorizer.iam.*. Reading only
+        # requestContext.identity.* (the REST / payload 1.0 shape) meant caller_arn was
+        # always empty for IDC, identity never resolved, and MISSING_EMAIL_ENFORCEMENT
+        # defaulted to "block" — so every IDC request was denied regardless of usage.
+        # Both shapes are read here so REST-API deployments keep working.
         if not email:
-            identity = event.get("requestContext", {}).get("identity", {})
-            caller_arn = identity.get("caller", "") or identity.get("userArn", "")
+            iam_ctx = authorizer_context.get("iam", {}) or {}
+            identity = event.get("requestContext", {}).get("identity", {}) or {}
+
+            caller_arn = (
+                iam_ctx.get("userArn", "")  # payload 2.0 (HTTP API)
+                or identity.get("userArn", "")  # payload 1.0 (REST API)
+                or identity.get("caller", "")
+            )
+
+            session_name = ""
             if "/" in caller_arn:
                 session_name = caller_arn.split("/")[-1]
-                if "@" in session_name:
-                    # Standard case: IDC username is an email address
-                    email = session_name
-                    print(f"Identity resolved from IAM ARN (email): {email}")
-                elif session_name and "AWSReservedSSO" in caller_arn:
-                    # IDC username without @ (e.g. "akshaya.claude" instead of "user@company.com")
-                    # Use the raw username as the identity — policies can be set by username
-                    email = session_name
-                    print(f"Identity resolved from IAM ARN (IDC username): {email}")
+            else:
+                # Fall back to userId, formatted "AROAEXAMPLEID:session-name". Present
+                # in payload 2.0 even when userArn is not surfaced.
+                user_id = iam_ctx.get("userId", "") or identity.get("user", "")
+                if ":" in user_id:
+                    session_name = user_id.split(":", 1)[1]
+
+            # An IDC username may or may not be an email. It is an email when the
+            # identity source is an external IdP such as Microsoft Entra ID, which
+            # provisions the UPN as the username; it is a bare name when using the
+            # built-in Identity Center directory. Both are valid identities — quota
+            # policies can be keyed on either.
+            #
+            # A bare (non-email) name is only accepted when the caller is demonstrably
+            # an SSO principal. Any other assumed role reaching this endpoint keeps its
+            # session name rejected, so an arbitrary role cannot mint a quota identity
+            # from an opaque session string (see
+            # test_non_sso_role_without_email_does_not_resolve).
+            if session_name and "@" in session_name:
+                email = session_name
+                print(f"Identity resolved from IAM caller (email): {email}")
+            elif session_name and "AWSReservedSSO" in caller_arn:
+                email = session_name
+                print(f"Identity resolved from IAM caller (IDC username): {email}")
 
         if not email:
             # Neither JWT nor IAM identity resolved
