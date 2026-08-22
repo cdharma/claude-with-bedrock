@@ -748,6 +748,28 @@ class PackageCommand(Command):
             console.print("Fix the issue above and re-run [cyan]ccwb package[/cyan].\n")
             build_failed = True
 
+        # A PARTIAL failure is just as broken as a total one, and used to slip
+        # through: without Go, the legacy builder produces the host platform fine
+        # but cannot cross-compile Windows, so `--target-platform windows,macos-arm64`
+        # emitted a macOS-only package and still exited 0. Anyone distributing that
+        # package hands Windows users an installer with no executable to install.
+        if not is_idc_zero_binary and built_executables:
+            built_platforms = {p for p, _ in built_executables}
+            missing = [
+                p
+                for p in platforms_to_build
+                if p not in built_platforms and not (p == "windows" and windows_codebuild_pending)
+            ]
+            if missing:
+                console.print(f"\n[yellow]Warning: no binaries produced for: {', '.join(missing)}[/yellow]")
+                if "windows" in missing and not use_go:
+                    console.print(
+                        "[dim]Windows binaries need Go (cross-compilation) or CodeBuild. "
+                        "Install Go 1.23+, or re-run 'ccwb init' and enable Windows builds.[/dim]"
+                    )
+                console.print("Fix the issue above and re-run [cyan]ccwb package[/cyan].\n")
+                build_failed = True
+
         if windows_codebuild_pending and not built_executables:
             console.print("\n[bold cyan]Windows binaries are building in AWS CodeBuild[/bold cyan]")
             console.print("Local configuration files will be generated now for distribution.")
@@ -3863,9 +3885,9 @@ for /f %%p in ('powershell -NoProfile -Command "$c=Get-Content config.json|Conve
             "$credProc = ($env:USERPROFILE + '\\claude-code-with-bedrock\\credential-process.exe --profile ' + $profileName) -replace '\\', '/';" ^
             "$section = \"`n[profile $profileName]`nregion = $region`ncredential_process = $credProc`n\";" ^
             "$existing = if (Test-Path $configFile) {{ Get-Content $configFile -Raw }} else {{ '' }};" ^
-            "if ($existing -notmatch \"\\[profile $profileName\\]\") {{ Add-Content -Path $configFile -Value $section; Write-Host '  OK Created AWS profile ''$profileName''' }} else {{ Write-Host '  OK AWS profile ''$profileName'' already exists' }};" ^
+            "if ($existing -notmatch ('\\[profile ' + $profileName + '\\]')) {{ Add-Content -Path $configFile -Value $section; Write-Host ('  OK Created AWS profile ' + $profileName) }} else {{ Write-Host ('  OK AWS profile ' + $profileName + ' already exists') }};" ^
             "$collectorConfig = Join-Path $env:USERPROFILE 'claude-code-with-bedrock\\collector-config.yaml';" ^
-            "if (Test-Path $collectorConfig) {{ $collProfile = $profileName + '-collector'; $collSection = \"`n[profile $collProfile]`nregion = $region`ncredential_process = $credProc`n\"; $existing2 = if (Test-Path $configFile) {{ Get-Content $configFile -Raw }} else {{ '' }}; if ($existing2 -notmatch \"\\[profile $collProfile\\]\") {{ Add-Content -Path $configFile -Value $collSection; Write-Host '  OK Created AWS profile ''$collProfile'' [otelcol SigV4 auth]' }} }}"
+            "if (Test-Path $collectorConfig) {{ $collProfile = $profileName + '-collector'; $collSection = \"`n[profile $collProfile]`nregion = $region`ncredential_process = $credProc`n\"; $existing2 = if (Test-Path $configFile) {{ Get-Content $configFile -Raw }} else {{ '' }}; if ($existing2 -notmatch ('\\[profile ' + $collProfile + '\\]')) {{ Add-Content -Path $configFile -Value $collSection; Write-Host ('  OK Created AWS profile ' + $collProfile + ' [otelcol SigV4 auth]') }} }}"
     )
 )
 
@@ -4478,6 +4500,7 @@ Available metrics include:
                 extra_keys=profile.cowork_3p_extra_keys or None,
                 credential_mode=getattr(profile, "cowork_credential_mode", "helper"),
                 credential_helper_ttl_sec=getattr(profile, "cowork_credential_helper_ttl_sec", 3500),
+                cris_prefix=getattr(profile, "cross_region_profile", None) or "us",
             )
 
             # Beta features (per-feature managed configuration keys)
