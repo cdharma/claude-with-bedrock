@@ -3872,22 +3872,51 @@ for /f %%p in ('powershell -NoProfile -Command "$c=Get-Content config.json|Conve
             )
         )
     ) else (
-        REM No AWS CLI — write directly to ~/.aws/config using PowerShell.
-        REM Also writes a <profile>-collector profile when a sidecar collector config is
-        REM present, so otelcol can resolve CloudWatch creds via credential_process (the
-        REM main profile's static ~/.aws/credentials would shadow it; see otel-helper.ps1).
-        powershell -NoProfile -Command ^
-            "$configDir = Join-Path $env:USERPROFILE '.aws';" ^
-            "if (-not (Test-Path $configDir)) {{ New-Item -ItemType Directory -Path $configDir -Force | Out-Null }};" ^
-            "$configFile = Join-Path $configDir 'config';" ^
-            "$profileName = '%%p';" ^
-            "$region = if ('!PROFILE_REGION!' -ne '') {{ '!PROFILE_REGION!' }} else {{ '{profile.aws_region}' }};" ^
-            "$credProc = ($env:USERPROFILE + '\\claude-code-with-bedrock\\credential-process.exe --profile ' + $profileName) -replace '\\', '/';" ^
-            "$section = \"`n[profile $profileName]`nregion = $region`ncredential_process = $credProc`n\";" ^
-            "$existing = if (Test-Path $configFile) {{ Get-Content $configFile -Raw }} else {{ '' }};" ^
-            "if ($existing -notmatch ('\\[profile ' + $profileName + '\\]')) {{ Add-Content -Path $configFile -Value $section; Write-Host ('  OK Created AWS profile ' + $profileName) }} else {{ Write-Host ('  OK AWS profile ' + $profileName + ' already exists') }};" ^
-            "$collectorConfig = Join-Path $env:USERPROFILE 'claude-code-with-bedrock\\collector-config.yaml';" ^
-            "if (Test-Path $collectorConfig) {{ $collProfile = $profileName + '-collector'; $collSection = \"`n[profile $collProfile]`nregion = $region`ncredential_process = $credProc`n\"; $existing2 = if (Test-Path $configFile) {{ Get-Content $configFile -Raw }} else {{ '' }}; if ($existing2 -notmatch ('\\[profile ' + $collProfile + '\\]')) {{ Add-Content -Path $configFile -Value $collSection; Write-Host ('  OK Created AWS profile ' + $collProfile + ' [otelcol SigV4 auth]') }} }}"
+        REM No AWS CLI — write the profile with plain batch redirection.
+        REM
+        REM This used to build a multi-statement PowerShell script inside this batch
+        REM file using ^ continuations. Every piece is wrapped in double quotes by
+        REM cmd.exe, so any inner quote terminated the piece early and PowerShell
+        REM received fragments: "The term '[profile' is not recognized" from the
+        REM $section assignment, and "The regular expression pattern \\ is not valid"
+        REM from `-replace '\\', '/'` (a lone backslash is not a valid regex).
+        REM The installer still printed "OK Created AWS profile" and left an empty
+        REM config file. Plain batch has no quoting or regex hazard here.
+        if not exist "%USERPROFILE%\\.aws" mkdir "%USERPROFILE%\\.aws"
+        set "CFG=%USERPROFILE%\\.aws\\config"
+        if not exist "!CFG!" type nul > "!CFG!"
+
+        REM Resolve the region once, outside the existence check: the collector block
+        REM below also needs it, and on a re-install where the main profile already
+        REM exists that check is skipped — leaving "region = " empty.
+        if defined PROFILE_REGION (set "PROF_REGION=!PROFILE_REGION!") else (set "PROF_REGION={profile.aws_region}")
+
+        REM findstr /c: matches a literal string, so the [ needs no escaping.
+        findstr /c:"[profile %%p]" "!CFG!" >nul 2>&1
+        if errorlevel 1 (
+            >>"!CFG!" echo.
+            >>"!CFG!" echo [profile %%p]
+            >>"!CFG!" echo region = !PROF_REGION!
+            >>"!CFG!" echo credential_process = %USERPROFILE%\\claude-code-with-bedrock\\credential-process.exe --profile %%p
+            echo   OK Created AWS profile '%%p'
+        ) else (
+            echo   OK AWS profile '%%p' already exists
+        )
+
+        REM <profile>-collector for the otelcol sidecar, when one is installed. otelcol
+        REM resolves CloudWatch credentials via credential_process; a dedicated profile
+        REM is used because a static ~/.aws/credentials entry would shadow
+        REM credential_process on the main profile (see otel-helper.ps1).
+        if exist "%USERPROFILE%\\claude-code-with-bedrock\\collector-config.yaml" (
+            findstr /c:"[profile %%p-collector]" "!CFG!" >nul 2>&1
+            if errorlevel 1 (
+                >>"!CFG!" echo.
+                >>"!CFG!" echo [profile %%p-collector]
+                >>"!CFG!" echo region = !PROF_REGION!
+                >>"!CFG!" echo credential_process = %USERPROFILE%\\claude-code-with-bedrock\\credential-process.exe --profile %%p
+                echo   OK Created AWS profile '%%p-collector' [otelcol SigV4 auth]
+            )
+        )
     )
 )
 

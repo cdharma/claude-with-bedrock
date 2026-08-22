@@ -58,11 +58,32 @@ class TestInstallBatAwsCliHandling:
         profile_section_end = self.content.find("Installation complete!", profile_section_start)
         profile_section = self.content[profile_section_start:profile_section_end]
 
-        # The old bug: 'echo OK Created' appeared outside any error check
+        # The old bug: 'echo OK Created' appeared outside any error check.
+        #
+        # Checked structurally rather than by a fixed lookback window. The previous
+        # version scanned only the 3 preceding lines, which failed once the profile
+        # write became several statements long even though the echo was correctly
+        # nested. Counting unclosed "(" back to the section start finds the real
+        # enclosing block however deep the echo sits.
         lines = profile_section.splitlines()
         for i, line in enumerate(lines):
-            if "OK Created AWS profile" in line:
-                # Must be inside a conditional (errorlevel check or PowerShell Write-Host)
-                context = "\n".join(lines[max(0, i - 3) : i + 1])
-                is_conditional = "errorlevel" in context.lower() or "else" in context or "Write-Host" in line
-                assert is_conditional, f"'OK Created AWS profile' at line {i} must be inside an error-check branch"
+            if "OK Created AWS profile" not in line:
+                continue
+            if "Write-Host" in line:
+                continue  # PowerShell branch guards itself with an if/else expression
+
+            depth = 0
+            guard = None
+            for prev in reversed(lines[:i]):
+                stripped = prev.strip()
+                depth += stripped.count(")") - stripped.count("(")
+                # A line that opens a block we are still inside encloses this echo.
+                if depth < 0:
+                    guard = stripped
+                    break
+            assert guard is not None, (
+                f"'OK Created AWS profile' at line {i} is not inside any block — it would print unconditionally"
+            )
+            assert "errorlevel" in guard.lower() or "if " in guard.lower(), (
+                f"'OK Created AWS profile' at line {i} is enclosed by {guard!r}, which is not a conditional"
+            )
