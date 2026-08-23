@@ -15,8 +15,10 @@ Choose your IdP and follow the setup guide before running `ccwb init`:
 | **Okta** | [okta-setup.md](./providers/okta-setup.md) |
 | **Microsoft Entra ID (Azure AD)** | [microsoft-entra-id-setup.md](./providers/microsoft-entra-id-setup.md) |
 | **Auth0** | [auth0-setup.md](./providers/auth0-setup.md) |
+| **Google** | [google-oidc-setup.md](./providers/google-oidc-setup.md) |
 | **AWS Cognito User Pool** | [cognito-user-pool-setup.md](./providers/cognito-user-pool-setup.md) |
-| **AWS IAM Identity Center (SSO)** | Coming soon |
+| **AWS IAM Identity Center (SSO)** | [iam-identity-center-setup.md](./providers/iam-identity-center-setup.md) |
+| **Generic OIDC (PingFederate, Keycloak, ForgeRock, etc.)** | [generic-oidc-setup.md](./providers/generic-oidc-setup.md) |
 
 ### Step 2 — Deploy AWS infrastructure
 
@@ -63,10 +65,8 @@ Once you have your IdP **provider domain** and **client ID**, follow one of thes
 - **Purpose**: Per-user and per-team cost tracking via CUR 2.0 and Cost Explorer
 - **Audience**: IT administrators and finance teams
 
-## Claude Cowork (Desktop)
-
-### CoWork 3P Guide
+## Claude Desktop (Cowork 3P)
 
 - **File**: [COWORK_3P.md](./COWORK_3P.md)
 - **Purpose**: Using this solution's credential helper with Claude Desktop in third-party platform mode
-- **Audience**: IT administrators deploying Claude Cowork with Amazon Bedrock
+- **Audience**: IT administrators deploying Claude Desktop with Amazon Bedrock

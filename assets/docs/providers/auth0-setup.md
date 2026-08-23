@@ -287,14 +287,15 @@ Once you've completed this Auth0 setup:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock.git
-   cd claude-code-setup
+   git clone https://github.com/cdharma/claude-with-bedrock
+   cd claude-with-bedrock/source
    poetry install
    ```
 2. Run the setup wizard: `poetry run ccwb init`
-3. Create a distribution package: `poetry run ccwb package`
-4. Test the deployment: `poetry run ccwb test --api`
-5. Distribute the `dist/` folder to your users
+3. Deploy the infrastructure: `poetry run ccwb deploy`
+4. Create a distribution package: `poetry run ccwb package`
+5. Test the deployment: `poetry run ccwb test`
+6. Distribute the `dist/` folder to your users
 
 ---
 

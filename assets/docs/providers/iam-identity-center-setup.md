@@ -4,13 +4,20 @@ This guide covers setting up Claude Code with Bedrock using AWS IAM Identity Cen
 
 ## How It Works
 
-IDC uses your existing AWS SSO credentials — no external IdP or JWT tokens needed, and **no custom binaries required on developer machines**.
+IDC uses your existing AWS SSO credentials — no external IdP or JWT tokens needed.
 
-- **Authentication:** Developers run `aws sso login` — Claude Code picks up ambient AWS credentials automatically via the standard credential chain. No credential-process binary needed.
+- **Authentication:** Developers run `aws sso login` — Claude Code picks up ambient AWS credentials automatically via the standard credential chain.
 - **Monitoring:** The local OTEL sidecar collector sends metrics to CloudWatch's native OTLP endpoint using the developer's SSO session credentials (SigV4). User identity is baked as a static resource attribute in the collector config at distribution time.
 - **Attribution:** User email is resolved from the IAM Identity Center ARN session name (e.g. `user@company.com`) during `ccwb init` or `ccwb package` and embedded directly in the collector configuration.
 
-This means the IDC developer bundle contains **only the collector binary** — no credential-process, no otel-helper.
+### Two packaging modes
+
+`ccwb package` builds one of two IDC bundles, depending on whether quota monitoring (spending limits) is enabled:
+
+| Mode | When | What ships |
+|---|---|---|
+| **Zero-binary** | Quota monitoring disabled | Only the collector binary — no credential-process, no otel-helper. Authentication is plain `aws sso login`; user identity is static in the collector config. |
+| **IDC + quota** | Quota monitoring enabled | Also includes the credential-process binary, which makes a SigV4-signed quota check before issuing credentials and writes the user's email to the OTEL cache at runtime. |
 
 ## When to Choose IAM Identity Center vs OIDC
 
@@ -25,12 +32,12 @@ This means the IDC developer bundle contains **only the collector binary** — n
 - You need JWT-based ALB authorization for the OTEL proxy
 - You want token-based session management with refresh tokens
 
-## What's NOT Supported with IAM Identity Center
+## Differences from OIDC
 
-⚠️ **Differences from OIDC:**
+⚠️ **How IDC differs from the OIDC path:**
 
-1. **Quota via SigV4**: Per-user quota enforcement works via IAM SigV4 authentication (not JWT). The quota Lambda extracts user email from the assumed-role ARN session name. Requires the quota-monitoring stack to be deployed.
-2. **Per-User OTEL Attribution**: Works automatically — credential-process writes user email to the OTEL cache from the STS caller ARN. Requires email as the IDC session name (the default).
+1. **Quota via SigV4**: Per-user quota enforcement is fully supported, via IAM SigV4 authentication (not JWT). The quota Lambda extracts user email from the assumed-role ARN session name. Requires the quota-monitoring stack to be deployed (and ships the credential-process binary — see the packaging modes above).
+2. **Per-User OTEL Attribution**: Works automatically. In zero-binary mode the email is baked into the collector config at package time; in IDC + quota mode credential-process also writes it to the OTEL cache from the STS caller ARN. Requires email as the IDC session name (the default).
 3. **No ALB JWT Authorization**: The OTEL proxy (central mode) cannot validate requests via JWT. Use sidecar mode, or accept unauthenticated OTEL ingestion in proxy mode.
 
 ## Prerequisites
@@ -106,9 +113,9 @@ poetry run ccwb deploy
 ```
 
 This will:
-- Skip the quota monitoring stack (not compatible with IDC)
 - Deploy the IAM role and Bedrock access policy
 - Deploy monitoring and dashboard stacks (if enabled)
+- Deploy the quota monitoring stack (if enabled) — quota checks for IDC are SigV4-signed, with user email resolved from the assumed-role session name
 
 ## Extending SSO Session Duration
 
@@ -133,13 +140,25 @@ IDC users get per-user OTEL attribution automatically. The user email is baked i
 
 ### Verifying Attribution
 
+Both packaging modes — confirm email is in your ARN:
+
 ```bash
-# Confirm email is in your ARN
 aws sts get-caller-identity --profile ClaudeCode
 # Look for: "Arn": "arn:aws:sts::123456789012:assumed-role/.../user@company.com"
+```
 
-# Check the OTEL cache was written (after first credential-process invocation)
-cat ~/.ccwb/otel-cache/*.json
+**Zero-binary packages** (quota disabled) — the email is baked in at package time; check the installed collector config:
+
+```bash
+grep user.email ~/.ccwb/collector-config.yaml
+# Should show your email, not an unresolved placeholder
+```
+
+**IDC + quota packages** — credential-process also writes the OTEL cache at runtime:
+
+```bash
+# After the first credential-process invocation
+cat ~/.claude-code-session/*-otel-headers.json
 # Should show: {"x-user-email": "user@company.com", ...}
 ```
 
@@ -278,4 +297,4 @@ After successful deployment:
 - **Set Up Alerts**: Configure SNS notifications for system health
 - **Train Users**: Share SSO login instructions with your team
 
-For quota monitoring and per-user controls, consider using the OIDC authentication method instead.
+For per-user spending limits, see the [Quota Monitoring guide](../QUOTA_MONITORING.md) — quota enforcement is fully supported with IDC via SigV4-signed requests.

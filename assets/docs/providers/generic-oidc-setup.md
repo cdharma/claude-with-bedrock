@@ -37,7 +37,7 @@ The exact UI varies by product, but every IdP needs you to configure these prope
 |---|---|---|
 | Application / client type | **Public client** (or "native", "SPA", "desktop") | Confidential client requires a client secret — only Azure AD currently supports that path here. |
 | Grant types | **Authorization Code** with **PKCE** | Refresh tokens optional but recommended. |
-| Redirect URI | `http://localhost:8400/callback` | Exact match. The credential helper auto-falls-back to a random port if 8400 is taken — if your IdP requires that to be allowlisted too, see [Troubleshooting](#7-troubleshooting). |
+| Redirect URI | `http://localhost:8400/callback` | Exact match. The port is fixed (default 8400); to change it, set the `REDIRECT_PORT` environment variable or the `redirect_port` profile field and update this redirect URI to match — see [Troubleshooting](#7-troubleshooting). |
 | Scopes | `openid`, `profile`, `email` | `groups` if you plan to use group-based quotas. |
 | ID token signing | **RS256** or stronger | HS256 is not supported by the credential helper. |
 
@@ -217,6 +217,6 @@ After `ccwb init` succeeds:
 
 ```bash
 poetry run ccwb deploy        # deploy all configured stacks
-poetry run ccwb test --api    # smoke-test authentication + Bedrock invoke
+poetry run ccwb test          # smoke-test authentication + Bedrock invoke
 poetry run ccwb package       # build distribution for end users
 ```

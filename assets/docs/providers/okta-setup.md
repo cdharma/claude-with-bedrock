@@ -245,6 +245,18 @@ If you want to add department or group information:
 5. Add users to this group
 6. Assign the group to your application
 
+### Using a Custom Authorization Server (Optional)
+
+This guide assumes the pre-provisioned **default** authorization server (`https://<your-domain>/oauth2/default`), which every Okta developer/free tenant has. If your organization uses a **custom authorization server** instead (Okta API Access Management — required for admin-defined claims like session tags), set the `okta_auth_server` field in your profile at `~/.ccwb/profiles/<name>.json`:
+
+```json
+"okta_auth_server": "aus1234567890abcde"
+```
+
+The issuer then becomes `https://<your-domain>/oauth2/<server-id>`, and everything derives from it: the token endpoints the credential helper calls, the quota API's JWT authorizer, the ALB OIDC configuration, and JWKS discovery. After changing it, re-run `poetry run ccwb deploy` and rebuild packages with `poetry run ccwb package` so the infrastructure and the packaged credential helper stay in sync.
+
+When the field is left empty, the credential helper uses the Okta Org authorization server endpoints (the historical behavior), while quota and ALB token validation assume the `default` server — so if you enable quota monitoring or the central OTEL collector, set the field explicitly (`"default"` or your custom server ID).
+
 ---
 
 ## 8. Quota Monitoring Configuration (Optional)
@@ -340,7 +352,7 @@ poetry run ccwb quota set-group data-science --monthly-limit 1B
 poetry run ccwb quota set-user power.user@company.com --monthly-limit 500M
 
 # Test the quota API
-poetry run ccwb test quota-api
+poetry run ccwb test --quota-only
 ```
 
 ### Verifying Your Configuration
@@ -390,14 +402,15 @@ Once you've completed this Okta setup:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock.git
-   cd claude-code-setup
+   git clone https://github.com/cdharma/claude-with-bedrock
+   cd claude-with-bedrock/source
    poetry install
    ```
 2. Run the setup wizard: `poetry run ccwb init`
-3. Create a distribution package: `poetry run ccwb package`
-4. Test the deployment: `poetry run ccwb test --api`
-5. Distribute the `dist/` folder to your users
+3. Deploy the infrastructure: `poetry run ccwb deploy`
+4. Create a distribution package: `poetry run ccwb package`
+5. Test the deployment: `poetry run ccwb test`
+6. Distribute the `dist/` folder to your users
 
 ---
 

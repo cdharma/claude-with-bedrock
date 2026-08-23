@@ -1,6 +1,6 @@
 # AWS Cognito User Pool Setup Guide
 
-This guide explains how to set up an AWS Cognito User Pool for use with Claude Code authentication. The User Pool can be used standalone or integrated with external identity providers like Amazon Federate/Midway.
+This guide explains how to set up an AWS Cognito User Pool for use with Claude Code authentication. The User Pool can be used standalone or integrated with external OIDC identity providers like Okta, Auth0, or Microsoft Entra ID.
 
 ## Overview
 
@@ -22,8 +22,8 @@ The CloudFormation template creates a Cognito User Pool with:
 
 ```bash
 # Clone the repository
-git clone <repository-url>
-cd claude-code-auth-setup
+git clone https://github.com/cdharma/claude-with-bedrock
+cd claude-with-bedrock
 
 # Deploy the User Pool stack
 aws cloudformation deploy \
@@ -60,7 +60,12 @@ aws cloudformation describe-stacks \
 
 ### 3. Configure Claude Code
 
+The `ccwb` tool runs from the `source/` directory:
+
 ```bash
+cd source
+poetry install
+
 # Initialize Claude Code with your User Pool
 poetry run ccwb init
 
@@ -74,7 +79,7 @@ poetry run ccwb init
 
 ```bash
 # Deploy the authentication infrastructure
-poetry run ccwb deploy --type auth
+poetry run ccwb deploy auth
 ```
 
 ## Configuration Options
@@ -85,14 +90,6 @@ poetry run ccwb deploy --type auth
 - `DomainPrefix`: Unique prefix for Cognito domain (required)
 - `CallbackURLs`: OAuth2 callback URLs (default: http://localhost:8400/callback)
 - `LogoutURLs`: OAuth2 logout URLs (default: http://localhost:8400/logout)
-
-### Amazon Federate/Midway Parameters (Optional)
-
-For Amazon internal use with Federate/Midway:
-
-- `FederateEnvironment`: 'none', 'integ', or 'prod' (default: none)
-- `FederateClientId`: Client ID from Federate service profile
-- `FederateClientSecret`: Client secret from Federate service profile
 
 ## User Pool Configuration
 
@@ -142,34 +139,12 @@ aws cognito-idp admin-create-user \
 
 ## Integrating External Identity Providers
 
-### Amazon Federate/Midway (Amazon Internal)
+To federate the User Pool with an external OIDC provider (Okta, Auth0, Microsoft Entra ID, etc.):
 
-If you deployed with Federate parameters, the integration is automatic. Otherwise:
-
-1. Create a Federate service profile at:
-   - Testing: https://integ.ep.federate.a2z.com/
-   - Production: https://prod.ep.federate.a2z.com/
-
-2. Configure the service profile:
-   - Protocol: OIDC
-   - Redirect URI: `https://<domain-prefix>.auth.<region>.amazoncognito.com/oauth2/idpresponse`
-   - Claims: EMAIL, GIVEN_NAME, FAMILY_NAME
-   - Groups: Configure your LDAP/ANT/POSIX groups
-
-3. In Cognito Console, add the identity provider:
-   - Type: OpenID Connect
-   - Provider name: midway
-   - Client ID/Secret: From Federate
-   - Issuer URL: https://idp.federate.amazon.com
-   - Attribute mappings as shown in template outputs
-
-### Other OIDC Providers
-
-Similar process for Okta, Auth0, Azure AD:
-1. Configure the provider with redirect URI
-2. Add as OIDC identity provider in Cognito
-3. Map attributes appropriately
-4. Update app client supported identity providers
+1. In your provider, register an application with the redirect URI `https://<domain-prefix>.auth.<region>.amazoncognito.com/oauth2/idpresponse`
+2. In the Cognito console, add the provider under your User Pool as an OpenID Connect identity provider (client ID/secret and issuer URL come from your provider)
+3. Map attributes appropriately (at minimum `email`; also `given_name` and `family_name` if available)
+4. Update the app client's supported identity providers to include the new provider
 
 ## Troubleshooting
 
