@@ -997,10 +997,12 @@ class InitCommand(Command):
             if not region:
                 return None
 
-            # For Direct STS, we use a stack name instead of Identity Pool Name
-            # But we keep the same field for backward compatibility
+            # A Cognito Identity Pool only exists on the OIDC/Cognito path. For
+            # Direct STS and IDC this value merely seeds the CloudFormation stack
+            # names, so ask for it honestly. The profile field name stays
+            # identity_pool_name for backward compatibility.
             federation_type = config.get("federation_type", "cognito")
-            if federation_type == "direct":
+            if federation_type == "direct" or config.get("auth_type") == "idc":
                 stack_base_name = questionary.text(
                     "Stack base name (for CloudFormation):",
                     default=config.get("aws", {}).get("identity_pool_name", "claude-code-auth"),
