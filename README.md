@@ -2,7 +2,7 @@
 
 This project lets a company give its developers **Claude Code** (the CLI) and **Claude Desktop** — running entirely against **Amazon Bedrock in the company's own AWS account** — with:
 
-- **Sign-in with company credentials** (Okta, Microsoft Entra ID, Auth0, Google, or AWS IAM Identity Center) — no API keys to hand out or rotate
+- **Sign-in with company credentials** (Okta, Microsoft Entra ID, Auth0, Google, Amazon Cognito, or AWS IAM Identity Center) — no API keys to hand out or rotate
 - **Per-user cost tracking** — dashboards showing who spent what
 - **Spending limits** — monthly/daily budgets per user, with warnings and hard blocks
 - **Simple installation for end users** — IT ships one zip; users run one installer
