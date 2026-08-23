@@ -64,6 +64,38 @@ def _extract_azure_tenant_id(domain: str) -> str:
     return match.group(0) if match else domain
 
 
+def _okta_issuer(profile) -> str:
+    """Build the Okta issuer URL used for JWT validation (quota API, ALB, web search).
+
+    The issuer must match the ``iss`` claim of the tokens the packaged Go
+    credential-process mints, and that side derives its endpoints from
+    ``profile.okta_auth_server`` (source/go/internal/provider/endpoints.go —
+    see .claude/rules/token-endpoint-single-builder.md). So the
+    authorization-server segment of the issuer must come from the same field:
+    ``https://<domain>/oauth2/<auth-server-id>``.
+
+    An unset/empty ``okta_auth_server`` falls back to the pre-provisioned
+    "default" server — the historical CLI behavior — so existing profiles keep
+    validating against ``/oauth2/default``. Every CLI-side construction of an
+    Okta issuer/discovery URL must go through this helper so the quota
+    authorizer, ALB OIDC params, web search gateway, and bootstrap discovery
+    can never drift apart.
+    """
+    domain = getattr(profile, "provider_domain", "") or ""
+    if not isinstance(domain, str):  # tolerate mocks/legacy profile objects
+        domain = ""
+    domain = domain.strip().rstrip("/")
+    if domain.startswith(("http://", "https://")):
+        domain = domain.split("://", 1)[1].rstrip("/")
+    # A provider_domain stored as a full issuer URL already carries the
+    # /oauth2/<server> segment — strip it so it isn't doubled.
+    domain = re.sub(r"/oauth2/[^/]+$", "", domain)
+    auth_server = getattr(profile, "okta_auth_server", "") or ""
+    if not isinstance(auth_server, str) or not auth_server.strip():
+        auth_server = "default"
+    return f"https://{domain}/oauth2/{auth_server.strip()}"
+
+
 def _discover_oidc_endpoints(profile) -> dict:
     """Fetch OIDC discovery document and extract endpoints.
 
@@ -80,7 +112,7 @@ def _discover_oidc_endpoints(profile) -> dict:
 
     tid = None  # needed for azure fallback
     if provider_type == "okta":
-        issuer = f"https://{provider_domain}/oauth2/default"
+        issuer = _okta_issuer(profile)
     elif provider_type == "azure":
         tid = _extract_azure_tenant_id(provider_domain)
         issuer = f"https://login.microsoftonline.com/{tid}/v2.0"
@@ -251,7 +283,7 @@ def _websearch_discovery_url(profile) -> str:
         tenant_id = _extract_azure_tenant_id(getattr(profile, "oidc_issuer_url", None) or provider_domain or "")
         return f"https://login.microsoftonline.com/{tenant_id}/v2.0/.well-known/openid-configuration"
     elif provider == "okta":
-        return f"https://{provider_domain}/oauth2/default/.well-known/openid-configuration"
+        return f"{_okta_issuer(profile)}/.well-known/openid-configuration"
     elif provider == "auth0":
         return f"https://{provider_domain}/.well-known/openid-configuration"
     elif provider == "google":
@@ -1393,10 +1425,10 @@ class DeployCommand(Command):
                                 oidc_issuer = f"https://login.microsoftonline.com/{tid}/v2.0"
                                 oidc_jwks = f"https://login.microsoftonline.com/{tid}/discovery/v2.0/keys"
                         elif provider_type == "okta":
-                            # provider_domain is e.g. "company.okta.com"
-                            domain = provider_domain.rstrip("/")
-                            oidc_issuer = f"https://{domain}/oauth2/default"
-                            oidc_jwks = f"https://{domain}/oauth2/default/v1/keys"
+                            # provider_domain is e.g. "company.okta.com"; the issuer
+                            # (and thus JWKS) must reflect profile.okta_auth_server
+                            oidc_issuer = _okta_issuer(profile)
+                            oidc_jwks = f"{oidc_issuer}/v1/keys"
                         elif provider_type == "auth0":
                             domain = provider_domain.rstrip("/")
                             oidc_issuer = f"https://{domain}/"
@@ -1968,6 +2000,13 @@ class DeployCommand(Command):
             console.print("\n[dim]# Step 2: Deploy packaged template[/dim]")
             monthly_limit = getattr(profile, "monthly_token_limit", 225000000)
             daily_limit = getattr(profile, "daily_token_limit", None)
+            # Print the same issuer the real deploy path resolves (Okta auth
+            # server suffix, Auth0 trailing slash, Cognito pool URL) so the
+            # shown command matches what `ccwb deploy quota` actually does.
+            try:
+                oidc_issuer_url, oidc_client_id = self._resolve_oidc_config(profile)
+            except ValueError:
+                oidc_issuer_url, oidc_client_id = profile.provider_domain, profile.client_id
             params = [
                 f"MonthlyTokenLimit={monthly_limit}",
                 f"WarningThreshold80={getattr(profile, 'warning_threshold_80', int(monthly_limit * 0.8))}",
@@ -1977,8 +2016,8 @@ class DeployCommand(Command):
                 f"DailyCostLimitUsd={getattr(profile, 'daily_cost_limit_usd', 0) or 0}",
                 f"DailyEnforcementMode={getattr(profile, 'daily_enforcement_mode', 'alert')}",
                 f"MonthlyEnforcementMode={getattr(profile, 'monthly_enforcement_mode', 'block')}",
-                f"OidcIssuerUrl={profile.provider_domain}",
-                f"OidcClientId={profile.client_id}",
+                f"OidcIssuerUrl={oidc_issuer_url}",
+                f"OidcClientId={oidc_client_id}",
                 f"EnableFinegrainedQuotas={str(profile.enable_finegrained_quotas).lower()}",
                 f"EnableBypassDetection={str(getattr(profile, 'enable_bypass_detection', False)).lower()}",
             ]
@@ -2331,12 +2370,13 @@ class DeployCommand(Command):
             if issuer_url and not issuer_url.startswith(("http://", "https://")):
                 issuer_url = f"https://{issuer_url}"
 
-        # Okta authenticates via its default custom authorization server, so issued
-        # tokens carry iss=https://<domain>/oauth2/default. The quota JWT authorizer
-        # must match that exact issuer or every /check request 401s (and, with
-        # fail-open, silently disables enforcement).
-        if profile.provider_type == "okta" and issuer_url and not issuer_url.rstrip("/").endswith("/oauth2/default"):
-            issuer_url = f"{issuer_url.rstrip('/')}/oauth2/default"
+        # Okta mints tokens from the authorization server configured in the
+        # profile (okta_auth_server; "default" when unset), so issued tokens
+        # carry iss=https://<domain>/oauth2/<auth-server>. The quota JWT
+        # authorizer must match that exact issuer or every /check request 401s
+        # (and, with fail-open, silently disables enforcement).
+        if profile.provider_type == "okta" and issuer_url and isinstance(issuer_url, str):
+            issuer_url = _okta_issuer(profile)
 
         # Auth0 tokens include trailing slash in iss claim, so authorizer must match
         if profile.provider_type == "auth0" and issuer_url and not issuer_url.endswith("/"):
