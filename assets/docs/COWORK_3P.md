@@ -29,7 +29,7 @@ Before configuring Claude Cowork 3P, ensure:
 
 1. **This solution is deployed** — Follow the [Quick Start Guide](../../QUICK_START.md) to deploy authentication infrastructure
 2. **Users have the credential-process installed** — Distribute via `ccwb package` as described in [Step 4 of Quick Start](../../QUICK_START.md#step-4-create-distribution-package)
-3. **Claude Desktop is installed** — Download from [claude.com/download](https://claude.com/download)
+3. **Claude Desktop is installed** — Download from [claude.com/download](https://claude.com/download). For managed Windows fleets, deploy the app itself via Intune — see [Deploying the Claude Desktop app with Intune](#deploying-the-claude-desktop-app-with-intune)
 4. **MDM solution available** — For deploying configuration profiles to managed devices
 
 ## Getting Started
@@ -222,6 +222,19 @@ No wrapper script is required — Cowork reuses the same `credential-process` bi
 1. Create the MDM configuration JSON with your settings
 2. Export as a `.reg` file via the Claude Desktop setup UI, or create registry entries manually
 3. Deploy via Group Policy, Intune, or your MDM solution
+
+#### Deploying the Claude Desktop app with Intune
+
+The steps above configure Claude Desktop — they assume the application itself is already on the machine. For Intune-managed Windows 11 fleets, deploy the app as an MSIX package:
+
+- **Official guide:** [Deploy Claude Desktop for Windows](https://support.claude.com/en/articles/12622703-deploy-claude-desktop-for-windows) (Anthropic)
+- **Video walkthrough (community):** [How to Deploy Claude Desktop via Microsoft Intune to Windows 11](https://www.youtube.com/watch?v=AaBub0YyPpU) (~9 min) — covers Intune licensing requirements, MSIX upload and app-package deployment, the Virtual Machine Platform prerequisite below, and troubleshooting via Event Viewer (permissions errors, slow installs, Entra vs Intune targeting). A companion video covers [managing Claude Desktop updates with Intune](https://youtu.be/H9Ip5zurpFw).
+
+> **Important:** Cowork features require the Windows **Virtual Machine Platform** optional feature. Push this once per device (e.g., as an Intune PowerShell script) before or alongside the app package:
+>
+> ```powershell
+> Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -All -NoRestart
+> ```
 
 ### VDI Environments
 
