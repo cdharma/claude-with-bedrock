@@ -342,6 +342,47 @@ def _poll_websearch_target_ready(
     return False
 
 
+def _check_idc_account_match(profile, console: Console) -> bool:
+    """Verify the current AWS credentials belong to the profile's IDC account.
+
+    The IDC auth stack creates the federated role that IAM Identity Center
+    users assume. If it is deployed with credentials for a different account
+    than ``profile.idc_account_id``, the role lands in the wrong account and
+    no IDC user can ever assume it — with no error at deploy time.
+
+    Returns True when the deploy may proceed: the caller account matches, or
+    ``idc_account_id`` is unset (older profiles — backward compat, skip the
+    check). Returns False on a mismatch after printing both account IDs and
+    the remediation. STS/credential errors propagate to the caller so the
+    existing credential error handling surfaces them (never swallowed here).
+    """
+    expected_account = getattr(profile, "idc_account_id", None)
+    if not expected_account:
+        return True
+
+    import boto3
+
+    sts_client = boto3.client("sts", region_name=profile.aws_region)
+    caller_account = sts_client.get_caller_identity()["Account"]
+
+    if str(caller_account) == str(expected_account):
+        return True
+
+    console.print(
+        f"[red]✗ AWS account mismatch: current credentials belong to account {caller_account}, "
+        f"but this profile's IAM Identity Center account is {expected_account}.[/red]"
+    )
+    console.print(
+        "[yellow]Deploying the auth stack with these credentials would create the federated role "
+        "in the wrong account — no IAM Identity Center user could assume it.[/yellow]"
+    )
+    console.print(
+        f"[dim]Switch to credentials for account {expected_account} (set AWS_PROFILE or pass "
+        f"--profile to your AWS CLI login) and re-run the deploy.[/dim]"
+    )
+    return False
+
+
 class _NullProgress:
     """No-op stand-in for rich.Progress used by parallel deploy workers.
 
@@ -984,6 +1025,12 @@ class DeployCommand(Command):
             if stack_type == "auth":
                 # IAM Identity Center uses a dedicated template
                 if profile.effective_auth_type == "idc":
+                    # Guard against deploying the federated role into the wrong
+                    # account (wrong AWS_PROFILE): the role would be unusable by
+                    # every IDC user, with no error at deploy time.
+                    if not _check_idc_account_match(profile, console):
+                        return 1
+
                     template = project_root / "deployment" / "infrastructure" / "bedrock-auth-idc.yaml"
                     stack_name = profile.stack_names.get("auth", f"{profile.identity_pool_name}-stack")
 
