@@ -72,7 +72,7 @@ The CloudWatch Dashboard uses native PromQL chart widgets — no Lambda function
 
 ## Implementation Details
 
-The core component runs as an ECS Fargate service using the AWS Distro for OpenTelemetry (ADOT) Collector image. The service runs with minimal resources (0.25 vCPU and 0.5 GB memory). An Application Load Balancer sits in front of the ECS service, receiving OTLP metrics on port 4318.
+The core component runs as an ECS Fargate service using the AWS Distro for OpenTelemetry (ADOT) Collector image. The service runs with modest resources (0.5 vCPU and 1 GB memory). An Application Load Balancer sits in front of the ECS service, receiving OTLP metrics on port 4318.
 
 ### Configuration
 
@@ -161,7 +161,7 @@ Quota monitoring uses the CloudWatch Prometheus-compatible API (`monitoring.<reg
 
 The quota check Lambda provides real-time allow/block decisions by reading the DynamoDB table (fast reads, at most 15 minutes stale).
 
-Both Claude Code and CoWork 3P (Claude Desktop) usage are counted toward the same per-user quota when the CoWork dashboard stack is deployed. See [CoWork 3P Quota Enforcement](COWORK_3P.md#quota-enforcement) for details.
+Both Claude Code and Claude Desktop (Cowork 3P) usage are counted toward the same per-user quota when the Cowork dashboard stack is deployed. See [Claude Desktop Quota Enforcement](COWORK_3P.md#quota-enforcement) for details.
 
 > **Detailed Information**: See the [Quota Monitoring Guide](QUOTA_MONITORING.md).
 

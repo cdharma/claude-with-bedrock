@@ -1,6 +1,6 @@
 # Claude Code Analytics Pipeline
 
-This directory contains the CloudFormation templates for setting up an analytics pipeline to track Claude Code usage metrics.
+This guide covers the optional analytics pipeline: long-term Claude Code usage history stored in S3 and queryable with SQL through Athena. The CloudFormation template lives at `deployment/infrastructure/analytics-pipeline.yaml`.
 
 ## Overview
 
@@ -17,34 +17,39 @@ The analytics pipeline consists of:
 
 ### Prerequisites
 
-1. AWS CLI configured with appropriate credentials
-2. Claude Code OTEL collector already deployed and sending metrics to CloudWatch Logs
+1. **Central monitoring mode with analytics enabled.** Choose both during `ccwb init`. Analytics makes the central collector dual-export — the EMF logs it writes to `/aws/claude-code/metrics` are what Firehose streams to S3 (see [MONITORING.md](MONITORING.md)). Without this, the pipeline deploys but stays empty.
+2. **Monitoring stack deployed** (`poetry run ccwb deploy`).
 
 ### Deploy the Analytics Pipeline
 
 ```bash
-# Deploy the analytics pipeline
-aws cloudformation deploy \
-  --template-file analytics-pipeline.yaml \
-  --stack-name claude-code-analytics \
-  --capabilities CAPABILITY_IAM
+cd source
+poetry run ccwb deploy analytics
+```
 
-# Get the Athena console URL
+This deploys `deployment/infrastructure/analytics-pipeline.yaml`, passing the log group, retention, and Firehose buffer settings from your profile. To find the Athena console URL afterwards:
+
+```bash
+# Get the Athena console URL (stack name is <identity-pool-name>-analytics)
 aws cloudformation describe-stacks \
-  --stack-name claude-code-analytics \
+  --stack-name <analytics-stack-name> \
   --query 'Stacks[0].Outputs[?OutputKey==`AthenaConsoleUrl`].OutputValue' \
   --output text
 ```
 
-### Update the Monitoring Dashboard
+<details>
+<summary>Manual deployment (alternative)</summary>
+
+You can deploy the template directly. All parameters have defaults; note that a later `poetry run ccwb deploy analytics` will overwrite any parameter overrides with the values from your profile.
 
 ```bash
-# Update the dashboard to remove hard-coded users
 aws cloudformation deploy \
-  --template-file monitoring-dashboard.yaml \
-  --stack-name claude-code-auth-dashboard \
-  --parameter-overrides TokenCostPerMillion=15.0
+  --template-file deployment/infrastructure/analytics-pipeline.yaml \
+  --stack-name claude-code-analytics \
+  --capabilities CAPABILITY_IAM
 ```
+
+</details>
 
 ## Using Athena for User Analytics
 

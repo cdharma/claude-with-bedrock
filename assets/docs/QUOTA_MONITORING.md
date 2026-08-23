@@ -10,7 +10,7 @@ The quota monitoring system is an optional CloudFormation stack that integrates 
 
 - **Per-user token tracking**: Monthly and daily consumption monitoring for each authenticated user
 - **Fine-grained quota policies**: Set limits at user, group, or default levels with precedence rules
-- **Multiple limit types**: Monthly tokens and daily tokens
+- **Multiple limit types**: Cost-based USD budgets (recommended) or raw token limits, monthly and daily
 - **Configurable thresholds**: Alerts at 80%, 90%, and 100% of limits
 - **JWT group integration**: Automatically extract group membership from identity provider claims
 - **Alert deduplication**: One alert per threshold per limit type per user per period
@@ -30,9 +30,9 @@ The quota monitoring system is an optional CloudFormation stack that integrates 
 > **Prerequisites**: Monitoring must be enabled and the dashboard stack deployed. See the [CLI Reference](CLI_REFERENCE.md#deploy---deploy-infrastructure) for deployment details.
 
 During `ccwb init`, quota monitoring is **enabled by default** when monitoring is enabled. You'll be prompted to configure:
-- Monthly token limit per user (default: 225 million tokens)
-- Automatic threshold calculation (80% warning at 180M, 90% critical at 202.5M)
-- Daily token limit with burst buffer (auto-calculated from monthly)
+- Limit type: **Cost-based ($ budget per user) [recommended]** or token-based
+- Cost-based: monthly budget per user in USD (default: $50) and an optional daily budget (default: 0, no daily cap)
+- Token-based: monthly token limit per user (default: 225 million tokens), automatic threshold calculation (80% warning at 180M, 90% critical at 202.5M), and a daily token limit with burst buffer (auto-calculated from monthly)
 - Enforcement modes for daily and monthly limits
 
 Deploy using `poetry run ccwb deploy` (deploys all enabled stacks) or `poetry run ccwb deploy quota` for just the quota stack. The OIDC configuration is automatically passed from your profile settings. For complete deployment instructions, see the [CLI Reference](CLI_REFERENCE.md#deploy---deploy-infrastructure).
@@ -86,7 +86,7 @@ When using `opusplan` (Opus planning + Sonnet execution), each token batch inclu
 
 > **Why not use the client-side `claude_code.cost.usage` metric?** Claude Code emits a cost estimate natively, but it uses generic Anthropic rates (not Bedrock-specific), resets per session (not accumulated monthly), and cannot be trusted for enforcement (client-controlled). Server-side calculation from raw token counts is tamper-resistant, uses admin-configurable Bedrock rates, and aggregates across all sessions.
 
-> **CoWork support:** Claude Desktop cost enforcement works when the CoWork dashboard stack is deployed with the `model` MetricFilter dimension (included by default). Requires attribution headers configured so `user_email` and `model` dimensions are present in the events.
+> **Claude Desktop support:** Claude Desktop cost enforcement works when the Cowork dashboard stack is deployed with the `model` MetricFilter dimension (included by default). Requires attribution headers configured so `user_email` and `model` dimensions are present in the events.
 
 
 ## Token-Based Limits (Legacy)
@@ -592,7 +592,7 @@ The Quota Check API is a secured HTTP endpoint that validates user quotas before
 
 The API requires JWT authentication using your OIDC provider's tokens:
 
-> **IAM Identity Center users**: Quota enforcement uses IAM SigV4 authentication instead of JWT. The credential-process signs the quota API request with SigV4 (`execute-api` service). API Gateway validates IAM credentials, and the quota Lambda extracts the user email from the caller ARN session name (`arn:aws:sts::ACCOUNT:assumed-role/Role/user@company.com`). Same per-user DynamoDB lookup and enforcement as OIDC. See [IAM Identity Center Setup](providers/iam-identity-center-setup.md) for details.
+> **IAM Identity Center users**: Quota enforcement uses IAM SigV4 authentication instead of JWT. The credential-process signs the quota API request with SigV4 (`execute-api` service). API Gateway validates IAM credentials, and the quota Lambda extracts the user email from the caller ARN session name (`arn:aws:sts::ACCOUNT:assumed-role/Role/user@company.com`). Same per-user DynamoDB lookup and enforcement as OIDC. Identity Center may live in a different region than the deployment — the quota request is signed for the quota API's own region (derived from its `execute-api` endpoint URL), so cross-region IDC works. See [IAM Identity Center Setup](providers/iam-identity-center-setup.md) for details.
 
 - **Authentication**: JWT token in `Authorization: Bearer <token>` header (OIDC) or SigV4-signed request (IDC)
 - **Validation**: API Gateway JWT Authorizer validates the token against your OIDC provider
@@ -731,18 +731,21 @@ A scheduled Lambda (`claude-code-bypass-detection`) runs every 15 minutes and:
 
 ### Configuration
 
-Disabled by default (opt-in). Enable during `ccwb init` (sidecar mode only) or
-via the `EnableBypassDetection` parameter on the quota stack. In central mode the
-collector runs server-side (users cannot stop it), so this control is disabled
-automatically.
+Disabled by default (opt-in). Enable during `ccwb init` (sidecar mode only) —
+`ccwb deploy quota` passes the `EnableBypassDetection` template parameter from
+your profile. In central mode the collector runs server-side (users cannot stop
+it), so this control is disabled automatically.
 
 ```bash
 # Enable during init
-ccwb init  # Select "Yes" for bypass detection when prompted (sidecar mode)
+ccwb init          # Select "Yes" for bypass detection when prompted (sidecar mode)
 
-# Or enable on existing deployment
-ccwb deploy quota --parameters EnableBypassDetection=true
+# To enable on an existing deployment, re-run init, then redeploy the quota stack
+ccwb deploy quota
 ```
+
+Because `ccwb deploy` always sets this parameter from the profile, changing it
+directly in CloudFormation would be reverted on the next deploy.
 
 | Parameter | Default | Description |
 | --- | --- | --- |
@@ -763,31 +766,31 @@ ccwb deploy quota --parameters EnableBypassDetection=true
 ## Current Limitations
 
 - Quotas reset on calendar month/day (UTC timezone)
-- Requires email claim in JWT tokens, or email as IAM session name for Identity Center users (see [IAM Identity Center Setup](providers/iam-identity-center-setup.md#quota-enforcement))
+- Requires email claim in JWT tokens, or email as IAM session name for Identity Center users (see [IAM Identity Center Setup](providers/iam-identity-center-setup.md#how-it-works))
 - Group membership requires JWT group claims from identity provider (not available for IDC users — user-level policies only)
 - Enforcement only at credential issuance (see [Enforcement Timing](#enforcement-timing) for mitigation)
 
-## CoWork 3P Usage Counting
+## Claude Desktop (Cowork 3P) Usage Counting
 
-When the CoWork dashboard stack is deployed, CoWork (Claude Desktop) token usage is automatically counted toward the same per-user quota as Claude Code:
+When the Cowork dashboard stack is deployed, Claude Desktop (Cowork 3P) token usage is automatically counted toward the same per-user quota as Claude Code:
 
 | Source | Namespace | Metric | Dimension |
 |--------|-----------|--------|-----------|
 | Claude Code | `ClaudeCode` | `claude_code.token.usage` | `user.email` |
-| CoWork 3P | `ClaudeCoWork` | `token.usage.input` / `token.usage.output` | `user_email` |
+| Claude Desktop (Cowork 3P) | `ClaudeCoWork` | `token.usage.input` / `token.usage.output` | `user_email` |
 
 The `quota_monitor` Lambda queries both namespaces and merges the results into a single DynamoDB record per user. This means:
 
-- `ccwb quota usage <email>` shows combined Claude Code + CoWork usage
+- `ccwb quota usage <email>` shows combined Claude Code + Claude Desktop usage
 - Quota limits apply to the combined total
-- A user hitting their limit on CoWork will be blocked on the next Claude Code credential refresh (and vice versa)
+- A user hitting their limit on Claude Desktop will be blocked on the next Claude Code credential refresh (and vice versa)
 
 **Requirements:**
-- CoWork monitoring stack deployed (`ccwb deploy --stack cowork-dashboard`)
+- Cowork dashboard stack deployed (`ccwb deploy cowork-dashboard`)
 - Attribution headers configured (collector injects `user_email` from `x-user-email` HTTP header)
-- Central or sidecar monitoring mode (both support CoWork telemetry counting)
+- Central or sidecar monitoring mode (both support Claude Desktop telemetry counting)
 
-**Without attribution headers:** CoWork usage is aggregate-only and cannot be counted toward individual user quotas. The `quota_monitor` CoWork query gracefully returns empty results.
+**Without attribution headers:** Claude Desktop usage is aggregate-only and cannot be counted toward individual user quotas. The `quota_monitor` Cowork query gracefully returns empty results.
 
 ## Data Latency
 
@@ -804,18 +807,22 @@ The analytics pipeline uses Kinesis Firehose with a configurable buffer interval
 accumulates records before flushing to S3 to reduce cost and API calls.
 
 To reduce analytics latency, lower the buffer interval (minimum 60 seconds) at
-the cost of more frequent S3 writes:
+the cost of more frequent S3 writes. Set `firehose_buffer_interval` in your
+profile (`~/.ccwb/config.json`), then redeploy the analytics stack:
 
 ```bash
-ccwb deploy analytics --parameters FirehoseBufferInterval=60
+ccwb deploy analytics
 ```
+
+Because `ccwb deploy` always passes the buffer interval from the profile,
+changing the parameter directly in CloudFormation would be reverted on the
+next deploy.
 
 ## Future Enhancements
 
 - **Tamper-proof enforcement**: Source quota usage from Bedrock model invocation
   logging (server-side) so usage is counted even if the sidecar is stopped,
   upgrading sidecar health monitoring from detective to preventive.
-- **Bulk import/export**: Manage policies via JSON files
 - **Quota reporting**: Generate usage reports across all users
 
 ## Integration Points
