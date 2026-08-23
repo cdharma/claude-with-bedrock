@@ -1122,47 +1122,49 @@ class DistributeCommand(Command):
                 progress.start()
                 task = progress.add_task("Processing...", total=None)
 
-            # Generate presigned URL
-            progress.update(task, description="Generating presigned URL...")
-            allowed_ips = self.option("allowed-ips")
+                # Generate presigned URL
+                progress.update(task, description="Generating presigned URL...")
+                allowed_ips = self.option("allowed-ips")
 
-            if allowed_ips:
-                # Generate URL with IP restrictions
-                url = self._generate_restricted_url(s3, bucket_name, package_key, allowed_ips, expires_hours)
-            else:
-                # Generate standard presigned URL
+                if allowed_ips:
+                    # Generate URL with IP restrictions
+                    url = self._generate_restricted_url(s3, bucket_name, package_key, allowed_ips, expires_hours)
+                else:
+                    # Generate standard presigned URL
+                    try:
+                        url = s3.generate_presigned_url(
+                            "get_object",
+                            Params={"Bucket": bucket_name, "Key": package_key},
+                            ExpiresIn=expires_hours * 3600,
+                        )
+                    except ClientError as e:
+                        console.print(f"[red]Failed to generate URL: {e}[/red]")
+                        return 1
+
+                # Store in Parameter Store
+                progress.update(task, description="Storing in Parameter Store...")
+                expiration = datetime.now() + timedelta(hours=expires_hours)
+
+                ssm = boto3.client("ssm", region_name=profile.aws_region)
                 try:
-                    url = s3.generate_presigned_url(
-                        "get_object", Params={"Bucket": bucket_name, "Key": package_key}, ExpiresIn=expires_hours * 3600
+                    ssm.put_parameter(
+                        Name=f"/claude-code/{profile.identity_pool_name}/distribution/latest",
+                        Value=json.dumps(
+                            {
+                                "url": url,
+                                "expires": expiration.isoformat(),
+                                "package_key": package_key,
+                                "checksum": checksum,
+                                "filename": filename,
+                                "created": datetime.now().isoformat(),
+                            }
+                        ),
+                        Type="SecureString",
+                        Overwrite=True,
+                        Description="Latest Claude Code package distribution URL",
                     )
                 except ClientError as e:
-                    console.print(f"[red]Failed to generate URL: {e}[/red]")
-                    return 1
-
-            # Store in Parameter Store
-            progress.update(task, description="Storing in Parameter Store...")
-            expiration = datetime.now() + timedelta(hours=expires_hours)
-
-            ssm = boto3.client("ssm", region_name=profile.aws_region)
-            try:
-                ssm.put_parameter(
-                    Name=f"/claude-code/{profile.identity_pool_name}/distribution/latest",
-                    Value=json.dumps(
-                        {
-                            "url": url,
-                            "expires": expiration.isoformat(),
-                            "package_key": package_key,
-                            "checksum": checksum,
-                            "filename": filename,
-                            "created": datetime.now().isoformat(),
-                        }
-                    ),
-                    Type="SecureString",
-                    Overwrite=True,
-                    Description="Latest Claude Code package distribution URL",
-                )
-            except ClientError as e:
-                console.print(f"[yellow]Warning: Failed to store in Parameter Store: {e}[/yellow]")
+                    console.print(f"[yellow]Warning: Failed to store in Parameter Store: {e}[/yellow]")
 
                 # Get file size before cleanup
                 file_size = archive_path.stat().st_size if archive_path.exists() else 0
@@ -1172,8 +1174,6 @@ class DistributeCommand(Command):
                 local_dir = Path("dist")
                 local_dir.mkdir(exist_ok=True)
                 local_path = local_dir / filename
-
-                import shutil
 
                 shutil.copy2(archive_path, local_path)
 
