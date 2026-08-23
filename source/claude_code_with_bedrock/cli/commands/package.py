@@ -829,10 +829,28 @@ class PackageCommand(Command):
             settings_version=timestamp,
         )
 
-        # Generate CoWork 3P MDM configuration if enabled
-        if profile.cowork_3p_enabled:
+        # Generate Claude Desktop (Cowork 3P) MDM configuration if enabled.
+        # Skipped in IDC zero-binary mode: Claude Desktop invokes the
+        # credential-process binary (via the cowork-credential-helper wrapper),
+        # and zero-binary packages intentionally ship no binaries (see
+        # .claude/rules/package-completeness.md). Generating the MDM config
+        # anyway would point Claude Desktop at a program that is never
+        # installed, silently breaking its authentication.
+        cowork_mdm_generated = False
+        if profile.cowork_3p_enabled and is_idc_zero_binary:
+            console.print(
+                "\n[yellow]Skipping Claude Desktop (Cowork 3P) MDM configuration:[/yellow] "
+                "Claude Desktop authentication requires the credential-process binary, "
+                "which IDC zero-binary packages intentionally do not include."
+            )
+            console.print(
+                "[dim]To generate Claude Desktop configuration, enable quota monitoring "
+                "(ccwb init) — the package then includes the credential-process binary.[/dim]"
+            )
+        elif profile.cowork_3p_enabled:
             console.print("\n[cyan]Generating CoWork 3P MDM configuration...[/cyan]")
             self._generate_cowork_3p_mdm_config(output_dir, profile, profile_name)
+            cowork_mdm_generated = True
 
         # Copy admin-defined extra files into the build folder, filtered to the
         # platforms actually being built (distribute filters again per-OS at zip
@@ -865,7 +883,7 @@ class PackageCommand(Command):
                 console.print(f"  • {otel_helper_path.name} - OTEL helper executable for {platform_name}")
         if (output_dir / "claude-settings" / "managed-settings.json").exists():
             console.print("  • claude-settings/managed-settings.json - Organization-wide enforcement settings")
-        if profile.cowork_3p_enabled:
+        if cowork_mdm_generated:
             if (output_dir / "cowork-3p-config.json").exists():
                 console.print("  • cowork-3p-config.json - CoWork 3P MDM configuration (JSON)")
             if (output_dir / "cowork-3p.mobileconfig").exists():
