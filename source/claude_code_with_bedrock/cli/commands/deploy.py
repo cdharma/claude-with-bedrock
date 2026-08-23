@@ -468,14 +468,23 @@ class DeployCommand(Command):
     #   monitoring, distribution  <- networking outputs
     #   quota, bootstrap          <- s3bucket outputs
     #   analytics, dashboards     <- monitoring outputs
+    #   bootstrap                 <- websearch (the websearch deploy writes
+    #                                GatewayMcpEndpoint back to the profile as
+    #                                websearch_gateway_url, which the bootstrap
+    #                                params read — so on a first deploy websearch
+    #                                must finish before bootstrap starts, matching
+    #                                the sequential order in handle())
+    #
+    # websearch reads no stack outputs (build_websearch_params uses only
+    # profile/IdP fields), so it can run in the second wave.
     #
     # A stack absent from stacks_to_deploy is simply skipped, so the waves stay valid
     # for every feature combination. Anything not listed here runs in the final wave
     # on its own, which is the conservative default for a newly added stack.
     DEPLOY_WAVES = [
         ["auth", "networking", "s3bucket", "codebuild"],
-        ["monitoring", "distribution", "quota", "bootstrap"],
-        ["dashboard", "cowork-dashboard", "analytics", "websearch"],
+        ["monitoring", "distribution", "quota", "websearch"],
+        ["dashboard", "cowork-dashboard", "analytics", "bootstrap"],
     ]
 
     # Waiter poll interval when deploying concurrently. Each in-flight stack runs its
@@ -1090,7 +1099,13 @@ class DeployCommand(Command):
                         task_description="Deploying IAM Identity Center auth stack...",
                     )
 
-                # Select template based on provider type (OIDC)
+                # Select template based on provider type (OIDC). A profile with no
+                # provider_type predates provider detection and is Okta (legacy
+                # default — keep it). Anything else unrecognized (e.g. a hand-edited
+                # profile.json) must fail here with a clear error: falling back to
+                # the Okta template would reach CloudFormation with no Okta params
+                # and fail with an opaque "Parameters: [OktaDomain, OktaClientId]
+                # must have values" error.
                 provider_type = profile.provider_type or "okta"
                 template_map = {
                     "okta": "bedrock-auth-okta.yaml",
@@ -1101,7 +1116,13 @@ class DeployCommand(Command):
                     "generic": "bedrock-auth-generic.yaml",
                 }
 
-                template_file = template_map.get(provider_type, "bedrock-auth-okta.yaml")
+                if provider_type not in template_map:
+                    console.print(f"[red]Error: Unsupported identity provider type '{provider_type}'.[/red]")
+                    console.print(f"[yellow]Supported provider types: {', '.join(template_map.keys())}[/yellow]")
+                    console.print("[dim]Fix provider_type in your profile or re-run 'ccwb init'.[/dim]")
+                    return 1
+
+                template_file = template_map[provider_type]
                 template = project_root / "deployment" / "infrastructure" / template_file
 
                 # Verify template exists
@@ -1424,42 +1445,78 @@ class DeployCommand(Command):
                         params.append(f"HostedZoneId={monitoring_config['hosted_zone_id']}")
                     if monitoring_config.get("certificate_arn"):
                         params.append(f"CertificateArn={monitoring_config['certificate_arn']}")
-                    # Add OIDC JWT validation parameters for ALB (all IdP types)
+                    # Add OIDC JWT validation parameters for ALB (all IdP types).
+                    # Note: google and generic don't require provider_domain —
+                    # google uses fixed well-known endpoints and generic reads
+                    # explicit profile fields — so there is no outer domain guard.
                     provider_type = profile.provider_type or ""
-                    provider_domain = profile.provider_domain
-                    if provider_type and provider_domain:
-                        oidc_issuer = ""
-                        oidc_jwks = ""
-                        if provider_type == "azure":
-                            uuid_pat = r"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
-                            tenant_match = re.search(uuid_pat, provider_domain)
-                            if tenant_match:
-                                tid = tenant_match.group(0)
-                                oidc_issuer = f"https://login.microsoftonline.com/{tid}/v2.0"
-                                oidc_jwks = f"https://login.microsoftonline.com/{tid}/discovery/v2.0/keys"
-                        elif provider_type == "okta":
-                            # provider_domain is e.g. "company.okta.com"; the issuer
-                            # (and thus JWKS) must reflect profile.okta_auth_server
-                            oidc_issuer = _okta_issuer(profile)
-                            oidc_jwks = f"{oidc_issuer}/v1/keys"
-                        elif provider_type == "auth0":
-                            domain = provider_domain.rstrip("/")
-                            oidc_issuer = f"https://{domain}/"
-                            oidc_jwks = f"https://{domain}/.well-known/jwks.json"
-                        elif provider_type == "cognito":
-                            # Cognito issuer uses cognito-idp endpoint, not the hosted UI domain
-                            pool_id = getattr(profile, "cognito_user_pool_id", "")
-                            if pool_id:
-                                # Extract region from pool ID (format: us-east-1_AbCdEfGhI)
-                                pool_region = pool_id.split("_")[0] if "_" in pool_id else profile.aws_region
-                                oidc_issuer = f"https://cognito-idp.{pool_region}.amazonaws.com/{pool_id}"
-                                oidc_jwks = (
-                                    f"https://cognito-idp.{pool_region}.amazonaws.com/{pool_id}/.well-known/jwks.json"
-                                )
-                        if oidc_issuer and oidc_jwks:
-                            params.append(f"OidcIssuerUrl={oidc_issuer}")
-                            params.append(f"OidcJwksEndpoint={oidc_jwks}")
-                            params.append(f"OidcClientId={profile.client_id}")
+                    provider_domain = profile.provider_domain or ""
+                    oidc_issuer = ""
+                    oidc_jwks = ""
+                    if provider_type == "azure" and provider_domain:
+                        uuid_pat = r"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+                        tenant_match = re.search(uuid_pat, provider_domain)
+                        if tenant_match:
+                            tid = tenant_match.group(0)
+                            oidc_issuer = f"https://login.microsoftonline.com/{tid}/v2.0"
+                            oidc_jwks = f"https://login.microsoftonline.com/{tid}/discovery/v2.0/keys"
+                    elif provider_type == "okta" and provider_domain:
+                        # provider_domain is e.g. "company.okta.com"; the issuer
+                        # (and thus JWKS) must reflect profile.okta_auth_server
+                        oidc_issuer = _okta_issuer(profile)
+                        oidc_jwks = f"{oidc_issuer}/v1/keys"
+                    elif provider_type == "auth0" and provider_domain:
+                        domain = provider_domain.rstrip("/")
+                        oidc_issuer = f"https://{domain}/"
+                        oidc_jwks = f"https://{domain}/.well-known/jwks.json"
+                    elif provider_type == "cognito":
+                        # Cognito issuer uses cognito-idp endpoint, not the hosted UI domain
+                        pool_id = getattr(profile, "cognito_user_pool_id", "")
+                        if pool_id:
+                            # Extract region from pool ID (format: us-east-1_AbCdEfGhI)
+                            pool_region = pool_id.split("_")[0] if "_" in pool_id else profile.aws_region
+                            oidc_issuer = f"https://cognito-idp.{pool_region}.amazonaws.com/{pool_id}"
+                            oidc_jwks = (
+                                f"https://cognito-idp.{pool_region}.amazonaws.com/{pool_id}/.well-known/jwks.json"
+                            )
+                    elif provider_type == "google":
+                        # Google publishes fixed endpoints (no per-tenant domain) —
+                        # mirrors _websearch_discovery_url's google branch.
+                        oidc_issuer = "https://accounts.google.com"
+                        oidc_jwks = "https://www.googleapis.com/oauth2/v3/certs"
+                    elif provider_type == "generic":
+                        # Generic OIDC: endpoints can't be derived from a domain;
+                        # they come from explicit profile fields set by `ccwb init`.
+                        issuer = (getattr(profile, "oidc_issuer_url", "") or "").rstrip("/")
+                        if issuer and not issuer.startswith(("http://", "https://")):
+                            issuer = f"https://{issuer}"
+                        oidc_issuer = issuer
+                        oidc_jwks = getattr(profile, "oidc_jwks_uri", "") or ""
+                    if oidc_issuer and oidc_jwks:
+                        params.append(f"OidcIssuerUrl={oidc_issuer}")
+                        params.append(f"OidcJwksEndpoint={oidc_jwks}")
+                        params.append(f"OidcClientId={profile.client_id}")
+                    elif profile.effective_auth_type == "oidc":
+                        # A JWT exists but no issuer/JWKS pair could be built, so
+                        # the collector's HTTPS listener will forward telemetry
+                        # WITHOUT JWT validation. This used to happen silently
+                        # (google/generic had no branch at all; azure with a
+                        # non-GUID domain and cognito without a pool ID also
+                        # fell through). Warn loudly instead of skipping quietly.
+                        missing = []
+                        if not oidc_issuer:
+                            missing.append("issuer URL")
+                        if not oidc_jwks:
+                            missing.append("JWKS endpoint")
+                        console.print(
+                            f"[yellow]⚠ Monitoring custom domain is set, but no OIDC {' / '.join(missing)} "
+                            f"could be derived for provider type '{provider_type or 'unknown'}'. "
+                            "The HTTPS telemetry listener will be deployed WITHOUT JWT validation.[/yellow]"
+                        )
+                        console.print(
+                            "[dim]  Check the identity provider settings in your profile "
+                            "(re-run 'ccwb init' to fix them), then re-run 'ccwb deploy monitoring'.[/dim]"
+                        )
 
                 # Pass CoWork service token for ALB auth bypass (if configured)
                 cowork_token = getattr(profile, "cowork_service_token", "") or ""
@@ -1889,6 +1946,9 @@ class DeployCommand(Command):
                 ]
                 print_deploy_cmd(template, stack_name, params, ["CAPABILITY_NAMED_IAM"])
             else:
+                # Same validation as the deploy path: never silently print an Okta
+                # command for an unrecognized provider type (None -> okta is the
+                # intentional legacy default).
                 provider_type = profile.provider_type or "okta"
                 template_map = {
                     "okta": "bedrock-auth-okta.yaml",
@@ -1898,7 +1958,12 @@ class DeployCommand(Command):
                     "google": "bedrock-auth-google.yaml",
                     "generic": "bedrock-auth-generic.yaml",
                 }
-                template_file = template_map.get(provider_type, "bedrock-auth-okta.yaml")
+                if provider_type not in template_map:
+                    console.print(f"[red]Error: Unsupported identity provider type '{provider_type}'.[/red]")
+                    console.print(f"[yellow]Supported provider types: {', '.join(template_map.keys())}[/yellow]")
+                    console.print("[dim]Fix provider_type in your profile or re-run 'ccwb init'.[/dim]")
+                    return
+                template_file = template_map[provider_type]
                 template = project_root / "deployment" / "infrastructure" / template_file
                 params = [f"FederationType={profile.federation_type}"]
                 if provider_type == "okta":

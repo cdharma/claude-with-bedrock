@@ -10,6 +10,7 @@ substantial slack:
     monitoring, distribution  <- networking outputs
     quota, bootstrap          <- s3bucket outputs
     analytics, dashboards     <- monitoring outputs
+    bootstrap                 <- websearch (gateway URL saved to the profile)
 
 `--parallel` groups them into waves and runs each wave concurrently. The invariant
 these tests protect is ordering: if a consumer ever lands in the same wave as its
@@ -24,15 +25,19 @@ indistinguishable from a real stack failure.
 from claude_code_with_bedrock.cli.commands.deploy import DeployCommand
 from claude_code_with_bedrock.cli.utils.cloudformation import CloudFormationManager
 
-# Consumer -> the stack whose outputs it reads.
+# Consumer -> the stacks whose outputs it reads.
+# bootstrap <- websearch is not a CFN output read: the websearch deploy saves
+# GatewayMcpEndpoint back to the profile (websearch_gateway_url), which the
+# bootstrap params read. If bootstrap ran first on a fresh deploy, it would be
+# created without WebSearchGatewayUrl (template default '') until a re-deploy.
 DEPENDENCIES = {
-    "monitoring": "networking",
-    "distribution": "networking",
-    "quota": "s3bucket",
-    "bootstrap": "s3bucket",
-    "analytics": "monitoring",
-    "dashboard": "monitoring",
-    "cowork-dashboard": "monitoring",
+    "monitoring": ("networking",),
+    "distribution": ("networking",),
+    "quota": ("s3bucket",),
+    "bootstrap": ("s3bucket", "websearch"),
+    "analytics": ("monitoring",),
+    "dashboard": ("monitoring",),
+    "cowork-dashboard": ("monitoring",),
 }
 
 ALL_STACKS = [
@@ -62,16 +67,18 @@ class TestWaveOrdering:
     def test_every_consumer_lands_after_its_producer(self):
         """The core invariant: never deploy a stack before the outputs it reads."""
         waves = DeployCommand._plan_waves(ALL_STACKS)
-        for consumer, producer in DEPENDENCIES.items():
-            ci, pi = _wave_index(waves, consumer), _wave_index(waves, producer)
-            assert ci is not None and pi is not None
-            assert pi < ci, f"{consumer} (wave {pi}) must come after {producer} (wave {ci})"
+        for consumer, producers in DEPENDENCIES.items():
+            for producer in producers:
+                ci, pi = _wave_index(waves, consumer), _wave_index(waves, producer)
+                assert ci is not None and pi is not None
+                assert pi < ci, f"{consumer} (wave {ci}) must come after {producer} (wave {pi})"
 
     def test_producer_and_consumer_never_share_a_wave(self):
         """Same wave means concurrent, which for a dependency means a race."""
         waves = DeployCommand._plan_waves(ALL_STACKS)
-        for consumer, producer in DEPENDENCIES.items():
-            assert _wave_index(waves, consumer) != _wave_index(waves, producer)
+        for consumer, producers in DEPENDENCIES.items():
+            for producer in producers:
+                assert _wave_index(waves, consumer) != _wave_index(waves, producer)
 
     def test_all_selected_stacks_are_planned_exactly_once(self):
         waves = DeployCommand._plan_waves(ALL_STACKS)
