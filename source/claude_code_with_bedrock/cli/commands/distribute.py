@@ -90,6 +90,21 @@ class DistributeCommand(Command):
             config=BotoConfig(signature_version="s3v4", s3={"addressing_style": "virtual"}),
         )
 
+    @staticmethod
+    def _is_idc_zero_binary(profile) -> bool:
+        """Mirror package.py's zero-binary detection (see package.py handle()).
+
+        IDC auth without quota enforcement intentionally builds a package with
+        NO binaries: users authenticate via ``aws sso login`` and the sidecar
+        collector config carries a static identity. Such builds contain only
+        config.json / install scripts / docs, and both distribution paths must
+        accept them instead of demanding a rebuild that would be just as
+        binary-less. See .claude/rules/package-completeness.md.
+        """
+        auth_type = getattr(profile, "effective_auth_type", None) or getattr(profile, "auth_type", "oidc")
+        has_quota = bool(getattr(profile, "quota_api_endpoint", None))
+        return auth_type == "idc" and not has_quota
+
     options = [
         option("expires-hours", description="URL expiration time in hours (1-168)", flag=False, default="48"),
         option("get-latest", description="Retrieve the latest distribution URL", flag=True),
@@ -359,50 +374,10 @@ class DistributeCommand(Command):
             console.print("Run 'poetry run ccwb package' first to build packages.")
             return 1
 
-        # Determine which build to use
-        selected_build_path = None
-
-        # Option 1: Explicit profile + timestamp
-        build_profile = self.option("build-profile")
-        timestamp = self.option("timestamp")
-        if build_profile and timestamp:
-            if build_profile in builds:
-                for build in builds[build_profile]:
-                    if build["timestamp"] == timestamp:
-                        selected_build_path = build["path"]
-                        break
-            if not selected_build_path:
-                console.print(f"[red]Build not found: {build_profile}/{timestamp}[/red]")
-                return 1
-
-        # Option 2: Latest flag (auto-select most recent)
-        elif self.option("latest"):
-            # Find most recent build across all profiles
-            latest_build = None
-            latest_timestamp = None
-
-            for _profile_name, profile_builds in builds.items():
-                if profile_builds:
-                    build = profile_builds[0]  # Already sorted, first is latest
-                    if latest_timestamp is None or build["timestamp"] > latest_timestamp:
-                        latest_timestamp = build["timestamp"]
-                        latest_build = build["path"]
-
-            selected_build_path = latest_build
-            console.print(f"[green]Auto-selected latest build: {latest_build.parent.name}/{latest_build.name}[/green]")
-
-        # Option 3: Show wizard (default)
-        else:
-            selected_build_path = self._show_distribution_wizard(builds, console)
-            if not selected_build_path:
-                console.print("[yellow]Distribution cancelled.[/yellow]")
-                return 0
-
-        # Use selected build path for distribution
-        package_path = selected_build_path
-        console.print(f"\n[green]Using build: {package_path.parent.name}/{package_path.name}[/green]")
-
-        # Load configuration
+        # Load configuration and resolve the target profile BEFORE selecting a
+        # build: --latest must be scoped to the profile whose S3 bucket / SSM
+        # parameter the upload targets, so another profile's build is never
+        # silently published as this profile's latest.
         config = Config.load()
 
         # Get profile name (use active profile if not specified)
@@ -428,6 +403,54 @@ class DistributeCommand(Command):
                     "'poetry run ccwb context use <profile>' first.[/red]"
                 )
             return 1
+
+        # Determine which build to use
+        selected_build_path = None
+
+        # Option 1: Explicit profile + timestamp
+        build_profile = self.option("build-profile")
+        timestamp = self.option("timestamp")
+        if build_profile and timestamp:
+            if build_profile in builds:
+                for build in builds[build_profile]:
+                    if build["timestamp"] == timestamp:
+                        selected_build_path = build["path"]
+                        break
+            if not selected_build_path:
+                console.print(f"[red]Build not found: {build_profile}/{timestamp}[/red]")
+                return 1
+
+        # Option 2: Latest flag (auto-select most recent build for THIS profile)
+        elif self.option("latest"):
+            profile_builds = builds.get(profile_name) or []
+            if not profile_builds:
+                console.print(f"[red]No builds found for profile '{profile_name}' under {dist_dir}/.[/red]")
+                other_profiles = sorted(name for name, profile_build_list in builds.items() if profile_build_list)
+                if other_profiles:
+                    console.print(f"[dim]Builds exist for other profiles: {', '.join(other_profiles)}[/dim]")
+                    console.print(
+                        "[dim]Select one explicitly with --build-profile <name> --timestamp <ts> "
+                        "if it really belongs to this profile.[/dim]"
+                    )
+                console.print("Run 'poetry run ccwb package' to build a package for this profile.")
+                return 1
+
+            selected_build_path = profile_builds[0]["path"]  # Already sorted, first is latest
+            console.print(
+                f"[green]Auto-selected latest build: "
+                f"{selected_build_path.parent.name}/{selected_build_path.name}[/green]"
+            )
+
+        # Option 3: Show wizard (default)
+        else:
+            selected_build_path = self._show_distribution_wizard(builds, console)
+            if not selected_build_path:
+                console.print("[yellow]Distribution cancelled.[/yellow]")
+                return 0
+
+        # Use selected build path for distribution
+        package_path = selected_build_path
+        console.print(f"\n[green]Using build: {package_path.parent.name}/{package_path.name}[/green]")
 
         # Check if distribution is enabled and stack is deployed
         if profile.enable_distribution:
@@ -559,10 +582,15 @@ class DistributeCommand(Command):
             console.print("Deploy the distribution stack first: poetry run ccwb deploy distribution")
             return 1
 
+        # IDC zero-binary builds intentionally ship no executables at all
+        is_zero_binary = self._is_idc_zero_binary(profile)
+
         # Check for Windows binaries and auto-download if needed
         console.print("\n[bold]Checking for Windows binaries...[/bold]")
         windows_exe = package_path / "credential-process-windows.exe"
-        if not windows_exe.exists():
+        if is_zero_binary:
+            console.print("  [dim]Skipped — IDC zero-binary package (no binaries expected)[/dim]")
+        elif not windows_exe.exists():
             # Check if Windows build is completed and download it
             try:
                 project_name = f"{profile.identity_pool_name}-windows-build"
@@ -602,58 +630,8 @@ class DistributeCommand(Command):
         # Map available binaries to platforms
         console.print("\n[bold]Scanning package directory...[/bold]")
 
-        # Platform file mappings
-        platform_files = {
-            "windows": [
-                ("credential-process-windows.exe", "credential-process-windows.exe"),
-                ("otel-helper-windows.exe", "otel-helper-windows.exe"),
-                ("otel-helper.ps1", "otel-helper.ps1"),
-                ("otel-helper.cmd", "otel-helper.cmd"),
-                ("otelcol-windows.exe", "otelcol-windows.exe"),
-                ("collector-config.yaml", "collector-config.yaml"),
-                ("install.bat", "install.bat"),
-                ("ccwb-install.ps1", "ccwb-install.ps1"),
-                ("config.json", "config.json"),
-                ("README.md", "README.md"),
-                ("cowork-3p.reg", "cowork-3p.reg"),
-                ("cowork-3p-config.json", "cowork-3p-config.json"),
-                ("cowork-credential-helper.cmd", "cowork-credential-helper.cmd"),
-            ],
-            "linux": [
-                ("credential-process-linux-x64", "credential-process-linux-x64"),
-                ("credential-process-linux-arm64", "credential-process-linux-arm64"),
-                # Accept generic linux binary (maps to x64 for compat with install.sh)
-                ("credential-process-linux", "credential-process-linux-x64"),
-                ("otel-helper-linux-x64", "otel-helper-linux-x64"),
-                ("otel-helper-linux-arm64", "otel-helper-linux-arm64"),
-                ("otel-helper-linux", "otel-helper-linux-x64"),
-                ("otelcol-linux-x64", "otelcol-linux-x64"),
-                ("otelcol-linux-arm64", "otelcol-linux-arm64"),
-                ("otel-helper.sh", "otel-helper.sh"),
-                ("collector-config.yaml", "collector-config.yaml"),
-                ("install.sh", "install.sh"),
-                ("config.json", "config.json"),
-                ("README.md", "README.md"),
-                ("cowork-3p-config.json", "cowork-3p-config.json"),
-                ("cowork-credential-helper.sh", "cowork-credential-helper.sh"),
-            ],
-            "mac": [
-                ("credential-process-macos-arm64", "credential-process-macos-arm64"),
-                ("credential-process-macos-intel", "credential-process-macos-intel"),
-                ("otel-helper-macos-arm64", "otel-helper-macos-arm64"),
-                ("otel-helper-macos-intel", "otel-helper-macos-intel"),
-                ("otelcol-macos-arm64", "otelcol-macos-arm64"),
-                ("otelcol-macos-intel", "otelcol-macos-intel"),
-                ("otel-helper.sh", "otel-helper.sh"),
-                ("collector-config.yaml", "collector-config.yaml"),
-                ("install.sh", "install.sh"),
-                ("config.json", "config.json"),
-                ("README.md", "README.md"),
-                ("cowork-3p.mobileconfig", "cowork-3p.mobileconfig"),
-                ("cowork-3p-config.json", "cowork-3p-config.json"),
-                ("cowork-credential-helper.sh", "cowork-credential-helper.sh"),
-            ],
-        }
+        # Platform file mappings (class-level manifest, shared with contract tests)
+        platform_files = self.LANDING_PLATFORM_FILES
 
         # Determine which platforms are available
         available_platforms = {}
@@ -670,6 +648,19 @@ class DistributeCommand(Command):
             if has_platform:
                 available_platforms[platform] = files
                 console.print(f"  ✓ {platform.capitalize()} platform detected")
+
+        if not available_platforms and is_zero_binary:
+            # IDC zero-binary: no executables by design. Detect platforms from
+            # the installer scripts instead and ship config/installer-only zips.
+            console.print("  [dim]IDC zero-binary package: detecting platforms from installer scripts[/dim]")
+            if (package_path / "install.bat").exists() or (package_path / "ccwb-install.ps1").exists():
+                available_platforms["windows"] = platform_files["windows"]
+                console.print("  ✓ Windows platform detected (installer)")
+            if (package_path / "install.sh").exists():
+                available_platforms["linux"] = platform_files["linux"]
+                available_platforms["mac"] = platform_files["mac"]
+                console.print("  ✓ Linux platform detected (installer)")
+                console.print("  ✓ Mac platform detected (installer)")
 
         if not available_platforms:
             console.print("[red]No platform packages found![/red]")
@@ -699,22 +690,17 @@ class DistributeCommand(Command):
         )
         release_datetime = f"{release_date} {release_time}"
 
-        # Clean up old packages in S3 to prevent stale platform packages from appearing
+        # NOTE: existing packages/*/latest.zip objects are NOT deleted up front.
+        # Uploads overwrite them in place, and deleting before uploading would
+        # leave a platform 404ing for users if its upload then failed. Stale
+        # platforms (no longer part of this build) are cleaned up AFTER the
+        # uploads succeed, below.
         s3 = self._s3_client(profile.aws_region)
-        console.print("\n[dim]Cleaning up old packages from S3...[/dim]")
 
-        # Delete all existing packages/*/latest.zip files
-        platforms_to_clean = ["windows", "linux", "mac", "all-platforms"]
-        for platform in platforms_to_clean:
-            s3_key = f"packages/{platform}/latest.zip"
-            try:
-                s3.delete_object(Bucket=bucket_name, Key=s3_key)
-            except ClientError:
-                # Ignore errors if file doesn't exist
-                pass
-
-        # Create and upload each platform package
-        uploaded_count = 0
+        # Create and upload each platform package, tracking per-platform outcome
+        # so the summary and exit code reflect what actually reached S3.
+        uploaded_platforms = []
+        failed_platforms = []
 
         with Progress(
             SpinnerColumn(),
@@ -774,9 +760,10 @@ class DistributeCommand(Command):
                         },
                         config=self.S3_TRANSFER_CONFIG,
                     )
-                    uploaded_count += 1
+                    uploaded_platforms.append(platform)
                     progress.update(task, advance=1, description=f"Uploaded {platform} package")
                 except Exception as e:
+                    failed_platforms.append(platform)
                     console.print(f"[red]Failed to upload {platform} package: {e}[/red]")
                     self._print_upload_error_guidance(e, console)
                     continue
@@ -788,20 +775,55 @@ class DistributeCommand(Command):
             except OSError:
                 pass
 
-        # Show success message
-        if uploaded_count > 0:
-            console.print(f"\n[bold green]✓ Successfully uploaded {uploaded_count} platform packages![/bold green]")
-            console.print(f"\n[bold]Landing Page URL:[/bold] [cyan]{landing_url}[/cyan]")
-            console.print(f"[dim]Profile: {profile_name}[/dim]")
-            console.print(f"[dim]Build Timestamp: {build_timestamp}[/dim]")
-            console.print(f"[dim]Release Date: {release_datetime}[/dim]")
-            console.print("\n[bold]Uploaded platforms:[/bold]")
-            for platform in available_platforms.keys():
-                console.print(f"  • {platform}")
-            return 0
-        else:
+        # Remove stale platform packages that are not part of this build (e.g. a
+        # previously uploaded Windows package when this build has no Windows
+        # binaries). This runs only after at least one upload succeeded, and never
+        # touches platforms in this build — a failed upload keeps serving the
+        # previous latest.zip instead of 404ing.
+        if uploaded_platforms:
+            stale_platforms = [
+                platform
+                for platform in ("windows", "linux", "mac", "all-platforms")
+                if platform not in available_platforms
+            ]
+            if stale_platforms:
+                console.print("\n[dim]Cleaning up stale platform packages from S3...[/dim]")
+                for platform in stale_platforms:
+                    try:
+                        s3.delete_object(Bucket=bucket_name, Key=f"packages/{platform}/latest.zip")
+                    except ClientError:
+                        # Ignore errors if file doesn't exist
+                        pass
+
+        # Show summary — list only platforms that actually reached S3, and exit
+        # non-zero when any platform failed (exit-code contract).
+        if not uploaded_platforms:
             console.print("[red]Failed to upload any packages.[/red]")
             return 1
+
+        if failed_platforms:
+            console.print(
+                f"\n[red]✗ Uploaded {len(uploaded_platforms)} of {len(available_platforms)} "
+                f"platform packages — {len(failed_platforms)} failed.[/red]"
+            )
+        else:
+            console.print(
+                f"\n[bold green]✓ Successfully uploaded {len(uploaded_platforms)} platform packages![/bold green]"
+            )
+        console.print(f"\n[bold]Landing Page URL:[/bold] [cyan]{landing_url}[/cyan]")
+        console.print(f"[dim]Profile: {profile_name}[/dim]")
+        console.print(f"[dim]Build Timestamp: {build_timestamp}[/dim]")
+        console.print(f"[dim]Release Date: {release_datetime}[/dim]")
+        console.print("\n[bold]Uploaded platforms:[/bold]")
+        for platform in uploaded_platforms:
+            console.print(f"  • {platform}")
+        if failed_platforms:
+            console.print("\n[bold red]Failed platforms (previous latest.zip left in place):[/bold red]")
+            for platform in failed_platforms:
+                console.print(f"  • {platform}")
+            console.print("Fix the upload errors above and re-run [cyan]poetry run ccwb distribute[/cyan].")
+            return 1
+        return 0
 
     def _create_distribution(self, profile, console: Console, package_path: Path) -> int:
         """Create a new distribution package and generate presigned URL."""
@@ -981,13 +1003,23 @@ class DistributeCommand(Command):
         if (package_path / "config.json").exists():
             console.print("  ✓ Configuration file")
 
+        # IDC zero-binary builds intentionally ship no executables at all —
+        # a config/installer-only archive is the expected, distributable output.
+        is_zero_binary = self._is_idc_zero_binary(profile)
+
         # Warn if missing critical platforms
         if not found_platforms:
-            console.print("\n[red]No platform executables found![/red]")
-            console.print("Run: [cyan]poetry run ccwb package --target-platform all[/cyan]")
-            return 1
+            if is_zero_binary:
+                console.print(
+                    "\n[cyan]IDC zero-binary package detected — distributing configuration-only package "
+                    "(authentication via 'aws sso login', no binaries expected).[/cyan]"
+                )
+            else:
+                console.print("\n[red]No platform executables found![/red]")
+                console.print("Run: [cyan]poetry run ccwb package --target-platform all[/cyan]")
+                return 1
 
-        if "windows" not in found_platforms:
+        if not is_zero_binary and "windows" not in found_platforms:
             console.print("\n[yellow]Warning: Windows support not included in this distribution[/yellow]")
             import sys as _sys
 
@@ -1002,7 +1034,10 @@ class DistributeCommand(Command):
                 # Non-interactive: proceed with default (skip Windows)
                 console.print("[dim]Non-interactive mode: proceeding without Windows support[/dim]")
 
-        console.print(f"\n[green]Ready to distribute for: {', '.join(found_platforms)}[/green]")
+        if found_platforms:
+            console.print(f"\n[green]Ready to distribute for: {', '.join(found_platforms)}[/green]")
+        else:
+            console.print("\n[green]Ready to distribute: configuration-only package (IDC zero-binary)[/green]")
 
         # Validate expiration hours (max 7 days for IAM user presigned URLs)
         try:
@@ -1019,7 +1054,16 @@ class DistributeCommand(Command):
 
         # Per-OS distribution: create separate packages per platform
         if self.option("per-os"):
-            return self._distribute_per_os(package_path, profile, found_platforms, expires_hours, console)
+            if is_zero_binary:
+                # A config-only build has no per-platform binaries to split on;
+                # fall through to the single all-in-one archive instead of
+                # failing with "No platform binaries found".
+                console.print(
+                    "[yellow]--per-os ignored for IDC zero-binary packages "
+                    "(creating a single configuration-only archive).[/yellow]"
+                )
+            else:
+                return self._distribute_per_os(package_path, profile, found_platforms, expires_hours, console)
 
         with Progress(
             SpinnerColumn(), TextColumn("[progress.description]{task.description}"), console=console
@@ -1292,6 +1336,7 @@ class DistributeCommand(Command):
                 return 1
 
         results = []
+        failed_labels = []
         for platform, label, archive_path in archives:
             try:
                 size = archive_path.stat().st_size
@@ -1317,6 +1362,7 @@ class DistributeCommand(Command):
                     results.append((platform, label, filename, size_mb, url))
                     console.print(f"  [green]OK[/green]  {label} ({size_mb:.1f} MB)")
                 except Exception as e:
+                    failed_labels.append(label)
                     console.print(f"  [red]FAIL[/red] {label}: {e}")
                     self._print_upload_error_guidance(e, console)
             else:
@@ -1353,6 +1399,16 @@ class DistributeCommand(Command):
         console.print("\n[bold]After downloading, extract and run the installer:[/bold]")
         console.print("  Windows:    Expand-Archive <file>.zip . && cd claude-code-package && .\\install.bat")
         console.print("  Linux/Mac:  unzip <file>.zip && cd claude-code-package && chmod +x install.sh && ./install.sh")
+
+        # Exit-code contract: any failed platform upload is a failure even when
+        # other platforms succeeded — otherwise automation reports success while
+        # some users have no package to download.
+        if failed_labels:
+            console.print(
+                f"\n[red]{len(failed_labels)} platform package(s) failed to upload: {', '.join(failed_labels)}[/red]"
+            )
+            console.print("Fix the upload errors above and re-run [cyan]poetry run ccwb distribute --per-os[/cyan].")
+            return 1
 
         return 0
 
@@ -1489,6 +1545,47 @@ class DistributeCommand(Command):
             else:
                 zf.writestr(f"claude-code-package/{name}", self._read_file_with_retry(src))
 
+    # Files to include in the all-in-one archive (class-level manifest, shared
+    # with the package↔distribute contract test).
+    ARCHIVE_REQUIRED_FILES = [
+        # Executables for each platform
+        "credential-process-macos-arm64",
+        "credential-process-macos-intel",
+        "credential-process-linux-x64",
+        "credential-process-linux-arm64",
+        "credential-process-windows.exe",
+        # OTEL helpers
+        "otel-helper-macos-arm64",
+        "otel-helper-macos-intel",
+        "otel-helper-linux-x64",
+        "otel-helper-linux-arm64",
+        "otel-helper-windows.exe",
+        "otel-helper.sh",
+        # Windows otel-helper launcher + AV-resilient fallback (required by install.bat)
+        "otel-helper.ps1",
+        "otel-helper.cmd",
+        # OTEL Collector sidecar
+        "otelcol-macos-arm64",
+        "otelcol-macos-intel",
+        "otelcol-linux-x64",
+        "otelcol-linux-arm64",
+        "otelcol-windows.exe",
+        "collector-config.yaml",
+        # Installation scripts
+        "install.sh",
+        "install.bat",
+        "ccwb-install.ps1",
+        # Configuration
+        "config.json",
+        "README.md",
+        # CoWork 3P MDM configs (optional — only present when CoWork is enabled)
+        "cowork-3p.reg",
+        "cowork-3p.mobileconfig",
+        "cowork-3p-config.json",
+        "cowork-credential-helper.sh",
+        "cowork-credential-helper.cmd",
+    ]
+
     def _create_archive(self, package_path: Path, extra_files=None) -> Path:
         """Create a zip archive of the package directory.
 
@@ -1502,49 +1599,9 @@ class DistributeCommand(Command):
 
         archive_path = package_path / "claude-code-package.zip"
 
-        # Files to include in the package
-        required_files = [
-            # Executables for each platform
-            "credential-process-macos-arm64",
-            "credential-process-macos-intel",
-            "credential-process-linux-x64",
-            "credential-process-linux-arm64",
-            "credential-process-windows.exe",
-            # OTEL helpers
-            "otel-helper-macos-arm64",
-            "otel-helper-macos-intel",
-            "otel-helper-linux-x64",
-            "otel-helper-linux-arm64",
-            "otel-helper-windows.exe",
-            "otel-helper.sh",
-            # Windows otel-helper launcher + AV-resilient fallback (required by install.bat)
-            "otel-helper.ps1",
-            "otel-helper.cmd",
-            # OTEL Collector sidecar
-            "otelcol-macos-arm64",
-            "otelcol-macos-intel",
-            "otelcol-linux-x64",
-            "otelcol-linux-arm64",
-            "otelcol-windows.exe",
-            "collector-config.yaml",
-            # Installation scripts
-            "install.sh",
-            "install.bat",
-            "ccwb-install.ps1",
-            # Configuration
-            "config.json",
-            "README.md",
-            # CoWork 3P MDM configs (optional — only present when CoWork is enabled)
-            "cowork-3p.reg",
-            "cowork-3p.mobileconfig",
-            "cowork-3p-config.json",
-            "cowork-credential-helper.sh",
-            "cowork-credential-helper.cmd",
-        ]
-
         with zipfile.ZipFile(archive_path, "w", zipfile.ZIP_DEFLATED) as zf:
             # Add required files directly from source
-            for filename in required_files:
+            for filename in self.ARCHIVE_REQUIRED_FILES:
                 source_file = package_path / filename
                 if source_file.exists():
                     zf.writestr(f"claude-code-package/{filename}", self._read_file_with_retry(source_file))
@@ -1577,32 +1634,100 @@ class DistributeCommand(Command):
         "macos-intel": ["cowork-credential-helper.sh", "cowork-3p.mobileconfig", "cowork-3p-config.json"],
     }
 
+    # NOTE: keep the primary auth binary FIRST in each "binaries" list —
+    # _create_per_os_archives uses binaries[0] to decide whether the platform
+    # was built at all. otelcol-* sidecar collectors ship only in sidecar-mode
+    # packages (package.py _build_otelcol) and are skipped when absent, but
+    # they MUST be listed here: install.sh installs otelcol-$BINARY_SUFFIX and
+    # collector-config.yaml, so omitting them from the per-OS zips silently
+    # breaks the local collector. See .claude/rules/distribution-manifest-parity.md.
     PLATFORM_FILES = {
         "windows": {
-            "binaries": ["credential-process-windows.exe", "otel-helper-windows.exe"],
+            "binaries": ["credential-process-windows.exe", "otel-helper-windows.exe", "otelcol-windows.exe"],
             "installer": ["install.bat", "ccwb-install.ps1", "otel-helper.ps1", "otel-helper.cmd"],
             "label": "Windows",
         },
         "linux-x64": {
-            "binaries": ["credential-process-linux-x64", "otel-helper-linux-x64"],
+            "binaries": ["credential-process-linux-x64", "otel-helper-linux-x64", "otelcol-linux-x64"],
             "installer": "install.sh",
             "label": "Linux x64",
         },
         "linux-arm64": {
-            "binaries": ["credential-process-linux-arm64", "otel-helper-linux-arm64"],
+            "binaries": ["credential-process-linux-arm64", "otel-helper-linux-arm64", "otelcol-linux-arm64"],
             "installer": "install.sh",
             "label": "Linux ARM64",
         },
         "macos-arm64": {
-            "binaries": ["credential-process-macos-arm64", "otel-helper-macos-arm64"],
+            "binaries": ["credential-process-macos-arm64", "otel-helper-macos-arm64", "otelcol-macos-arm64"],
             "installer": "install.sh",
             "label": "macOS ARM64",
         },
         "macos-intel": {
-            "binaries": ["credential-process-macos-intel", "otel-helper-macos-intel"],
+            "binaries": ["credential-process-macos-intel", "otel-helper-macos-intel", "otelcol-macos-intel"],
             "installer": "install.sh",
             "label": "macOS Intel",
         },
+    }
+
+    # Platform-neutral files every per-OS zip carries. collector-config.yaml is
+    # emitted only for sidecar-mode packages (skipped via exists() otherwise),
+    # but when present the installer copies it next to otelcol — it must ship.
+    PER_OS_SHARED_FILES = ["config.json", "README.md", "collector-config.yaml"]
+
+    # Landing-page family manifests: (source_file, archive_name) per download
+    # family (windows / linux / mac). Kept as a class attribute so the
+    # package↔distribute contract test can assert parity with package.py
+    # outputs and with the other two manifests above/below.
+    LANDING_PLATFORM_FILES = {
+        "windows": [
+            ("credential-process-windows.exe", "credential-process-windows.exe"),
+            ("otel-helper-windows.exe", "otel-helper-windows.exe"),
+            ("otel-helper.ps1", "otel-helper.ps1"),
+            ("otel-helper.cmd", "otel-helper.cmd"),
+            ("otelcol-windows.exe", "otelcol-windows.exe"),
+            ("collector-config.yaml", "collector-config.yaml"),
+            ("install.bat", "install.bat"),
+            ("ccwb-install.ps1", "ccwb-install.ps1"),
+            ("config.json", "config.json"),
+            ("README.md", "README.md"),
+            ("cowork-3p.reg", "cowork-3p.reg"),
+            ("cowork-3p-config.json", "cowork-3p-config.json"),
+            ("cowork-credential-helper.cmd", "cowork-credential-helper.cmd"),
+        ],
+        "linux": [
+            ("credential-process-linux-x64", "credential-process-linux-x64"),
+            ("credential-process-linux-arm64", "credential-process-linux-arm64"),
+            # Accept generic linux binary (maps to x64 for compat with install.sh)
+            ("credential-process-linux", "credential-process-linux-x64"),
+            ("otel-helper-linux-x64", "otel-helper-linux-x64"),
+            ("otel-helper-linux-arm64", "otel-helper-linux-arm64"),
+            ("otel-helper-linux", "otel-helper-linux-x64"),
+            ("otelcol-linux-x64", "otelcol-linux-x64"),
+            ("otelcol-linux-arm64", "otelcol-linux-arm64"),
+            ("otel-helper.sh", "otel-helper.sh"),
+            ("collector-config.yaml", "collector-config.yaml"),
+            ("install.sh", "install.sh"),
+            ("config.json", "config.json"),
+            ("README.md", "README.md"),
+            ("cowork-3p-config.json", "cowork-3p-config.json"),
+            ("cowork-credential-helper.sh", "cowork-credential-helper.sh"),
+        ],
+        "mac": [
+            ("credential-process-macos-arm64", "credential-process-macos-arm64"),
+            ("credential-process-macos-intel", "credential-process-macos-intel"),
+            ("otel-helper-macos-arm64", "otel-helper-macos-arm64"),
+            ("otel-helper-macos-intel", "otel-helper-macos-intel"),
+            ("otelcol-macos-arm64", "otelcol-macos-arm64"),
+            ("otelcol-macos-intel", "otelcol-macos-intel"),
+            ("otel-helper.sh", "otel-helper.sh"),
+            ("collector-config.yaml", "collector-config.yaml"),
+            ("install.sh", "install.sh"),
+            ("config.json", "config.json"),
+            ("README.md", "README.md"),
+            ("cowork-3p.mobileconfig", "cowork-3p.mobileconfig"),
+            ("cowork-3p-config.json", "cowork-3p-config.json"),
+            ("cowork-credential-helper.sh", "cowork-credential-helper.sh"),
+        ],
     }
 
     def _create_per_os_archives(self, package_path: Path, extra_files=None) -> list[tuple[str, Path]]:
@@ -1617,7 +1742,7 @@ class DistributeCommand(Command):
         import zipfile
 
         archives = []
-        shared_files = ["config.json", "README.md"]
+        shared_files = self.PER_OS_SHARED_FILES
 
         for platform, pconfig in self.PLATFORM_FILES.items():
             # Check if the primary binary exists
