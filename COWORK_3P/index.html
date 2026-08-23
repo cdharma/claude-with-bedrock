@@ -2133,7 +2133,7 @@
 <p>No additional AWS infrastructure is required — if you've already deployed this solution for Claude Code, you can extend it to Claude Cowork immediately. Your data stays within your AWS account: Amazon Bedrock does not store prompts, files, tool inputs/outputs, or model responses.</p>
 <h3 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h3>
 <p>The following diagram from the <a href="https://aws.amazon.com/blogs/machine-learning/from-developer-desks-to-the-whole-organization-running-claude-cowork-in-amazon-bedrock/">AWS Blog</a> illustrates the end-to-end flow for Claude Cowork with Amazon Bedrock:</p>
-<p><img alt="Claude Cowork with Amazon Bedrock — Architecture" src="../../assets/images/cowork-3p-architecture.png" /></p>
+<p><img alt="Claude Cowork with Amazon Bedrock — Architecture" src="../images/cowork-3p-architecture.png" /></p>
 <p>The application has three outbound paths: model inference to Amazon Bedrock in your configured regions, MCP server connections to endpoints you approve, and optional aggregate telemetry to Anthropic (which can be disabled).</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <p>Before configuring Claude Cowork 3P, ensure:</p>
@@ -2182,7 +2182,7 @@
 <li>Go to <strong>Developer → Configure third-party inference</strong></li>
 <li>Select <strong>Bedrock</strong> as the inference provider</li>
 </ol>
-<p><img alt="Claude Desktop - Configure third-party inference" src="../../assets/images/cowork-3p-setup-ui.png" /></p>
+<p><img alt="Claude Desktop - Configure third-party inference" src="../images/cowork-3p-setup-ui.png" /></p>
 <p>In the <strong>Bedrock Credentials</strong> section, configure:
 - <strong>AWS region</strong>: Your Bedrock region (e.g., <code>us-west-2</code>)
 - <strong>AWS profile</strong>: The named profile the installer writes to <code>~/.aws/config</code> — <code>ClaudeCode</code> by default</p>
@@ -2190,7 +2190,7 @@
 - <strong>Model list</strong>: Add the model aliases your organization has enabled (e.g., <code>opus</code>, <code>sonnet</code>, <code>haiku</code>)</p>
 <p>Once configured, use <strong>Export</strong> to generate a <code>.mobileconfig</code> (macOS) or <code>.reg</code> (Windows) file for MDM distribution, or <strong>Apply locally</strong> for immediate testing.</p>
 <p>After applying the configuration, Claude Desktop will detect the Bedrock setup and present the option to continue:</p>
-<p><img alt="Claude Desktop - Bedrock configuration detected" src="../../assets/images/cowork-3p-bedrock-detected.png" /></p>
+<p><img alt="Claude Desktop - Bedrock configuration detected" src="../images/cowork-3p-bedrock-detected.png" /></p>
 <p>Select <strong>Continue with Bedrock</strong> to start using Claude with your organization's credentials.</p>
 <h3 id="option-3-json-mdm-configuration">Option 3: JSON MDM Configuration<a class="headerlink" href="#option-3-json-mdm-configuration" title="Permanent link">&para;</a></h3>
 <p>For automated deployment at scale, create an MDM profile with the following essential keys:</p>
@@ -2705,7 +2705,7 @@
 <p><strong>Note:</strong> <code>user.email</code>, <code>user.account_uuid</code>, and <code>organization.id</code> are only available in Claude.ai-managed Cowork deployments (not 3P).  </p>
 </blockquote>
 <p>Per-device dashboard dimensions are planned — see <a href="https://github.com/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock/issues/585">#585</a>. Both central and sidecar monitoring modes are supported for Cowork telemetry.</p>
-<p><img alt="Claude Cowork Dashboard" src="../../assets/images/ClaudeCoworkDashboard.png" /></p>
+<p><img alt="Claude Cowork Dashboard" src="../images/ClaudeCoworkDashboard.png" /></p>
 <h2 id="quota-enforcement">Quota Enforcement<a class="headerlink" href="#quota-enforcement" title="Permanent link">&para;</a></h2>
 <p>Cowork 3P usage is subject to the same per-user quota enforcement as Claude Code. Here's how it works:</p>
 <h3 id="how-enforcement-applies">How enforcement applies<a class="headerlink" href="#how-enforcement-applies" title="Permanent link">&para;</a></h3>
