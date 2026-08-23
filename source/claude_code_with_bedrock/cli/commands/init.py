@@ -8,6 +8,7 @@ import re
 import subprocess
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 import boto3
 import questionary
@@ -58,6 +59,54 @@ def _model_keys_for_region(region: str | None) -> list[str]:
         for model_key in CLAUDE_MODELS
         if ("us-gov" in get_available_profiles_for_model(model_key)) == in_govcloud
     ]
+
+
+# AWS region shape, including multi-segment partitions (us-gov-west-1,
+# us-iso-east-1). Deliberately structural, not an allow-list: new regions
+# must not require a code change to pass init.
+_AWS_REGION_PATTERN = re.compile(r"^[a-z]{2}(-[a-z]+)+-\d{1,2}$")
+
+
+def validate_idc_start_url(value: str) -> bool | str:
+    """Validate an IAM Identity Center start URL.
+
+    Must be an https:// URL with a real hostname (e.g.
+    https://company.awsapps.com/start). Anything accepted here is written
+    verbatim to the packaged AWS config as sso_start_url, where garbage only
+    fails on end-user machines — so reject it at the prompt instead.
+
+    Returns:
+        True if valid, error message string if invalid.
+    """
+    candidate = (value or "").strip()
+    if not candidate:
+        return "Start URL cannot be empty"
+    try:
+        parsed = urlparse(candidate)
+        hostname = parsed.hostname or ""
+    except ValueError:
+        return "Must be a valid https:// URL (e.g., https://company.awsapps.com/start)"
+    if parsed.scheme != "https" or "." not in hostname:
+        return "Must be an https:// URL with a hostname (e.g., https://company.awsapps.com/start)"
+    return True
+
+
+def validate_sso_region(value: str) -> bool | str:
+    """Validate the AWS region where IAM Identity Center is configured.
+
+    Accepts standard and GovCloud-style regions (us-east-1, us-gov-west-1).
+    The value is written to the packaged AWS config as sso_region, so an
+    invalid region breaks every end-user SSO login.
+
+    Returns:
+        True if valid, error message string if invalid.
+    """
+    candidate = (value or "").strip()
+    if not candidate:
+        return "SSO region cannot be empty"
+    if not _AWS_REGION_PATTERN.match(candidate):
+        return "Must be an AWS region (e.g., us-east-1, eu-west-1, us-gov-west-1)"
+    return True
 
 
 def validate_identity_pool_name(value: str) -> bool | str:
@@ -430,22 +479,23 @@ class InitCommand(Command):
                 "Enter your IAM Identity Center start URL:",
                 instruction="(e.g., https://company.awsapps.com/start)",
                 default=config.get("idc_start_url", ""),
-                validate=lambda x: bool(x.strip()) or "Start URL cannot be empty",
+                validate=validate_idc_start_url,
             ).ask()
             if idc_start_url is None:
                 return None
             config["idc_start_url"] = idc_start_url.strip().rstrip("/")
 
-            # SSO region (auto-suggest from start URL if possible)
+            # SSO region (auto-suggest from start URL if possible; the extra
+            # (-[a-z]+)+ segment also matches GovCloud regions like us-gov-west-1)
             suggested_region = "us-east-1"
-            _region_match = re.search(r"\.(us|eu|ap|sa|ca|me|af|il)-[a-z]+-\d+\.", idc_start_url)
+            _region_match = re.search(r"\.((us|eu|ap|sa|ca|me|af|il)(-[a-z]+)+-\d+)\.", idc_start_url)
             if _region_match:
-                suggested_region = _region_match.group(0).strip(".")
+                suggested_region = _region_match.group(1)
 
             sso_region = questionary.text(
                 "Enter your SSO region (where Identity Center is configured):",
                 default=config.get("sso_region", suggested_region),
-                validate=lambda x: bool(x.strip()) or "SSO region cannot be empty",
+                validate=validate_sso_region,
             ).ask()
             if sso_region is None:
                 return None
@@ -510,8 +560,6 @@ class InitCommand(Command):
             cognito_user_pool_id = None
 
             # Secure provider detection using proper URL parsing
-            from urllib.parse import urlparse
-
             # Handle both full URLs and domain-only inputs
             url_to_parse = (
                 provider_domain if provider_domain.startswith(("http://", "https://")) else f"https://{provider_domain}"
@@ -872,9 +920,15 @@ class InitCommand(Command):
                 "in your IdP application configuration.\n"
             )
 
+            # Round-trip safety (config-sync.md): default the confirm to Yes when a
+            # custom port is already saved, and never wipe the saved port when the
+            # confirm is declined — otherwise re-running init silently rewrites
+            # redirect_port to None and repackaged binaries fall back to 8400 while
+            # the IdP app only has the custom port registered (redirect_uri mismatch).
+            saved_redirect_port = config.get("redirect_port")
             use_custom_port = questionary.confirm(
                 "Use a custom OAuth callback port? (default: 8400)",
-                default=False,
+                default=bool(saved_redirect_port),
             ).ask()
 
             if use_custom_port:
@@ -883,7 +937,7 @@ class InitCommand(Command):
                     validate=lambda x: (
                         (x.isdigit() and 1024 <= int(x) <= 65535) or "Must be a number between 1024 and 65535"
                     ),
-                    default=str(config.get("redirect_port", 8400)),
+                    default=str(saved_redirect_port or 8400),
                     instruction="(must match the port in your IdP's registered redirect URI)",
                 ).ask()
                 if redirect_port_str:
@@ -892,6 +946,9 @@ class InitCommand(Command):
                         f"[dim]  Remember to register http://localhost:{redirect_port_str}/callback "
                         f"as a redirect URI in your IdP application.[/dim]"
                     )
+            elif saved_redirect_port:
+                # Declining must preserve the previously configured custom port.
+                console.print(f"[dim]  Keeping previously configured OAuth callback port {saved_redirect_port}.[/dim]")
 
             # Preserve existing okta settings, only update domain/client_id
             if "okta" not in config:
@@ -1335,9 +1392,19 @@ class InitCommand(Command):
                         config["quota"]["daily_cost_limit"] = 0
 
                         console.print("\n[bold]Monthly Limit[/bold]")
+                        # The saved value is monthly_limit in RAW tokens (restored by
+                        # _check_existing_deployment); "monthly_limit_millions" is never
+                        # persisted anywhere. Derive the prompt default from the raw
+                        # value or re-running init silently rewrites the limit to 225M.
+                        # Falls back to 225 for fresh installs and cost-mode profiles
+                        # (monthly_limit 0), whose 0 would fail the > 0 validation.
+                        _saved_monthly_tokens = config.get("quota", {}).get("monthly_limit") or 0
+                        _default_monthly_millions = (
+                            _saved_monthly_tokens // 1_000_000 if _saved_monthly_tokens >= 1_000_000 else 225
+                        )
                         monthly_limit_millions = questionary.text(
                             "Monthly token limit per user (in millions):",
-                            default=str(config.get("quota", {}).get("monthly_limit_millions", 225)),
+                            default=str(_default_monthly_millions),
                             validate=lambda x: x.isdigit() and int(x) > 0,
                         ).ask()
 
@@ -3429,6 +3496,19 @@ class InitCommand(Command):
             # Add lock_default_model if present
             if hasattr(profile, "lock_default_model"):
                 existing_config["lock_default_model"] = profile.lock_default_model
+
+            # Restore the settings deployment target (round-trip: without this the
+            # wizard's select pre-picks "user" and accepting the default downgrades
+            # a managed profile — dropping org-enforced managed-settings on the
+            # next package).
+            existing_config["settings_target"] = getattr(profile, "settings_target", "user") or "user"
+
+            # Restore the OAuth callback port (round-trip: without this, accepting
+            # the wizard's "custom port?" No-default silently rewrites redirect_port
+            # to None; repackaged binaries then fall back to 8400 while the IdP app
+            # only has the custom port registered → redirect_uri mismatch).
+            if getattr(profile, "redirect_port", None):
+                existing_config["redirect_port"] = profile.redirect_port
 
             # Add cross-region profile if present
             if hasattr(profile, "cross_region_profile") and profile.cross_region_profile:
