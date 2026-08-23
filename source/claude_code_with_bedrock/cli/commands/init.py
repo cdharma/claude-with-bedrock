@@ -1099,7 +1099,9 @@ class InitCommand(Command):
                     config["monitoring"]["vpc_config"] = vpc_config
 
                     # ALB scheme: internet-facing (default) or internal (private network)
-                    existing_alb_scheme = config["monitoring"].get("alb_scheme", "internet-facing")
+                    # `or` (not a .get default) — restored configs carry alb_scheme=None
+                    # for profiles saved before the scheme was persisted.
+                    existing_alb_scheme = config["monitoring"].get("alb_scheme") or "internet-facing"
                     alb_scheme = questionary.select(
                         "Load balancer network exposure:",
                         choices=[
@@ -2963,6 +2965,11 @@ class InitCommand(Command):
             monitoring_config["custom_domain"] = monitoring_dict["custom_domain"]
         if monitoring_dict.get("hosted_zone_id"):
             monitoring_config["hosted_zone_id"] = monitoring_dict["hosted_zone_id"]
+        # Persist the ALB scheme only when the wizard asked for it (central mode).
+        # Sidecar mode never sets it — don't invent a value; deploy.py defaults
+        # absent/other values to internet-facing (backward compatible).
+        if monitoring_dict.get("alb_scheme"):
+            monitoring_config["alb_scheme"] = monitoring_dict["alb_scheme"]
 
         # Get SSO configuration or use defaults if SSO is disabled
         sso_enabled = config_data.get("sso_enabled", True)
@@ -3370,6 +3377,9 @@ class InitCommand(Command):
                     "hosted_zone_id": profile.monitoring_config.get("hosted_zone_id")
                     if profile.monitoring_config
                     else None,
+                    # Round-trip the saved ALB scheme so a re-run pre-selects it
+                    # (None for old profiles — the wizard falls back to internet-facing).
+                    "alb_scheme": profile.monitoring_config.get("alb_scheme") if profile.monitoring_config else None,
                 },
             }
 
