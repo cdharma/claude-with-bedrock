@@ -1,319 +1,108 @@
-# Guidance for Claude Code and Cowork on Amazon Bedrock
+# Claude Code and Claude Desktop for your organization, on Amazon Bedrock
 
-[![Stable Release](https://img.shields.io/github/v/release/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock?style=for-the-badge&label=stable&filter=v*.*.*)](https://github.com/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock/releases/latest)
-[![Beta Release](https://img.shields.io/github/v/release/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock?style=for-the-badge&include_prereleases&label=beta)](https://github.com/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock/tree/beta)
+This project lets a company give its developers **Claude Code** (the CLI) and **Claude Desktop** — running entirely against **Amazon Bedrock in the company's own AWS account** — with:
 
-This guidance enables enterprise deployment of Claude Code and Claude Cowork on Amazon Bedrock across command-line (CLI) and desktop surfaces — with secure single sign-on (SSO), usage monitoring, and cost controls.
+- **Sign-in with company credentials** (Okta, Microsoft Entra ID, Auth0, Google, or AWS IAM Identity Center) — no API keys to hand out or rotate
+- **Per-user cost tracking** — dashboards showing who spent what
+- **Spending limits** — monthly/daily budgets per user, with warnings and hard blocks
+- **Simple installation for end users** — IT ships one zip; users run one installer
 
-## ℹ️ Maintenance Mode
+Your data stays in your AWS account. No Anthropic license or account is required.
 
-**This repository is now in maintenance mode on a best-efforts basis.** It remains available as a reference implementation. New contributions without GitHub issues approved by maintainers will not be accepted.
+## How it works
 
-For new deployments of Claude Apps on Amazon Bedrock, we recommend [Claude Apps Gateway](https://code.claude.com/docs/en/claude-apps-gateway) — a self-hosted service that sits between your Claude clients and your model provider. It is included in the `claude` binary, so the same executable that runs Claude Code also runs the gateway. It provides:
+An admin deploys the infrastructure once. End users install a small package and sign in.
 
-- Corporate SSO (OIDC) with centralized policy enforcement
-- Per-user cost attribution and spend caps
-- Managed settings delivery
-- OTLP telemetry routing
-- Single stateless container deployment
+```mermaid
+flowchart LR
+    U[Developer] --> CC[Claude Code /<br/>Claude Desktop]
+    CC --> CP[credential helper<br/>installed on the laptop]
+    CP -->|sign in with<br/>company identity| IDP[Okta / Entra ID /<br/>Identity Center]
+    CP -->|temporary AWS<br/>credentials| BR[Amazon Bedrock<br/>your AWS account]
+```
 
-**👉 [Get started with Claude Apps Gateway on AWS](https://github.com/aws-samples/anthropic-on-aws/tree/main/claude-apps-gateway)**
+1. The developer uses Claude Code or Claude Desktop as normal.
+2. A small **credential helper** (installed with the package) signs the developer in with their company identity and fetches **temporary** AWS credentials — nothing long-lived is stored on the laptop.
+3. If spending limits are enabled, the helper checks the developer's budget **before** issuing credentials. Over budget means no credentials — enforced before any Bedrock call.
+4. Usage telemetry flows to CloudWatch dashboards with the user's identity attached, so costs are attributable per person and per team.
 
-**💻 [Deploying both Claude Code CLI and Claude Desktop? Add the Bootstrap Server](https://github.com/aws-samples/anthropic-on-aws/tree/main/claude-apps-gateway-bootstrap)** — delivers managed settings, organization plugins, and per-user configuration to Claude Desktop at sign-in.
+## Choose your sign-in method
+
+Pick one during setup — this is the only decision that changes the architecture:
+
+| Your situation | Choose | What users experience |
+|---|---|---|
+| You have a corporate identity provider (Okta, Entra ID, Auth0, Google, Cognito) | **OIDC** | Browser opens, they sign in with company credentials |
+| You use **AWS IAM Identity Center** (with or without an external IdP behind it) | **IAM Identity Center** | Standard AWS SSO device sign-in |
+| Neither — users already have AWS access | **None** | No sign-in; monitoring only, no spending limits |
+
+All three support usage dashboards. Spending limits work with OIDC and Identity Center.
+
+## For admins: deploying it
+
+**You need:** an AWS account with Bedrock model access enabled, Python 3.10+, Poetry, and the AWS CLI. (Go is optional — pre-built binaries are available.)
+
+The `ccwb` tool walks you through everything:
+
+```bash
+cd source
+poetry run ccwb init          # interactive wizard: sign-in method, region, models, limits
+poetry run ccwb deploy        # creates the AWS infrastructure (add --parallel to speed it up)
+poetry run ccwb package       # builds the installer package for your users
+poetry run ccwb distribute    # uploads it and returns a download link to share
+poetry run ccwb test          # verifies the deployment end to end
+```
+
+Plan for **2–3 hours** on the first setup (mostly identity-provider configuration). The full walkthrough is in **[QUICK_START.md](QUICK_START.md)**; every command is documented in the [CLI Reference](assets/docs/CLI_REFERENCE.md). If something misbehaves, `poetry run ccwb doctor` diagnoses installations and [Troubleshooting](assets/docs/TROUBLESHOOTING.md) covers common issues.
+
+Works in any AWS region with Bedrock support, including GovCloud. During setup you pick the model (Opus, Sonnet, Haiku) and a cross-region inference profile (US, EU, or global) to control where inference runs for data-residency needs.
+
+## For end users: installing it
+
+Users receive a download link from their admin. Then:
+
+- **Windows:** unzip, run `install.bat`
+- **macOS / Linux:** unzip, run `./install.sh`
+
+That's it — the installer configures everything, including the AWS profile Claude Code uses. First use opens a company sign-in; after that, credentials refresh automatically. Users need Claude Code or Claude Desktop installed, and nothing else — no Python, no AWS account of their own, no build tools.
+
+**Claude Desktop** is configured centrally instead of per-user: `poetry run ccwb cowork generate` produces ready-to-deploy MDM files (JSON, macOS `.mobileconfig`, Windows `.reg`) for Jamf, Intune, or Group Policy. See the [Claude Desktop (Cowork 3P) Guide](assets/docs/COWORK_3P.md). One deployment serves both surfaces, and a user's spending limit is shared across both.
+
+## Optional add-ons
+
+Everything below is opt-in during `ccwb init` and can be added later:
+
+| Add-on | What it gives you | Guide |
+|---|---|---|
+| **Monitoring** | CloudWatch dashboards: usage and cost per user, team, and model | [Monitoring](assets/docs/MONITORING.md) |
+| **Spending limits** | Per-user/per-team monthly and daily budgets (USD or tokens); warn at thresholds, block at the limit | [Quota Monitoring](assets/docs/QUOTA_MONITORING.md) |
+| **Analytics** | Long-term usage history queryable with SQL (S3 + Athena) | [Analytics](assets/docs/ANALYTICS.md) |
+| **Distribution** | Presigned download links, or a self-service download page behind your IdP | [Distribution options](assets/docs/distribution/comparison.md) |
+| **Bootstrap server** | Delivers per-user settings and [organization plugins](assets/docs/PLUGINS.md) to Claude Desktop at sign-in — no MDM re-push for config changes | [Plugins](assets/docs/PLUGINS.md) |
+
+Infrastructure running costs are modest and scale with team size — see [Cost Estimates](assets/docs/COST_ESTIMATES.md). Per-user Bedrock costs appear in Cost Explorer automatically via [CUR 2.0 cost attribution](assets/docs/COST_ATTRIBUTION.md).
+
+## About this repository
+
+This is a maintained fork of the AWS Solutions guidance [guidance-for-claude-code-with-amazon-bedrock](https://github.com/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock), carrying fixes (each with regression tests) for the IAM Identity Center, Windows, and non-`us-east-1` deployment paths. The upstream repository is in maintenance mode.
 
 <details>
-<summary><strong>Areas where this reference solution complements Claude Apps Gateway today</strong></summary>
+<summary><strong>Considering alternatives?</strong> Anthropic's Claude Apps Gateway</summary>
 
-The following capabilities are not yet available in Claude Apps Gateway but may appear on its future roadmap. This solution provides reference patterns in the meantime:
+For new deployments, AWS and Anthropic recommend evaluating [Claude Apps Gateway](https://code.claude.com/docs/en/claude-apps-gateway) — a self-hosted service built into the `claude` binary that provides corporate SSO, per-user spend caps, managed settings, and telemetry routing from a single stateless container. See [Claude Apps Gateway on AWS](https://github.com/aws-samples/anthropic-on-aws/tree/main/claude-apps-gateway).
 
-- **Claude Desktop** — spend controls and model discovery may be functional, however configuration and managed settings delivery requires MDM or per-user bootstrap server.
-- **AWS IAM Identity Center** — native IDC authentication without external OIDC
-- **Historical usage analytics** — S3 + Athena for long-term usage queries
-- **Multi-platform packaging** — automated installers for Windows, macOS, Linux (note: Claude Apps Gateway is native to Claude Code and requires no additional client-side packages)
-- **Cost tracking via IAM principal-based cost allocation** — Gateway spend controls are based on cost estimates
-
-As Claude Apps Gateway evolves, check Anthropic's documentation for the latest capabilities.
+This project still covers ground the gateway does not yet: native AWS IAM Identity Center sign-in (no external OIDC needed), historical usage analytics with Athena, automated multi-platform installer packaging, and IAM-principal-based cost allocation.
 
 </details>
 
----
+## Documentation
 
-## Key Features
+**Getting started:** [Quick Start](QUICK_START.md) · [CLI Reference](assets/docs/CLI_REFERENCE.md) · [Troubleshooting](assets/docs/TROUBLESHOOTING.md) · [Hands-on workshop](https://catalog.workshops.aws/claude-code-on-amazon-bedrock/en-US)
 
-- **Secure Access**: Secure single sign-on (SSO) with enterprise identity providers such as Okta, Entra ID, Auth0, Google, Cognito, or AWS IAM Identity Center — temporary credentials, automatic refresh, no API keys to manage
-- **Usage Monitoring**: CloudWatch dashboards with per-user cost attribution, plus S3 + Athena for historical analytics
-- **Quota Enforcement**: Per-user and per-team token limits with configurable thresholds, warnings, and block modes
-- **Multi-Platform**: Windows, macOS, Linux — Go or Python binaries, pre-built from GitHub Releases
-- **One Deployment, Two Surfaces**: Same infrastructure powers both Claude Code CLI and Claude Desktop (which features Chat, Cowork and Code)
-- **Model Flexibility**: Choose from Opus, Sonnet, Haiku with model aliases (e.g. `opusplan` for Opus planning + Sonnet execution)
-- **Native Desktop Experience**: Deploy and manage Claude Desktop via MDM (Jamf, Intune, Group Policy)
-- **Dynamic Config Delivery**: Deliver per-user settings and [organization plugins](assets/docs/PLUGINS.md#bootstrap-server-delivery-dynamic) to Claude Desktop at sign-in via a bootstrap server — no MDM re-push needed for config changes
-- **Data Residency**: Select your cross-region inference profile (US, EU, AU) to keep data within your compliance boundary
-- **AWS-Native**: Your data, your AWS account, your compliance controls — no Anthropic licensing required
+**Identity provider setup:** [Okta](assets/docs/providers/okta-setup.md) · [Microsoft Entra ID](assets/docs/providers/microsoft-entra-id-setup.md) · [Auth0](assets/docs/providers/auth0-setup.md) · [Google](assets/docs/providers/google-oidc-setup.md) · [Cognito](assets/docs/providers/cognito-user-pool-setup.md) · [Generic OIDC](assets/docs/providers/generic-oidc-setup.md)
 
-## Table of Contents
-
-1. [Quick Start](#quick-start)
-2. [Architecture Overview](#architecture-overview)
-   - [Authentication Modes](#authentication-modes)
-   - [Per-User Attribution](#per-user-attribution)
-3. [How It Works](#how-it-works)
-   - [Usage Monitoring](#usage-monitoring)
-   - [Quota Enforcement and Cost Controls](#quota-enforcement-and-cost-controls)
-4. [Deployment](#deployment)
-5. [Additional Resources](#additional-resources)
-
-## Quick Start
-
-This guidance integrates Claude Code CLI and Claude Desktop with your existing OIDC identity provider (Okta, Entra ID, Auth0, Google, or Cognito User Pools) to provide federated access to Amazon Bedrock.
-
-### What You Need
-
-- An OIDC identity provider (Okta, Entra ID, Auth0, Google, Cognito) OR AWS IAM Identity Center
-- AWS account with IAM and CloudFormation permissions
-- Amazon Bedrock activated in target regions
-- Python 3.10+ for deployment
-
-### What Gets Deployed
-
-- Authentication infrastructure (IAM OIDC Provider or IDC auth stack)
-- Platform-specific installation packages (Windows, macOS, Linux)
-- Optional: OpenTelemetry monitoring + quota enforcement
-
-**Deployment time:** 2-3 hours for initial setup. See [QUICK_START.md](QUICK_START.md) for step-by-step instructions.
-
-### Extend to Claude Cowork
-
-If you've deployed this guidance for Claude Code, extend it to Claude Cowork (Claude Desktop) with one command:
-
-```bash
-poetry run ccwb cowork generate
-```
-
-This generates MDM configuration files (JSON, macOS .mobileconfig, Windows .reg) using your existing deployment profile. See the [CoWork 3P Guide](assets/docs/COWORK_3P.md) for setup and deployment details.
-
-## Architecture Overview
-
-The architecture is modular — start with authentication, then optionally add [monitoring, quota enforcement, analytics, or distribution](#what-gets-deployed) independently as requirements grow. This guidance supports three authentication paths (see [Authentication Modes](#authentication-modes) for details). The recommended path is Direct IAM Federation:
-
-### Recommended: Direct IAM Federation
-
-![Architecture Diagram](assets/images/credential-flow-direct-diagram.png)
-
-1. **User initiates authentication**: User requests access to Amazon Bedrock through Claude Code or Claude Cowork
-2. **OIDC authentication**: User authenticates with their OIDC provider and receives an ID token
-3. **Token exchange with AWS STS**: Application calls `AssumeRoleWithWebIdentity` with the OIDC ID token
-4. **STS returns credentials**: AWS STS validates the token against the registered IAM OIDC provider and returns temporary AWS credentials (scoped to Bedrock access)
-5. **Access Amazon Bedrock**: Application uses the temporary credentials to call Amazon Bedrock
-6. **Bedrock response**: Amazon Bedrock processes the request and returns the response
-
-### What Gets Deployed
-
-`ccwb init` creates a profile that selects which stacks to enable. Deploy all at once with `ccwb deploy`, or individually with `--stack <name>`:
-
-| Component | What | Deployed via |
-|-----------|------|-------------|
-| **Authentication** | IAM OIDC Provider + federated role, or IDC auth stack | `ccwb deploy --stack auth` |
-| **User packages** | Platform-specific binaries (credential-process, otel-helper) + install scripts | `ccwb package` |
-| **Monitoring** (optional) | Central mode: ECS Fargate OTEL collector + ALB. Sidecar mode: local collector on each machine. Both export to CloudWatch dashboards. | `ccwb deploy --stack monitoring` |
-| **Quota enforcement** (optional) | Quota check API + DynamoDB policies + per-user/team limits | `ccwb deploy --stack quota` |
-| **Analytics** (optional) | S3 data lake + Athena for historical SQL queries on usage data | `ccwb deploy --stack analytics` |
-| **Distribution** (optional) | S3 presigned URLs or self-service landing page with IdP auth | `ccwb deploy --stack distribution` |
-| **Diagnostics** | Installation health checks + resolved config dump | `ccwb doctor` |
-
-See [Monitoring Guide](assets/docs/MONITORING.md), [Quota Guide](assets/docs/QUOTA_MONITORING.md), [Analytics Guide](assets/docs/ANALYTICS.md), and [Distribution Comparison](assets/docs/distribution/comparison.md) for detailed setup.
-### Authentication Modes
-
-This guidance supports three identity paths. Each path provides usage monitoring and audit trails. Per-user identity resolution and quota enforcement depend on the authentication mode chosen.
-
-| Mode | `ccwb init` choice | Identity Source | Session Length | Quota Enforcement | Best For |
-|------|--------------------|----------------|----------------|-------------------|----------|
-| **External IdP (OIDC)** | `OIDC / Direct IdP` | Okta, Entra ID, Auth0, Google, Cognito User Pools JWT claims | Refresh token lifetime | ✅ Full | Orgs with an existing enterprise IdP |
-| **AWS IAM Identity Center** | `AWS IAM Identity Center` | `AWSReservedSSO_*` IAM role ARN (email in session name) | Up to 90 days (recommended: 7 days) | ✅ Via SigV4 | Orgs on native AWS identity, or where OIDC localhost callback is blocked |
-| **None** | `None` | IAM user ARN or hashed role principal | AWS credential TTL | ❌ Not available | Internal tools / analytics-only deployments |
-
-For deployment patterns and best practices, see the [Claude Code deployment patterns and best practices with Amazon Bedrock](https://aws.amazon.com/blogs/machine-learning/claude-code-deployment-patterns-and-best-practices-with-amazon-bedrock/) blog post.
-
-### Optional: Deploy Without SSO Authentication
-
-You can deploy the observability/analytics stack without configuring an identity provider. Select **"None"** during `ccwb init`.
-
-- No OIDC provider or IdP configuration required
-- Uses AWS IAM for access control directly
-- Identity detection is automatic (IDC users: email from ARN, IAM users: username, other roles: hashed identifier)
-- Best for: internal tools, analytics-only deployments, or orgs where users already have IAM access to Bedrock
-
-### Per-User Attribution
-
-Per-user usage attribution works across all authentication modes and Claude Code CLI and Claude Desktop (Cowork):
-
-| Auth Mode | Identity Source | Telemetry Attribution | Quota Enforcement | CUR 2.0 Cost Visibility |
-|-----------|----------------|----------------------|-------------------|-------------------------|
-| **OIDC** | JWT email claim | Per-user (email, team, department) | ✅ | ✅ Per-user via STS session tags |
-| **IAM Identity Center** | IAM ARN session name | Per-user (email only) | ✅ | ✅ Per-user if [ABAC attributes](https://docs.aws.amazon.com/singlesignon/latest/userguide/abac.html) configured in IDC |
-| **None** | Hashed IAM principal | Anonymous | ❌ | ✅ Per-IAM-role |
-
-Usage from both Claude Code CLI and Claude Desktop (Cowork) counts toward the same per-user limit — a single quota applies regardless of which surface consumed the tokens.
-
-See [Quota Monitoring Guide](assets/docs/QUOTA_MONITORING.md) for enforcement details and [CoWork 3P Guide](assets/docs/COWORK_3P.md#quota-enforcement) for Desktop-specific behavior.
-
-## How It Works
-
-Once distributed, the **credential-process** binary runs on each user's machine:
-- **Claude Code:** configured via `credential_process` in `~/.aws/config` (AWS SDK calls it automatically)
-- **Claude Desktop (Cowork):** configured via `inferenceBedrockProfile` MDM key pointing to the AWS profile that has `credential_process` set
-
-```mermaid
-flowchart LR
-    CC1[Claude Code CLI] -->|needs credentials| CP[credential-process binary]
-    CC2[Claude Desktop] -->|needs credentials| CP
-    CP --> AUTH{Auth Mode}
-    AUTH -->|OIDC| OIDC[IdP → STS]
-    AUTH -->|IDC| IDC[SSO → STS]
-    OIDC --> OUT[Temporary AWS credentials]
-    IDC --> OUT
-```
-
-The **otel-helper** binary attaches per-user identity to telemetry:
-
-- **Header mode** (Claude Code CLI): Called once per OTLP export as a header provider. Returns JSON headers containing user identity (email, team, department) extracted from the cached JWT.
-- **Bootstrap mode** (Claude Desktop, recommended): The [bootstrap server](assets/docs/PLUGINS.md#bootstrap-server-delivery-dynamic) delivers per-user `otlpHeaders` at sign-in. Claude Desktop applies these natively — no proxy or helper needed.
-- **Static MDM** (Claude Desktop, basic): Set `otlpHeaders` in MDM config for device-level identity (not per-user unless you create per-device profiles).
-
-```mermaid
-flowchart LR
-    CC1[Claude Code CLI] -->|telemetry| OH[otel-helper]
-    CC2[Claude Desktop] -->|telemetry| OH
-    OH -->|adds user identity| COLL[Collector] --> CW[CloudWatch]
-```
-
-### Usage Monitoring
-
-Both Claude Code (CLI) and Claude Desktop emit OpenTelemetry (OTLP) telemetry. For Claude Code, otel-helper provides per-user identity headers. For Claude Desktop, the bootstrap server delivers per-user `otlpHeaders` at sign-in — no local proxy needed. See [Monitoring Guide](assets/docs/MONITORING.md) for detailed configuration.
-
-```mermaid
-flowchart LR
-    CC[Claude Code CLI] -->|OTLP| OH1[otel-helper<br/>header mode]
-    CW[Claude Desktop] -->|OTLP with otlpHeaders| COLL[Collector]
-    OH1 -->|"user identity + Bearer JWT"| COLL
-    COLL --> DASH[CloudWatch Dashboards]
-```
-
-| Surface | Per-user identity | How | Collector mode |
-|---------|------------------|-----|----------------|
-| **Claude Code (CLI)** | otel-helper (header mode) | Returns identity headers per export | Central or Sidecar |
-| **Claude Desktop (bootstrap)** | Bootstrap server delivers `otlpHeaders` | Per-user from OIDC token at sign-in | Central |
-| **Claude Desktop (static MDM)** | `otlpHeaders` in MDM config | Device-level (not per-user) | Central or Sidecar |
-
-> **Recommended:** Use the [bootstrap server](assets/docs/PLUGINS.md#bootstrap-server-delivery-dynamic) for per-user Claude Desktop telemetry. It delivers `otlpHeaders` with user identity at sign-in — no local proxy or helper binary needed on the Desktop machine.
-
-**Cost attribution:** Since April 2026, Amazon Bedrock supports [IAM principal cost tracking via CUR 2.0](assets/docs/COST_ATTRIBUTION.md) — per-user costs appear in Cost Explorer automatically from the STS session tags set by credential-process. Note: real-time quota enforcement relies on telemetry emitted from the client rather than actual costs metered by AWS, so figures may differ from CUR.
-
-**Dashboards:** Pre-built CloudWatch dashboards for [Claude Code](assets/images/ClaudeCodeDashboard.png) and [Claude Desktop (Cowork)](assets/images/ClaudeCoworkDashboard.png). See [Monitoring Guide](assets/docs/MONITORING.md) for setup.
-
-### Quota Enforcement and Cost Controls
-
-Quota is enforced at the **credential layer** — before any Bedrock call is made:
-
-```mermaid
-flowchart LR
-    CP[credential-process binary] -->|"am I allowed?"| API[Quota API]
-    API --> Lambda[Lambda]
-    Lambda -->|check limits| DDB[(DynamoDB Policies)]
-    Lambda -->|check usage| CW[CloudWatch Metrics]
-    Lambda -->|allowed| OUT[✅ Credentials issued]
-    Lambda -->|blocked| STOP[❌ Credentials denied]
-```
-
-How it works:
-- **Policies** (DynamoDB): Admins set per-user or per-team monthly/daily token limits via `ccwb quota` commands
-- **Usage** (CloudWatch): The OTEL collector aggregates token consumption metrics per user
-- **Check** (Lambda): On each credential request, compares current usage against the policy limit
-- **Enforcement**: If over limit, credentials are withheld and the user sees a quota exceeded message
-
-If a user exceeds their quota, access to Bedrock is denied until usage resets or an admin unblocks them. See [Quota Guide](assets/docs/QUOTA_MONITORING.md) for configuration details.
-
-
-## Deployment
-
-### Requirements
-
-- Python 3.10+, Poetry, AWS CLI v2, Git
-- AWS account with Bedrock activated and IAM/CloudFormation permissions
-- OIDC identity provider (Okta, Entra ID, Auth0, Google, Cognito) or AWS IAM Identity Center
-- Go 1.24+ (optional — only for local builds; [pre-built binaries](https://github.com/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock/releases) available from v2.4.0+)
-
-**End users need only:** Claude Code or Claude Desktop installed. No Python, AWS account, or build tools required — IT distributes pre-built packages.
-
-See [QUICK_START.md](QUICK_START.md) for the full step-by-step walkthrough.
-
-### Supported Regions
-
-Deploys to any AWS region with Bedrock support, across both AWS Commercial and AWS GovCloud (US) partitions. During `ccwb init`, select your region and the wizard auto-configures partition-appropriate models and endpoints.
-
-### Cross-Region Inference
-
-Select your preferred model (Opus, Sonnet, Haiku) and cross-region inference profile (US, EU, AU) for optimal routing and data residency. Modern Claude models (3.7+) require cross-region inference.
-
-See [Model Configuration](https://code.claude.com/docs/en/model-config) for model aliases (including `opusplan` for Opus planning + Sonnet execution).
-
-### Platform Support
-
-| Platform | Architecture | Build Methods |
-|----------|-------------|---------------|
-| Windows | x64 | Go (recommended) or Nuitka via CodeBuild |
-| macOS | ARM64 / Intel / Universal | Go or PyInstaller |
-| Linux | x86_64 / ARM64 | Go or PyInstaller (Docker) |
-
-**Pre-built binaries:** From v2.4.0+, [GitHub Releases](https://github.com/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock/releases) include binaries for all platforms — no local build tools needed.
-
-See [QUICK_START.md](QUICK_START.md#platform-builds) for build configuration.
-
-## Additional Resources
-
-### Getting Started
-
-- [Quick Start Guide](QUICK_START.md) - Step-by-step deployment walkthrough
-- [CLI Reference](assets/docs/CLI_REFERENCE.md) - Complete command reference for the `ccwb` tool
-- [Troubleshooting](assets/docs/TROUBLESHOOTING.md) - Common issues, `ccwb doctor`, and how to file bugs
-- [Workshop: Claude Code on Amazon Bedrock](https://catalog.workshops.aws/claude-code-on-amazon-bedrock/en-US) - Companion hands-on workshop
-- [Claude Code deployment patterns and best practices with Amazon Bedrock](https://aws.amazon.com/blogs/machine-learning/claude-code-deployment-patterns-and-best-practices-with-amazon-bedrock/) - Blog post covering deployment patterns and best practices
-
-### Architecture & Deployment
-
-- [Architecture Guide](assets/docs/ARCHITECTURE.md) - System architecture and design decisions
-- [Deployment Guide](assets/docs/DEPLOYMENT.md) - Advanced deployment options
-- [Distribution Comparison](assets/docs/distribution/comparison.md) - Presigned URLs vs Landing Page
-- [Local Testing Guide](assets/docs/LOCAL_TESTING.md) - Testing before deployment
-
-### Monitoring & Analytics
-
-- [Monitoring Guide](assets/docs/MONITORING.md) - OpenTelemetry setup and dashboards
-- [Analytics Guide](assets/docs/ANALYTICS.md) - S3 data lake and Athena SQL queries
-
-### Cost Management
-
-- [Cost Estimates](assets/docs/COST_ESTIMATES.md) - High-level monthly cost estimates by deployment tier and team size
-- [Cost Attribution](assets/docs/COST_ATTRIBUTION.md) - Per-user and per-team cost tracking via CUR 2.0 and Cost Explorer
-
-### Plugins
-
-- [Example Plugins](assets/claude-code-plugins/) - Example plugins for Claude Code and Cowork 3P ([distribution guide](assets/docs/PLUGINS.md))
-
-### Claude Cowork (Desktop)
-
-- [CoWork 3P Guide](assets/docs/COWORK_3P.md) - Setup and deployment for Claude Desktop with Bedrock
-- [AWS Blog: Running Claude Cowork in Amazon Bedrock](https://aws.amazon.com/blogs/machine-learning/from-developer-desks-to-the-whole-organization-running-claude-cowork-in-amazon-bedrock/)
-
-### Identity Provider Setup
-
-- [Okta](assets/docs/providers/okta-setup.md)
-- [Microsoft Entra ID](assets/docs/providers/microsoft-entra-id-setup.md)
-- [Auth0](assets/docs/providers/auth0-setup.md)
-- [Google](assets/docs/providers/google-oidc-setup.md)
-- [AWS Cognito User Pool](assets/docs/providers/cognito-user-pool-setup.md)
-- [Generic OIDC (PingFederate, Keycloak, ForgeRock, etc.)](assets/docs/providers/generic-oidc-setup.md)
+**Going deeper:** [Architecture](assets/docs/ARCHITECTURE.md) · [Advanced deployment](assets/docs/DEPLOYMENT.md) · [Local testing](assets/docs/LOCAL_TESTING.md) · [Claude Desktop (Cowork 3P)](assets/docs/COWORK_3P.md) · [Deployment patterns blog post](https://aws.amazon.com/blogs/machine-learning/claude-code-deployment-patterns-and-best-practices-with-amazon-bedrock/)
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT — see [LICENSE](LICENSE).
