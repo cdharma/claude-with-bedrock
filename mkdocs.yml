@@ -1,9 +1,9 @@
 site_name: Guidance for Claude Code and Cowork on Amazon Bedrock
 site_description: Enterprise deployment guide for Claude Code on Amazon Bedrock
-site_url: https://wirjo.github.io/guidance-for-claude-code-with-amazon-bedrock/
-repo_url: https://github.com/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock
-repo_name: aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock
-edit_uri: edit/beta/
+site_url: https://cdharma.github.io/claude-with-bedrock/
+repo_url: https://github.com/cdharma/claude-with-bedrock
+repo_name: cdharma/claude-with-bedrock
+edit_uri: edit/main/
 
 theme:
   name: material
@@ -90,8 +90,12 @@ nav:
     - Quota Monitoring: QUOTA_MONITORING.md
     - Cost Estimates: COST_ESTIMATES.md
     - Cost Attribution: COST_ATTRIBUTION.md
+    - Troubleshooting: TROUBLESHOOTING.md
+    - Resource Inventory: RESOURCE_INVENTORY.md
   - Usage:
     - CLI Reference: CLI_REFERENCE.md
     - Local Testing: LOCAL_TESTING.md
-    - Claude Desktop (CoWork): COWORK_3P.md
+    - Claude Desktop (Cowork): COWORK_3P.md
     - Plugins: PLUGINS.md
+    - Bootstrap Server: BOOTSTRAP_SERVER.md
+    - Web Search: WEB_SEARCH.md
