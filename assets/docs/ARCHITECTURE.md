@@ -6,7 +6,7 @@ This document provides technical details about the Claude Code authentication sy
 
 ## System Overview
 
-The Claude Code authentication system enables secure, scalable access to Amazon Bedrock by federating enterprise identity providers through AWS Cognito. The architecture follows zero-trust principles with complete audit trails.
+The Claude Code authentication system enables secure, scalable access to Amazon Bedrock by federating enterprise identity — via direct IAM OIDC federation, an Amazon Cognito Identity Pool, or AWS IAM Identity Center. The architecture follows zero-trust principles with complete audit trails.
 
 ### Authentication Components
 
@@ -58,11 +58,11 @@ For organizations requiring detailed analytics, the optional analytics stack pro
 
 The authentication flow begins when Claude Code requests AWS credentials through the AWS CLI. The CLI invokes our credential process executable, which initiates an OAuth2 flow with PKCE (Proof Key for Code Exchange) to ensure security without requiring client secrets. A browser window opens automatically, directing the user to their organization's identity provider for authentication.
 
-After successful authentication, the identity provider redirects back to the local callback server with an authorization code. The credential process exchanges this code for OIDC tokens. The system then uses one of two authentication methods to obtain AWS credentials:
+After successful authentication, the identity provider redirects back to the local callback server with an authorization code. The credential process exchanges this code for OIDC tokens. The system then uses one of the following methods to obtain AWS credentials:
 
 ### Authentication Methods
 
-The system supports two authentication methods:
+The system supports three authentication methods:
 
 **Direct IAM Federation**
 - Uses IAM OIDC Provider with STS AssumeRoleWithWebIdentity
@@ -74,7 +74,13 @@ The system supports two authentication methods:
 - Cognito manages the OIDC to AWS credential exchange
 - Configurable session duration up to 8 hours
 
-The authentication method is selected during initial configuration and both methods provide full CloudTrail attribution through session tags. These credentials include session tags containing the user's email and subject claim, ensuring every subsequent API call to Amazon Bedrock can be attributed to the specific user.
+**AWS IAM Identity Center (IDC)**
+- Uses the device-authorization sign-in built into IAM Identity Center — no external identity provider or OIDC tokens involved
+- User identity comes from the IAM role session name; spending-limit (quota) checks are SigV4-signed instead of JWT-based
+- Session duration is set by the Identity Center permission set (default 1 hour, up to 12 hours)
+- See the [IAM Identity Center setup guide](providers/iam-identity-center-setup.md)
+
+The authentication method is selected during initial configuration and all methods provide full CloudTrail attribution. The OIDC-based methods include session tags containing the user's email and subject claim, ensuring every subsequent API call to Amazon Bedrock can be attributed to the specific user.
 
 The temporary credentials are returned to Claude Code through the standard AWS CLI credential process protocol. The entire flow operates without any client secrets or long-lived credentials, following zero-trust security principles. Credentials are cached securely using either the operating system's keyring service or encrypted session files, preventing repeated authentication requests during the session lifetime.
 
@@ -98,9 +104,9 @@ Our implementation returns credentials in the exact format required by the AWS C
 
 The packaging and distribution system bridges the gap between IT administrators who deploy infrastructure and end users who need simple, foolproof installation. The `ccwb package` command creates a self-contained distribution that includes everything users need without requiring technical expertise.
 
-The packaging system uses Go cross-compilation (`ccwb package --go`) to produce native statically-linked binaries for all 5 platforms from a single machine, replacing the previous PyInstaller (macOS/Linux) and Nuitka/CodeBuild (Windows) build pipeline. The binaries are generic — they contain zero customer-specific data and work for all deployments.
+The packaging system uses Go cross-compilation (the default for `ccwb package`) to produce native statically-linked binaries for all 5 platforms from a single machine, replacing the previous PyInstaller (macOS/Linux) and Nuitka/CodeBuild (Windows) build pipeline. The binaries are generic — they contain zero customer-specific data and work for all deployments.
 
-The `ccwb package --go` command cross-compiles the binaries and generates customer-specific `config.json` (with federation config, quota settings) and `settings.json` (with Bedrock model, OTel endpoint) from the admin's profile. Only Go 1.24+ is required — no Docker, CodeBuild, or platform-specific toolchains needed.
+The `ccwb package` command cross-compiles the binaries and generates customer-specific `config.json` (with federation config, quota settings) and `settings.json` (with Bedrock model, OTel endpoint) from the admin's profile. Only Go 1.24+ is required — no Docker, CodeBuild, or platform-specific toolchains needed.
 
 The package embeds the configuration created during deployment, including the federation identifier (role ARN or identity pool ID) read from the profile. Generic install scripts (`install.sh`, `install.bat`, `ccwb-install.ps1`) read profile names and regions from `config.json` at install time, so they work for any customer without regeneration.
 
@@ -131,7 +137,7 @@ For organizations with monitoring enabled, the package also includes the OTEL he
 
 The security architecture addresses several threat vectors inherent in enterprise authentication systems. Each design decision directly mitigates specific risks while maintaining usability.
 
-Credential theft represents the most common attack vector in authentication systems. Traditional long-lived API keys create persistent risk - once stolen, they remain valid until manually revoked. Our architecture eliminates this risk by using only temporary credentials that expire automatically. These credentials typically last one hour, with a maximum configurable lifetime of eight hours. Even if credentials are somehow compromised, the attacker's window of opportunity is limited and closes automatically.
+Credential theft represents the most common attack vector in authentication systems. Traditional long-lived API keys create persistent risk - once stolen, they remain valid until manually revoked. Our architecture eliminates this risk by using only temporary credentials that expire automatically. The maximum configurable lifetime depends on the authentication method: up to 12 hours with Direct IAM federation (STS AssumeRoleWithWebIdentity) and up to 8 hours with a Cognito Identity Pool. Even if credentials are somehow compromised, the attacker's window of opportunity is limited and closes automatically.
 
 The OAuth2 authorization flow itself presents opportunities for interception attacks. An attacker who intercepts an authorization code could potentially exchange it for tokens. We implement PKCE (Proof Key for Code Exchange, RFC 7636) which generates a dynamic code verifier for each authentication request. This makes intercepted codes useless without the corresponding verifier. Additionally, a cryptographically random state parameter prevents cross-site request forgery attacks.
 

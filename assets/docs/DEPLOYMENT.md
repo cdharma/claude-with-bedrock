@@ -2,7 +2,7 @@
 
 This guide walks IT administrators through deploying Claude Code authentication across your organization, transforming your existing identity provider into a gateway for secure Amazon Bedrock access.
 
-> **Prerequisites**: See the [main README](../../README.md#prerequisites) for detailed requirements. You'll need AWS administrative access, an OIDC identity provider, and Python with Poetry installed.
+> **Prerequisites**: See the [main README](../../README.md#for-admins-deploying-it) for detailed requirements. You'll need AWS administrative access, an OIDC identity provider or AWS IAM Identity Center, and Python with Poetry installed.
 
 ## The Deployment Process
 
@@ -27,8 +27,8 @@ Before moving on, note two critical values from your application configuration: 
 With your identity provider configured, it's time to deploy the AWS infrastructure that bridges your organization's authentication to Amazon Bedrock. Start by cloning the repository and installing the deployment tools:
 
 ```bash
-git clone https://github.com/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock
-cd guidance-for-claude-code-with-amazon-bedrock/source
+git clone https://github.com/cdharma/claude-with-bedrock
+cd claude-with-bedrock/source
 poetry install
 ```
 
@@ -63,7 +63,7 @@ The packaging system uses Go cross-compilation to produce native binaries for al
 
 ```bash
 # Build for all platforms (recommended — works from any OS)
-poetry run ccwb package --go --target-platform all
+poetry run ccwb package --target-platform all
 ```
 
 This single command:
@@ -74,7 +74,7 @@ This single command:
 
 **Requirements:** Go 1.24+ installed. Go supports native cross-compilation, so all 5 platform binaries are produced from any single machine (macOS, Linux, or Windows) without Docker or CodeBuild. Build time: ~10 seconds for all platforms.
 
-> **Legacy mode:** Running `ccwb package` without `--go` uses the PyInstaller/Nuitka/Docker/CodeBuild pipeline. This is retained for backward compatibility.
+> **Legacy mode:** Plain `ccwb package` builds with Go by default (the `--go` flag is still accepted but no longer needed). Pass `--legacy` to use the older PyInstaller/Nuitka/Docker/CodeBuild pipeline, retained for backward compatibility.
 
 <details>
 <summary>Legacy build mode details</summary>
@@ -118,7 +118,7 @@ On first cross-arch build, `ccwb` creates an isolated build environment at `~/.c
 
 Without universal2 Python: `--target-platform=all` skips the cross-arch target with a note and continues normally. Explicitly requesting the cross-arch target (e.g. `--target-platform=macos-intel` on Apple Silicon) fails with a clear error pointing to the python.org installer.
 
-(Cross-arch builds are not needed with `--go` — Go cross-compiles all platforms natively.)
+(Cross-arch builds are not needed in the default Go mode — Go cross-compiles all platforms natively.)
 
 The resulting `dist/` folder contains everything users need:
 
@@ -127,9 +127,11 @@ The resulting `dist/` folder contains everything users need:
 - Intelligent installer scripts (`install.sh` for Unix, `install.bat` + `ccwb-install.ps1` for Windows) detect the user's architecture and set up their AWS profile automatically
 - If you enabled monitoring, OTEL helper executables and Claude Code telemetry settings that point to your OpenTelemetry collector
 
-### Windows Build System (Optional)
+### Windows Build System (Legacy mode only)
 
-Windows binary builds use AWS CodeBuild with Nuitka for optimal performance. Windows support is optional and configured during the `init` process:
+> **In the default Go mode, this section does not apply.** Windows binaries are cross-compiled locally like every other platform — no CodeBuild stack and no remote builds. You only need what follows if you build with `--legacy`.
+
+Legacy-mode Windows binary builds use AWS CodeBuild with Nuitka. Windows support is optional and configured during the `init` process:
 
 1. **Enable during init**: When running `poetry run ccwb init`, you'll be prompted:
 
@@ -139,12 +141,12 @@ Windows binary builds use AWS CodeBuild with Nuitka for optimal performance. Win
 
    If you answer "yes", the CodeBuild stack will be deployed automatically when you run `deploy`.
 
-2. **If enabled**, Windows builds will automatically trigger when you run:
+2. **If enabled**, Windows builds will automatically trigger when you run a legacy build:
 
    ```bash
-   poetry run ccwb package --target-platform=all
+   poetry run ccwb package --legacy --target-platform=all
    # or specifically for Windows:
-   poetry run ccwb package --target-platform=windows
+   poetry run ccwb package --legacy --target-platform=windows
    ```
 
 3. **Monitor build progress**:
@@ -155,8 +157,8 @@ Windows binary builds use AWS CodeBuild with Nuitka for optimal performance. Win
 **Important Notes:**
 
 - Windows builds are completely optional - the package will work without them
-- If CodeBuild is not enabled, Windows builds will be silently skipped
-- Windows builds take 20+ minutes
+- In legacy mode, if CodeBuild is not enabled, Windows builds are silently skipped
+- Legacy Windows builds take 20+ minutes
 - To enable Windows builds after initial setup, re-run `poetry run ccwb init`
 
 ### Organization-Wide Enforcement (Optional)
@@ -165,7 +167,7 @@ For large deployments (50+ users) where settings must be non-overridable, use ma
 
 ```bash
 poetry run ccwb init --managed
-poetry run ccwb package --go
+poetry run ccwb package
 ```
 
 This writes settings to the OS-level `managed-settings.json` path instead of user-scope `~/.claude/settings.json`. Managed settings have the **highest precedence** in Claude Code's settings hierarchy and cannot be edited or overridden by end users.
@@ -186,12 +188,12 @@ Before distributing to users, thoroughly test the package to ensure everything w
 poetry run ccwb test
 ```
 
-This test runs through the complete user journey. It executes the installer in a temporary directory, configures the AWS profile, triggers the authentication flow, and verifies access to Amazon Bedrock. Watch as it opens a browser window for authentication - this is exactly what your users will see.
+This test runs through the complete user journey. It executes the installer in a temporary directory, configures the AWS profile, triggers the authentication flow, and verifies access to Amazon Bedrock — including real Bedrock API calls (minimal cost, ~$0.001). Watch as it opens a browser window for authentication - this is exactly what your users will see.
 
-For more thorough validation, add the `--api` flag to make actual Bedrock API calls:
+By default the test covers three representative regions. To validate every allowed Bedrock region, add the `--full` flag:
 
 ```bash
-poetry run ccwb test --api
+poetry run ccwb test --full
 ```
 
 ## Phase 5: Distributing to Your Users

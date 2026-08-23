@@ -7,8 +7,8 @@ Before distributing Claude Code authentication to your organization, thorough lo
 The CLI provides comprehensive automated testing that simulates exactly what your users will experience:
 
 ```bash
-poetry run ccwb test         # Basic authentication test
-poetry run ccwb test --api   # Full test including Bedrock API calls
+poetry run ccwb test         # Full test, including real Bedrock API calls
+poetry run ccwb test --full  # Also test every allowed Bedrock region
 ```
 
 This single command runs through the entire user journey - installation, authentication, and Bedrock access. For most deployments, this automated testing provides sufficient validation. However, understanding what happens behind the scenes and testing edge cases helps you support users more effectively.
@@ -180,7 +180,7 @@ When testing, be aware that AWS CLI uses the following credential precedence ord
 5. Config file credentials
 6. Instance metadata
 
-If you have AWS credentials in environment variables (e.g., from other tools like Isengard), they will override the ClaudeCode profile. To ensure you're using the Claude Code authentication:
+If you have AWS credentials in environment variables (e.g., exported by another SSO or credential-vending tool), they will override the ClaudeCode profile. To ensure you're using the Claude Code authentication:
 
 ```bash
 # Clear any existing AWS credentials from environment

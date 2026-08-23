@@ -1,6 +1,6 @@
 # AWS Resource Inventory Per Stack
 
-> **Last updated:** 2026-07-03
+> **Last updated:** 2026-08-23
 
 > **Purpose:** Pre-deployment reference for customers under restrictive SCPs.
 > Use this to plan IAM/SCP exemptions or decide which stacks to skip before running `ccwb deploy`.
@@ -82,30 +82,28 @@ Stacks in `[]` are optional. Only `auth` is strictly required for basic Claude C
 | Resource Type | Service Namespace | Count |
 |---|---|---|
 | `AWS::ECS::Cluster` | `ecs` | 1 |
-| `AWS::ECS::Service` | `ecs` | 2 |
+| `AWS::ECS::Service` | `ecs` | 2 (mutually exclusive — only 1 deploys, HTTP or HTTPS) |
 | `AWS::ECS::TaskDefinition` | `ecs` | 1 |
 | `AWS::EC2::SecurityGroup` | `ec2` | 2 |
 | `AWS::ElasticLoadBalancingV2::LoadBalancer` | `elasticloadbalancing` | 1 |
-| `AWS::ElasticLoadBalancingV2::Listener` | `elasticloadbalancing` | 2 |
+| `AWS::ElasticLoadBalancingV2::Listener` | `elasticloadbalancing` | 2 (1 conditional, HTTPS) |
+| `AWS::ElasticLoadBalancingV2::ListenerRule` | `elasticloadbalancing` | 1 (conditional, Claude Desktop telemetry auth bypass) |
 | `AWS::ElasticLoadBalancingV2::TargetGroup` | `elasticloadbalancing` | 1 |
 | `AWS::IAM::Role` | `iam` | 2 |
-| `AWS::Logs::LogGroup` | `logs` | 2 |
-| `AWS::SSM::Parameter` | `ssm` | 2 |
+| `AWS::Logs::LogGroup` | `logs` | 3 (1 conditional, analytics) |
+| `AWS::SSM::Parameter` | `ssm` | 1 |
 | `AWS::CertificateManager::Certificate` | `acm` | 1 (conditional) |
 | `AWS::Route53::RecordSet` | `route53` | 1 (conditional) |
-| `AWS::ApplicationAutoScaling::ScalableTarget` | `application-autoscaling` | 1 |
-| `AWS::ApplicationAutoScaling::ScalingPolicy` | `application-autoscaling` | 1 |
 
 **IAM actions required for deployment:**
 - `ecs:CreateCluster`, `ecs:CreateService`, `ecs:RegisterTaskDefinition`
 - `ec2:CreateSecurityGroup`, `ec2:AuthorizeSecurityGroupIngress`
-- `elasticloadbalancing:CreateLoadBalancer`, `elasticloadbalancing:CreateTargetGroup`, `elasticloadbalancing:CreateListener`
+- `elasticloadbalancing:CreateLoadBalancer`, `elasticloadbalancing:CreateTargetGroup`, `elasticloadbalancing:CreateListener`, `elasticloadbalancing:CreateRule`
 - `iam:CreateRole`, `iam:PutRolePolicy`, `iam:PassRole`
 - `logs:CreateLogGroup`
 - `ssm:PutParameter`
 - `acm:RequestCertificate` (if custom domain)
 - `route53:ChangeResourceRecordSets` (if custom domain)
-- `application-autoscaling:RegisterScalableTarget`, `application-autoscaling:PutScalingPolicy`
 
 **Runtime service-linked role required:**
 - `AWSServiceRoleForECS` (created automatically by `ccwb deploy`, or manually: `aws iam create-service-linked-role --aws-service-name ecs.amazonaws.com`)
@@ -129,7 +127,7 @@ Stacks in `[]` are optional. Only `auth` is strictly required for basic Claude C
 ## cowork-dashboard
 
 **Template:** `cowork-dashboard.yaml`
-**Required:** No (optional, CoWork-specific)
+**Required:** No (optional, Claude Desktop (Cowork)-specific)
 
 | Resource Type | Service Namespace | Count |
 |---|---|---|
@@ -171,18 +169,19 @@ Stacks in `[]` are optional. Only `auth` is strictly required for basic Claude C
 ## quota
 
 **Template:** `quota-monitoring.yaml`
-**Required:** No (optional, for per-user token limits)
+**Required:** No (optional, for per-user spending limits — USD cost-based or token-based)
 
 | Resource Type | Service Namespace | Count |
 |---|---|---|
 | `AWS::DynamoDB::Table` | `dynamodb` | 2 |
-| `AWS::Lambda::Function` | `lambda` | 2 |
-| `AWS::Lambda::Permission` | `lambda` | 2 |
-| `AWS::IAM::Role` | `iam` | 2 |
+| `AWS::Lambda::Function` | `lambda` | 3 (1 conditional, bypass detection) |
+| `AWS::Lambda::Permission` | `lambda` | 3 (1 conditional, bypass detection) |
+| `AWS::IAM::Role` | `iam` | 3 (1 conditional, bypass detection) |
+| `AWS::IAM::ManagedPolicy` | `iam` | 1 (conditional, IDC/IAM-auth deployments) |
 | `AWS::SNS::Topic` | `sns` | 1 |
-| `AWS::Events::Rule` | `events` | 1 |
+| `AWS::Events::Rule` | `events` | 2 (1 conditional, bypass detection) |
 | `AWS::ApiGatewayV2::Api` | `apigateway` | 1 |
-| `AWS::ApiGatewayV2::Authorizer` | `apigateway` | 1 |
+| `AWS::ApiGatewayV2::Authorizer` | `apigateway` | 1 (conditional, OIDC deployments) |
 | `AWS::ApiGatewayV2::Integration` | `apigateway` | 1 |
 | `AWS::ApiGatewayV2::Route` | `apigateway` | 1 |
 | `AWS::ApiGatewayV2::Stage` | `apigateway` | 1 |
@@ -190,7 +189,7 @@ Stacks in `[]` are optional. Only `auth` is strictly required for basic Claude C
 **IAM actions required for deployment:**
 - `dynamodb:CreateTable`, `dynamodb:DescribeTable`
 - `lambda:CreateFunction`, `lambda:AddPermission`
-- `iam:CreateRole`, `iam:PutRolePolicy`, `iam:PassRole`
+- `iam:CreateRole`, `iam:PutRolePolicy`, `iam:PassRole`, `iam:CreatePolicy` (IDC/IAM-auth deployments)
 - `sns:CreateTopic`
 - `events:PutRule`, `events:PutTargets`
 - `apigateway:CreateApi`, `apigateway:CreateRoute`, `apigateway:CreateIntegration`, `apigateway:CreateStage`, `apigateway:CreateAuthorizer`
@@ -404,7 +403,7 @@ cognito-identity, iam, logs, cloudformation, sts
 Full deployment adds:
 ```
 ec2, ecs, elasticloadbalancing, s3, ssm, acm, route53,
-application-autoscaling, cloudwatch, dynamodb, lambda,
+cloudwatch, dynamodb, lambda,
 sns, events, apigateway, athena, glue, firehose, codebuild,
 secretsmanager, wafv2, bedrock-agentcore, cognito-idp
 ```
