@@ -66,6 +66,28 @@ def _find_binary(install_dir: Path, name: str) -> Path | None:
     return None
 
 
+def _monitoring_configured(config_data: dict | None) -> bool:
+    """Return True when any profile in config.json declares monitoring.
+
+    Newer packages (`ccwb package`) write ``monitoring_enabled`` /
+    ``monitoring_mode`` and, when resolvable, ``otel_collector_endpoint`` into
+    the end-user config.json. Older packages wrote none of these keys, so
+    keying the monitoring checks on ``otel_collector_endpoint`` alone made the
+    otel-helper/proxy failures unreachable — a broken monitoring install
+    reported "skipped / Monitoring not configured". Check both keys.
+    """
+    if not config_data:
+        return False
+    profiles_data = config_data.get("profiles", config_data)
+    for name in profiles_data:
+        prof = profiles_data.get(name)
+        if not isinstance(prof, dict):
+            continue
+        if prof.get("otel_collector_endpoint") or prof.get("monitoring_enabled"):
+            return True
+    return False
+
+
 def _run_binary_json(binary_path: Path, args: list, timeout: int = 10) -> dict | None:
     """Run a binary with args, parse JSON stdout. Returns None on failure."""
     try:
@@ -218,12 +240,7 @@ def run_doctor(home: Path = None, live: bool = False, profile: str = None) -> li
         check.pass_(str(otel_path))
     elif config_data:
         # Only fail if monitoring is actually configured
-        profiles_data = config_data.get("profiles", config_data)
-        any_monitoring = any(
-            isinstance(profiles_data.get(p), dict) and profiles_data[p].get("otel_collector_endpoint")
-            for p in profiles_data
-        )
-        if any_monitoring:
+        if _monitoring_configured(config_data):
             check.fail(
                 "Monitoring configured but otel-helper not found",
                 "Re-run 'ccwb package' with Go installed, then re-install",
@@ -254,12 +271,7 @@ def run_doctor(home: Path = None, live: bool = False, profile: str = None) -> li
             else:
                 # Proxy not running is only a problem if monitoring is configured
                 if config_data:
-                    profiles_data = config_data.get("profiles", config_data)
-                    any_monitoring = any(
-                        isinstance(profiles_data.get(p), dict) and profiles_data[p].get("otel_collector_endpoint")
-                        for p in profiles_data
-                    )
-                    if any_monitoring:
+                    if _monitoring_configured(config_data):
                         check.warn(
                             f"Proxy not running (port {proxy.get('port')})",
                             "Proxy starts automatically when credential-process runs",
@@ -322,12 +334,7 @@ def run_doctor(home: Path = None, live: bool = False, profile: str = None) -> li
                 continue
         else:
             if config_data:
-                profiles_data = config_data.get("profiles", config_data)
-                any_monitoring = any(
-                    isinstance(profiles_data.get(p), dict) and profiles_data[p].get("otel_collector_endpoint")
-                    for p in profiles_data
-                )
-                if any_monitoring:
+                if _monitoring_configured(config_data):
                     check.warn(
                         "No OTEL proxy listening on 4318 or 4319",
                         "Run credential-process to spawn the proxy, or start otel-helper manually",

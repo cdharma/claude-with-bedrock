@@ -518,6 +518,22 @@ class PackageCommand(Command):
             console.print("[dim]To enable quota enforcement, run: ccwb init → enable quota monitoring[/dim]")
             console.print()
 
+        # Static OTEL identity for the IDC sidecar collector config.
+        # collector-config-idc.yaml bakes ${USER_EMAIL}/${USER_NAME}/... at package
+        # time for BOTH IDC paths — zero-binary AND IDC+quota (see the
+        # _generate_collector_config call below). The email collection therefore
+        # must not live under the zero-binary branch alone: an IDC+quota sidecar
+        # package used to ship a collector config with unresolved ${USER_EMAIL}
+        # placeholders. Zero-binary keeps its historical always-collect behavior;
+        # the IDC+quota path collects only when a sidecar collector config will
+        # actually be generated (no pointless STS call or prompt otherwise).
+        _idc_needs_static_identity = is_idc_zero_binary or (
+            _is_idc_auth
+            and _has_quota
+            and profile.monitoring_enabled
+            and getattr(profile, "monitoring_mode", "central") == "sidecar"
+        )
+        if _idc_needs_static_identity:
             # Auto-detect user email from STS caller identity (IDC ARN session name = email)
             try:
                 import boto3
@@ -770,6 +786,25 @@ class PackageCommand(Command):
                 console.print("Fix the issue above and re-run [cyan]ccwb package[/cyan].\n")
                 build_failed = True
 
+        # otel-helper parity gate: when monitoring is enabled, every platform that
+        # received a credential-process binary must also get an otel-helper. Both
+        # build paths swallow otel-helper failures (PyInstaller prints a warning,
+        # the Go loop `continue`s), so without this gate a monitoring-enabled
+        # package with broken telemetry still printed "Package created
+        # successfully!" and exited 0. IDC zero-binary mode is excluded: it ships
+        # no binaries at all and bakes static identity into the collector config.
+        if not is_idc_zero_binary and profile.monitoring_enabled and built_executables:
+            otel_platforms = {p for p, _ in built_otel_helpers}
+            missing_otel = sorted({p for p, _ in built_executables} - otel_platforms)
+            if missing_otel:
+                console.print(
+                    f"\n[yellow]Warning: monitoring is enabled but no otel-helper was built for: "
+                    f"{', '.join(missing_otel)}[/yellow]"
+                )
+                console.print("Telemetry would be silently broken for users on those platforms.")
+                console.print("Fix the issue above and re-run [cyan]ccwb package[/cyan].\n")
+                build_failed = True
+
         if windows_codebuild_pending and not built_executables:
             console.print("\n[bold cyan]Windows binaries are building in AWS CodeBuild[/bold cyan]")
             console.print("Local configuration files will be generated now for distribution.")
@@ -817,9 +852,12 @@ class PackageCommand(Command):
         console.print("[cyan]Creating documentation...[/cyan]")
         self._create_documentation(output_dir, profile, timestamp)
 
-        # Always create Claude Code settings (required for Bedrock configuration)
+        # Always create Claude Code settings (required for Bedrock configuration).
+        # A failure here (exception, or monitoring enabled with no resolvable OTEL
+        # endpoint) makes the package incomplete — propagate it to the exit code
+        # instead of shipping a package that silently lacks settings/telemetry.
         console.print("[cyan]Creating Claude Code settings...[/cyan]")
-        self._create_claude_settings(
+        settings_ok = self._create_claude_settings(
             output_dir,
             profile,
             include_coauthored_by,
@@ -872,9 +910,11 @@ class PackageCommand(Command):
 
         console.print("  • config.json - Configuration")
         console.print("  • install.sh - Installation script for macOS/Linux")
-        # Check if Windows installer exists (created when Windows binaries are present)
+        # Check if Windows installer exists (created when Windows binaries are
+        # present, and always for IDC zero-binary packages)
         if (output_dir / "install.bat").exists():
             console.print("  • install.bat - Installation script for Windows")
+        if (output_dir / "ccwb-install.ps1").exists():
             console.print("  • ccwb-install.ps1 - PowerShell installer (called by install.bat)")
         console.print("  • README.md - Installation instructions")
         if profile.monitoring_enabled and (output_dir / "claude-settings" / "settings.json").exists():
@@ -914,7 +954,16 @@ class PackageCommand(Command):
             console.print("Share the dist folder with your users for installation")
 
         if build_failed:
-            console.print("\n[yellow]⚠ Package generated without binaries. Fix the build issue and re-run.[/yellow]")
+            console.print(
+                "\n[yellow]⚠ Package generated with missing binaries. Fix the build issue and re-run.[/yellow]"
+            )
+            return 1
+
+        if not settings_ok:
+            console.print(
+                "\n[red]✗ Claude Code settings generation failed — the package is incomplete. "
+                "Fix the issue above and re-run.[/red]"
+            )
             return 1
 
         return 0
@@ -1147,24 +1196,46 @@ class PackageCommand(Command):
             return
 
         content = template_src.read_text(encoding="utf-8")
+        # Key the identity substitution on the TEMPLATE (does it carry the static
+        # identity placeholders?), not on whether the caller supplied an email.
+        # Guarding on `idc_user_email is not None` shipped collector configs with
+        # literal ${USER_EMAIL}/${USER_NAME}/... when a caller passed None — the
+        # collector then exported those verbatim as resource attributes. When no
+        # email is known, fall back to anonymous defaults instead (the
+        # otel-attribution-chain contract: x-user-email is always present).
+        has_identity_placeholders = "${USER_EMAIL}" in content
         content = content.replace("${REGION}", region)
 
-        if idc_user_email is not None:
+        if has_identity_placeholders:
             attrs: dict[str, str] = {}
             if otel_resource_attributes:
                 for pair in otel_resource_attributes.split(","):
                     if "=" in pair:
                         k, v = pair.split("=", 1)
                         attrs[k.strip()] = v.strip()
-            content = content.replace("${USER_EMAIL}", idc_user_email or "unknown@example.com")
-            content = content.replace("${USER_NAME}", (idc_user_email or "unknown").split("@")[0])
+            effective_email = idc_user_email or "unknown@example.com"
+            content = content.replace("${USER_EMAIL}", effective_email)
+            content = content.replace("${USER_NAME}", effective_email.split("@")[0])
             content = content.replace("${DEPARTMENT}", attrs.get("department", "default"))
             content = content.replace("${TEAM_ID}", attrs.get("team.id", "default"))
             content = content.replace("${COST_CENTER}", attrs.get("cost_center", "default"))
             content = content.replace("${ORGANIZATION}", attrs.get("organization", "default"))
 
         (output_dir / "collector-config.yaml").write_text(content, encoding="utf-8")
-        label = f"IDC (identity: {idc_user_email})" if idc_user_email is not None else "OIDC"
+
+        # Post-write guard: no unresolved ${...} placeholders may ship. A config
+        # with leftovers would attribute all telemetry to a literal "${USER_EMAIL}"
+        # (or break the exporter endpoint) with no error anywhere.
+        import re as _re
+
+        unresolved = sorted(set(_re.findall(r"\$\{[A-Z_]+\}", content)))
+        if unresolved:
+            console.print(
+                f"[yellow]Warning: collector-config.yaml contains unresolved placeholders: "
+                f"{', '.join(unresolved)}[/yellow]"
+            )
+
+        label = f"IDC (identity: {effective_email})" if has_identity_placeholders else "OIDC"
         console.print(f"[dim]Generated {label} sidecar collector config[/dim]")
 
     def _build_otelcol(self, output_dir: Path, platforms_to_build: list[str]) -> None:
@@ -2683,7 +2754,7 @@ RUN pyinstaller \
 
         # Regenerate Claude Code settings
         console.print("[cyan]Generating Claude Code settings...[/cyan]")
-        self._create_claude_settings(
+        settings_ok = self._create_claude_settings(
             output_dir,
             profile,
             include_coauthored_by,
@@ -2691,6 +2762,12 @@ RUN pyinstaller \
             otel_resource_attributes,
             settings_version=timestamp,
         )
+        if not settings_ok:
+            console.print(
+                "[red]✗ Claude Code settings generation failed — the package is incomplete. "
+                "Fix the issue above and re-run.[/red]"
+            )
+            return 1
 
         # Summary
         console.print("\n[green]✓ Installers regenerated successfully![/green]")
@@ -2826,6 +2903,22 @@ RUN pyinstaller \
         if profile.provider_type == "cognito" and profile.cognito_user_pool_id:
             config[profile_name]["cognito_user_pool_id"] = profile.cognito_user_pool_id
 
+        # Okta Custom Authorization Server. The two credential-process variants
+        # read DIFFERENT keys for the same value — Python reads "okta_auth_server"
+        # (credential_provider/__main__.py) while Go reads "okta_auth_server_id"
+        # (go/internal/config/config.go) — so write both to keep them in lockstep.
+        # Empty means "Org authorization server" for both, so only emit when set.
+        if getattr(profile, "okta_auth_server", None):
+            config[profile_name]["okta_auth_server"] = profile.okta_auth_server
+            config[profile_name]["okta_auth_server_id"] = profile.okta_auth_server
+
+        # OIDC prompt parameter (Azure account picker). None means "not
+        # configured" (both binaries default to select_account); the empty string
+        # is meaningful — it suppresses the prompt parameter for silent SSO — so
+        # emit whenever the profile sets it explicitly, including "".
+        if getattr(profile, "oidc_prompt", None) is not None:
+            config[profile_name]["oidc_prompt"] = profile.oidc_prompt
+
         # Add selected_model if available
         if hasattr(profile, "selected_model") and profile.selected_model:
             config[profile_name]["selected_model"] = profile.selected_model
@@ -2878,6 +2971,20 @@ RUN pyinstaller \
             config[profile_name]["quota_api_endpoint"] = profile.quota_api_endpoint
             config[profile_name]["quota_fail_mode"] = getattr(profile, "quota_fail_mode", "open")
             config[profile_name]["quota_check_interval"] = getattr(profile, "quota_check_interval", 30)
+
+        # Monitoring wiring (mirrors _create_claude_settings): these keys drive
+        # `ccwb doctor`'s monitoring checks and `credential-process --explain` on
+        # the end-user machine. Without them, a broken monitoring install reports
+        # "skipped / Monitoring not configured" instead of failing the check.
+        if getattr(profile, "monitoring_enabled", False):
+            config[profile_name]["monitoring_enabled"] = True
+            monitoring_mode = getattr(profile, "monitoring_mode", "central") or "central"
+            config[profile_name]["monitoring_mode"] = monitoring_mode
+            if monitoring_mode == "sidecar":
+                # Sidecar packages always export to the local collector.
+                config[profile_name]["otel_collector_endpoint"] = "http://localhost:4318"
+            elif getattr(profile, "otel_collector_endpoint", None):
+                config[profile_name]["otel_collector_endpoint"] = profile.otel_collector_endpoint
 
         config_path = output_dir / "config.json"
         with open(config_path, "w", encoding="utf-8") as f:
@@ -3070,6 +3177,20 @@ echo "Re-run 'aws sso login --profile {profile_name}' when your session expires 
             with open(installer_path, "w", encoding="utf-8") as f:
                 f.write(idc_content)
             installer_path.chmod(0o755)
+
+            # Windows users need an installer too: the README unconditionally
+            # instructs `install.bat`, and _create_windows_installer is only
+            # reachable from the standard (binary) path below. Without this,
+            # zero-binary packages shipped no Windows installer at all.
+            self._create_idc_zero_binary_windows_installer(
+                output_dir,
+                profile_name=profile_name,
+                idc_start_url=idc_start_url,
+                idc_account_id=idc_account_id,
+                idc_permission_set=idc_permission_set,
+                aws_region=aws_region,
+                sso_region=sso_region,
+            )
             return installer_path
 
         # Determine which binaries were built
@@ -3626,6 +3747,114 @@ echo
 
         return installer_path
 
+    def _create_idc_zero_binary_windows_installer(
+        self,
+        output_dir: Path,
+        profile_name: str,
+        idc_start_url: str,
+        idc_account_id: str,
+        idc_permission_set: str,
+        aws_region: str,
+        sso_region: str,
+    ) -> Path:
+        """Create the Windows installer for IDC zero-binary packages.
+
+        Zero-binary packages ship no credential-process/otel-helper binaries, so
+        the standard _create_windows_installer (which installs and tests those
+        binaries) does not apply. This installer mirrors the zero-binary bash
+        install.sh: copy config.json, install the optional collector config,
+        write the [profile]/[sso-session] stanza into %USERPROFILE%\\.aws\\config,
+        and install the Claude Code settings. The stanza is appended only when
+        absent so re-runs never duplicate it.
+        """
+        installer_content = f"""@echo off
+cd /d "%~dp0"
+REM Claude Code with Bedrock - IAM Identity Center Installer (Windows)
+REM Zero-binary mode: authentication uses 'aws sso login' (no credential-process binary)
+REM Generated: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+
+echo ======================================
+echo Claude Code with Bedrock - IDC Setup
+echo ======================================
+echo.
+
+REM Prerequisites
+where aws >nul 2>&1
+if %errorlevel% neq 0 (
+    echo ERROR: AWS CLI v2 is required.
+    echo        Install from: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+    exit /b 1
+)
+echo OK AWS CLI found
+
+REM Install config.json
+if not exist "%USERPROFILE%\\claude-code-with-bedrock" mkdir "%USERPROFILE%\\claude-code-with-bedrock"
+copy /Y config.json "%USERPROFILE%\\claude-code-with-bedrock\\" >nul
+echo OK Configuration installed
+
+REM Install collector sidecar config if present
+if exist "collector-config.yaml" (
+    if not exist "%USERPROFILE%\\.ccwb" mkdir "%USERPROFILE%\\.ccwb"
+    copy /Y collector-config.yaml "%USERPROFILE%\\.ccwb\\" >nul
+    echo OK OTel collector config installed
+)
+
+REM Configure the AWS SSO profile (appended once; re-runs leave it unchanged)
+if not exist "%USERPROFILE%\\.aws" mkdir "%USERPROFILE%\\.aws"
+if not exist "%USERPROFILE%\\.aws\\config" type nul > "%USERPROFILE%\\.aws\\config"
+findstr /C:"[profile {profile_name}]" "%USERPROFILE%\\.aws\\config" >nul 2>&1
+if %errorlevel% neq 0 (
+    (
+        echo.
+        echo [profile {profile_name}]
+        echo sso_session = {profile_name}-session
+        echo sso_account_id = {idc_account_id}
+        echo sso_role_name = {idc_permission_set}
+        echo region = {aws_region}
+        echo.
+        echo [sso-session {profile_name}-session]
+        echo sso_start_url = {idc_start_url}
+        echo sso_region = {sso_region}
+        echo sso_registration_scopes = sso:account:access
+    ) >> "%USERPROFILE%\\.aws\\config"
+    echo OK AWS profile '{profile_name}' configured
+) else (
+    echo OK AWS profile '{profile_name}' already present - left unchanged
+)
+
+REM Install Claude Code settings
+if exist "claude-settings\\settings.json" (
+    if not exist "%USERPROFILE%\\.claude" mkdir "%USERPROFILE%\\.claude"
+    if exist "%USERPROFILE%\\.claude\\settings.json" copy /Y "%USERPROFILE%\\.claude\\settings.json" "%USERPROFILE%\\.claude\\settings.json.backup" >nul
+    copy /Y "claude-settings\\settings.json" "%USERPROFILE%\\.claude\\settings.json" >nul
+    echo OK Claude Code settings installed
+)
+
+echo.
+echo ======================================
+echo Installation complete!
+echo ======================================
+echo.
+echo Next step - authenticate with AWS SSO:
+echo.
+echo   aws sso login --profile {profile_name}
+echo.
+echo Then verify:
+echo.
+echo   aws sts get-caller-identity --profile {profile_name}
+echo.
+echo Claude Code will use the {profile_name} profile automatically.
+echo Re-run 'aws sso login --profile {profile_name}' when your session expires.
+echo.
+pause
+"""
+        installer_path = output_dir / "install.bat"
+        # CRLF endings: generated Windows scripts must not depend on the
+        # packaging host's line-ending conventions (windows-platform-guards.md).
+        with open(installer_path, "w", encoding="utf-8", newline="\r\n") as f:
+            f.write(installer_content)
+        return installer_path
+
     def _create_windows_installer(self, output_dir: Path, profile) -> Path:
         """Create Windows batch installer script."""
 
@@ -4042,6 +4271,59 @@ pause
 
     def _create_documentation(self, output_dir: Path, profile, timestamp: str):
         """Create user documentation."""
+        # IDC zero-binary packages authenticate with `aws sso login` — the
+        # generic instructions (browser OIDC auth via credential-process) do not
+        # apply, so the auth steps are swapped out below.
+        _is_idc_auth = getattr(profile, "effective_auth_type", getattr(profile, "auth_type", "oidc")) == "idc"
+        _zero_binary = _is_idc_auth and not bool(getattr(profile, "quota_api_endpoint", None))
+
+        if _zero_binary:
+            unix_step3 = """3. Sign in with AWS SSO:
+   ```bash
+   aws sso login --profile ClaudeCode
+   aws sts get-caller-identity --profile ClaudeCode
+   ```"""
+            windows_installer_does = """The installer will:
+- Check for AWS CLI installation
+- Copy the configuration to `%USERPROFILE%\\claude-code-with-bedrock`
+- Configure the AWS SSO profile "ClaudeCode" in `%USERPROFILE%\\.aws\\config`"""
+            windows_step4 = """#### Step 4: Sign in with AWS SSO
+```cmd
+aws sso login --profile ClaudeCode
+
+REM Verify authentication works
+aws sts get-caller-identity --profile ClaudeCode
+```
+
+Re-run `aws sso login --profile ClaudeCode` when your session expires."""
+        else:
+            unix_step3 = """3. Use the AWS profile:
+   ```bash
+   export AWS_PROFILE=ClaudeCode
+   aws sts get-caller-identity
+   ```"""
+            windows_installer_does = """The installer will:
+- Check for AWS CLI installation
+- Copy authentication tools to `%USERPROFILE%\\claude-code-with-bedrock`
+- Configure the AWS profile "ClaudeCode"
+- Test the authentication"""
+            windows_step4 = """#### Step 4: Use Claude Code
+```cmd
+# Set the AWS profile
+set AWS_PROFILE=ClaudeCode
+
+# Verify authentication works
+aws sts get-caller-identity
+
+# Your browser will open automatically for authentication if needed
+```
+
+For PowerShell users:
+```powershell
+$env:AWS_PROFILE = "ClaudeCode"
+aws sts get-caller-identity
+```"""
+
         readme_content = f"""# Claude Code Authentication Setup
 
 ## Quick Start
@@ -4059,11 +4341,7 @@ pause
    chmod +x install.sh && ./install.sh
    ```
 
-3. Use the AWS profile:
-   ```bash
-   export AWS_PROFILE=ClaudeCode
-   aws sts get-caller-identity
-   ```
+{unix_step3}
 
 ### Windows
 
@@ -4106,28 +4384,9 @@ cd claude-code-package
 install.bat
 ```
 
-The installer will:
-- Check for AWS CLI installation
-- Copy authentication tools to `%USERPROFILE%\\claude-code-with-bedrock`
-- Configure the AWS profile "ClaudeCode"
-- Test the authentication
+{windows_installer_does}
 
-#### Step 4: Use Claude Code
-```cmd
-# Set the AWS profile
-set AWS_PROFILE=ClaudeCode
-
-# Verify authentication works
-aws sts get-caller-identity
-
-# Your browser will open automatically for authentication if needed
-```
-
-For PowerShell users:
-```powershell
-$env:AWS_PROFILE = "ClaudeCode"
-aws sts get-caller-identity
-```
+{windows_step4}
 
 ## What This Does
 
@@ -4216,9 +4475,16 @@ Available metrics include:
         otel_resource_attributes: str | None = None,
         is_idc_zero_binary: bool = False,
         settings_version: str | None = None,
-    ) -> None:
-        """Create Claude Code settings.json with Bedrock and optional monitoring configuration."""
+    ) -> bool:
+        """Create Claude Code settings.json with Bedrock and optional monitoring configuration.
+
+        Returns True on success, False when the settings could not be created or
+        when monitoring is enabled but no OTEL endpoint could be resolved (the
+        settings file is still written in that case, but without any telemetry
+        configuration — an incomplete package the caller must not exit 0 for).
+        """
         console = Console()
+        success = True
 
         try:
             # Create claude-settings directory (visible, not hidden)
@@ -4507,6 +4773,10 @@ Available metrics include:
                 else:
                     console.print("[red]ERROR: Monitoring enabled but no OTel endpoint configured.[/red]")
                     console.print("[red]Run 'ccwb deploy' first or set otel_collector_endpoint in the profile.[/red]")
+                    # The settings file is still written below (Bedrock env only),
+                    # but it silently lacks ALL telemetry configuration — treat
+                    # this as a packaging failure, not a red print that exits 0.
+                    success = False
 
             # Determine output filename based on settings_target
             settings_target = getattr(profile, "settings_target", "user")
@@ -4524,6 +4794,9 @@ Available metrics include:
 
         except Exception as e:
             console.print(f"[yellow]Warning: Could not create Claude Code settings: {e}[/yellow]")
+            return False
+
+        return success
 
     def _generate_cowork_3p_mdm_config(
         self,
