@@ -3373,6 +3373,18 @@ class InitCommand(Command):
                 },
             }
 
+            # Restore auth type + IAM Identity Center fields (critical to preserve
+            # during updates — config-sync.md round-trip rule). Without these, the
+            # wizard's auth-method select defaults an IDC profile back to OIDC, the
+            # IDC prompts lose their saved defaults, and accepting defaults silently
+            # rewrites the profile with auth_type="oidc" and all idc_* fields nulled.
+            # effective_auth_type handles legacy profiles that only have sso_enabled.
+            existing_config["auth_type"] = profile.effective_auth_type
+            existing_config["sso_enabled"] = getattr(profile, "sso_enabled", True)
+            for idc_field in ("idc_start_url", "idc_account_id", "idc_permission_set_name", "sso_region"):
+                if getattr(profile, idc_field, None):
+                    existing_config[idc_field] = getattr(profile, idc_field)
+
             # Add provider type if present (critical to preserve during updates)
             if hasattr(profile, "provider_type") and profile.provider_type:
                 existing_config["provider_type"] = profile.provider_type
@@ -3527,7 +3539,12 @@ class InitCommand(Command):
         """Show summary of existing deployment."""
         console = Console()
 
-        if config.get("sso_enabled", True) and "okta" in config and "domain" in config["okta"]:
+        auth_type = config.get("auth_type", "oidc" if config.get("sso_enabled", True) else "none")
+        if auth_type == "idc":
+            console.print("• Authentication: [cyan]IAM Identity Center[/cyan]")
+            if config.get("idc_start_url"):
+                console.print(f"• IDC Start URL: [cyan]{config['idc_start_url']}[/cyan]")
+        elif auth_type == "oidc" and "okta" in config and "domain" in config["okta"]:
             console.print(f"• OIDC Provider: [cyan]{config['okta']['domain']}[/cyan]")
         else:
             console.print("• Authentication: [cyan]AWS SSO / IAM Identity Center (no OIDC)[/cyan]")
@@ -3535,7 +3552,7 @@ class InitCommand(Command):
         # Show Cognito-specific fields if using Cognito User Pool
         if "cognito_user_pool_id" in config:
             console.print(f"• Cognito User Pool ID: [cyan]{config['cognito_user_pool_id']}[/cyan]")
-        if "okta" in config and "client_id" in config["okta"]:
+        if auth_type == "oidc" and "okta" in config and "client_id" in config["okta"]:
             console.print(f"• Client ID: [cyan]{config['okta']['client_id']}[/cyan]")
 
         cred_storage = "Keyring" if config.get("credential_storage") == "keyring" else "Session Files"
