@@ -811,7 +811,7 @@ class PackageCommand(Command):
 
         # Create installer
         console.print("[cyan]Creating installer script...[/cyan]")
-        self._create_installer(output_dir, profile, built_executables, built_otel_helpers)
+        self._create_installer(output_dir, profile, built_executables, built_otel_helpers, profile_name=profile_name)
 
         # Create documentation
         console.print("[cyan]Creating documentation...[/cyan]")
@@ -2675,7 +2675,7 @@ RUN pyinstaller \
 
         # Regenerate installer scripts
         console.print("[cyan]Generating installer scripts...[/cyan]")
-        self._create_installer(output_dir, profile, built_executables, built_otel_helpers)
+        self._create_installer(output_dir, profile, built_executables, built_otel_helpers, profile_name=profile_name)
 
         # Regenerate documentation
         console.print("[cyan]Generating documentation...[/cyan]")
@@ -2931,7 +2931,9 @@ RUN pyinstaller \
         except Exception:
             return "auto"  # Let credential_provider auto-detect from domain at runtime
 
-    def _create_installer(self, output_dir: Path, profile, built_executables, built_otel_helpers=None) -> Path:
+    def _create_installer(
+        self, output_dir: Path, profile, built_executables, built_otel_helpers=None, profile_name: str = "ClaudeCode"
+    ) -> Path:
         """Create simple installer script.
 
         When the bundle was built via --go, both install.sh and
@@ -2939,6 +2941,14 @@ RUN pyinstaller \
         templates below are the standard installer generation path for builds
         (--go, PyInstaller, CodeBuild) that don't copy installer scripts;
         we skip them if external scripts are already in place.
+
+        Args:
+            profile_name: Packaging profile name. Must match the name that
+                config.json (key) and claude-settings/settings.json
+                (AWS_PROFILE) reference — the IDC zero-binary installer
+                writes the ~/.aws/config [profile <name>] entry under this
+                name, so a mismatch breaks end-user auth ("profile not
+                found"). Defaults to "ClaudeCode" for backward compatibility.
         """
         installer_path = output_dir / "install.sh"
         external_ps1 = output_dir / "ccwb-install.ps1"
@@ -3005,30 +3015,30 @@ fi
 
 # Configure AWS SSO profile
 echo
-echo "Configuring AWS SSO profile 'ClaudeCode'..."
+echo "Configuring AWS SSO profile '{profile_name}'..."
 mkdir -p "$ACTUAL_HOME/.aws"
 touch "$ACTUAL_HOME/.aws/config"
 
-# Remove old ClaudeCode entries if present
-sed -i.bak '/^\\[profile ClaudeCode\\]/,/^$/d' "$ACTUAL_HOME/.aws/config" 2>/dev/null || true
-sed -i.bak '/^\\[sso-session ClaudeCode-session\\]/,/^$/d' "$ACTUAL_HOME/.aws/config" 2>/dev/null || true
+# Remove old {profile_name} entries if present
+sed -i.bak '/^\\[profile {profile_name}\\]/,/^$/d' "$ACTUAL_HOME/.aws/config" 2>/dev/null || true
+sed -i.bak '/^\\[sso-session {profile_name}-session\\]/,/^$/d' "$ACTUAL_HOME/.aws/config" 2>/dev/null || true
 rm -f "$ACTUAL_HOME/.aws/config.bak"
 
 cat >> "$ACTUAL_HOME/.aws/config" << 'AWSCONFIG'
-[profile ClaudeCode]
-sso_session = ClaudeCode-session
+[profile {profile_name}]
+sso_session = {profile_name}-session
 sso_account_id = {idc_account_id}
 sso_role_name = {idc_permission_set}
 region = {aws_region}
 
-[sso-session ClaudeCode-session]
+[sso-session {profile_name}-session]
 sso_start_url = {idc_start_url}
 sso_region = {sso_region}
 sso_registration_scopes = sso:account:access
 AWSCONFIG
 
 if [ -n "$SUDO_USER" ]; then chown "$ACTUAL_USER" "$ACTUAL_HOME/.aws/config"; fi
-echo "✓ AWS profile 'ClaudeCode' configured"
+echo "✓ AWS profile '{profile_name}' configured"
 
 # Install Claude Code settings
 if [ -d "claude-settings" ] && [ -f "claude-settings/settings.json" ]; then
@@ -3048,14 +3058,14 @@ echo "======================================"
 echo
 echo "Next step — authenticate with AWS SSO:"
 echo
-echo "  aws sso login --profile ClaudeCode"
+echo "  aws sso login --profile {profile_name}"
 echo
 echo "Then verify:"
 echo
-echo "  aws sts get-caller-identity --profile ClaudeCode"
+echo "  aws sts get-caller-identity --profile {profile_name}"
 echo
-echo "Claude Code will use the ClaudeCode profile automatically."
-echo "Re-run 'aws sso login --profile ClaudeCode' when your session expires (every 8 hours)."
+echo "Claude Code will use the {profile_name} profile automatically."
+echo "Re-run 'aws sso login --profile {profile_name}' when your session expires (every 8 hours)."
 """
             with open(installer_path, "w", encoding="utf-8") as f:
                 f.write(idc_content)
@@ -4286,7 +4296,7 @@ Available metrics include:
                 settings["awsAuthRefresh"] = f"__CREDENTIAL_PROCESS_PATH__ --login --profile {profile_name}"
             elif profile.effective_auth_type == "idc" and is_idc_zero_binary:
                 # IDC zero-binary: no credential-process. AWS SDK resolves via the
-                # ClaudeCode SSO profile in ~/.aws/config written by install.sh.
+                # AWS_PROFILE (profile_name) SSO profile in ~/.aws/config written by install.sh.
                 # Session expiry is handled out-of-band via `aws sso login`.
                 pass
             elif profile.credential_storage == "session":
