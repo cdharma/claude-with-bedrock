@@ -1,0 +1,3403 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Enterprise deployment guide for Claude Code on Amazon Bedrock">
+      
+      
+      
+        <link rel="canonical" href="https://cdharma.github.io/claude-with-bedrock/QUICK_START/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../providers/okta-setup/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Getting Started - Guidance for Claude Code and Cowork on Amazon Bedrock</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../css/timeago.css">
+    
+      <link rel="stylesheet" href="../stylesheets/custom.css?v=11">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#quick-start-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Guidance for Claude Code and Cowork on Amazon Bedrock" class="md-header__button md-logo" aria-label="Guidance for Claude Code and Cowork on Amazon Bedrock" data-md-component="logo">
+      
+  
+  <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 304 182" style="enable-background:new 0 0 304 182;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#141413;}
+	.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#141413;}
+</style>
+<g>
+	<path class="st0" d="M86.4,66.4c0,3.7,0.4,6.7,1.1,8.9c0.8,2.2,1.8,4.6,3.2,7.2c0.5,0.8,0.7,1.6,0.7,2.3c0,1-0.6,2-1.9,3l-6.3,4.2
+		c-0.9,0.6-1.8,0.9-2.6,0.9c-1,0-2-0.5-3-1.4C76.2,90,75,88.4,74,86.8c-1-1.7-2-3.6-3.1-5.9c-7.8,9.2-17.6,13.8-29.4,13.8
+		c-8.4,0-15.1-2.4-20-7.2c-4.9-4.8-7.4-11.2-7.4-19.2c0-8.5,3-15.4,9.1-20.6c6.1-5.2,14.2-7.8,24.5-7.8c3.4,0,6.9,0.3,10.6,0.8
+		c3.7,0.5,7.5,1.3,11.5,2.2v-7.3c0-7.6-1.6-12.9-4.7-16c-3.2-3.1-8.6-4.6-16.3-4.6c-3.5,0-7.1,0.4-10.8,1.3c-3.7,0.9-7.3,2-10.8,3.4
+		c-1.6,0.7-2.8,1.1-3.5,1.3c-0.7,0.2-1.2,0.3-1.6,0.3c-1.4,0-2.1-1-2.1-3.1v-4.9c0-1.6,0.2-2.8,0.7-3.5c0.5-0.7,1.4-1.4,2.8-2.1
+		c3.5-1.8,7.7-3.3,12.6-4.5c4.9-1.3,10.1-1.9,15.6-1.9c11.9,0,20.6,2.7,26.2,8.1c5.5,5.4,8.3,13.6,8.3,24.6V66.4z M45.8,81.6
+		c3.3,0,6.7-0.6,10.3-1.8c3.6-1.2,6.8-3.4,9.5-6.4c1.6-1.9,2.8-4,3.4-6.4c0.6-2.4,1-5.3,1-8.7v-4.2c-2.9-0.7-6-1.3-9.2-1.7
+		c-3.2-0.4-6.3-0.6-9.4-0.6c-6.7,0-11.6,1.3-14.9,4c-3.3,2.7-4.9,6.5-4.9,11.5c0,4.7,1.2,8.2,3.7,10.6
+		C37.7,80.4,41.2,81.6,45.8,81.6z M126.1,92.4c-1.8,0-3-0.3-3.8-1c-0.8-0.6-1.5-2-2.1-3.9L96.7,10.2c-0.6-2-0.9-3.3-0.9-4
+		c0-1.6,0.8-2.5,2.4-2.5h9.8c1.9,0,3.2,0.3,3.9,1c0.8,0.6,1.4,2,2,3.9l16.8,66.2l15.6-66.2c0.5-2,1.1-3.3,1.9-3.9c0.8-0.6,2.2-1,4-1
+		h8c1.9,0,3.2,0.3,4,1c0.8,0.6,1.5,2,1.9,3.9l15.8,67l17.3-67c0.6-2,1.3-3.3,2-3.9c0.8-0.6,2.1-1,3.9-1h9.3c1.6,0,2.5,0.8,2.5,2.5
+		c0,0.5-0.1,1-0.2,1.6c-0.1,0.6-0.3,1.4-0.7,2.5l-24.1,77.3c-0.6,2-1.3,3.3-2.1,3.9c-0.8,0.6-2.1,1-3.8,1h-8.6c-1.9,0-3.2-0.3-4-1
+		c-0.8-0.7-1.5-2-1.9-4L156,23l-15.4,64.4c-0.5,2-1.1,3.3-1.9,4c-0.8,0.7-2.2,1-4,1H126.1z M254.6,95.1c-5.2,0-10.4-0.6-15.4-1.8
+		c-5-1.2-8.9-2.5-11.5-4c-1.6-0.9-2.7-1.9-3.1-2.8c-0.4-0.9-0.6-1.9-0.6-2.8v-5.1c0-2.1,0.8-3.1,2.3-3.1c0.6,0,1.2,0.1,1.8,0.3
+		c0.6,0.2,1.5,0.6,2.5,1c3.4,1.5,7.1,2.7,11,3.5c4,0.8,7.9,1.2,11.9,1.2c6.3,0,11.2-1.1,14.6-3.3c3.4-2.2,5.2-5.4,5.2-9.5
+		c0-2.8-0.9-5.1-2.7-7c-1.8-1.9-5.2-3.6-10.1-5.2L246,52c-7.3-2.3-12.7-5.7-16-10.2c-3.3-4.4-5-9.3-5-14.5c0-4.2,0.9-7.9,2.7-11.1
+		c1.8-3.2,4.2-6,7.2-8.2c3-2.3,6.4-4,10.4-5.2c4-1.2,8.2-1.7,12.6-1.7c2.2,0,4.5,0.1,6.7,0.4c2.3,0.3,4.4,0.7,6.5,1.1
+		c2,0.5,3.9,1,5.7,1.6c1.8,0.6,3.2,1.2,4.2,1.8c1.4,0.8,2.4,1.6,3,2.5c0.6,0.8,0.9,1.9,0.9,3.3v4.7c0,2.1-0.8,3.2-2.3,3.2
+		c-0.8,0-2.1-0.4-3.8-1.2c-5.7-2.6-12.1-3.9-19.2-3.9c-5.7,0-10.2,0.9-13.3,2.8c-3.1,1.9-4.7,4.8-4.7,8.9c0,2.8,1,5.2,3,7.1
+		c2,1.9,5.7,3.8,11,5.5l14.2,4.5c7.2,2.3,12.4,5.5,15.5,9.6c3.1,4.1,4.6,8.8,4.6,14c0,4.3-0.9,8.2-2.6,11.6
+		c-1.8,3.4-4.2,6.4-7.3,8.8c-3.1,2.5-6.8,4.3-11.1,5.6C264.4,94.4,259.7,95.1,254.6,95.1z"/>
+	<g>
+		<path class="st1" d="M273.5,143.7c-32.9,24.3-80.7,37.2-121.8,37.2c-57.6,0-109.5-21.3-148.7-56.7c-3.1-2.8-0.3-6.6,3.4-4.4
+			c42.4,24.6,94.7,39.5,148.8,39.5c36.5,0,76.6-7.6,113.5-23.2C274.2,133.6,278.9,139.7,273.5,143.7z"/>
+		<path class="st1" d="M287.2,128.1c-4.2-5.4-27.8-2.6-38.5-1.3c-3.2,0.4-3.7-2.4-0.8-4.5c18.8-13.2,49.7-9.4,53.3-5
+			c3.6,4.5-1,35.4-18.6,50.2c-2.7,2.3-5.3,1.1-4.1-1.9C282.5,155.7,291.4,133.4,287.2,128.1z"/>
+	</g>
+</g>
+</svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Guidance for Claude Code and Cowork on Amazon Bedrock
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Getting Started
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cdharma/claude-with-bedrock" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cdharma/claude-with-bedrock
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../providers/okta-setup/" class="md-tabs__link">
+          
+  
+  
+  Authentication
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../DEPLOYMENT/" class="md-tabs__link">
+          
+  
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../distribution/comparison/" class="md-tabs__link">
+          
+  
+  
+  Distribution
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../MONITORING/" class="md-tabs__link">
+          
+  
+  
+  Operations
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../CLI_REFERENCE/" class="md-tabs__link">
+          
+  
+  
+  Usage
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Guidance for Claude Code and Cowork on Amazon Bedrock" class="md-nav__button md-logo" aria-label="Guidance for Claude Code and Cowork on Amazon Bedrock" data-md-component="logo">
+      
+  
+  <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 304 182" style="enable-background:new 0 0 304 182;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#141413;}
+	.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#141413;}
+</style>
+<g>
+	<path class="st0" d="M86.4,66.4c0,3.7,0.4,6.7,1.1,8.9c0.8,2.2,1.8,4.6,3.2,7.2c0.5,0.8,0.7,1.6,0.7,2.3c0,1-0.6,2-1.9,3l-6.3,4.2
+		c-0.9,0.6-1.8,0.9-2.6,0.9c-1,0-2-0.5-3-1.4C76.2,90,75,88.4,74,86.8c-1-1.7-2-3.6-3.1-5.9c-7.8,9.2-17.6,13.8-29.4,13.8
+		c-8.4,0-15.1-2.4-20-7.2c-4.9-4.8-7.4-11.2-7.4-19.2c0-8.5,3-15.4,9.1-20.6c6.1-5.2,14.2-7.8,24.5-7.8c3.4,0,6.9,0.3,10.6,0.8
+		c3.7,0.5,7.5,1.3,11.5,2.2v-7.3c0-7.6-1.6-12.9-4.7-16c-3.2-3.1-8.6-4.6-16.3-4.6c-3.5,0-7.1,0.4-10.8,1.3c-3.7,0.9-7.3,2-10.8,3.4
+		c-1.6,0.7-2.8,1.1-3.5,1.3c-0.7,0.2-1.2,0.3-1.6,0.3c-1.4,0-2.1-1-2.1-3.1v-4.9c0-1.6,0.2-2.8,0.7-3.5c0.5-0.7,1.4-1.4,2.8-2.1
+		c3.5-1.8,7.7-3.3,12.6-4.5c4.9-1.3,10.1-1.9,15.6-1.9c11.9,0,20.6,2.7,26.2,8.1c5.5,5.4,8.3,13.6,8.3,24.6V66.4z M45.8,81.6
+		c3.3,0,6.7-0.6,10.3-1.8c3.6-1.2,6.8-3.4,9.5-6.4c1.6-1.9,2.8-4,3.4-6.4c0.6-2.4,1-5.3,1-8.7v-4.2c-2.9-0.7-6-1.3-9.2-1.7
+		c-3.2-0.4-6.3-0.6-9.4-0.6c-6.7,0-11.6,1.3-14.9,4c-3.3,2.7-4.9,6.5-4.9,11.5c0,4.7,1.2,8.2,3.7,10.6
+		C37.7,80.4,41.2,81.6,45.8,81.6z M126.1,92.4c-1.8,0-3-0.3-3.8-1c-0.8-0.6-1.5-2-2.1-3.9L96.7,10.2c-0.6-2-0.9-3.3-0.9-4
+		c0-1.6,0.8-2.5,2.4-2.5h9.8c1.9,0,3.2,0.3,3.9,1c0.8,0.6,1.4,2,2,3.9l16.8,66.2l15.6-66.2c0.5-2,1.1-3.3,1.9-3.9c0.8-0.6,2.2-1,4-1
+		h8c1.9,0,3.2,0.3,4,1c0.8,0.6,1.5,2,1.9,3.9l15.8,67l17.3-67c0.6-2,1.3-3.3,2-3.9c0.8-0.6,2.1-1,3.9-1h9.3c1.6,0,2.5,0.8,2.5,2.5
+		c0,0.5-0.1,1-0.2,1.6c-0.1,0.6-0.3,1.4-0.7,2.5l-24.1,77.3c-0.6,2-1.3,3.3-2.1,3.9c-0.8,0.6-2.1,1-3.8,1h-8.6c-1.9,0-3.2-0.3-4-1
+		c-0.8-0.7-1.5-2-1.9-4L156,23l-15.4,64.4c-0.5,2-1.1,3.3-1.9,4c-0.8,0.7-2.2,1-4,1H126.1z M254.6,95.1c-5.2,0-10.4-0.6-15.4-1.8
+		c-5-1.2-8.9-2.5-11.5-4c-1.6-0.9-2.7-1.9-3.1-2.8c-0.4-0.9-0.6-1.9-0.6-2.8v-5.1c0-2.1,0.8-3.1,2.3-3.1c0.6,0,1.2,0.1,1.8,0.3
+		c0.6,0.2,1.5,0.6,2.5,1c3.4,1.5,7.1,2.7,11,3.5c4,0.8,7.9,1.2,11.9,1.2c6.3,0,11.2-1.1,14.6-3.3c3.4-2.2,5.2-5.4,5.2-9.5
+		c0-2.8-0.9-5.1-2.7-7c-1.8-1.9-5.2-3.6-10.1-5.2L246,52c-7.3-2.3-12.7-5.7-16-10.2c-3.3-4.4-5-9.3-5-14.5c0-4.2,0.9-7.9,2.7-11.1
+		c1.8-3.2,4.2-6,7.2-8.2c3-2.3,6.4-4,10.4-5.2c4-1.2,8.2-1.7,12.6-1.7c2.2,0,4.5,0.1,6.7,0.4c2.3,0.3,4.4,0.7,6.5,1.1
+		c2,0.5,3.9,1,5.7,1.6c1.8,0.6,3.2,1.2,4.2,1.8c1.4,0.8,2.4,1.6,3,2.5c0.6,0.8,0.9,1.9,0.9,3.3v4.7c0,2.1-0.8,3.2-2.3,3.2
+		c-0.8,0-2.1-0.4-3.8-1.2c-5.7-2.6-12.1-3.9-19.2-3.9c-5.7,0-10.2,0.9-13.3,2.8c-3.1,1.9-4.7,4.8-4.7,8.9c0,2.8,1,5.2,3,7.1
+		c2,1.9,5.7,3.8,11,5.5l14.2,4.5c7.2,2.3,12.4,5.5,15.5,9.6c3.1,4.1,4.6,8.8,4.6,14c0,4.3-0.9,8.2-2.6,11.6
+		c-1.8,3.4-4.2,6.4-7.3,8.8c-3.1,2.5-6.8,4.3-11.1,5.6C264.4,94.4,259.7,95.1,254.6,95.1z"/>
+	<g>
+		<path class="st1" d="M273.5,143.7c-32.9,24.3-80.7,37.2-121.8,37.2c-57.6,0-109.5-21.3-148.7-56.7c-3.1-2.8-0.3-6.6,3.4-4.4
+			c42.4,24.6,94.7,39.5,148.8,39.5c36.5,0,76.6-7.6,113.5-23.2C274.2,133.6,278.9,139.7,273.5,143.7z"/>
+		<path class="st1" d="M287.2,128.1c-4.2-5.4-27.8-2.6-38.5-1.3c-3.2,0.4-3.7-2.4-0.8-4.5c18.8-13.2,49.7-9.4,53.3-5
+			c3.6,4.5-1,35.4-18.6,50.2c-2.7,2.3-5.3,1.1-4.1-1.9C282.5,155.7,291.4,133.4,287.2,128.1z"/>
+	</g>
+</g>
+</svg>
+
+    </a>
+    Guidance for Claude Code and Cowork on Amazon Bedrock
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cdharma/claude-with-bedrock" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cdharma/claude-with-bedrock
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#software-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Software Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aws-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#identity-provider-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Identity Provider Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supported-aws-regions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported AWS Regions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-region-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-Region Inference
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment Steps
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment Steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-clone-repository-and-install-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Clone Repository and Install Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-initialize-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Initialize Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2: Initialize Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#complete-wizard-flow-decision-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete Wizard Flow — Decision Tree
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profile-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Profile Name
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-ccwb-init-reads-your-aws-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How ccwb init reads your AWS credentials
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-1-authentication-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Authentication Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1: Authentication Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#if-you-chose-oidc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        If you chose OIDC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#if-you-chose-iam-identity-center" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        If you chose IAM Identity Center
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#if-you-chose-none" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        If you chose None
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-aws-infrastructure-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: AWS Infrastructure Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Optional Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-and-usage-dashboards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitoring and Usage Dashboards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analytics-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analytics Pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quota-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quota Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows-build-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows Build Support
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#claude-desktop-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Claude Desktop Support
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#package-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-bedrock-model-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Bedrock Model Selection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-ccwb-init-saves" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What ccwb init saves
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-deploy-infrastructure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Deploy Infrastructure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-create-distribution-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Create Distribution Package
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4: Create Distribution Package">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#legacy-build-mode-legacy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Legacy build mode (--legacy)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-test-the-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Test the Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-distribute-packages-to-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Distribute Packages to Users
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 6: Distribute Packages to Users">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-manual-sharing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 1: Manual Sharing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-presigned-s3-urls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 2: Presigned S3 URLs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-3-authenticated-landing-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 3: Authenticated Landing Page
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#platform-builds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Platform Builds
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Platform Builds">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#build-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-cross-arch-macos-builds-legacy-mode-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional: Cross-arch macOS Builds (legacy mode only)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cleanup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ccwb-init-fails-aws-credentials-configured-even-though-aws-sts-get-caller-identity-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ccwb init fails "AWS credentials configured" even though aws sts get-caller-identity works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authentication-issues-end-user-credential-refresh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authentication Issues (end-user credential refresh)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#port-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Port Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exec-format-error-on-the-credential-process-binary-end-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exec format error on the credential-process binary (end user)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows-installbat-replace-was-unexpected-at-this-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows install.bat — -replace was unexpected at this time.
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build Failures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stack-deployment-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stack Deployment Issues
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next Steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Authentication
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/okta-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Okta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/microsoft-entra-id-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microsoft Entra ID
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/auth0-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auth0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/cognito-user-pool-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS Cognito
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/google-oidc-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google OIDC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/generic-oidc-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generic OIDC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/iam-identity-center-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IAM Identity Center
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deployment
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DEPLOYMENT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WINDOWS_BUILD_SYSTEM/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows Build System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Distribution
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Distribution
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../distribution/comparison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Comparison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../distribution/deployment-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MONITORING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ANALYTICS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analytics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../QUOTA_MONITORING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quota Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COST_ESTIMATES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cost Estimates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COST_ATTRIBUTION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cost Attribution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TROUBLESHOOTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RESOURCE_INVENTORY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resource Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CLI_REFERENCE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LOCAL_TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COWORK_3P/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude Desktop (Cowork)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PLUGINS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOOTSTRAP_SERVER/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bootstrap Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WEB_SEARCH/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Search
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/cdharma/claude-with-bedrock/edit/main/QUICK_START.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="quick-start-guide">Quick Start Guide<a class="headerlink" href="#quick-start-guide" title="Permanent link">&para;</a></h1>
+<p>Complete deployment walkthrough for IT administrators deploying Claude Code with Amazon Bedrock.</p>
+<p><strong>Time Required:</strong> 2-3 hours for initial deployment
+<strong>Skill Level:</strong> AWS administrator with IAM/CloudFormation experience</p>
+<hr />
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<h3 id="software-requirements">Software Requirements<a class="headerlink" href="#software-requirements" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Python 3.10-3.13</li>
+<li>Poetry (dependency management)</li>
+<li>AWS CLI v2</li>
+<li>Git</li>
+<li>Go 1.24+ (used by the default <code>ccwb package</code> build — cross-compiles binaries for all 5 platforms from any admin OS; if Go is missing, packaging falls back to the deprecated legacy PyInstaller pipeline)</li>
+</ul>
+<blockquote>
+<p><strong>End users</strong> need only Claude Code or Claude Desktop installed. No Python, Poetry, Go, or AWS account required — IT distributes pre-built packages.</p>
+</blockquote>
+<p><strong>macOS fleets:</strong> the default build produces both <code>macos-arm64</code> (Apple Silicon) and <code>macos-intel</code> binaries from any admin OS, and the installer picks the right one automatically. Intel binaries also run on Apple Silicon via Rosetta; ARM64 binaries do not run on Intel Macs. Only the deprecated <code>--legacy</code> build mode has host-architecture constraints — see <a href="assets/docs/CLI_REFERENCE.md#cross-arch-macos-build-setup-legacy-mode-only-optional">Cross-arch macOS Build Setup</a>.</p>
+<h3 id="aws-requirements">AWS Requirements<a class="headerlink" href="#aws-requirements" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AWS account with appropriate IAM permissions to create:</li>
+<li>CloudFormation stacks</li>
+<li>IAM OIDC Providers or Cognito Identity Pools</li>
+<li>IAM roles and policies</li>
+<li>(Optional) Amazon Elastic Container Service (Amazon ECS) tasks and Amazon CloudWatch dashboards</li>
+<li>(Optional) Amazon Athena, AWS Glue, AWS Lambda, and Amazon Data Firehose resources</li>
+<li>(Optional) AWS CodeBuild</li>
+<li>Amazon Bedrock activated in target regions</li>
+</ul>
+<h3 id="identity-provider-requirements">Identity Provider Requirements<a class="headerlink" href="#identity-provider-requirements" title="Permanent link">&para;</a></h3>
+<p>This guide covers the <strong>AWS infrastructure</strong> side of the deployment. It assumes you have already configured your identity provider (IdP). <strong>You must complete your IdP setup before running <code>ccwb init</code></strong> — for OIDC providers the wizard will ask for your provider domain and client ID, and will fail without them.</p>
+<table>
+<thead>
+<tr>
+<th>Your IdP</th>
+<th>Setup guide</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Okta</strong></td>
+<td><a href="assets/docs/providers/okta-setup.md">Okta Setup Guide</a></td>
+</tr>
+<tr>
+<td><strong>Microsoft Entra ID (Azure AD)</strong></td>
+<td><a href="assets/docs/providers/microsoft-entra-id-setup.md">Microsoft Entra ID Setup Guide</a></td>
+</tr>
+<tr>
+<td><strong>Auth0</strong></td>
+<td><a href="assets/docs/providers/auth0-setup.md">Auth0 Setup Guide</a></td>
+</tr>
+<tr>
+<td><strong>Google</strong></td>
+<td><a href="assets/docs/providers/google-oidc-setup.md">Google Setup Guide</a></td>
+</tr>
+<tr>
+<td><strong>AWS Cognito User Pool</strong></td>
+<td><a href="assets/docs/providers/cognito-user-pool-setup.md">Cognito User Pool Setup Guide</a></td>
+</tr>
+<tr>
+<td><strong>AWS IAM Identity Center</strong></td>
+<td><a href="assets/docs/providers/iam-identity-center-setup.md">IAM Identity Center Setup Guide</a></td>
+</tr>
+<tr>
+<td><strong>PingFederate, Keycloak, ForgeRock, or other generic OIDC</strong></td>
+<td><a href="assets/docs/providers/generic-oidc-setup.md">Generic OIDC Setup Guide</a></td>
+</tr>
+</tbody>
+</table>
+<p>Each OIDC guide walks through creating the application, setting the redirect URI to <code>http://localhost:8400/callback</code>, enabling PKCE, and noting the two values you will need here: your <strong>provider domain</strong> and <strong>client ID</strong>. Using IAM Identity Center instead? There is no app registration — the wizard asks for your <strong>start URL</strong> and <strong>SSO region</strong> (see the IAM Identity Center guide).</p>
+<p>Once your IdP is ready, return here and continue from Step 1.</p>
+<h3 id="supported-aws-regions">Supported AWS Regions<a class="headerlink" href="#supported-aws-regions" title="Permanent link">&para;</a></h3>
+<p>The guidance can be deployed in any AWS region that supports:</p>
+<ul>
+<li>IAM OIDC Providers or Amazon Cognito Identity Pools</li>
+<li>Amazon Bedrock</li>
+<li>(Optional) Amazon Elastic Container Service (Amazon ECS) tasks and Amazon CloudWatch dashboards</li>
+<li>(Optional) Amazon Athena, AWS Glue, AWS Lambda, and Amazon Data Firehose resources</li>
+<li>(Optional) AWS CodeBuild</li>
+</ul>
+<h3 id="cross-region-inference">Cross-Region Inference<a class="headerlink" href="#cross-region-inference" title="Permanent link">&para;</a></h3>
+<p>Claude Code uses Amazon Bedrock's cross-region inference for optimal performance and availability. During setup, you can:</p>
+<ul>
+<li>Select your preferred Claude model (Opus, Sonnet, Haiku)</li>
+<li>Choose a cross-region profile (US, Europe, APAC) for optimal regional routing</li>
+<li>Select a specific source region within your profile for model inference</li>
+</ul>
+<p>This automatically routes requests across multiple AWS regions to ensure the best response times and highest availability. Modern Claude models (3.7+) require cross-region inference for access.</p>
+<hr />
+<h2 id="deployment-steps">Deployment Steps<a class="headerlink" href="#deployment-steps" title="Permanent link">&para;</a></h2>
+<h3 id="step-1-clone-repository-and-install-dependencies">Step 1: Clone Repository and Install Dependencies<a class="headerlink" href="#step-1-clone-repository-and-install-dependencies" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Clone the repository</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/cdharma/claude-with-bedrock
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">cd</span><span class="w"> </span>claude-with-bedrock/source
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># Install dependencies</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>poetry<span class="w"> </span>install
+</code></pre></div>
+<h3 id="step-2-initialize-configuration">Step 2: Initialize Configuration<a class="headerlink" href="#step-2-initialize-configuration" title="Permanent link">&para;</a></h3>
+<p>Run the interactive setup wizard:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>init
+</code></pre></div>
+<p>The wizard runs through three numbered steps plus optional features. Every question is explained below — read this section before running the wizard so you know exactly what to enter.</p>
+<blockquote>
+<p><strong>Before you run <code>ccwb init</code>:</strong> The wizard calls AWS APIs to validate account id (using your <strong>administrator</strong> credentials — not developer credentials). Make sure your terminal has a valid AWS session before you start. See <a href="#how-ccwb-init-reads-your-aws-credentials">How ccwb init reads your AWS credentials</a> below.</p>
+</blockquote>
+<p>The wizard collects:</p>
+<ul>
+<li>Authentication method (OIDC, IAM Identity Center, or none) and provider details — OIDC domain and client ID, or Identity Center start URL and SSO region</li>
+<li>AWS region selection for infrastructure</li>
+<li>Amazon Bedrock cross-region inference configuration</li>
+<li>Credential storage method (keyring or session files)</li>
+<li>Optional monitoring setup:</li>
+<li>Enable monitoring? (yes/no)</li>
+<li>Monitoring mode: <strong>central collector</strong> (ECS Fargate) or <strong>sidecar collector</strong> (local). Sidecar mode skips VPC configuration and Athena SQL pipeline setup (PromQL dashboards are included in both modes).</li>
+<li>VPC configuration (central collector only)</li>
+</ul>
+<hr />
+<h4 id="complete-wizard-flow-decision-tree">Complete Wizard Flow — Decision Tree<a class="headerlink" href="#complete-wizard-flow-decision-tree" title="Permanent link">&para;</a></h4>
+<p>Use this to quickly see which questions apply to your setup:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>ccwb init
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>│
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>├── Profile name → e.g. "CorpIT-Prod"
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>│
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>├── STEP 1: Select authentication method: (OIDC / IAM Identity Center / None)
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>│   │
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>│   ├── OIDC (default) ─────────────────────────────────────────────┐
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>│   │                                                                │
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>│   │   Provider domain? (e.g. company.okta.com)                    │
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>│   │   Client ID?                                                   │
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>│   │   │                                                            │
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>│   │   ├── Azure detected?                                          │
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>│   │   │   └── Auth mode: Public / Secret / Certificate             │
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>│   │   │       ├── Secret → enter client secret (stored in keyring) │
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>│   │   │       └── Certificate → cert path + key path               │
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>│   │   │                                                            │
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>│   │   ├── Credential storage: Keyring / Session Files              │
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>│   │   └── Federation type: Direct STS / Cognito Identity Pool      │
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>│   │                                                                │
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>│   ├── IAM Identity Center                                          │
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>│   │   ├── Start URL (e.g. https://company.awsapps.com/start)       │
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>│   │   ├── SSO region                                               │
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>│   │   ├── AWS account ID for Bedrock access                        │
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>│   │   └── Permission set name                                      │
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>│   │                                                                │
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>│   └── None → skips all auth questions, goes to Step 2 ────────────┘
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>│
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>├── STEP 2: AWS Infrastructure
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>│   ├── AWS region? (where CloudFormation stacks are deployed)
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>│   └── Stack base name? (prefix for all stack names)
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>│
+<a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>├── OPTIONAL FEATURES
+<a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a>│   │
+<a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a>│   ├── Enable monitoring?
+<a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a>│   │   ├── No → skip to Windows builds
+<a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a>│   │   └── Yes
+<a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a>│   │       ├── VPC: Create new / Use existing
+<a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a>│   │       │   └── Existing → enter VPC ID + subnet IDs
+<a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a>│   │       ├── Enable HTTPS with custom domain?
+<a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a>│   │       │   ├── No → use HTTP (plain text endpoint)
+<a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a>│   │       │   └── Yes → domain name + Route53 hosted zone
+<a id="__codelineno-2-42" name="__codelineno-2-42" href="#__codelineno-2-42"></a>│   │       ├── Enable analytics? (Athena + S3 data lake)
+<a id="__codelineno-2-43" name="__codelineno-2-43" href="#__codelineno-2-43"></a>│   │       └── Enable quota monitoring?
+<a id="__codelineno-2-44" name="__codelineno-2-44" href="#__codelineno-2-44"></a>│   │           └── Yes
+<a id="__codelineno-2-45" name="__codelineno-2-45" href="#__codelineno-2-45"></a>│   │               ├── How do you want to limit usage?
+<a id="__codelineno-2-46" name="__codelineno-2-46" href="#__codelineno-2-46"></a>│   │               │   ├── Cost-based (default) → monthly budget (USD)
+<a id="__codelineno-2-47" name="__codelineno-2-47" href="#__codelineno-2-47"></a>│   │               │   │                          + daily budget (USD)
+<a id="__codelineno-2-48" name="__codelineno-2-48" href="#__codelineno-2-48"></a>│   │               │   └── Token-based → monthly token limit (millions)
+<a id="__codelineno-2-49" name="__codelineno-2-49" href="#__codelineno-2-49"></a>│   │               │       ├── Burst buffer % (5-25)
+<a id="__codelineno-2-50" name="__codelineno-2-50" href="#__codelineno-2-50"></a>│   │               │       └── Custom daily limit (optional)
+<a id="__codelineno-2-51" name="__codelineno-2-51" href="#__codelineno-2-51"></a>│   │               ├── Daily enforcement: alert / block
+<a id="__codelineno-2-52" name="__codelineno-2-52" href="#__codelineno-2-52"></a>│   │               ├── Monthly enforcement: alert / block
+<a id="__codelineno-2-53" name="__codelineno-2-53" href="#__codelineno-2-53"></a>│   │               └── Quota re-check interval (minutes)
+<a id="__codelineno-2-54" name="__codelineno-2-54" href="#__codelineno-2-54"></a>│   │
+<a id="__codelineno-2-55" name="__codelineno-2-55" href="#__codelineno-2-55"></a>│   ├── Enable Windows builds? (CodeBuild)
+<a id="__codelineno-2-56" name="__codelineno-2-56" href="#__codelineno-2-56"></a>│   ├── Enable Claude Desktop support?
+<a id="__codelineno-2-57" name="__codelineno-2-57" href="#__codelineno-2-57"></a>│   └── Distribution method?
+<a id="__codelineno-2-58" name="__codelineno-2-58" href="#__codelineno-2-58"></a>│       ├── Presigned S3 URLs
+<a id="__codelineno-2-59" name="__codelineno-2-59" href="#__codelineno-2-59"></a>│       ├── Authenticated Landing Page
+<a id="__codelineno-2-60" name="__codelineno-2-60" href="#__codelineno-2-60"></a>│       │   ├── IdP provider + domain + client ID
+<a id="__codelineno-2-61" name="__codelineno-2-61" href="#__codelineno-2-61"></a>│       │   ├── Custom domain (e.g. downloads.company.com)
+<a id="__codelineno-2-62" name="__codelineno-2-62" href="#__codelineno-2-62"></a>│       │   └── Route53 hosted zone
+<a id="__codelineno-2-63" name="__codelineno-2-63" href="#__codelineno-2-63"></a>│       └── Disabled
+<a id="__codelineno-2-64" name="__codelineno-2-64" href="#__codelineno-2-64"></a>│
+<a id="__codelineno-2-65" name="__codelineno-2-65" href="#__codelineno-2-65"></a>└── STEP 3: Bedrock Model Selection
+<a id="__codelineno-2-66" name="__codelineno-2-66" href="#__codelineno-2-66"></a>    ├── Select Claude model (Sonnet / Haiku / Opus)
+<a id="__codelineno-2-67" name="__codelineno-2-67" href="#__codelineno-2-67"></a>    ├── Cross-region inference profile (US / EU / APAC / Global)
+<a id="__codelineno-2-68" name="__codelineno-2-68" href="#__codelineno-2-68"></a>    └── Source region (e.g. us-east-1)
+</code></pre></div>
+<hr />
+<h4 id="profile-name">Profile Name<a class="headerlink" href="#profile-name" title="Permanent link">&para;</a></h4>
+<p><strong>Q: <code>Enter a name for this profile:</code></strong></p>
+<p>The very first thing the wizard asks is a profile name. A <strong>profile</strong> is a named configuration set stored in <code>~/.ccwb/profiles/&lt;name&gt;.json</code>. It contains everything about one deployment: auth type, IdP domain, AWS region, stack names, monitoring settings, and model selection.</p>
+<p><strong>Why profiles matter:</strong>
+- You run <code>ccwb init</code> once per deployment environment, not once per machine.
+- Each profile maps to one set of AWS CloudFormation stacks.
+- You can have multiple profiles on the same machine — for example <code>prod</code> and <code>staging</code>, or <code>us-prod</code> and <code>eu-prod</code> for regional deployments.</p>
+<p><strong>Naming rules:</strong> lowercase letters, numbers, and hyphens only. Good examples: <code>prod</code>, <code>corp-it-prod</code>, <code>us-bedrock-dev</code>.</p>
+<p><strong>Profile commands:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ccwb<span class="w"> </span>context<span class="w"> </span>list<span class="w">          </span><span class="c1"># see all profiles</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>ccwb<span class="w"> </span>context<span class="w"> </span>use<span class="w"> </span>&lt;name&gt;<span class="w">    </span><span class="c1"># switch active profile</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>ccwb<span class="w"> </span>context<span class="w"> </span>show<span class="w">          </span><span class="c1"># view active profile details</span>
+</code></pre></div></p>
+<p>Nothing is deployed to AWS when you run <code>ccwb init</code> — the profile is only saved locally. Deployment happens in Step 3.</p>
+<hr />
+<h4 id="how-ccwb-init-reads-your-aws-credentials">How ccwb init reads your AWS credentials<a class="headerlink" href="#how-ccwb-init-reads-your-aws-credentials" title="Permanent link">&para;</a></h4>
+<p><code>ccwb init</code> itself (the wizard running on your administrator machine) needs AWS credentials to call AWS APIs to validate that your account ID is reachable.</p>
+<p>boto3 (the AWS SDK used internally) resolves credentials in this order — <strong>first source that provides a valid, non-expired credential wins</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Priority</th>
+<th>Source</th>
+<th>How to set it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1 — highest</strong></td>
+<td>Environment variables</td>
+<td><code>AWS_ACCESS_KEY_ID</code> + <code>AWS_SECRET_ACCESS_KEY</code> (+ optional <code>AWS_SESSION_TOKEN</code>)</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><code>~/.aws/credentials</code> file</td>
+<td><code>[default]</code> or named profile via <code>AWS_PROFILE</code></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><code>~/.aws/config</code> file</td>
+<td>SSO profiles (<code>aws sso login</code>), <code>credential_process</code> entries, assumed-role profiles</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>IAM instance profile</td>
+<td>Automatic on EC2 — no config needed</td>
+</tr>
+<tr>
+<td><strong>5 — lowest</strong></td>
+<td>ECS container role</td>
+<td>Automatic on ECS tasks — no config needed</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Common issue: stale environment variables override everything.</strong> If you ran <code>aws sts assume-role</code> earlier and those vars are still exported, boto3 will try them first — even if they are expired — and will not fall back to your credential file. If <code>ccwb init</code> fails with an AWS credentials error but <code>aws sts get-caller-identity</code> works from a fresh shell, see <a href="#ccwb-init-fails-aws-credentials-configured-even-though-aws-sts-get-caller-identity-works">Troubleshooting</a> below.</p>
+<p><strong>Recommended for most administrators:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># SSO login (if your org uses IAM Identity Center)</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>aws<span class="w"> </span>sso<span class="w"> </span>login<span class="w"> </span>--profile<span class="w"> </span>&lt;your-admin-profile&gt;
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AWS_PROFILE</span><span class="o">=</span>&lt;your-admin-profile&gt;
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1"># Verify before starting</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>aws<span class="w"> </span>sts<span class="w"> </span>get-caller-identity
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="c1"># Then run the wizard</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>init
+</code></pre></div></p>
+<hr />
+<h4 id="step-1-authentication-configuration">Step 1: Authentication Configuration<a class="headerlink" href="#step-1-authentication-configuration" title="Permanent link">&para;</a></h4>
+<p><strong>What it asks:</strong> <code>Select authentication method:</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Select authentication method:
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>❯ OIDC (Okta, Azure AD, Auth0, Cognito)
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>  IAM Identity Center
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>  None
+</code></pre></div>
+<p>Choose how developers will authenticate to reach Bedrock:</p>
+<table>
+<thead>
+<tr>
+<th>Choice</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OIDC</strong> (default)</td>
+<td>You have Okta, Azure AD / Entra ID, Auth0, or a Cognito User Pool — full per-user attribution and quota enforcement</td>
+</tr>
+<tr>
+<td><strong>IAM Identity Center</strong></td>
+<td>Your org uses AWS IAM Identity Center (AWS SSO) — per-user attribution and quota enforcement without an external OIDC provider</td>
+</tr>
+<tr>
+<td><strong>None</strong></td>
+<td>Analytics-only deployment, or developers already have IAM/role access to Bedrock</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h5 id="if-you-chose-oidc">If you chose OIDC<a class="headerlink" href="#if-you-chose-oidc" title="Permanent link">&para;</a></h5>
+<p><strong>Q: <code>Enter your OIDC provider domain:</code></strong></p>
+<p>Enter the domain of your identity provider — the base URL without <code>https://</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Provider</th>
+<th>Example value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Okta</td>
+<td><code>company.okta.com</code></td>
+</tr>
+<tr>
+<td>Microsoft Entra ID</td>
+<td><code>login.microsoftonline.com/{your-tenant-id}/v2.0</code></td>
+</tr>
+<tr>
+<td>Auth0</td>
+<td><code>company.auth0.com</code></td>
+</tr>
+<tr>
+<td>Cognito User Pool</td>
+<td><code>my-app.auth.us-east-1.amazoncognito.com</code></td>
+</tr>
+</tbody>
+</table>
+<p>The wizard auto-detects the provider type from the domain for the four known providers above. If it detects Cognito, it will also ask for your <strong>User Pool ID</strong> (case-sensitive, format: <code>us-east-1_XXXXXXXXX</code>).</p>
+<blockquote>
+<p><strong>Custom or non-standard OIDC domains</strong> (e.g. Keycloak, PingFederate, Okta vanity domains like <code>sso.mycompany.com</code>): the wizard cannot auto-detect the type and will prompt you to select manually:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Could not auto-detect provider type from domain.
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Select your identity provider type:
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  &gt; Okta (or generic OIDC)
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    Microsoft Entra ID / Azure AD
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    Auth0
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    AWS Cognito User Pool
+</code></pre></div>
+Choose <strong>Okta (or generic OIDC)</strong> for any standard OIDC provider not listed (Keycloak, PingFederate, ADFS, etc.) — it uses the most compatible CloudFormation template.</p>
+</blockquote>
+<hr />
+<p><strong>Q: <code>Enter your OIDC Client ID:</code></strong></p>
+<p>The Application (client) ID from your IdP app registration. You noted this during the IdP setup in Step 0.</p>
+<ul>
+<li>Okta: found in Applications → your app → General tab</li>
+<li>Azure: found in App registrations → your app → Overview → Application (client) ID</li>
+<li>Auth0: found in Applications → your app → Settings → Client ID</li>
+</ul>
+<hr />
+<p><strong>Q (Azure only): <code>Select authentication mode:</code></strong></p>
+<p>Only shown for Azure AD / Entra ID. Choose based on whether your tenant allows public client flows:</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Public client</strong></td>
+<td>Personal tenant or <code>Allow public client flows = Yes</code> in your app — simplest option, no secret needed</td>
+</tr>
+<tr>
+<td><strong>Confidential — client secret</strong></td>
+<td>Enterprise tenant with <code>Allow public client flows = No</code> — uses a shared app secret</td>
+</tr>
+<tr>
+<td><strong>Confidential — certificate</strong></td>
+<td>Enterprise tenant, production recommended — uses a certificate/key pair, no shared secret</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Check in Azure portal: App registration → Authentication → Advanced settings → "Allow public client flows"</p>
+</blockquote>
+<p>If you choose <strong>certificate mode</strong>, the wizard will ask for two file paths:
+- <code>Path to certificate PEM file:</code> — enter <code>~/claude-code-with-bedrock/cert.pem</code> (works on all platforms)
+- <code>Path to private key PEM file:</code> — enter <code>~/claude-code-with-bedrock/key.pem</code></p>
+<p>Use <code>~/</code> relative paths — they resolve correctly on macOS, Linux and Windows. The cert files must exist at those paths on every user machine. See <a href="assets/docs/providers/microsoft-entra-id-setup.md#5-confidential-client-setup-enterprise">Certificate Setup</a> for how to generate and distribute them.</p>
+<hr />
+<p><strong>Q: <code>Select credential storage method:</code></strong></p>
+<p>Choose how the <code>credential-process</code> binary stores AWS temporary credentials on the user's machine:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>What it does</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Keyring</strong></td>
+<td>OS secure storage (macOS Keychain, Windows Credential Manager, Linux Secret Service)</td>
+<td>Production, and recommended for Claude Desktop (Cowork 3P)</td>
+</tr>
+<tr>
+<td><strong>Session Files</strong></td>
+<td>Temp files in <code>~/.aws/credentials</code> and <code>~/.claude-code-session/</code></td>
+<td>Dev/testing — simpler, wiped on logout</td>
+</tr>
+</tbody>
+</table>
+<p>Default is <strong>Session Files</strong>. Both modes work for Claude Code CLI. For <strong>Claude Desktop (3P)</strong>, Keyring is strongly recommended: Claude Desktop resolves credentials through <code>inferenceBedrockProfile</code> → boto3's named-profile resolution, and boto3 reads <code>~/.aws/credentials</code> before the <code>credential_process</code> entry in <code>~/.aws/config</code>. In Session Files mode, that means boto3 uses whatever static credentials the last CLI invocation wrote to the file and will <strong>not</strong> auto-refresh them through <code>credential_process</code> once they expire — Claude Desktop fails with <code>403 The security token included in the request is invalid</code> until the CLI is run again to repopulate the file. Keyring mode keeps <code>~/.aws/credentials</code> untouched, so boto3 falls through to <code>credential_process</code> and the binary handles refresh transparently. Keyring may show a one-time OS permission prompt on first use.</p>
+<hr />
+<p><strong>Q: <code>Choose federation type:</code></strong></p>
+<p>How the OIDC token is exchanged for AWS temporary credentials:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>How it works</th>
+<th>Max session</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Direct STS</strong></td>
+<td>OIDC token → STS <code>AssumeRoleWithWebIdentity</code> → temp creds</td>
+<td>12 hours</td>
+<td>Recommended for most deployments — simpler, longer sessions</td>
+</tr>
+<tr>
+<td><strong>Cognito Identity Pool</strong></td>
+<td>OIDC token → Cognito Identity Pool → temp creds</td>
+<td>8 hours</td>
+<td>When you need Cognito features like principal tag mapping</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Default: Direct STS.</strong> Unless you have a specific reason for Cognito, use Direct STS.</p>
+<hr />
+<h5 id="if-you-chose-iam-identity-center">If you chose IAM Identity Center<a class="headerlink" href="#if-you-chose-iam-identity-center" title="Permanent link">&para;</a></h5>
+<p>Set up Identity Center first — the <a href="assets/docs/providers/iam-identity-center-setup.md">IAM Identity Center Setup Guide</a> covers the prerequisites (a permission set with Bedrock access, email-based session names) and the full walkthrough.</p>
+<p>The wizard asks four questions:</p>
+<p><strong>Q: <code>Enter your IAM Identity Center start URL:</code></strong>
+Your Identity Center portal URL, e.g. <code>https://company.awsapps.com/start</code>.</p>
+<p><strong>Q: <code>Enter your SSO region (where Identity Center is configured):</code></strong>
+The AWS region where IAM Identity Center is enabled — auto-suggested from the start URL when possible. This can differ from the region you deploy infrastructure to.</p>
+<p><strong>Q: <code>Enter the AWS account ID for Bedrock access:</code></strong>
+The 12-digit AWS account ID users will receive credentials for.</p>
+<p><strong>Q: <code>Enter the permission set name (IAM role users will assume):</code></strong>
+Default: <code>BedrockDeveloperAccess</code>. The permission set must grant Bedrock invoke access.</p>
+<p>Developers sign in with the standard AWS SSO device flow (browser approval, like <code>aws sso login</code>). Quota enforcement and per-user cost attribution both work with Identity Center: quota checks are SigV4-signed, and user identity comes from the IAM ARN session name.</p>
+<hr />
+<h5 id="if-you-chose-none">If you chose None<a class="headerlink" href="#if-you-chose-none" title="Permanent link">&para;</a></h5>
+<p>No authentication questions are asked. The wizard skips directly to Step 2.</p>
+<p><strong>What choosing None means in practice:</strong></p>
+<ul>
+<li><strong>No auth infrastructure is deployed</strong> — no IAM OIDC Provider, no Cognito Identity Pool, no IAM role for developers is created.</li>
+<li><strong>No <code>credential_process</code> binary is distributed</strong> — end users will not get an installer or auto-refreshing AWS credentials from this tool.</li>
+<li><strong>You are responsible for giving developers Bedrock access</strong> via whatever IAM mechanism already exists in your account (IAM users, existing roles, existing SSO, etc.).</li>
+</ul>
+<p><strong>When to choose None:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Why choosing None makes sense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>You only want the monitoring/analytics stack</td>
+<td>Deploy dashboards without changing how developers authenticate</td>
+</tr>
+<tr>
+<td>Developers already have Bedrock access via existing roles</td>
+<td>Adding another auth layer would be redundant</td>
+</tr>
+<tr>
+<td>Pilot/testing with a shared IAM user</td>
+<td>Fastest way to test the monitoring stack before committing to a full OIDC or Identity Center setup</td>
+</tr>
+<tr>
+<td>You will configure auth manually after deployment</td>
+<td>Advanced users who want to customise the CloudFormation templates directly</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note:</strong> Quota monitoring and per-user attribution require OIDC or IAM Identity Center authentication. With <strong>None</strong>, the monitoring stack still collects aggregate metrics but cannot attribute usage to individual users.</p>
+</blockquote>
+<hr />
+<h4 id="step-2-aws-infrastructure-configuration">Step 2: AWS Infrastructure Configuration<a class="headerlink" href="#step-2-aws-infrastructure-configuration" title="Permanent link">&para;</a></h4>
+<p><strong>Q: <code>Select AWS Region for infrastructure deployment:</code></strong></p>
+<p>The region where CloudFormation will create authentication resources (IAM OIDC Provider or Cognito Identity Pool, IAM roles, monitoring stack if enabled). This does <strong>not</strong> have to match the region where Bedrock is invoked — you configure Bedrock regions separately in Step 3.</p>
+<p>Choose the region closest to your team or where your compliance requirements dictate resources must reside.</p>
+<hr />
+<p><strong>Q: <code>Stack base name:</code> (Direct STS) or <code>Identity Pool Name:</code> (Cognito)</strong></p>
+<p>A name prefix used for all CloudFormation stack names created by this deployment. Example: <code>claude-code-auth</code> produces:
+- <code>claude-code-auth-stack</code> — main auth stack
+- <code>claude-code-auth-monitoring</code> — OTEL collector (if enabled)
+- <code>claude-code-auth-dashboard</code> — CloudWatch dashboard (if enabled)
+- <code>claude-code-auth-analytics</code> — Athena pipeline (if enabled)</p>
+<p>Use lowercase letters, numbers and hyphens only. Must be unique within your AWS account/region.</p>
+<hr />
+<h4 id="optional-features">Optional Features<a class="headerlink" href="#optional-features" title="Permanent link">&para;</a></h4>
+<hr />
+<h5 id="monitoring-and-usage-dashboards">Monitoring and Usage Dashboards<a class="headerlink" href="#monitoring-and-usage-dashboards" title="Permanent link">&para;</a></h5>
+<p><strong>Q: <code>Enable monitoring?</code></strong></p>
+<p>Deploys an OpenTelemetry collector on ECS Fargate + CloudWatch dashboard showing per-user token usage, costs, model breakdown, and quota status.</p>
+<ul>
+<li><strong>Yes</strong> → continues to VPC and HTTPS configuration below</li>
+<li><strong>No</strong> → skips all monitoring questions; auth infrastructure only</li>
+</ul>
+<blockquote>
+<p><strong>Important:</strong> If your VPC has no Internet Gateway (fully private environment), answer <strong>No</strong> here. The monitoring ALB is internet-facing by default — see the VPC note under <strong>VPC Configuration</strong> below.</p>
+</blockquote>
+<hr />
+<p><strong>Q: VPC Configuration</strong> (shown if monitoring = Yes)</p>
+<p>The wizard asks whether to create a new VPC or use an existing one:</p>
+<ul>
+<li><strong>Create new VPC</strong> — wizard creates a VPC with public/private subnets automatically. Simplest option.</li>
+<li><strong>Use existing VPC</strong> — you provide your VPC ID and at least 2 subnet IDs. Use this if you have networking requirements (VPC peering, PrivateLink, specific CIDR ranges).</li>
+</ul>
+<blockquote>
+<p>Your VPC <strong>must have an Internet Gateway</strong> for monitoring to deploy successfully. This is a current limitation — the OTEL collector ALB is internet-facing.</p>
+</blockquote>
+<hr />
+<p><strong>Q: <code>Enable HTTPS with custom domain?</code></strong></p>
+<table>
+<thead>
+<tr>
+<th>Answer</th>
+<th>What happens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>No</strong> (default)</td>
+<td>OTEL collector endpoint uses plain HTTP on the ALB's auto-generated DNS name. Metrics are unencrypted in transit. Simple, no domain needed.</td>
+</tr>
+<tr>
+<td><strong>Yes</strong></td>
+<td>Provide a custom domain (e.g. <code>telemetry.company.com</code>) and Route53 hosted zone. CloudFormation creates an ACM certificate and DNS record automatically.</td>
+</tr>
+</tbody>
+</table>
+<p>If you answer <strong>Yes</strong>, the wizard asks:
+- <code>Enter custom domain name:</code> — e.g. <code>telemetry.company.com</code>
+- <code>Select Route53 hosted zone:</code> — the wizard lists zones in your account; select the one that matches your domain</p>
+<blockquote>
+<p>If you do not have a Route53 hosted zone, answer <strong>No</strong> to HTTPS and handle TLS termination externally.</p>
+</blockquote>
+<hr />
+<h5 id="analytics-pipeline">Analytics Pipeline<a class="headerlink" href="#analytics-pipeline" title="Permanent link">&para;</a></h5>
+<p><strong>Q: <code>Enable analytics?</code></strong></p>
+<p>Deploys Kinesis Data Firehose → S3 data lake → Athena with 10 pre-built SQL queries for historical token usage analysis.</p>
+<ul>
+<li>Additional cost: ~$5/month for light usage</li>
+<li>Gives you 90-day hot storage + Glacier archival</li>
+<li>Useful for chargeback, cost attribution by team/department, trend analysis</li>
+</ul>
+<p>You can enable this later by re-running <code>ccwb init</code> and <code>ccwb deploy analytics</code>.</p>
+<hr />
+<h5 id="quota-monitoring">Quota Monitoring<a class="headerlink" href="#quota-monitoring" title="Permanent link">&para;</a></h5>
+<p><strong>Q: <code>Enable quota monitoring?</code></strong></p>
+<p>Enforces per-user monthly and daily usage limits. Sends SNS alerts at 80%, 90%, and 100% of limits. Can block credential issuance when limits are exceeded.</p>
+<p>If <strong>Yes</strong>, the wizard first asks how to measure usage:</p>
+<p><strong>Q: <code>How do you want to limit usage?</code></strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>How it works</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cost-based ($ budget per user)</strong> — default, recommended</td>
+<td>Set monthly/daily budgets in USD; cost is calculated server-side from per-model Bedrock pricing rates</td>
+</tr>
+<tr>
+<td><strong>Token-based</strong></td>
+<td>Set raw token-count limits per user</td>
+</tr>
+</tbody>
+</table>
+<p><strong>If cost-based (the default):</strong></p>
+<p><strong>Q: <code>Monthly budget per user (USD):</code></strong>
+Default: <code>50</code>.</p>
+<p><strong>Q: <code>Daily budget per user (USD, 0 for no daily cap):</code></strong>
+Default: <code>0</code> (no daily cap).</p>
+<blockquote>
+<p>Cost estimates use published on-demand Bedrock rates. Use AWS Cost Explorer for billing truth.</p>
+</blockquote>
+<p><strong>If token-based:</strong></p>
+<p><strong>Q: <code>Monthly token limit per user (in millions):</code></strong>
+Default: <code>225</code> (= 225,000,000 tokens/month). Adjust based on your team's expected usage.</p>
+<p><strong>Q: <code>Burst buffer percentage (5-25%):</code></strong>
+Daily limit = (monthly ÷ 30) × (1 + buffer%). The buffer allows for legitimate heavy days above the average without triggering alerts.
+- <code>5%</code> = strict, blocks heavy days quickly
+- <code>10%</code> = default, balanced
+- <code>25%</code> = flexible, only catches extreme spikes</p>
+<p><strong>Q: <code>Custom daily limit:</code></strong>
+Press Enter to accept the calculated value, or enter a specific number.</p>
+<p><strong>Both limit types then ask:</strong></p>
+<p><strong>Q: <code>Daily limit enforcement:</code> and <code>Monthly limit enforcement:</code></strong></p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>alert</strong></td>
+<td>Send SNS notification, allow continued use</td>
+</tr>
+<tr>
+<td><strong>block</strong></td>
+<td>Deny credential issuance when limit exceeded</td>
+</tr>
+</tbody>
+</table>
+<p>Recommended defaults: Daily = <strong>alert</strong>, Monthly = <strong>block</strong></p>
+<p><strong>Q: <code>Quota check interval (minutes):</code></strong>
+How often quota is re-checked when credentials are cached.
+- <code>0</code> = check every request (adds ~200ms latency, strictest enforcement)
+- <code>30</code> = every 30 minutes (default — good balance)
+- <code>60</code> = hourly (minimal impact, 1-hour enforcement gap)</p>
+<hr />
+<h5 id="windows-build-support">Windows Build Support<a class="headerlink" href="#windows-build-support" title="Permanent link">&para;</a></h5>
+<p><strong>Q: <code>Enable Windows builds?</code></strong></p>
+<p>Deploys an AWS CodeBuild project to compile the Windows <code>.exe</code> binary using Nuitka. Windows builds take ~20 minutes and run in the cloud — you don't need a Windows machine.</p>
+<ul>
+<li>Answer <strong>Yes</strong> if you have Windows users</li>
+<li>Answer <strong>No</strong> to skip — you can enable it later by re-running <code>ccwb init</code></li>
+</ul>
+<hr />
+<h5 id="claude-desktop-support">Claude Desktop Support<a class="headerlink" href="#claude-desktop-support" title="Permanent link">&para;</a></h5>
+<p><strong>Q: <code>Enable Claude Desktop support?</code></strong></p>
+<p>When <strong>Yes</strong>, every <code>ccwb package</code> run automatically produces MDM configuration files alongside the standard installer. These deploy Claude Desktop (Cowork) pointing at Bedrock through the same credential infrastructure. No extra AWS resources required. (Exception: IDC zero-binary packages — IAM Identity Center auth without quota — skip MDM generation with a warning, because they intentionally ship no credential-process binary for Claude Desktop to invoke.)</p>
+<p>Output files in <code>dist/cowork-3p/</code>:
+- <code>cowork-3p.mobileconfig</code> — deploy via Jamf/Kandji/Mosyle (macOS). Unsigned profiles cannot auto-install: after delivery (or when <code>install.sh</code> runs), the user must approve the profile in <strong>System Settings → Privacy &amp; Security → Profiles</strong>.
+- <code>cowork-3p.reg</code> — deploy via Intune/Group Policy (Windows). Writes to <code>HKCU\SOFTWARE\Policies\Claude</code> (per-user, no admin elevation); do not redirect to <code>HKLM</code>.
+- <code>cowork-3p-config.json</code> — raw MDM JSON for the Claude Desktop Setup UI / manual review</p>
+<p>Claude Desktop authenticates via the <code>inferenceBedrockProfile</code> MDM key, which points at the AWS named profile that <code>install.sh</code> / <code>install.bat</code> writes to <code>~/.aws/config</code>. No per-user wrapper script is required. Users must run the installer <strong>before</strong> opening Claude Desktop — otherwise the named profile won't exist and Bedrock mode won't activate.</p>
+<p>See <a href="assets/docs/COWORK_3P.md">COWORK_3P.md</a> for MDM deployment instructions.</p>
+<hr />
+<h5 id="package-distribution">Package Distribution<a class="headerlink" href="#package-distribution" title="Permanent link">&para;</a></h5>
+<p><strong>Q: <code>Distribution method:</code></strong></p>
+<p>How to deliver the installer package to end users:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>How it works</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Presigned S3 URLs</strong></td>
+<td><code>ccwb distribute</code> uploads to S3 and generates a time-limited link (48h default) you share via Slack/email</td>
+<td>Any team size, no extra infrastructure</td>
+</tr>
+<tr>
+<td><strong>Authenticated Landing Page</strong></td>
+<td>Self-service web portal — users log in with SSO and download the right binary for their OS</td>
+<td>Large orgs needing compliance, audit trail, self-service</td>
+</tr>
+<tr>
+<td><strong>Disabled</strong></td>
+<td>You distribute the <code>dist/</code> folder manually (zip + email, shared drive, artifact repo)</td>
+<td>Simple pilots, internal testing</td>
+</tr>
+</tbody>
+</table>
+<p>If you choose <strong>Landing Page</strong>, the wizard asks for:
+- IdP provider for the web portal (can be different from your developer IdP)
+- Custom domain for the download portal (e.g. <code>downloads.company.com</code>)
+- Route53 hosted zone</p>
+<hr />
+<h4 id="step-3-bedrock-model-selection">Step 3: Bedrock Model Selection<a class="headerlink" href="#step-3-bedrock-model-selection" title="Permanent link">&para;</a></h4>
+<p><strong>Q: <code>Select Claude model:</code></strong></p>
+<p>The default model developers will use. This sets <code>ANTHROPIC_MODEL</code> in the distributed <code>settings.json</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Cost</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Claude Sonnet</strong></td>
+<td>Mid</td>
+<td>Most development tasks — best balance of speed and capability</td>
+</tr>
+<tr>
+<td><strong>Claude Haiku</strong></td>
+<td>Lowest</td>
+<td>High-volume, fast tasks — autocomplete, simple edits</td>
+</tr>
+<tr>
+<td><strong>Claude Opus</strong></td>
+<td>Highest</td>
+<td>Complex reasoning, architecture, hard problems</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Q: <code>Select cross-region inference profile:</code></strong></p>
+<p>Routes Bedrock requests across multiple AWS regions within a geography for higher availability and throughput. All regions within a profile have the same pricing.</p>
+<table>
+<thead>
+<tr>
+<th>Profile</th>
+<th>Routes within</th>
+<th>Required for Claude 3.7+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>US</strong> (<code>us.</code>)</td>
+<td>US East, US West</td>
+<td>Yes — Claude 3.7+ only available via cross-region</td>
+</tr>
+<tr>
+<td><strong>EU</strong> (<code>eu.</code>)</td>
+<td>EU regions</td>
+<td>For EU data residency compliance</td>
+</tr>
+<tr>
+<td><strong>APAC</strong> (<code>ap.</code>)</td>
+<td>Asia Pacific regions</td>
+<td>For APAC deployments</td>
+</tr>
+<tr>
+<td><strong>Global</strong> (<code>global.</code>)</td>
+<td>All regions worldwide</td>
+<td>Maximum throughput</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Important:</strong> Claude models 3.7 and newer require cross-region inference. Direct single-region invocation is only available for older models.</p>
+</blockquote>
+<p><strong>Q: <code>Select source region:</code></strong></p>
+<p>The AWS region where Bedrock API calls originate. Choose the region closest to your developers or your primary AWS region. Requests may be routed to other regions within the profile for capacity, but billing and data residency are anchored to the selected geography.</p>
+<hr />
+<h4 id="what-ccwb-init-saves">What <code>ccwb init</code> saves<a class="headerlink" href="#what-ccwb-init-saves" title="Permanent link">&para;</a></h4>
+<p>When the wizard completes, configuration is saved to <code>~/.ccwb/profiles/&lt;name&gt;.json</code> on your machine (one file per profile). A <code>~/.ccwb/config.json</code> file tracks which profile is currently active.</p>
+<p><strong>Nothing is deployed to AWS at this point.</strong> The wizard only writes local config. Deployment happens in Step 3.</p>
+<p>If you need to re-run the wizard to change settings, run <code>ccwb init</code> again with the same profile name — it will overwrite the saved profile. If you want to add a second deployment environment, run <code>ccwb init</code> again with a new profile name.</p>
+<hr />
+<h3 id="step-3-deploy-infrastructure">Step 3: Deploy Infrastructure<a class="headerlink" href="#step-3-deploy-infrastructure" title="Permanent link">&para;</a></h3>
+<p>Deploy the AWS CloudFormation stacks:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>deploy
+</code></pre></div>
+<blockquote>
+<p><strong>Tip:</strong> Add <code>--parallel</code> to deploy independent stacks concurrently — faster on full deployments (per-stack progress spinners are suppressed).</p>
+</blockquote>
+<p>This deploys in order based on what you configured in Step 2:</p>
+<p><strong>Auth stack</strong> (always deployed):</p>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IAM OIDC Provider (Direct STS) or Cognito Identity Pool</td>
+<td>Trusts your IdP — validates OIDC tokens from Okta/Azure/Auth0</td>
+</tr>
+<tr>
+<td>IAM Role with <code>bedrock:InvokeModel</code></td>
+<td>What developers assume after OIDC login — scoped to Bedrock only</td>
+</tr>
+<tr>
+<td>IAM trust policy</td>
+<td>Allows only tokens from your specific IdP client ID to assume the role</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Monitoring stack</strong> (if monitoring = Yes):</p>
+<ul>
+<li>VPC and networking resources (or integration with existing VPC)</li>
+<li>ECS Fargate cluster running OpenTelemetry collector</li>
+<li>Application Load Balancer for OTLP ingestion</li>
+<li>CloudWatch Log Groups and Metrics</li>
+<li>CloudWatch Dashboard with PromQL widgets (no Lambda functions)</li>
+<li>Kinesis Data Firehose for streaming metrics to S3 (if analytics enabled)</li>
+<li>Amazon Athena for SQL analytics on collected metrics (if analytics enabled)</li>
+<li>S3 bucket for long-term metrics storage (if analytics enabled)</li>
+</ul>
+<p><strong>Quota stack</strong> (if quota monitoring = Yes):</p>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DynamoDB table (<code>QuotaPolicies</code>)</td>
+<td>Stores per-user/group/default token limits</td>
+</tr>
+<tr>
+<td>Lambda (quota-monitor)</td>
+<td>Runs every 15 min — checks thresholds via PromQL, sends alerts</td>
+</tr>
+<tr>
+<td>SNS topic</td>
+<td>Delivers quota alerts to subscribed email/webhook</td>
+</tr>
+<tr>
+<td>API Gateway (quota check)</td>
+<td>Real-time quota check at credential issuance time</td>
+</tr>
+</tbody>
+</table>
+<p><strong>CodeBuild stack</strong> (if Windows builds = Yes):</p>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CodeBuild project</td>
+<td>Compiles Windows <code>.exe</code> using Nuitka (~20 min per build)</td>
+</tr>
+<tr>
+<td>S3 bucket</td>
+<td>Stores compiled Windows binaries</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Deployment takes 5–15 minutes</strong> depending on which stacks are enabled. Monitor progress:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>status
+</code></pre></div>
+<h3 id="step-4-create-distribution-package">Step 4: Create Distribution Package<a class="headerlink" href="#step-4-create-distribution-package" title="Permanent link">&para;</a></h3>
+<p>Build the package for end users:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># Builds all 5 platforms via Go cross-compilation (the default)</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># Creates ready-to-distribute packages for:</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c1"># - macOS ARM64 (Apple Silicon) and Intel</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="c1"># - Linux x64 and ARM64</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="c1"># - Windows x64</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="c1"># All from a single command, any admin OS. Requires: Go 1.24+</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> Go cross-compilation is the default build mode — no Docker, CodeBuild, or platform-specific toolchains needed, and both macOS architectures are built regardless of your admin machine. If Go 1.24+ is not installed, <code>ccwb package</code> automatically falls back to the deprecated legacy PyInstaller/CodeBuild pipeline (see <a href="#legacy-build-mode---legacy">Legacy build mode</a> below). The old <code>--go</code> flag is accepted for backwards compatibility but no longer changes anything.</p>
+</blockquote>
+<p>Use <code>--target-platform</code> to build a subset (comma-separated, e.g. <code>--target-platform macos-arm64,windows</code>); the default is <code>all</code>. The installer auto-detects each user's platform and architecture, so shipping all platforms is the simplest choice.</p>
+<p><strong>Package Workflow:</strong></p>
+<ol>
+<li><strong>Build</strong>: <code>poetry run ccwb package</code> cross-compiles native Go binaries for every selected platform locally — any admin OS, no Docker or CodeBuild</li>
+<li><strong>Check status</strong>: <code>poetry run ccwb builds</code> (only needed for legacy-mode Windows CodeBuild builds)</li>
+<li><strong>Create distribution</strong>: Use <code>distribute</code> to upload and generate presigned URLs</li>
+</ol>
+<p>The <code>dist/</code> folder will contain:</p>
+<ul>
+<li><code>credential-process-macos-arm64</code> - Authentication executable for macOS Apple Silicon</li>
+<li><code>credential-process-macos-intel</code> - Authentication executable for macOS Intel</li>
+<li><code>credential-process-linux-x64</code> - Authentication executable for Linux x64</li>
+<li><code>credential-process-linux-arm64</code> - Authentication executable for Linux ARM64</li>
+<li><code>credential-process-windows.exe</code> - Authentication executable for Windows</li>
+<li><code>config.json</code> - Embedded configuration</li>
+<li><code>install.sh</code> - Installation script for Unix systems</li>
+<li><code>install.bat</code> - Installation script for Windows (launcher)</li>
+<li><code>ccwb-install.ps1</code> - PowerShell installer logic (called by install.bat)</li>
+<li><code>README.md</code> - User instructions</li>
+<li><code>.claude/settings.json</code> - Claude Code telemetry settings (if monitoring enabled)</li>
+<li><code>otel-helper-*</code> - OTEL helper executables for each platform (if monitoring enabled)</li>
+</ul>
+<p>The package builder:</p>
+<ul>
+<li>Cross-compiles every selected platform from any admin OS — no Docker, no macOS host, no CodeBuild required</li>
+<li>Includes the OTEL helper for extracting user attributes from JWT tokens</li>
+<li>Creates a unified installer that auto-detects the user's platform</li>
+</ul>
+<h4 id="legacy-build-mode-legacy">Legacy build mode (<code>--legacy</code>)<a class="headerlink" href="#legacy-build-mode-legacy" title="Permanent link">&para;</a></h4>
+<p>The deprecated PyInstaller/Nuitka pipeline is still available with <code>poetry run ccwb package --legacy</code>, and is used automatically when Go 1.24+ is missing. Unlike the Go default, it has host-OS constraints:</p>
+<table>
+<thead>
+<tr>
+<th>Target binary</th>
+<th>Build host must be</th>
+<th>Tooling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>macos-arm64</code>, <code>macos-intel</code></td>
+<td>macOS</td>
+<td>PyInstaller (native)</td>
+</tr>
+<tr>
+<td><code>linux-x64</code>, <code>linux-arm64</code></td>
+<td>Linux, <strong>or</strong> macOS with Docker Desktop</td>
+<td>PyInstaller (Docker container used when building from macOS)</td>
+</tr>
+<tr>
+<td><code>windows</code></td>
+<td>any host with CodeBuild enabled</td>
+<td>AWS CodeBuild (remote build, 20+ minutes) — requires enabling CodeBuild during <code>init</code>; skipped otherwise</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>In legacy mode, Linux admins cannot build macOS binaries.</strong> PyInstaller on Linux emits Linux ELF binaries regardless of the requested target architecture, and macOS cannot load ELF — the build refuses with a clear error. To produce macOS binaries in legacy mode, use a macOS workstation or a CI macOS runner (e.g. GitHub Actions <code>macos-latest</code>) — or simply use the default Go build mode, which has none of these constraints.</p>
+</blockquote>
+<p><strong>Choosing macOS targets in legacy mode:</strong> PyInstaller builds only for the host Mac's own architecture. Check what your developers run (<code>uname -m</code>: <code>arm64</code> = Apple Silicon → <code>macos-arm64</code>; <code>x86_64</code> = Intel → <code>macos-intel</code>). <code>macos-intel</code> binaries run on all Macs — natively on Intel, via Rosetta on Apple Silicon. Building the non-native architecture requires a universal2 Python (see <a href="assets/docs/CLI_REFERENCE.md#cross-arch-macos-build-setup-legacy-mode-only-optional">Cross-arch macOS Build Setup</a>).</p>
+<p><strong>Docker (legacy mode):</strong> producing Linux binaries from a macOS host requires Docker Desktop installed and running; if not present, Linux builds are skipped with a warning and other platforms continue unaffected. macOS and Windows builds have no dependency on Docker.</p>
+<h3 id="step-5-test-the-setup">Step 5: Test the Setup<a class="headerlink" href="#step-5-test-the-setup" title="Permanent link">&para;</a></h3>
+<p>Verify everything works correctly:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span><span class="nb">test</span>
+</code></pre></div>
+<p>This will:</p>
+<ul>
+<li>Simulate the end-user installation process</li>
+<li>Test authentication</li>
+<li>Verify AWS credential retrieval</li>
+<li>Check Amazon Bedrock access</li>
+<li>Test actual API calls — these run by default and make real Bedrock calls (minimal cost, ~$0.001). Add <code>--full</code> to test all allowed regions, or <code>--quota-only</code> to run only the quota monitoring checks</li>
+</ul>
+<h3 id="step-6-distribute-packages-to-users">Step 6: Distribute Packages to Users<a class="headerlink" href="#step-6-distribute-packages-to-users" title="Permanent link">&para;</a></h3>
+<p>You have three options for sharing packages with users. The distribution method is configured during <code>ccwb init</code> (Step 2).</p>
+<h4 id="option-1-manual-sharing">Option 1: Manual Sharing<a class="headerlink" href="#option-1-manual-sharing" title="Permanent link">&para;</a></h4>
+<p>No additional infrastructure required. Share the built packages directly:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Navigate to dist directory</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nb">cd</span><span class="w"> </span>dist
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1"># Create a zip file of all packages</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>zip<span class="w"> </span>-r<span class="w"> </span>claude-code-packages.zip<span class="w"> </span>.
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="c1"># Share via email or internal file sharing</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="c1"># Users extract and run install.sh (Unix) or install.bat (Windows)</span>
+</code></pre></div>
+<p><strong>Best for:</strong> Any size team, no automation required</p>
+<h4 id="option-2-presigned-s3-urls">Option 2: Presigned S3 URLs<a class="headerlink" href="#option-2-presigned-s3-urls" title="Permanent link">&para;</a></h4>
+<p>Automated distribution via time-limited S3 URLs:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute
+</code></pre></div>
+<p>Generates presigned URLs (default 48-hour expiry) that you share with users via email or messaging.</p>
+<p><strong>Best for:</strong> Automated distribution without authentication requirements</p>
+<p><strong>Setup:</strong> Select "presigned-s3" distribution type during <code>ccwb init</code> (Step 2)</p>
+<h4 id="option-3-authenticated-landing-page">Option 3: Authenticated Landing Page<a class="headerlink" href="#option-3-authenticated-landing-page" title="Permanent link">&para;</a></h4>
+<p>Self-service portal with IdP authentication:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># Deploy landing page infrastructure (if not done during Step 3)</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>deploy<span class="w"> </span>distribution
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="c1"># Upload packages to landing page</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute
+</code></pre></div>
+<p>Users visit your landing page URL, authenticate with SSO, and download packages for their platform.</p>
+<p><strong>Best for:</strong> Self-service portal with compliance and audit requirements</p>
+<p><strong>Setup:</strong> Select "landing-page" distribution type during <code>ccwb init</code> (Step 2), then deploy distribution infrastructure</p>
+<p>See <a href="assets/docs/distribution/comparison.md">Distribution Comparison</a> for detailed feature comparison and setup guides.</p>
+<hr />
+<h2 id="platform-builds">Platform Builds<a class="headerlink" href="#platform-builds" title="Permanent link">&para;</a></h2>
+<h3 id="build-requirements">Build Requirements<a class="headerlink" href="#build-requirements" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Go 1.24+</strong> (default build mode): Cross-compiles the credential-process, OTEL helper, and (in sidecar monitoring mode) OTEL collector binaries for all 5 platforms from any admin OS. Install from https://go.dev/dl/</li>
+<li><strong>Legacy mode (<code>--legacy</code>, deprecated)</strong> — also the automatic fallback when Go 1.24+ is missing:</li>
+<li><strong>Windows</strong>: AWS CodeBuild with Nuitka (automated)</li>
+<li><strong>macOS</strong>: PyInstaller with architecture-specific builds<ul>
+<li>ARM64: Native build on Apple Silicon Macs only — cannot run on Intel Macs</li>
+<li>Intel: Native build on Intel Macs — cross-arch from Apple Silicon requires universal2 Python (optional)</li>
+<li>Universal: Requires universal2 Python (optional)</li>
+</ul>
+</li>
+<li><strong>Linux</strong>: Docker with PyInstaller (cross-compiled from macOS host)<ul>
+<li>Requires <a href="https://docs.docker.com/get-docker/">Docker Desktop</a> installed and running</li>
+<li>If Docker is not installed or its daemon is not running, Linux builds are skipped with a warning</li>
+<li>macOS and Windows builds have <strong>no dependency on Docker</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="optional-cross-arch-macos-builds-legacy-mode-only">Optional: Cross-arch macOS Builds (legacy mode only)<a class="headerlink" href="#optional-cross-arch-macos-builds-legacy-mode-only" title="Permanent link">&para;</a></h3>
+<p>In legacy mode, <code>ccwb package --legacy</code> builds only for your Mac's own architecture. If you need to also build for the other architecture (e.g. Intel on Apple Silicon), install a universal2 Python from python.org — <code>ccwb</code> will detect it automatically.</p>
+<p>See <a href="assets/docs/CLI_REFERENCE.md#cross-arch-macos-build-setup-legacy-mode-only-optional">CLI Reference - Cross-arch macOS Build Setup</a> for setup instructions.</p>
+<p>If not configured, cross-arch builds are skipped and the package command continues with other platforms. Intel (<code>macos-intel</code>) binaries cover all Macs via Rosetta, so admins on Intel Macs can skip this. Admins on Apple Silicon who have Intel Mac users in their org should install the universal2 Python to produce the Intel binary. (The default Go build mode always produces both macOS architectures — none of this applies there.)</p>
+<hr />
+<h2 id="cleanup">Cleanup<a class="headerlink" href="#cleanup" title="Permanent link">&para;</a></h2>
+<p>You are responsible for the costs of AWS services while running this guidance. If you decide that you no longer need the guidance, please ensure that infrastructure resources are removed.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>destroy
+</code></pre></div>
+<hr />
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="ccwb-init-fails-aws-credentials-configured-even-though-aws-sts-get-caller-identity-works"><code>ccwb init</code> fails "AWS credentials configured" even though <code>aws sts get-caller-identity</code> works<a class="headerlink" href="#ccwb-init-fails-aws-credentials-configured-even-though-aws-sts-get-caller-identity-works" title="Permanent link">&para;</a></h3>
+<p>This is almost always caused by <strong>expired AWS environment variables</strong> overriding your credential file. boto3 (used internally by <code>ccwb</code>) resolves credentials in a strict priority order and stops at the first source that provides values — even if those values are expired:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>1. AWS_ACCESS_KEY_ID + AWS_SECRET_ACCESS_KEY env vars   ← highest priority
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>2. ~/.aws/credentials file
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>3. ~/.aws/config file (SSO, credential_process, assumed roles)
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>4. IAM instance profile (EC2 only)
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>5. ECS container role                                   ← lowest priority
+</code></pre></div>
+<p>If <code>AWS_ACCESS_KEY_ID</code> is set in your environment but expired, boto3 will <strong>not</strong> fall back to <code>~/.aws/credentials</code>. It will simply fail. This is the most common cause of this error.</p>
+<p><strong>Fix:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># 1. Check what is set</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>env<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>AWS_
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1"># 2. Unset any stale values</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="nb">unset</span><span class="w"> </span>AWS_ACCESS_KEY_ID<span class="w"> </span>AWS_SECRET_ACCESS_KEY<span class="w"> </span>AWS_SESSION_TOKEN
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="c1"># 3. Verify boto3 now resolves credentials correctly</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import boto3; print(boto3.client('sts').get_caller_identity())"</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="c1"># 4. Re-run init</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>init
+</code></pre></div>
+<p>If you are using <code>aws sso login</code>, make sure the SSO session is active before running <code>ccwb init</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>aws<span class="w"> </span>sso<span class="w"> </span>login<span class="w"> </span>--profile<span class="w"> </span>&lt;your-profile&gt;
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AWS_PROFILE</span><span class="o">=</span>&lt;your-profile&gt;
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>init
+</code></pre></div>
+<h3 id="authentication-issues-end-user-credential-refresh">Authentication Issues (end-user credential refresh)<a class="headerlink" href="#authentication-issues-end-user-credential-refresh" title="Permanent link">&para;</a></h3>
+<p>Force re-authentication after deployment:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>~/claude-code-with-bedrock/credential-process<span class="w"> </span>--clear-cache
+</code></pre></div>
+<p>If Claude Desktop (3P) fails with <code>403 The security token included in the request is invalid</code> and the user was previously on a session-files build, <code>~/.aws/credentials</code> may contain a stale <code>[&lt;profile-name&gt;]</code> stanza with literal <code>EXPIRED</code> values that shadows the current <code>credential_process</code> entry in <code>~/.aws/config</code>. Re-run <code>install.sh</code> / <code>install.bat</code> — it purges any such stanza before writing the new profile. Alternatively, remove the block by hand.</p>
+<h3 id="port-configuration">Port Configuration<a class="headerlink" href="#port-configuration" title="Permanent link">&para;</a></h3>
+<p>The credential provider uses port 8400 by default for OAuth callbacks. This port also serves as an inter-process lock: if multiple credential-process invocations run concurrently, the second will wait for the first to complete authentication and then read credentials from cache.</p>
+<p><strong>Important:</strong> The callback port must match the redirect URI registered in your IdP application (e.g., <code>http://localhost:8400/callback</code>). If port 8400 is occupied by another application on your users' machines (e.g., Commvault, HashiCorp Vault), configure a different port.</p>
+<p><strong>Option 1: Configure in profile</strong> (recommended — persisted in config.json):</p>
+<p>During <code>ccwb init</code>, select "Use a custom OAuth callback port" when prompted. Or manually add to <code>config.json</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="p">{</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span><span class="nt">"ProfileName"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">    </span><span class="nt">"redirect_port"</span><span class="p">:</span><span class="w"> </span><span class="mi">8401</span><span class="p">,</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">    </span><span class="err">...</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="p">}</span>
+</code></pre></div>
+<p><strong>Option 2: Environment variable</strong> (takes precedence over config.json):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">REDIRECT_PORT</span><span class="o">=</span><span class="m">8401</span>
+</code></pre></div>
+<p>Whichever port you choose, ensure <code>http://localhost:&lt;port&gt;/callback</code> is registered as a valid redirect URI in your IdP application configuration.</p>
+<h3 id="exec-format-error-on-the-credential-process-binary-end-user"><code>Exec format error</code> on the credential-process binary (end user)<a class="headerlink" href="#exec-format-error-on-the-credential-process-binary-end-user" title="Permanent link">&para;</a></h3>
+<p>If an end user sees this when running <code>aws sts get-caller-identity</code> or launching Claude:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>[Errno 8] Exec format error: '/Users/&lt;username&gt;/claude-code-with-bedrock/credential-process'
+</code></pre></div>
+<p>or directly:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>zsh: exec format error: ./credential-process
+</code></pre></div>
+<p><strong>This is a CPU architecture mismatch</strong> — the binary was built for a different architecture than the user's machine. <code>chmod +x</code> will not fix it.</p>
+<p><strong>Diagnose (run on the user's machine):</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>uname<span class="w"> </span>-m<span class="w">                                                  </span><span class="c1"># their CPU arch</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>file<span class="w"> </span>~/claude-code-with-bedrock/credential-process<span class="w">        </span><span class="c1"># binary's CPU arch</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th><code>uname -m</code> result</th>
+<th>Binary arch</th>
+<th>Cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x86_64</code> (Intel Mac)</td>
+<td><code>arm64</code></td>
+<td>Intel binary was not built — only ARM64 was in the package</td>
+</tr>
+<tr>
+<td><code>arm64</code> (Apple Silicon)</td>
+<td><code>x86_64</code></td>
+<td>Wrong binary manually copied</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Fix (admin) — rebuild with both macOS architectures:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># The default Go build mode produces both macos-arm64 and macos-intel</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="c1"># from any admin OS — no universal2 Python needed (requires Go 1.24+)</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package<span class="w"> </span>--target-platform<span class="w"> </span>all
+</code></pre></div>
+<p>Redistribute the new package. The installer auto-detects architecture and installs the correct binary.</p>
+<blockquote>
+<p><strong>Why this happens:</strong> In the legacy (<code>--legacy</code>) build mode — also the fallback when Go is missing — <code>ccwb package</code> builds only for the host Mac's architecture unless a universal2 Python is installed. An ARM64-only package has no Intel binary, so Intel Mac users get <code>exec format error</code> — ARM64 binaries cannot run on Intel Macs. Rebuild with the default Go mode, or in legacy mode install the "macOS 64-bit universal2 installer" for Python 3.12 from https://www.python.org/downloads/macos/ (ccwb detects it automatically at <code>/Library/Frameworks/Python.framework/</code>) to also build the Intel binary.</p>
+</blockquote>
+<h3 id="windows-installbat-replace-was-unexpected-at-this-time">Windows <code>install.bat</code> — <code>-replace was unexpected at this time.</code><a class="headerlink" href="#windows-installbat-replace-was-unexpected-at-this-time" title="Permanent link">&para;</a></h3>
+<p>If running <code>install.bat</code> on Windows produces this error:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>-replace was unexpected at this time.
+</code></pre></div>
+<p><strong>Root cause:</strong> This is a cmd.exe parser bug in the generated installer — <code>^</code> line-continuation characters inside a double-quoted PowerShell command get consumed by cmd.exe, causing <code>-replace</code> to be treated as a standalone batch command rather than part of the PowerShell string. A code fix is included in the next release.</p>
+<p><strong>Workaround:</strong> The binary and <code>config.json</code> are already copied before this error occurs — only the <code>~/.claude/settings.json</code> placeholder replacement fails. Complete the installation manually:</p>
+<p><strong>Step 1</strong> — Open <strong>PowerShell</strong> (not cmd.exe) from the extracted package folder and run:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="nv">$otelPath</span> <span class="p">=</span> <span class="s2">"$env:USERPROFILE\claude-code-with-bedrock\otel-helper.exe"</span> <span class="o">-replace</span> <span class="s1">'\\'</span><span class="p">,</span> <span class="s1">'/'</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="nv">$credPath</span> <span class="p">=</span> <span class="s2">"$env:USERPROFILE\claude-code-with-bedrock\credential-process.exe"</span> <span class="o">-replace</span> <span class="s1">'\\'</span><span class="p">,</span> <span class="s1">'/'</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="p">(</span><span class="nb">Get-Content</span> <span class="s1">'claude-settings\settings.json'</span><span class="p">)</span> <span class="p">`</span>
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>    <span class="o">-replace</span> <span class="s1">'__OTEL_HELPER_PATH__'</span><span class="p">,</span> <span class="nv">$otelPath</span> <span class="p">`</span>
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>    <span class="o">-replace</span> <span class="s1">'__CREDENTIAL_PROCESS_PATH__'</span><span class="p">,</span> <span class="nv">$credPath</span> <span class="p">|</span>
+<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>    <span class="nb">Set-Content</span> <span class="s2">"$env:USERPROFILE\.claude\settings.json"</span>
+</code></pre></div>
+<p><strong>Step 2</strong> — Configure the AWS profile (replace <code>&lt;profile-name&gt;</code> with the name shown in <code>config.json</code>):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="n">aws</span> <span class="n">configure</span> <span class="nb">set </span><span class="n">credential_process</span> <span class="p">`</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>    <span class="s2">"$env:USERPROFILE\claude-code-with-bedrock\credential-process.exe --profile &lt;profile-name&gt;"</span> <span class="p">`</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>    <span class="p">-</span><span class="n">-profile</span> <span class="p">&lt;</span><span class="n">profile-name</span><span class="p">&gt;</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Why PowerShell works:</strong> PowerShell uses backtick (<code>`</code>) for line continuation — there is no cmd.exe parser involved to mangle the <code>-replace</code> operators.</p>
+</blockquote>
+<h3 id="build-failures">Build Failures<a class="headerlink" href="#build-failures" title="Permanent link">&para;</a></h3>
+<p>Check Windows build status:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>builds
+</code></pre></div>
+<h3 id="stack-deployment-issues">Stack Deployment Issues<a class="headerlink" href="#stack-deployment-issues" title="Permanent link">&para;</a></h3>
+<p>View stack status:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>status
+</code></pre></div>
+<p>For detailed troubleshooting, see <a href="assets/docs/DEPLOYMENT.md">Deployment Guide</a>.</p>
+<hr />
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="assets/docs/ARCHITECTURE.md">Architecture Deep Dive</a> - Technical architecture details</li>
+<li><a href="assets/docs/MONITORING.md">Enable Monitoring</a> - Setup OpenTelemetry monitoring</li>
+<li><a href="assets/docs/ANALYTICS.md">Setup Analytics</a> - Configure S3 data lake and Athena queries</li>
+<li><a href="assets/docs/CLI_REFERENCE.md">CLI Reference</a> - Complete command reference</li>
+</ul>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="August 23, 2026 14:42:54 UTC"><span class="timeago" datetime="2026-08-23T14:42:54+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 23, 2026 14:42:54 UTC">2026-08-23</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="November 18, 2025 05:12:26 UTC"><span class="timeago" datetime="2025-11-18T05:12:26+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 18, 2025 05:12:26 UTC">2025-11-18</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <nav class="md-footer__inner md-grid" aria-label="Footer" style="background: transparent;">
+    
+    <a href=".." class="md-footer__link md-footer__link--prev" style="color: #141413;">
+      <div class="md-footer__title">
+        <span class="md-footer__direction">Previous</span>
+        Home
+      </div>
+    </a>
+    
+    
+    <a href="../providers/okta-setup/" class="md-footer__link md-footer__link--next" style="color: #141413;">
+      <div class="md-footer__title">
+        <span class="md-footer__direction">Next</span>
+        Okta
+      </div>
+    </a>
+    
+  </nav>
+  
+  <div class="md-footer-meta md-typeset" style="background-color: transparent;">
+    <div class="md-footer-meta__inner md-grid" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; padding: 2.5rem 0 2rem;">
+      <img src="../assets/images/aws-logo.svg" alt="AWS" style="height: 18px; width: auto; opacity: 0.4;">
+      <span style="color: #141413; opacity: 0.35; font-size: 0.65rem;">Claude Code with Amazon Bedrock</span>
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit", "toc.follow", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../js/timeago.min.js"></script>
+      
+        <script src="../js/timeago_mkdocs_material.js"></script>
+      
+    
+  </body>
+</html>

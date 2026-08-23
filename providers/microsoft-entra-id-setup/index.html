@@ -1,0 +1,2799 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Enterprise deployment guide for Claude Code on Amazon Bedrock">
+      
+      
+      
+        <link rel="canonical" href="https://cdharma.github.io/claude-with-bedrock/providers/microsoft-entra-id-setup/">
+      
+      
+        <link rel="prev" href="../okta-setup/">
+      
+      
+        <link rel="next" href="../auth0-setup/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Microsoft Entra ID - Guidance for Claude Code and Cowork on Amazon Bedrock</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../css/timeago.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/custom.css?v=11">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#complete-microsoft-entra-id-setup-guide-for-amazon-bedrock-integration" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Guidance for Claude Code and Cowork on Amazon Bedrock" class="md-header__button md-logo" aria-label="Guidance for Claude Code and Cowork on Amazon Bedrock" data-md-component="logo">
+      
+  
+  <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 304 182" style="enable-background:new 0 0 304 182;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#141413;}
+	.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#141413;}
+</style>
+<g>
+	<path class="st0" d="M86.4,66.4c0,3.7,0.4,6.7,1.1,8.9c0.8,2.2,1.8,4.6,3.2,7.2c0.5,0.8,0.7,1.6,0.7,2.3c0,1-0.6,2-1.9,3l-6.3,4.2
+		c-0.9,0.6-1.8,0.9-2.6,0.9c-1,0-2-0.5-3-1.4C76.2,90,75,88.4,74,86.8c-1-1.7-2-3.6-3.1-5.9c-7.8,9.2-17.6,13.8-29.4,13.8
+		c-8.4,0-15.1-2.4-20-7.2c-4.9-4.8-7.4-11.2-7.4-19.2c0-8.5,3-15.4,9.1-20.6c6.1-5.2,14.2-7.8,24.5-7.8c3.4,0,6.9,0.3,10.6,0.8
+		c3.7,0.5,7.5,1.3,11.5,2.2v-7.3c0-7.6-1.6-12.9-4.7-16c-3.2-3.1-8.6-4.6-16.3-4.6c-3.5,0-7.1,0.4-10.8,1.3c-3.7,0.9-7.3,2-10.8,3.4
+		c-1.6,0.7-2.8,1.1-3.5,1.3c-0.7,0.2-1.2,0.3-1.6,0.3c-1.4,0-2.1-1-2.1-3.1v-4.9c0-1.6,0.2-2.8,0.7-3.5c0.5-0.7,1.4-1.4,2.8-2.1
+		c3.5-1.8,7.7-3.3,12.6-4.5c4.9-1.3,10.1-1.9,15.6-1.9c11.9,0,20.6,2.7,26.2,8.1c5.5,5.4,8.3,13.6,8.3,24.6V66.4z M45.8,81.6
+		c3.3,0,6.7-0.6,10.3-1.8c3.6-1.2,6.8-3.4,9.5-6.4c1.6-1.9,2.8-4,3.4-6.4c0.6-2.4,1-5.3,1-8.7v-4.2c-2.9-0.7-6-1.3-9.2-1.7
+		c-3.2-0.4-6.3-0.6-9.4-0.6c-6.7,0-11.6,1.3-14.9,4c-3.3,2.7-4.9,6.5-4.9,11.5c0,4.7,1.2,8.2,3.7,10.6
+		C37.7,80.4,41.2,81.6,45.8,81.6z M126.1,92.4c-1.8,0-3-0.3-3.8-1c-0.8-0.6-1.5-2-2.1-3.9L96.7,10.2c-0.6-2-0.9-3.3-0.9-4
+		c0-1.6,0.8-2.5,2.4-2.5h9.8c1.9,0,3.2,0.3,3.9,1c0.8,0.6,1.4,2,2,3.9l16.8,66.2l15.6-66.2c0.5-2,1.1-3.3,1.9-3.9c0.8-0.6,2.2-1,4-1
+		h8c1.9,0,3.2,0.3,4,1c0.8,0.6,1.5,2,1.9,3.9l15.8,67l17.3-67c0.6-2,1.3-3.3,2-3.9c0.8-0.6,2.1-1,3.9-1h9.3c1.6,0,2.5,0.8,2.5,2.5
+		c0,0.5-0.1,1-0.2,1.6c-0.1,0.6-0.3,1.4-0.7,2.5l-24.1,77.3c-0.6,2-1.3,3.3-2.1,3.9c-0.8,0.6-2.1,1-3.8,1h-8.6c-1.9,0-3.2-0.3-4-1
+		c-0.8-0.7-1.5-2-1.9-4L156,23l-15.4,64.4c-0.5,2-1.1,3.3-1.9,4c-0.8,0.7-2.2,1-4,1H126.1z M254.6,95.1c-5.2,0-10.4-0.6-15.4-1.8
+		c-5-1.2-8.9-2.5-11.5-4c-1.6-0.9-2.7-1.9-3.1-2.8c-0.4-0.9-0.6-1.9-0.6-2.8v-5.1c0-2.1,0.8-3.1,2.3-3.1c0.6,0,1.2,0.1,1.8,0.3
+		c0.6,0.2,1.5,0.6,2.5,1c3.4,1.5,7.1,2.7,11,3.5c4,0.8,7.9,1.2,11.9,1.2c6.3,0,11.2-1.1,14.6-3.3c3.4-2.2,5.2-5.4,5.2-9.5
+		c0-2.8-0.9-5.1-2.7-7c-1.8-1.9-5.2-3.6-10.1-5.2L246,52c-7.3-2.3-12.7-5.7-16-10.2c-3.3-4.4-5-9.3-5-14.5c0-4.2,0.9-7.9,2.7-11.1
+		c1.8-3.2,4.2-6,7.2-8.2c3-2.3,6.4-4,10.4-5.2c4-1.2,8.2-1.7,12.6-1.7c2.2,0,4.5,0.1,6.7,0.4c2.3,0.3,4.4,0.7,6.5,1.1
+		c2,0.5,3.9,1,5.7,1.6c1.8,0.6,3.2,1.2,4.2,1.8c1.4,0.8,2.4,1.6,3,2.5c0.6,0.8,0.9,1.9,0.9,3.3v4.7c0,2.1-0.8,3.2-2.3,3.2
+		c-0.8,0-2.1-0.4-3.8-1.2c-5.7-2.6-12.1-3.9-19.2-3.9c-5.7,0-10.2,0.9-13.3,2.8c-3.1,1.9-4.7,4.8-4.7,8.9c0,2.8,1,5.2,3,7.1
+		c2,1.9,5.7,3.8,11,5.5l14.2,4.5c7.2,2.3,12.4,5.5,15.5,9.6c3.1,4.1,4.6,8.8,4.6,14c0,4.3-0.9,8.2-2.6,11.6
+		c-1.8,3.4-4.2,6.4-7.3,8.8c-3.1,2.5-6.8,4.3-11.1,5.6C264.4,94.4,259.7,95.1,254.6,95.1z"/>
+	<g>
+		<path class="st1" d="M273.5,143.7c-32.9,24.3-80.7,37.2-121.8,37.2c-57.6,0-109.5-21.3-148.7-56.7c-3.1-2.8-0.3-6.6,3.4-4.4
+			c42.4,24.6,94.7,39.5,148.8,39.5c36.5,0,76.6-7.6,113.5-23.2C274.2,133.6,278.9,139.7,273.5,143.7z"/>
+		<path class="st1" d="M287.2,128.1c-4.2-5.4-27.8-2.6-38.5-1.3c-3.2,0.4-3.7-2.4-0.8-4.5c18.8-13.2,49.7-9.4,53.3-5
+			c3.6,4.5-1,35.4-18.6,50.2c-2.7,2.3-5.3,1.1-4.1-1.9C282.5,155.7,291.4,133.4,287.2,128.1z"/>
+	</g>
+</g>
+</svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Guidance for Claude Code and Cowork on Amazon Bedrock
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Microsoft Entra ID
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cdharma/claude-with-bedrock" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cdharma/claude-with-bedrock
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../QUICK_START/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../okta-setup/" class="md-tabs__link">
+          
+  
+  
+  Authentication
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../DEPLOYMENT/" class="md-tabs__link">
+          
+  
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../distribution/comparison/" class="md-tabs__link">
+          
+  
+  
+  Distribution
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../MONITORING/" class="md-tabs__link">
+          
+  
+  
+  Operations
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../CLI_REFERENCE/" class="md-tabs__link">
+          
+  
+  
+  Usage
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Guidance for Claude Code and Cowork on Amazon Bedrock" class="md-nav__button md-logo" aria-label="Guidance for Claude Code and Cowork on Amazon Bedrock" data-md-component="logo">
+      
+  
+  <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 304 182" style="enable-background:new 0 0 304 182;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#141413;}
+	.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#141413;}
+</style>
+<g>
+	<path class="st0" d="M86.4,66.4c0,3.7,0.4,6.7,1.1,8.9c0.8,2.2,1.8,4.6,3.2,7.2c0.5,0.8,0.7,1.6,0.7,2.3c0,1-0.6,2-1.9,3l-6.3,4.2
+		c-0.9,0.6-1.8,0.9-2.6,0.9c-1,0-2-0.5-3-1.4C76.2,90,75,88.4,74,86.8c-1-1.7-2-3.6-3.1-5.9c-7.8,9.2-17.6,13.8-29.4,13.8
+		c-8.4,0-15.1-2.4-20-7.2c-4.9-4.8-7.4-11.2-7.4-19.2c0-8.5,3-15.4,9.1-20.6c6.1-5.2,14.2-7.8,24.5-7.8c3.4,0,6.9,0.3,10.6,0.8
+		c3.7,0.5,7.5,1.3,11.5,2.2v-7.3c0-7.6-1.6-12.9-4.7-16c-3.2-3.1-8.6-4.6-16.3-4.6c-3.5,0-7.1,0.4-10.8,1.3c-3.7,0.9-7.3,2-10.8,3.4
+		c-1.6,0.7-2.8,1.1-3.5,1.3c-0.7,0.2-1.2,0.3-1.6,0.3c-1.4,0-2.1-1-2.1-3.1v-4.9c0-1.6,0.2-2.8,0.7-3.5c0.5-0.7,1.4-1.4,2.8-2.1
+		c3.5-1.8,7.7-3.3,12.6-4.5c4.9-1.3,10.1-1.9,15.6-1.9c11.9,0,20.6,2.7,26.2,8.1c5.5,5.4,8.3,13.6,8.3,24.6V66.4z M45.8,81.6
+		c3.3,0,6.7-0.6,10.3-1.8c3.6-1.2,6.8-3.4,9.5-6.4c1.6-1.9,2.8-4,3.4-6.4c0.6-2.4,1-5.3,1-8.7v-4.2c-2.9-0.7-6-1.3-9.2-1.7
+		c-3.2-0.4-6.3-0.6-9.4-0.6c-6.7,0-11.6,1.3-14.9,4c-3.3,2.7-4.9,6.5-4.9,11.5c0,4.7,1.2,8.2,3.7,10.6
+		C37.7,80.4,41.2,81.6,45.8,81.6z M126.1,92.4c-1.8,0-3-0.3-3.8-1c-0.8-0.6-1.5-2-2.1-3.9L96.7,10.2c-0.6-2-0.9-3.3-0.9-4
+		c0-1.6,0.8-2.5,2.4-2.5h9.8c1.9,0,3.2,0.3,3.9,1c0.8,0.6,1.4,2,2,3.9l16.8,66.2l15.6-66.2c0.5-2,1.1-3.3,1.9-3.9c0.8-0.6,2.2-1,4-1
+		h8c1.9,0,3.2,0.3,4,1c0.8,0.6,1.5,2,1.9,3.9l15.8,67l17.3-67c0.6-2,1.3-3.3,2-3.9c0.8-0.6,2.1-1,3.9-1h9.3c1.6,0,2.5,0.8,2.5,2.5
+		c0,0.5-0.1,1-0.2,1.6c-0.1,0.6-0.3,1.4-0.7,2.5l-24.1,77.3c-0.6,2-1.3,3.3-2.1,3.9c-0.8,0.6-2.1,1-3.8,1h-8.6c-1.9,0-3.2-0.3-4-1
+		c-0.8-0.7-1.5-2-1.9-4L156,23l-15.4,64.4c-0.5,2-1.1,3.3-1.9,4c-0.8,0.7-2.2,1-4,1H126.1z M254.6,95.1c-5.2,0-10.4-0.6-15.4-1.8
+		c-5-1.2-8.9-2.5-11.5-4c-1.6-0.9-2.7-1.9-3.1-2.8c-0.4-0.9-0.6-1.9-0.6-2.8v-5.1c0-2.1,0.8-3.1,2.3-3.1c0.6,0,1.2,0.1,1.8,0.3
+		c0.6,0.2,1.5,0.6,2.5,1c3.4,1.5,7.1,2.7,11,3.5c4,0.8,7.9,1.2,11.9,1.2c6.3,0,11.2-1.1,14.6-3.3c3.4-2.2,5.2-5.4,5.2-9.5
+		c0-2.8-0.9-5.1-2.7-7c-1.8-1.9-5.2-3.6-10.1-5.2L246,52c-7.3-2.3-12.7-5.7-16-10.2c-3.3-4.4-5-9.3-5-14.5c0-4.2,0.9-7.9,2.7-11.1
+		c1.8-3.2,4.2-6,7.2-8.2c3-2.3,6.4-4,10.4-5.2c4-1.2,8.2-1.7,12.6-1.7c2.2,0,4.5,0.1,6.7,0.4c2.3,0.3,4.4,0.7,6.5,1.1
+		c2,0.5,3.9,1,5.7,1.6c1.8,0.6,3.2,1.2,4.2,1.8c1.4,0.8,2.4,1.6,3,2.5c0.6,0.8,0.9,1.9,0.9,3.3v4.7c0,2.1-0.8,3.2-2.3,3.2
+		c-0.8,0-2.1-0.4-3.8-1.2c-5.7-2.6-12.1-3.9-19.2-3.9c-5.7,0-10.2,0.9-13.3,2.8c-3.1,1.9-4.7,4.8-4.7,8.9c0,2.8,1,5.2,3,7.1
+		c2,1.9,5.7,3.8,11,5.5l14.2,4.5c7.2,2.3,12.4,5.5,15.5,9.6c3.1,4.1,4.6,8.8,4.6,14c0,4.3-0.9,8.2-2.6,11.6
+		c-1.8,3.4-4.2,6.4-7.3,8.8c-3.1,2.5-6.8,4.3-11.1,5.6C264.4,94.4,259.7,95.1,254.6,95.1z"/>
+	<g>
+		<path class="st1" d="M273.5,143.7c-32.9,24.3-80.7,37.2-121.8,37.2c-57.6,0-109.5-21.3-148.7-56.7c-3.1-2.8-0.3-6.6,3.4-4.4
+			c42.4,24.6,94.7,39.5,148.8,39.5c36.5,0,76.6-7.6,113.5-23.2C274.2,133.6,278.9,139.7,273.5,143.7z"/>
+		<path class="st1" d="M287.2,128.1c-4.2-5.4-27.8-2.6-38.5-1.3c-3.2,0.4-3.7-2.4-0.8-4.5c18.8-13.2,49.7-9.4,53.3-5
+			c3.6,4.5-1,35.4-18.6,50.2c-2.7,2.3-5.3,1.1-4.1-1.9C282.5,155.7,291.4,133.4,287.2,128.1z"/>
+	</g>
+</g>
+</svg>
+
+    </a>
+    Guidance for Claude Code and Cowork on Amazon Bedrock
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cdharma/claude-with-bedrock" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cdharma/claude-with-bedrock
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../QUICK_START/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Authentication
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../okta-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Okta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microsoft Entra ID
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microsoft Entra ID
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-create-azure-account" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Create Azure Account
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-access-azure-portal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Access Azure Portal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-create-app-registration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Create App Registration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Create App Registration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-31-start-app-registration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3.1: Start App Registration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-32-configure-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3.2: Configure Application
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-33-note-your-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3.3: Note Your IDs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-configure-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Configure Authentication
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Configure Authentication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-41-add-platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4.1: Add Platform
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4.1: Add Platform">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#public-client-personal-dev-tenant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Public client (personal / dev tenant)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#confidential-client-enterprise-secret-or-certificate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Confidential client (enterprise — secret or certificate)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-42-public-client-vs-confidential-client" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4.2: Public Client vs. Confidential Client
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-43-verify-api-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4.3: Verify API Permissions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-confidential-client-setup-enterprise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Confidential Client Setup (Enterprise)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Confidential Client Setup (Enterprise)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-a-client-secret" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option A: Client Secret
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Option A: Client Secret">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#distributing-to-end-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Distributing to end users
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rotating-the-secret" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rotating the secret
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-b-certificate-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option B: Certificate (Recommended)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Option B: Certificate (Recommended)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-51-generate-a-self-signed-certificate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5.1: Generate a self-signed certificate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-52-upload-the-certificate-to-entra-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5.2: Upload the certificate to Entra ID
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-53-distribute-the-key-files-to-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5.3: Distribute the key files to users
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-54-note-the-file-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5.4: Note the file paths
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-55-override-certificate-paths-on-end-user-machines-if-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5.5: Override certificate paths on end-user machines (if needed)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-create-test-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Create Test Users
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Create Test Users">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-61-navigate-to-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6.1: Navigate to Users
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-62-create-a-test-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6.2: Create a Test User
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-63-create-additional-users-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6.3: Create Additional Users (Optional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-assign-users-to-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Assign Users to Application
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Assign Users to Application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-71-from-enterprise-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7.1: From Enterprise Applications
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-collect-required-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Collect Required Information
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Collect Required Information">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-provider-domain-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported Provider Domain Formats
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-the-values-with-ccwb-init" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use the values with ccwb init
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-test-the-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Test the Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Test the Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-91-verify-application-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 9.1: Verify Application Settings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-92-test-oidc-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 9.2: Test OIDC Discovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-web-search-for-claude-cowork-entra-id-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Web search for Claude Cowork (Entra ID notes)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Web search for Claude Cowork (Entra ID notes)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#no-special-entra-setup-is-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No special Entra setup is required
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audience-validation-informational" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audience validation (informational)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#confidential-client-auth-succeeds-but-secret-or-certificate-is-not-actually-validated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Confidential client auth succeeds but secret or certificate is not actually validated
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reply-url-does-not-match-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Reply URL does not match" Error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-not-assigned-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "User not assigned" Error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cant-find-client-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Can't Find Client ID
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aadsts7000218-the-request-body-must-contain-the-following-parameter-client_assertion-or-client_secret-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "AADSTS7000218: The request body must contain the following parameter: 'client_assertion' or 'client_secret'" Error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameter-azuretenantid-failed-to-satisfy-constraint-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Parameter AzureTenantId failed to satisfy constraint" Error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#certificate-or-key-file-not-found-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Certificate or key file not found" Error
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-attribution-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost Attribution (Optional)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next Steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../auth0-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auth0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cognito-user-pool-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS Cognito
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../google-oidc-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google OIDC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generic-oidc-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generic OIDC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../iam-identity-center-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IAM Identity Center
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deployment
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../DEPLOYMENT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../WINDOWS_BUILD_SYSTEM/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows Build System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Distribution
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Distribution
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../distribution/comparison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Comparison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../distribution/deployment-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../MONITORING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ANALYTICS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analytics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../QUOTA_MONITORING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quota Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../COST_ESTIMATES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cost Estimates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../COST_ATTRIBUTION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cost Attribution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TROUBLESHOOTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../RESOURCE_INVENTORY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resource Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CLI_REFERENCE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LOCAL_TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../COWORK_3P/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude Desktop (Cowork)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PLUGINS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BOOTSTRAP_SERVER/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bootstrap Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../WEB_SEARCH/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Search
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/cdharma/claude-with-bedrock/edit/main/providers/microsoft-entra-id-setup.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="complete-microsoft-entra-id-setup-guide-for-amazon-bedrock-integration">Complete Microsoft Entra ID Setup Guide for Amazon Bedrock Integration<a class="headerlink" href="#complete-microsoft-entra-id-setup-guide-for-amazon-bedrock-integration" title="Permanent link">&para;</a></h1>
+<p>This guide walks you through setting up Microsoft Entra ID from scratch to work with the AWS Cognito Identity Pool for Bedrock access.</p>
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="#1-create-azure-account">Create Azure Account</a></li>
+<li><a href="#2-access-azure-portal">Access Azure Portal</a></li>
+<li><a href="#3-create-app-registration">Create App Registration</a></li>
+<li><a href="#4-configure-authentication">Configure Authentication</a></li>
+<li><a href="#5-confidential-client-setup-enterprise">Confidential Client Setup (Enterprise)</a></li>
+<li><a href="#6-create-test-users">Create Test Users</a></li>
+<li><a href="#7-assign-users-to-application">Assign Users to Application</a></li>
+<li><a href="#8-collect-required-information">Collect Required Information</a></li>
+<li><a href="#9-test-the-setup">Test the Setup</a></li>
+<li><a href="#10-web-search-for-claude-cowork-entra-id-notes">Web search for Claude Cowork (Entra ID notes)</a></li>
+</ol>
+<hr />
+<h2 id="1-create-azure-account">1. Create Azure Account<a class="headerlink" href="#1-create-azure-account" title="Permanent link">&para;</a></h2>
+<p>If you don't have an Azure account:</p>
+<ol>
+<li>Go to https://azure.microsoft.com/free/</li>
+<li>Click <strong>Start free</strong></li>
+<li>Sign in with a Microsoft account or create one</li>
+<li>Complete the registration (requires credit card for verification)</li>
+<li>You'll get $200 in credits and free tier access</li>
+</ol>
+<blockquote>
+<p><strong>Note</strong>: Save your tenant ID - you'll need it for configuration!</p>
+</blockquote>
+<hr />
+<h2 id="2-access-azure-portal">2. Access Azure Portal<a class="headerlink" href="#2-access-azure-portal" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Go to https://portal.azure.com</li>
+<li>Sign in with your Azure account</li>
+<li>Search for <strong>Microsoft Entra ID</strong> in the top search bar</li>
+<li>Click to access the admin center</li>
+</ol>
+<hr />
+<h2 id="3-create-app-registration">3. Create App Registration<a class="headerlink" href="#3-create-app-registration" title="Permanent link">&para;</a></h2>
+<h3 id="step-31-start-app-registration">Step 3.1: Start App Registration<a class="headerlink" href="#step-31-start-app-registration" title="Permanent link">&para;</a></h3>
+<ol>
+<li>In Microsoft Entra ID, navigate to <strong>Applications</strong> → <strong>App registrations</strong></li>
+<li>Click <strong>+ New registration</strong></li>
+</ol>
+<h3 id="step-32-configure-application">Step 3.2: Configure Application<a class="headerlink" href="#step-32-configure-application" title="Permanent link">&para;</a></h3>
+<p>Fill in the following:</p>
+<ul>
+<li><strong>Name</strong>: <code>Amazon Bedrock CLI Access</code></li>
+<li><strong>Supported account types</strong>: Select based on your needs</li>
+<li>For enterprise: <strong>Accounts in this organizational directory only</strong></li>
+<li>For broader access: <strong>Accounts in any organizational directory</strong></li>
+<li><strong>Redirect URI</strong>: Leave blank (we'll add it next)</li>
+</ul>
+<p>Click <strong>Register</strong></p>
+<h3 id="step-33-note-your-ids">Step 3.3: Note Your IDs<a class="headerlink" href="#step-33-note-your-ids" title="Permanent link">&para;</a></h3>
+<p>After registration, save these values:</p>
+<ul>
+<li><strong>Application (client) ID</strong>: <code>12345678-1234-1234-1234-123456789012</code></li>
+<li><strong>Directory (tenant) ID</strong>: <code>87654321-4321-4321-4321-210987654321</code></li>
+</ul>
+<hr />
+<h2 id="4-configure-authentication">4. Configure Authentication<a class="headerlink" href="#4-configure-authentication" title="Permanent link">&para;</a></h2>
+<h3 id="step-41-add-platform">Step 4.1: Add Platform<a class="headerlink" href="#step-41-add-platform" title="Permanent link">&para;</a></h3>
+<p>The platform type you select here controls whether Azure AD enforces confidential client authentication. <strong>Choose based on your intended auth mode:</strong></p>
+<h4 id="public-client-personal-dev-tenant">Public client (personal / dev tenant)<a class="headerlink" href="#public-client-personal-dev-tenant" title="Permanent link">&para;</a></h4>
+<ol>
+<li>In your app registration, click <strong>Authentication</strong></li>
+<li>Click <strong>+ Add a platform</strong></li>
+<li>Select <strong>Mobile and desktop applications</strong></li>
+<li>Check <strong>Add a custom redirect URI</strong> and enter exactly:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>http://localhost:8400/callback
+</code></pre></div></li>
+<li>Click <strong>Configure</strong></li>
+</ol>
+<h4 id="confidential-client-enterprise-secret-or-certificate">Confidential client (enterprise — secret or certificate)<a class="headerlink" href="#confidential-client-enterprise-secret-or-certificate" title="Permanent link">&para;</a></h4>
+<ol>
+<li>In your app registration, click <strong>Authentication</strong></li>
+<li>Click <strong>+ Add a platform</strong></li>
+<li>Select <strong>Web</strong></li>
+<li>Under <strong>Redirect URIs</strong>, enter exactly:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>http://localhost:8400/callback
+</code></pre></div></li>
+<li>Click <strong>Configure</strong></li>
+</ol>
+<blockquote>
+<p><strong>Important</strong>: Using <strong>Mobile and desktop applications</strong> with a confidential client mode will cause Azure AD to silently skip client credential enforcement — the flow will appear to succeed even without a valid secret or certificate. Always use <strong>Web</strong> for confidential client setups.</p>
+</blockquote>
+<h3 id="step-42-public-client-vs-confidential-client">Step 4.2: Public Client vs. Confidential Client<a class="headerlink" href="#step-42-public-client-vs-confidential-client" title="Permanent link">&para;</a></h3>
+<p>In <strong>Authentication</strong> → <strong>Advanced settings</strong> you will find the <strong>Allow public client flows</strong> toggle.</p>
+<table>
+<thead>
+<tr>
+<th>Your situation</th>
+<th>Setting</th>
+<th>Next step</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Personal or dev tenant, no restrictions</td>
+<td><strong>Yes</strong> (enabled)</td>
+<td>Continue to <a href="#6-create-test-users">Section 6</a></td>
+</tr>
+<tr>
+<td>Enterprise tenant with security policy that disables public clients</td>
+<td><strong>No</strong> (leave disabled)</td>
+<td>Follow <a href="#5-confidential-client-setup-enterprise">Section 5</a></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Enterprise note</strong>: Many organisations enforce <code>Allow public client flows = No</code> as a security baseline. If yours does, do not change this setting — configure a confidential client instead (Section 5).</p>
+</blockquote>
+<h3 id="step-43-verify-api-permissions">Step 4.3: Verify API Permissions<a class="headerlink" href="#step-43-verify-api-permissions" title="Permanent link">&para;</a></h3>
+<p>The default <code>User.Read</code> permission is sufficient. No changes needed.</p>
+<hr />
+<h2 id="5-confidential-client-setup-enterprise">5. Confidential Client Setup (Enterprise)<a class="headerlink" href="#5-confidential-client-setup-enterprise" title="Permanent link">&para;</a></h2>
+<p>Skip this section if you enabled public client flows in Step 4.2.</p>
+<p>Enterprise Entra ID tenants often prohibit public client flows. The credential provider supports two confidential client modes:</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Client secret</strong></td>
+<td>Quick setup, lower security — suitable for dev/test</td>
+</tr>
+<tr>
+<td><strong>Certificate (recommended)</strong></td>
+<td>No long-lived secret on disk, preferred for production</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="option-a-client-secret">Option A: Client Secret<a class="headerlink" href="#option-a-client-secret" title="Permanent link">&para;</a></h3>
+<ol>
+<li>In your app registration, go to <strong>Certificates &amp; secrets</strong> → <strong>Client secrets</strong></li>
+<li>Click <strong>+ New client secret</strong></li>
+<li>Set a description (e.g. <code>ccwb-credential-provider</code>) and an expiry</li>
+<li>Click <strong>Add</strong> and <strong>copy the secret value immediately</strong> — it is not shown again</li>
+</ol>
+<p>When <code>ccwb init</code> asks for the Azure authentication mode, select <strong>Confidential client — client secret</strong> and paste the value. The secret is stored securely in the <strong>OS secure storage</strong> (keyring) on the admin machine.</p>
+<h4 id="distributing-to-end-users">Distributing to end users<a class="headerlink" href="#distributing-to-end-users" title="Permanent link">&para;</a></h4>
+<p>The client secret is a <strong>shared app secret</strong> — every user of the app uses the same value. After installing the dist package, each user must run the following command once to store it on their machine:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># macOS / Linux</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>~/claude-code-with-bedrock/credential-process<span class="w"> </span>--set-client-secret<span class="w"> </span>--profile<span class="w"> </span>ClaudeCode
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Windows</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>%USERPROFILE%<span class="se">\c</span>laude-code-with-bedrock<span class="se">\c</span>redential-process.exe<span class="w"> </span>--set-client-secret<span class="w"> </span>--profile<span class="w"> </span>ClaudeCode
+</code></pre></div>
+<p>The user is prompted to enter the secret interactively. For automated or MDM-based deployments, set the <code>CCWB_CLIENT_SECRET</code> environment variable before running the command — this avoids the secret appearing in shell history or process listings:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">CCWB_CLIENT_SECRET</span><span class="o">=</span>&lt;your-client-secret&gt;<span class="w"> </span>~/claude-code-with-bedrock/credential-process<span class="w"> </span>--set-client-secret<span class="w"> </span>--profile<span class="w"> </span>ClaudeCode
+</code></pre></div>
+<h4 id="rotating-the-secret">Rotating the secret<a class="headerlink" href="#rotating-the-secret" title="Permanent link">&para;</a></h4>
+<p>When you rotate the secret in Entra ID, re-run <code>ccwb init</code> on the admin machine and repeat the <code>--set-client-secret</code> command on each user machine (or push it via MDM).</p>
+<p>To clear a stored secret from a machine:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>~/claude-code-with-bedrock/credential-process<span class="w"> </span>--set-client-secret<span class="w"> </span>--profile<span class="w"> </span>ClaudeCode
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># press Enter without typing a value</span>
+</code></pre></div>
+<hr />
+<h3 id="option-b-certificate-recommended">Option B: Certificate (Recommended)<a class="headerlink" href="#option-b-certificate-recommended" title="Permanent link">&para;</a></h3>
+<h4 id="step-51-generate-a-self-signed-certificate">Step 5.1: Generate a self-signed certificate<a class="headerlink" href="#step-51-generate-a-self-signed-certificate" title="Permanent link">&para;</a></h4>
+<p>On any machine with OpenSSL:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>openssl<span class="w"> </span>req<span class="w"> </span>-x509<span class="w"> </span>-newkey<span class="w"> </span>rsa:2048<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>-keyout<span class="w"> </span>key.pem<span class="w"> </span>-out<span class="w"> </span>cert.pem<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>-days<span class="w"> </span><span class="m">365</span><span class="w"> </span>-nodes<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span>-subj<span class="w"> </span><span class="s2">"/CN=ccwb-credential-provider"</span>
+</code></pre></div>
+<p>This produces two files:
+- <code>cert.pem</code> — the public certificate (upload to Entra ID)
+- <code>key.pem</code> — the private key (stays on the user's machine, never shared)</p>
+<h4 id="step-52-upload-the-certificate-to-entra-id">Step 5.2: Upload the certificate to Entra ID<a class="headerlink" href="#step-52-upload-the-certificate-to-entra-id" title="Permanent link">&para;</a></h4>
+<ol>
+<li>In your app registration, go to <strong>Certificates &amp; secrets</strong> → <strong>Certificates</strong></li>
+<li>Click <strong>Upload certificate</strong></li>
+<li>Select <code>cert.pem</code></li>
+<li>Click <strong>Add</strong></li>
+</ol>
+<h4 id="step-53-distribute-the-key-files-to-users">Step 5.3: Distribute the key files to users<a class="headerlink" href="#step-53-distribute-the-key-files-to-users" title="Permanent link">&para;</a></h4>
+<p>Each user needs both <code>cert.pem</code> and <code>key.pem</code> on their machine. Common distribution methods:</p>
+<ul>
+<li><strong>MDM (Intune / JAMF)</strong>: Deploy the files to a fixed path on managed devices</li>
+<li><strong>Bundle in the <code>dist/</code> package</strong>: Include alongside <code>config.json</code> before packaging</li>
+<li><strong>Manual</strong>: Provide files via a secure channel and instruct users to save them locally</li>
+</ul>
+<h4 id="step-54-note-the-file-paths">Step 5.4: Note the file paths<a class="headerlink" href="#step-54-note-the-file-paths" title="Permanent link">&para;</a></h4>
+<p>Decide on consistent paths for your deployment, for example:</p>
+<ul>
+<li>macOS/Linux: <code>~/claude-code-with-bedrock/cert.pem</code> and <code>~/claude-code-with-bedrock/key.pem</code></li>
+<li>Windows: <code>%USERPROFILE%\claude-code-with-bedrock\cert.pem</code></li>
+</ul>
+<p>You will enter these paths when running <code>ccwb init</code>.</p>
+<blockquote>
+<p><strong>Note on absolute paths</strong>: If you enter absolute paths during <code>ccwb init</code>, the <code>ccwb package</code> command will warn you that those paths are machine-specific and may not resolve on end-user machines with a different install layout. Prefer paths relative to the home directory (e.g. <code>~/claude-code-with-bedrock/cert.pem</code>) where possible.</p>
+</blockquote>
+<h4 id="step-55-override-certificate-paths-on-end-user-machines-if-needed">Step 5.5: Override certificate paths on end-user machines (if needed)<a class="headerlink" href="#step-55-override-certificate-paths-on-end-user-machines-if-needed" title="Permanent link">&para;</a></h4>
+<p>If the paths recorded in <code>config.json</code> don't match the actual file locations on a user's machine, the user (or an MDM system) can override them at runtime without editing <code>config.json</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># macOS / Linux — set in the shell or via a launch agent:</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AZURE_CLIENT_CERTIFICATE_PATH</span><span class="o">=</span>~/certs/cert.pem
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">AZURE_CLIENT_CERTIFICATE_KEY_PATH</span><span class="o">=</span>~/certs/key.pem
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1"># Windows — set as user or system environment variables:</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="c1"># AZURE_CLIENT_CERTIFICATE_PATH = C:\Users\&lt;name&gt;\certs\cert.pem</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1"># AZURE_CLIENT_CERTIFICATE_KEY_PATH = C:\Users\&lt;name&gt;\certs\key.pem</span>
+</code></pre></div>
+<p>These env vars take precedence over the paths in <code>config.json</code> and follow the same convention as the Azure SDK.</p>
+<hr />
+<h2 id="6-create-test-users">6. Create Test Users<a class="headerlink" href="#6-create-test-users" title="Permanent link">&para;</a></h2>
+<h3 id="step-61-navigate-to-users">Step 6.1: Navigate to Users<a class="headerlink" href="#step-61-navigate-to-users" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Go to <strong>Identity</strong> → <strong>Users</strong> → <strong>All users</strong></li>
+<li>Click <strong>+ New user</strong> → <strong>Create new user</strong></li>
+</ol>
+<h3 id="step-62-create-a-test-user">Step 6.2: Create a Test User<a class="headerlink" href="#step-62-create-a-test-user" title="Permanent link">&para;</a></h3>
+<p>Fill in:</p>
+<ul>
+<li><strong>User principal name</strong>: <code>testuser@yourdomain.onmicrosoft.com</code></li>
+<li><strong>Display name</strong>: <code>Test User</code></li>
+<li><strong>Password</strong>: Let me create the password (note it down)</li>
+<li><strong>Usage location</strong>: Your country</li>
+<li><strong>Block sign in</strong>: No</li>
+</ul>
+<p>Click <strong>Create</strong></p>
+<h3 id="step-63-create-additional-users-optional">Step 6.3: Create Additional Users (Optional)<a class="headerlink" href="#step-63-create-additional-users-optional" title="Permanent link">&para;</a></h3>
+<p>Repeat for more test users if needed.</p>
+<hr />
+<h2 id="7-assign-users-to-application">7. Assign Users to Application<a class="headerlink" href="#7-assign-users-to-application" title="Permanent link">&para;</a></h2>
+<h3 id="step-71-from-enterprise-applications">Step 7.1: From Enterprise Applications<a class="headerlink" href="#step-71-from-enterprise-applications" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Go to <strong>Identity</strong> → <strong>Applications</strong> → <strong>Enterprise applications</strong></li>
+<li>Search for <strong>Amazon Bedrock CLI Access</strong></li>
+<li>Click on your application</li>
+<li>Click <strong>Users and groups</strong></li>
+<li>Click <strong>+ Add user/group</strong></li>
+<li>Select your test users</li>
+<li>Click <strong>Assign</strong></li>
+</ol>
+<hr />
+<h2 id="8-collect-required-information">8. Collect Required Information<a class="headerlink" href="#8-collect-required-information" title="Permanent link">&para;</a></h2>
+<p>You now have everything needed for deployment:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Your Value</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Provider Domain</strong></td>
+<td>Your tenant URL</td>
+<td><code>login.microsoftonline.com/{tenant-id}/v2.0</code></td>
+</tr>
+<tr>
+<td><strong>Client ID</strong></td>
+<td>Your Application ID</td>
+<td><code>12345678-1234-1234-1234-123456789012</code></td>
+</tr>
+<tr>
+<td><strong>Client secret</strong> <em>(if using Option A)</em></td>
+<td>Secret value from Step 5A</td>
+<td><em>(entered interactively during <code>ccwb init</code>)</em></td>
+</tr>
+<tr>
+<td><strong>Certificate path</strong> <em>(if using Option B)</em></td>
+<td>Path to <code>cert.pem</code> on user machine</td>
+<td><code>~/claude-code-with-bedrock/cert.pem</code></td>
+</tr>
+<tr>
+<td><strong>Key path</strong> <em>(if using Option B)</em></td>
+<td>Path to <code>key.pem</code> on user machine</td>
+<td><code>~/claude-code-with-bedrock/key.pem</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="supported-provider-domain-formats">Supported Provider Domain Formats<a class="headerlink" href="#supported-provider-domain-formats" title="Permanent link">&para;</a></h3>
+<p>The CLI accepts multiple formats for the Azure provider domain:</p>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th>Example</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Full URL with /v2.0</strong></td>
+<td><code>login.microsoftonline.com/c56f9106-.../v2.0</code></td>
+<td><strong>Recommended</strong></td>
+</tr>
+<tr>
+<td><strong>Full URL without /v2.0</strong></td>
+<td><code>login.microsoftonline.com/c56f9106-...</code></td>
+<td>Also supported</td>
+</tr>
+<tr>
+<td><strong>Just the tenant ID</strong></td>
+<td><code>c56f9106-1d27-456d-bd20-3de87e595a36</code></td>
+<td>Simplest format</td>
+</tr>
+<tr>
+<td><strong>With https:// prefix</strong></td>
+<td><code>https://login.microsoftonline.com/...</code></td>
+<td>Protocol stripped automatically</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note</strong>: The CLI automatically extracts the tenant ID GUID from any of these formats.</p>
+</blockquote>
+<h3 id="use-the-values-with-ccwb-init">Use the values with ccwb init<a class="headerlink" href="#use-the-values-with-ccwb-init" title="Permanent link">&para;</a></h3>
+<p>When running <code>ccwb init</code>, the wizard will ask:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Enter your OIDC provider domain:
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>&gt; login.microsoftonline.com/{your-tenant-id}/v2.0
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>Enter your OIDC Client ID:
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>&gt; 12345678-1234-1234-1234-123456789012
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>Select authentication mode:
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>&gt; Public client (default, no secret required)
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>  Confidential client — client secret
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>  Confidential client — certificate (recommended for enterprise)
+</code></pre></div>
+<p>Select the mode matching your setup in Section 4–5. The wizard will prompt for the secret or certificate paths accordingly.</p>
+<hr />
+<h2 id="9-test-the-setup">9. Test the Setup<a class="headerlink" href="#9-test-the-setup" title="Permanent link">&para;</a></h2>
+<h3 id="step-91-verify-application-settings">Step 9.1: Verify Application Settings<a class="headerlink" href="#step-91-verify-application-settings" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Go back to your app registration</li>
+<li>Click <strong>Authentication</strong></li>
+<li>Verify:</li>
+<li>Platform: <strong>Mobile and desktop applications</strong> (public client) or <strong>Web</strong> (confidential client)</li>
+<li>Redirect URI: <code>http://localhost:8400/callback</code> under the correct platform</li>
+<li>Public client flows: matches your chosen mode (enabled for public, disabled for confidential)</li>
+</ol>
+<p>For confidential client with certificate, also verify:</p>
+<ol>
+<li>Go to <strong>Certificates &amp; secrets</strong> → <strong>Certificates</strong></li>
+<li>Confirm your certificate is listed and not expired</li>
+</ol>
+<h3 id="step-92-test-oidc-discovery">Step 9.2: Test OIDC Discovery<a class="headerlink" href="#step-92-test-oidc-discovery" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>curl<span class="w"> </span>https://login.microsoftonline.com/<span class="o">{</span>your-tenant-id<span class="o">}</span>/v2.0/.well-known/openid-configuration
+</code></pre></div>
+<p>Should return a JSON response with OIDC configuration.</p>
+<hr />
+<h2 id="10-web-search-for-claude-cowork-entra-id-notes">10. Web search for Claude Cowork (Entra ID notes)<a class="headerlink" href="#10-web-search-for-claude-cowork-entra-id-notes" title="Permanent link">&para;</a></h2>
+<p>This section applies <strong>only if you enable the optional <a href="../../COWORK_3P/#web-search-via-agentcore-gateway">AgentCore Gateway web search</a></strong> for <strong>Claude Cowork</strong>. It is <strong>not</strong> required for the base SSO setup.</p>
+<h3 id="no-special-entra-setup-is-required">No special Entra setup is required<a class="headerlink" href="#no-special-entra-setup-is-required" title="Permanent link">&para;</a></h3>
+<p><code>ccwb package</code> injects web search as a <strong>remote MCP</strong> <code>managedMcpServers</code> entry authenticated with a <code>headersHelper</code> script (see <a href="../../COWORK_3P/#web-search-via-agentcore-gateway">COWORK_3P.md → Web search</a>). The helper attaches an <strong>id_token</strong> the solution already mints; Claude Desktop does <strong>not</strong> run a fresh OAuth flow for the gateway. Because no <a href="https://datatracker.ietf.org/doc/html/rfc8707">RFC 8707</a> <code>resource</code> indicator is sent, the earlier Entra limitation (rejecting an unregistered <code>resource</code> with <strong><code>AADSTS9010010</code></strong>, which would have required registering the gateway URL as an Application ID URI) <strong>does not apply</strong> to this path. No Expose-an-API / Application ID URI registration is needed.</p>
+<blockquote>
+<p><strong>Historical note:</strong> an earlier design used a raw OAuth client in the MDM entry, which <em>did</em> send a <code>resource</code> indicator and therefore required registering the gateway URL as an Application ID URI on Entra. The <code>headersHelper</code> (id_token) approach removed that requirement.</p>
+</blockquote>
+<h3 id="audience-validation-informational">Audience validation (informational)<a class="headerlink" href="#audience-validation-informational" title="Permanent link">&para;</a></h3>
+<p>The gateway authorizer validates the token's <strong><code>aud</code> claim against your Client ID using <code>allowedAudience</code> only</strong> — it does <strong>not</strong> set <code>allowedClients</code> (mixing in <code>allowedClients</code> breaks Entra validation). The solution's CloudFormation template already does this (<code>AllowedAudience: [ClientId]</code>) and <code>ccwb deploy</code> passes your <strong>Client ID</strong> as that value. The bearer is an <strong>id_token</strong>, whose <code>aud</code> equals the Client ID on every provider (Entra v2 included), so there is nothing to configure. Leave the <code>ccwb init</code> web search audience prompt at its default; <code>websearch_jwt_audience</code> is an advanced override for the rare case of a non-default <code>aud</code>.</p>
+<blockquote>
+<p><strong>Cognito:</strong> likewise no special setup — <code>allowedAudience = client_id</code> works out of the box.</p>
+</blockquote>
+<hr />
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="confidential-client-auth-succeeds-but-secret-or-certificate-is-not-actually-validated">Confidential client auth succeeds but secret or certificate is not actually validated<a class="headerlink" href="#confidential-client-auth-succeeds-but-secret-or-certificate-is-not-actually-validated" title="Permanent link">&para;</a></h3>
+<p><strong>Symptom</strong>: Authentication appears to succeed even when the client secret is wrong or the certificate is not registered in Entra ID. Claude Code then fails to obtain AWS credentials.</p>
+<p><strong>Cause</strong>: The redirect URI is registered under the <strong>Mobile and desktop applications</strong> platform. This marks the app as a public client in Azure AD, which skips client credential enforcement entirely.</p>
+<p><strong>Fix</strong>: In your app registration → <strong>Authentication</strong>, remove the redirect URI from the Mobile and desktop applications platform and re-add it under <strong>Web</strong> (see <a href="#step-41-add-platform">Step 4.1</a>). Then ensure <strong>Allow public client flows</strong> is set to <strong>No</strong>.</p>
+<hr />
+<h3 id="reply-url-does-not-match-error">"Reply URL does not match" Error<a class="headerlink" href="#reply-url-does-not-match-error" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Ensure redirect URI is exactly: <code>http://localhost:8400/callback</code></li>
+<li>Check for trailing slashes or typos</li>
+</ul>
+<h3 id="user-not-assigned-error">"User not assigned" Error<a class="headerlink" href="#user-not-assigned-error" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Check user assignment in Enterprise Applications</li>
+<li>Verify the user account is active</li>
+</ul>
+<h3 id="cant-find-client-id">Can't Find Client ID<a class="headerlink" href="#cant-find-client-id" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Go to <strong>Applications</strong> → <strong>App registrations</strong></li>
+<li>Click on your application</li>
+<li>The Client ID is on the overview page</li>
+</ol>
+<h3 id="aadsts7000218-the-request-body-must-contain-the-following-parameter-client_assertion-or-client_secret-error">"AADSTS7000218: The request body must contain the following parameter: 'client_assertion' or 'client_secret'" Error<a class="headerlink" href="#aadsts7000218-the-request-body-must-contain-the-following-parameter-client_assertion-or-client_secret-error" title="Permanent link">&para;</a></h3>
+<p>Your tenant has <code>Allow public client flows = No</code>. You must configure a confidential client:</p>
+<ul>
+<li>Follow <a href="#5-confidential-client-setup-enterprise">Section 5</a> to set up a client secret or certificate</li>
+<li>Re-run <code>ccwb init</code> and select the appropriate confidential client mode</li>
+</ul>
+<h3 id="parameter-azuretenantid-failed-to-satisfy-constraint-error">"Parameter AzureTenantId failed to satisfy constraint" Error<a class="headerlink" href="#parameter-azuretenantid-failed-to-satisfy-constraint-error" title="Permanent link">&para;</a></h3>
+<p>This error occurs during deployment if the tenant ID format is incorrect. The fix:</p>
+<ul>
+<li><strong>If using an older version of the CLI</strong>: Upgrade to the latest version which supports multiple URL formats</li>
+<li><strong>Manual workaround</strong>: When prompted for "Provider Domain", enter just your tenant ID GUID instead of the full URL:</li>
+<li>✅ Use: <code>c56f9106-1d27-456d-bd20-3de87e595a36</code></li>
+<li>❌ Instead of: <code>login.microsoftonline.com/c56f9106-1d27-456d-bd20-3de87e595a36/v2.0</code></li>
+</ul>
+<h3 id="certificate-or-key-file-not-found-error">"Certificate or key file not found" Error<a class="headerlink" href="#certificate-or-key-file-not-found-error" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Verify the paths in <code>config.json</code> match the actual file locations on this machine</li>
+<li>On macOS/Linux, paths starting with <code>~/</code> are expanded automatically</li>
+<li>If the paths differ from what was set during <code>ccwb init</code>, set <code>AZURE_CLIENT_CERTIFICATE_PATH</code> and <code>AZURE_CLIENT_CERTIFICATE_KEY_PATH</code> environment variables to override them without editing <code>config.json</code> (see <a href="#step-55-override-certificate-paths-on-end-user-machines-if-needed">Step 5.5</a>)</li>
+<li>Check file permissions: the credential provider process must be able to read both files</li>
+</ul>
+<hr />
+<h2 id="cost-attribution-optional">Cost Attribution (Optional)<a class="headerlink" href="#cost-attribution-optional" title="Permanent link">&para;</a></h2>
+<p>Per-user Bedrock costs are tracked automatically via the session name — no IdP changes needed. For additional tag-based attribution, you can inject AWS session tags into the JWT via a custom claims provider. See <a href="../../COST_ATTRIBUTION/#microsoft-entra-id">Cost Attribution</a> for details.</p>
+<hr />
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<p>Once you've completed this setup:</p>
+<ol>
+<li>Clone the repository:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/cdharma/claude-with-bedrock
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nb">cd</span><span class="w"> </span>claude-with-bedrock/source
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>poetry<span class="w"> </span>install
+</code></pre></div></li>
+<li>Run the setup wizard: <code>poetry run ccwb init</code></li>
+<li>Deploy the infrastructure: <code>poetry run ccwb deploy</code></li>
+<li>Create a distribution package: <code>poetry run ccwb package</code></li>
+<li>Test the deployment: <code>poetry run ccwb test</code></li>
+<li>Distribute the <code>dist/</code> folder to your users</li>
+</ol>
+<hr />
+<h2 id="security-best-practices">Security Best Practices<a class="headerlink" href="#security-best-practices" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Authentication mode</strong>:</li>
+<li>Use <strong>certificate-based confidential client</strong> for production — no long-lived secret is stored</li>
+<li>If using a client secret, rotate it in Entra ID and re-run <code>--set-client-secret</code> on each user machine</li>
+<li>
+<p>Public client flows are acceptable for personal or dev tenants where enterprise policy allows it</p>
+</li>
+<li>
+<p><strong>Token Settings</strong>:</p>
+</li>
+<li>PKCE is always active regardless of authentication mode</li>
+<li>
+<p>Certificate assertions are short-lived (5-minute lifetime) and include a unique <code>jti</code> to prevent replay</p>
+</li>
+<li>
+<p><strong>Certificate management</strong>:</p>
+</li>
+<li>Use a 2048-bit or 4096-bit RSA key</li>
+<li>Set a certificate expiry appropriate for your rotation policy (365 days is a reasonable default)</li>
+<li>
+<p>Plan for certificate rotation before expiry: upload the new cert to Entra ID, redistribute <code>cert.pem</code> and <code>key.pem</code>, then remove the old cert</p>
+</li>
+<li>
+<p><strong>Production Considerations</strong>:</p>
+</li>
+<li>Use your specific tenant ID (not "common")</li>
+<li>Enable MFA for all users</li>
+<li>Set appropriate session timeouts</li>
+<li>
+<p>Monitor sign-in logs regularly</p>
+</li>
+<li>
+<p><strong>User Management</strong>:</p>
+</li>
+<li>Use groups to manage access at scale</li>
+<li>Regular access reviews</li>
+<li>Disable unused accounts promptly</li>
+</ol>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="August 23, 2026 14:42:59 UTC"><span class="timeago" datetime="2026-08-23T14:42:59+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 23, 2026 14:42:59 UTC">2026-08-23</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="July 25, 2025 07:10:58 UTC"><span class="timeago" datetime="2025-07-25T07:10:58+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="July 25, 2025 07:10:58 UTC">2025-07-25</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <nav class="md-footer__inner md-grid" aria-label="Footer" style="background: transparent;">
+    
+    <a href="../okta-setup/" class="md-footer__link md-footer__link--prev" style="color: #141413;">
+      <div class="md-footer__title">
+        <span class="md-footer__direction">Previous</span>
+        Okta
+      </div>
+    </a>
+    
+    
+    <a href="../auth0-setup/" class="md-footer__link md-footer__link--next" style="color: #141413;">
+      <div class="md-footer__title">
+        <span class="md-footer__direction">Next</span>
+        Auth0
+      </div>
+    </a>
+    
+  </nav>
+  
+  <div class="md-footer-meta md-typeset" style="background-color: transparent;">
+    <div class="md-footer-meta__inner md-grid" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; padding: 2.5rem 0 2rem;">
+      <img src="../../assets/images/aws-logo.svg" alt="AWS" style="height: 18px; width: auto; opacity: 0.4;">
+      <span style="color: #141413; opacity: 0.35; font-size: 0.65rem;">Claude Code with Amazon Bedrock</span>
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit", "toc.follow", "toc.integrate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../js/timeago.min.js"></script>
+      
+        <script src="../../js/timeago_mkdocs_material.js"></script>
+      
+    
+  </body>
+</html>

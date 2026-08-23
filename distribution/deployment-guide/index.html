@@ -1,0 +1,3338 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Enterprise deployment guide for Claude Code on Amazon Bedrock">
+      
+      
+      
+        <link rel="canonical" href="https://cdharma.github.io/claude-with-bedrock/distribution/deployment-guide/">
+      
+      
+        <link rel="prev" href="../comparison/">
+      
+      
+        <link rel="next" href="../../MONITORING/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Deployment Guide - Guidance for Claude Code and Cowork on Amazon Bedrock</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../css/timeago.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/custom.css?v=11">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#distribution-deployment-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Guidance for Claude Code and Cowork on Amazon Bedrock" class="md-header__button md-logo" aria-label="Guidance for Claude Code and Cowork on Amazon Bedrock" data-md-component="logo">
+      
+  
+  <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 304 182" style="enable-background:new 0 0 304 182;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#141413;}
+	.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#141413;}
+</style>
+<g>
+	<path class="st0" d="M86.4,66.4c0,3.7,0.4,6.7,1.1,8.9c0.8,2.2,1.8,4.6,3.2,7.2c0.5,0.8,0.7,1.6,0.7,2.3c0,1-0.6,2-1.9,3l-6.3,4.2
+		c-0.9,0.6-1.8,0.9-2.6,0.9c-1,0-2-0.5-3-1.4C76.2,90,75,88.4,74,86.8c-1-1.7-2-3.6-3.1-5.9c-7.8,9.2-17.6,13.8-29.4,13.8
+		c-8.4,0-15.1-2.4-20-7.2c-4.9-4.8-7.4-11.2-7.4-19.2c0-8.5,3-15.4,9.1-20.6c6.1-5.2,14.2-7.8,24.5-7.8c3.4,0,6.9,0.3,10.6,0.8
+		c3.7,0.5,7.5,1.3,11.5,2.2v-7.3c0-7.6-1.6-12.9-4.7-16c-3.2-3.1-8.6-4.6-16.3-4.6c-3.5,0-7.1,0.4-10.8,1.3c-3.7,0.9-7.3,2-10.8,3.4
+		c-1.6,0.7-2.8,1.1-3.5,1.3c-0.7,0.2-1.2,0.3-1.6,0.3c-1.4,0-2.1-1-2.1-3.1v-4.9c0-1.6,0.2-2.8,0.7-3.5c0.5-0.7,1.4-1.4,2.8-2.1
+		c3.5-1.8,7.7-3.3,12.6-4.5c4.9-1.3,10.1-1.9,15.6-1.9c11.9,0,20.6,2.7,26.2,8.1c5.5,5.4,8.3,13.6,8.3,24.6V66.4z M45.8,81.6
+		c3.3,0,6.7-0.6,10.3-1.8c3.6-1.2,6.8-3.4,9.5-6.4c1.6-1.9,2.8-4,3.4-6.4c0.6-2.4,1-5.3,1-8.7v-4.2c-2.9-0.7-6-1.3-9.2-1.7
+		c-3.2-0.4-6.3-0.6-9.4-0.6c-6.7,0-11.6,1.3-14.9,4c-3.3,2.7-4.9,6.5-4.9,11.5c0,4.7,1.2,8.2,3.7,10.6
+		C37.7,80.4,41.2,81.6,45.8,81.6z M126.1,92.4c-1.8,0-3-0.3-3.8-1c-0.8-0.6-1.5-2-2.1-3.9L96.7,10.2c-0.6-2-0.9-3.3-0.9-4
+		c0-1.6,0.8-2.5,2.4-2.5h9.8c1.9,0,3.2,0.3,3.9,1c0.8,0.6,1.4,2,2,3.9l16.8,66.2l15.6-66.2c0.5-2,1.1-3.3,1.9-3.9c0.8-0.6,2.2-1,4-1
+		h8c1.9,0,3.2,0.3,4,1c0.8,0.6,1.5,2,1.9,3.9l15.8,67l17.3-67c0.6-2,1.3-3.3,2-3.9c0.8-0.6,2.1-1,3.9-1h9.3c1.6,0,2.5,0.8,2.5,2.5
+		c0,0.5-0.1,1-0.2,1.6c-0.1,0.6-0.3,1.4-0.7,2.5l-24.1,77.3c-0.6,2-1.3,3.3-2.1,3.9c-0.8,0.6-2.1,1-3.8,1h-8.6c-1.9,0-3.2-0.3-4-1
+		c-0.8-0.7-1.5-2-1.9-4L156,23l-15.4,64.4c-0.5,2-1.1,3.3-1.9,4c-0.8,0.7-2.2,1-4,1H126.1z M254.6,95.1c-5.2,0-10.4-0.6-15.4-1.8
+		c-5-1.2-8.9-2.5-11.5-4c-1.6-0.9-2.7-1.9-3.1-2.8c-0.4-0.9-0.6-1.9-0.6-2.8v-5.1c0-2.1,0.8-3.1,2.3-3.1c0.6,0,1.2,0.1,1.8,0.3
+		c0.6,0.2,1.5,0.6,2.5,1c3.4,1.5,7.1,2.7,11,3.5c4,0.8,7.9,1.2,11.9,1.2c6.3,0,11.2-1.1,14.6-3.3c3.4-2.2,5.2-5.4,5.2-9.5
+		c0-2.8-0.9-5.1-2.7-7c-1.8-1.9-5.2-3.6-10.1-5.2L246,52c-7.3-2.3-12.7-5.7-16-10.2c-3.3-4.4-5-9.3-5-14.5c0-4.2,0.9-7.9,2.7-11.1
+		c1.8-3.2,4.2-6,7.2-8.2c3-2.3,6.4-4,10.4-5.2c4-1.2,8.2-1.7,12.6-1.7c2.2,0,4.5,0.1,6.7,0.4c2.3,0.3,4.4,0.7,6.5,1.1
+		c2,0.5,3.9,1,5.7,1.6c1.8,0.6,3.2,1.2,4.2,1.8c1.4,0.8,2.4,1.6,3,2.5c0.6,0.8,0.9,1.9,0.9,3.3v4.7c0,2.1-0.8,3.2-2.3,3.2
+		c-0.8,0-2.1-0.4-3.8-1.2c-5.7-2.6-12.1-3.9-19.2-3.9c-5.7,0-10.2,0.9-13.3,2.8c-3.1,1.9-4.7,4.8-4.7,8.9c0,2.8,1,5.2,3,7.1
+		c2,1.9,5.7,3.8,11,5.5l14.2,4.5c7.2,2.3,12.4,5.5,15.5,9.6c3.1,4.1,4.6,8.8,4.6,14c0,4.3-0.9,8.2-2.6,11.6
+		c-1.8,3.4-4.2,6.4-7.3,8.8c-3.1,2.5-6.8,4.3-11.1,5.6C264.4,94.4,259.7,95.1,254.6,95.1z"/>
+	<g>
+		<path class="st1" d="M273.5,143.7c-32.9,24.3-80.7,37.2-121.8,37.2c-57.6,0-109.5-21.3-148.7-56.7c-3.1-2.8-0.3-6.6,3.4-4.4
+			c42.4,24.6,94.7,39.5,148.8,39.5c36.5,0,76.6-7.6,113.5-23.2C274.2,133.6,278.9,139.7,273.5,143.7z"/>
+		<path class="st1" d="M287.2,128.1c-4.2-5.4-27.8-2.6-38.5-1.3c-3.2,0.4-3.7-2.4-0.8-4.5c18.8-13.2,49.7-9.4,53.3-5
+			c3.6,4.5-1,35.4-18.6,50.2c-2.7,2.3-5.3,1.1-4.1-1.9C282.5,155.7,291.4,133.4,287.2,128.1z"/>
+	</g>
+</g>
+</svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Guidance for Claude Code and Cowork on Amazon Bedrock
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Deployment Guide
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cdharma/claude-with-bedrock" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cdharma/claude-with-bedrock
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../QUICK_START/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../providers/okta-setup/" class="md-tabs__link">
+          
+  
+  
+  Authentication
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../DEPLOYMENT/" class="md-tabs__link">
+          
+  
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../comparison/" class="md-tabs__link">
+          
+  
+  
+  Distribution
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../MONITORING/" class="md-tabs__link">
+          
+  
+  
+  Operations
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../CLI_REFERENCE/" class="md-tabs__link">
+          
+  
+  
+  Usage
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Guidance for Claude Code and Cowork on Amazon Bedrock" class="md-nav__button md-logo" aria-label="Guidance for Claude Code and Cowork on Amazon Bedrock" data-md-component="logo">
+      
+  
+  <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 304 182" style="enable-background:new 0 0 304 182;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#141413;}
+	.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#141413;}
+</style>
+<g>
+	<path class="st0" d="M86.4,66.4c0,3.7,0.4,6.7,1.1,8.9c0.8,2.2,1.8,4.6,3.2,7.2c0.5,0.8,0.7,1.6,0.7,2.3c0,1-0.6,2-1.9,3l-6.3,4.2
+		c-0.9,0.6-1.8,0.9-2.6,0.9c-1,0-2-0.5-3-1.4C76.2,90,75,88.4,74,86.8c-1-1.7-2-3.6-3.1-5.9c-7.8,9.2-17.6,13.8-29.4,13.8
+		c-8.4,0-15.1-2.4-20-7.2c-4.9-4.8-7.4-11.2-7.4-19.2c0-8.5,3-15.4,9.1-20.6c6.1-5.2,14.2-7.8,24.5-7.8c3.4,0,6.9,0.3,10.6,0.8
+		c3.7,0.5,7.5,1.3,11.5,2.2v-7.3c0-7.6-1.6-12.9-4.7-16c-3.2-3.1-8.6-4.6-16.3-4.6c-3.5,0-7.1,0.4-10.8,1.3c-3.7,0.9-7.3,2-10.8,3.4
+		c-1.6,0.7-2.8,1.1-3.5,1.3c-0.7,0.2-1.2,0.3-1.6,0.3c-1.4,0-2.1-1-2.1-3.1v-4.9c0-1.6,0.2-2.8,0.7-3.5c0.5-0.7,1.4-1.4,2.8-2.1
+		c3.5-1.8,7.7-3.3,12.6-4.5c4.9-1.3,10.1-1.9,15.6-1.9c11.9,0,20.6,2.7,26.2,8.1c5.5,5.4,8.3,13.6,8.3,24.6V66.4z M45.8,81.6
+		c3.3,0,6.7-0.6,10.3-1.8c3.6-1.2,6.8-3.4,9.5-6.4c1.6-1.9,2.8-4,3.4-6.4c0.6-2.4,1-5.3,1-8.7v-4.2c-2.9-0.7-6-1.3-9.2-1.7
+		c-3.2-0.4-6.3-0.6-9.4-0.6c-6.7,0-11.6,1.3-14.9,4c-3.3,2.7-4.9,6.5-4.9,11.5c0,4.7,1.2,8.2,3.7,10.6
+		C37.7,80.4,41.2,81.6,45.8,81.6z M126.1,92.4c-1.8,0-3-0.3-3.8-1c-0.8-0.6-1.5-2-2.1-3.9L96.7,10.2c-0.6-2-0.9-3.3-0.9-4
+		c0-1.6,0.8-2.5,2.4-2.5h9.8c1.9,0,3.2,0.3,3.9,1c0.8,0.6,1.4,2,2,3.9l16.8,66.2l15.6-66.2c0.5-2,1.1-3.3,1.9-3.9c0.8-0.6,2.2-1,4-1
+		h8c1.9,0,3.2,0.3,4,1c0.8,0.6,1.5,2,1.9,3.9l15.8,67l17.3-67c0.6-2,1.3-3.3,2-3.9c0.8-0.6,2.1-1,3.9-1h9.3c1.6,0,2.5,0.8,2.5,2.5
+		c0,0.5-0.1,1-0.2,1.6c-0.1,0.6-0.3,1.4-0.7,2.5l-24.1,77.3c-0.6,2-1.3,3.3-2.1,3.9c-0.8,0.6-2.1,1-3.8,1h-8.6c-1.9,0-3.2-0.3-4-1
+		c-0.8-0.7-1.5-2-1.9-4L156,23l-15.4,64.4c-0.5,2-1.1,3.3-1.9,4c-0.8,0.7-2.2,1-4,1H126.1z M254.6,95.1c-5.2,0-10.4-0.6-15.4-1.8
+		c-5-1.2-8.9-2.5-11.5-4c-1.6-0.9-2.7-1.9-3.1-2.8c-0.4-0.9-0.6-1.9-0.6-2.8v-5.1c0-2.1,0.8-3.1,2.3-3.1c0.6,0,1.2,0.1,1.8,0.3
+		c0.6,0.2,1.5,0.6,2.5,1c3.4,1.5,7.1,2.7,11,3.5c4,0.8,7.9,1.2,11.9,1.2c6.3,0,11.2-1.1,14.6-3.3c3.4-2.2,5.2-5.4,5.2-9.5
+		c0-2.8-0.9-5.1-2.7-7c-1.8-1.9-5.2-3.6-10.1-5.2L246,52c-7.3-2.3-12.7-5.7-16-10.2c-3.3-4.4-5-9.3-5-14.5c0-4.2,0.9-7.9,2.7-11.1
+		c1.8-3.2,4.2-6,7.2-8.2c3-2.3,6.4-4,10.4-5.2c4-1.2,8.2-1.7,12.6-1.7c2.2,0,4.5,0.1,6.7,0.4c2.3,0.3,4.4,0.7,6.5,1.1
+		c2,0.5,3.9,1,5.7,1.6c1.8,0.6,3.2,1.2,4.2,1.8c1.4,0.8,2.4,1.6,3,2.5c0.6,0.8,0.9,1.9,0.9,3.3v4.7c0,2.1-0.8,3.2-2.3,3.2
+		c-0.8,0-2.1-0.4-3.8-1.2c-5.7-2.6-12.1-3.9-19.2-3.9c-5.7,0-10.2,0.9-13.3,2.8c-3.1,1.9-4.7,4.8-4.7,8.9c0,2.8,1,5.2,3,7.1
+		c2,1.9,5.7,3.8,11,5.5l14.2,4.5c7.2,2.3,12.4,5.5,15.5,9.6c3.1,4.1,4.6,8.8,4.6,14c0,4.3-0.9,8.2-2.6,11.6
+		c-1.8,3.4-4.2,6.4-7.3,8.8c-3.1,2.5-6.8,4.3-11.1,5.6C264.4,94.4,259.7,95.1,254.6,95.1z"/>
+	<g>
+		<path class="st1" d="M273.5,143.7c-32.9,24.3-80.7,37.2-121.8,37.2c-57.6,0-109.5-21.3-148.7-56.7c-3.1-2.8-0.3-6.6,3.4-4.4
+			c42.4,24.6,94.7,39.5,148.8,39.5c36.5,0,76.6-7.6,113.5-23.2C274.2,133.6,278.9,139.7,273.5,143.7z"/>
+		<path class="st1" d="M287.2,128.1c-4.2-5.4-27.8-2.6-38.5-1.3c-3.2,0.4-3.7-2.4-0.8-4.5c18.8-13.2,49.7-9.4,53.3-5
+			c3.6,4.5-1,35.4-18.6,50.2c-2.7,2.3-5.3,1.1-4.1-1.9C282.5,155.7,291.4,133.4,287.2,128.1z"/>
+	</g>
+</g>
+</svg>
+
+    </a>
+    Guidance for Claude Code and Cowork on Amazon Bedrock
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cdharma/claude-with-bedrock" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cdharma/claude-with-bedrock
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../QUICK_START/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Authentication
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/okta-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Okta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/microsoft-entra-id-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microsoft Entra ID
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/auth0-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auth0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/cognito-user-pool-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS Cognito
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/google-oidc-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google OIDC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/generic-oidc-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generic OIDC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../providers/iam-identity-center-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IAM Identity Center
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deployment
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../DEPLOYMENT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../WINDOWS_BUILD_SYSTEM/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows Build System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Distribution
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Distribution
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../comparison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Comparison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment Guide
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#architecture-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#presigned-s3-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Presigned S3 Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#landing-page-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Landing Page Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-prerequisites-both-distribution-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Prerequisites (Both Distribution Types)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#landing-page-additional-prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Landing Page Additional Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#presigned-s3-distribution-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Presigned-S3 Distribution Deployment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Presigned-S3 Distribution Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-initialize-distribution-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Initialize Distribution Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-deploy-distribution-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Deploy Distribution Stack
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-build-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Build Packages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-distribute-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Distribute Packages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-share-with-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Share with Users
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#presigned-s3-stack-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Presigned-S3 Stack Outputs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#landing-page-distribution-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Landing-Page Distribution Deployment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Landing-Page Distribution Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deployment-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-idp-web-application-setup-before-ccwb-init" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: IdP Web Application Setup (BEFORE ccwb init)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 1: IdP Web Application Setup (BEFORE ccwb init)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-two-separate-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Two Separate Applications?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#okta-web-application-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Okta Web Application Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#azure-ad-entra-id-web-application-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Azure AD / Entra ID Web Application Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auth0-web-application-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auth0 Web Application Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cognito-user-pool-web-client-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cognito User Pool Web Client Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cognito User Pool Web Client Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-deployupdate-cognito-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Deploy/Update Cognito Stack
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-configuration-is-automatic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Configuration is Automatic!
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-initialize-and-deploy-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Initialize and Deploy Distribution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 2: Initialize and Deploy Distribution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-21-initialize-distribution-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2.1: Initialize Distribution Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-22-deploy-vpc-if-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2.2: Deploy VPC (if needed)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-23-deploy-landing-page-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2.3: Deploy Landing Page Stack
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-24-capture-stack-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2.4: Capture Stack Outputs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-3-post-deployment-idp-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 3: Post-Deployment IdP Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 3: Post-Deployment IdP Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#update-okta-redirect-uri" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update Okta Redirect URI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-azure-ad-redirect-uri" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update Azure AD Redirect URI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-auth0-callback-urls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update Auth0 Callback URLs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-cognito-callback-urls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update Cognito Callback URLs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-4-publish-and-share-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 4: Publish and Share Packages
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 4: Publish and Share Packages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-41-build-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4.1: Build Packages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-42-distribute-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4.2: Distribute Packages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-43-share-landing-page-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4.3: Share Landing Page URL
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-5-test-the-landing-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 5: Test the Landing Page
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 5: Test the Landing Page">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#if-authentication-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        If Authentication Fails
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#publishing-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Publishing Packages
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Publishing Packages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#build-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build Packages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#distribute-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Distribute Packages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-expiry-presigned-s3-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Custom Expiry (Presigned-S3 Only)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retrieve-latest-url-presigned-s3-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retrieve Latest URL (Presigned-S3 Only)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#switching-distribution-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Switching Distribution Types
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Switching Distribution Types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#important-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Important Notes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#post-deployment-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Post-Deployment Operations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Post-Deployment Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#updating-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Updating Packages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-custom-domain-landing-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding Custom Domain (Landing-Page)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Adding Custom Domain (Landing-Page)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Considerations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Security Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#distribution-type-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Distribution Type Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reference-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference Links
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../MONITORING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ANALYTICS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analytics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../QUOTA_MONITORING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quota Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../COST_ESTIMATES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cost Estimates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../COST_ATTRIBUTION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cost Attribution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../TROUBLESHOOTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../RESOURCE_INVENTORY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resource Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CLI_REFERENCE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../LOCAL_TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../COWORK_3P/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude Desktop (Cowork)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PLUGINS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BOOTSTRAP_SERVER/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bootstrap Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../WEB_SEARCH/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Search
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/cdharma/claude-with-bedrock/edit/main/distribution/deployment-guide.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="distribution-deployment-guide">Distribution Deployment Guide<a class="headerlink" href="#distribution-deployment-guide" title="Permanent link">&para;</a></h1>
+<p>Complete guide for deploying Claude Code package distribution using either presigned S3 URLs (simple) or authenticated landing pages (enterprise).</p>
+<hr />
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>Claude Code with Bedrock supports <strong>two distribution methods</strong> for sharing packaged binaries and settings with end users:</p>
+<ol>
+<li><strong>Presigned S3 URLs</strong> - Simple distribution via time-limited URLs, no authentication required</li>
+<li><strong>Authenticated Landing Page</strong> - Enterprise-grade distribution with IdP authentication via ALB + Lambda</li>
+</ol>
+<p><strong>Choosing the right distribution type:</strong> See <a href="../comparison/">comparison.md</a> for detailed comparison, cost analysis, and decision guidance.</p>
+<h3 id="architecture-overview">Architecture Overview<a class="headerlink" href="#architecture-overview" title="Permanent link">&para;</a></h3>
+<h4 id="presigned-s3-distribution">Presigned S3 Distribution<a class="headerlink" href="#presigned-s3-distribution" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Admin Machine → S3 Bucket → Presigned URL (48h default) → Users download directly
+</code></pre></div>
+<ul>
+<li><strong>Components</strong>: S3 bucket + IAM user with presigned URL generation</li>
+<li><strong>Authentication</strong>: None (URL-based access)</li>
+<li><strong>Best for</strong>: Small teams (&lt;20 users), internal trusted users</li>
+</ul>
+<h4 id="landing-page-distribution">Landing Page Distribution<a class="headerlink" href="#landing-page-distribution" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>User → ALB (HTTPS) → OIDC Authentication (IdP) → Lambda → S3 (presigned URLs)
+</code></pre></div>
+<ul>
+<li><strong>Components</strong>: ALB + Lambda + S3 + VPC + Security Groups</li>
+<li><strong>Authentication</strong>: IdP (Okta/Azure/Auth0/Cognito) via OIDC</li>
+<li><strong>Best for</strong>: Large teams (20-100 users), enterprise compliance requirements</li>
+</ul>
+<hr />
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<h3 id="common-prerequisites-both-distribution-types">Common Prerequisites (Both Distribution Types)<a class="headerlink" href="#common-prerequisites-both-distribution-types" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>AWS CLI</strong>: Installed and configured with credentials</li>
+<li><strong>Python 3.10+</strong>: Required for ccwb CLI</li>
+<li><strong>Poetry</strong>: Python package manager (<code>curl -sSL https://install.python-poetry.org | python3 -</code>)</li>
+<li><strong>Basic Authentication Configured</strong>: Must have completed <code>ccwb init</code> for Bedrock authentication</li>
+<li><strong>Packages Built</strong>: Run <code>ccwb package</code> to create distribution packages</li>
+</ul>
+<h3 id="landing-page-additional-prerequisites">Landing Page Additional Prerequisites<a class="headerlink" href="#landing-page-additional-prerequisites" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>VPC with Subnets</strong>:</p>
+</li>
+<li>
+<p>Public subnets in 2+ availability zones (for ALB)</p>
+</li>
+<li>Private subnets in 2+ availability zones (for Lambda)</li>
+<li>
+<p>Can be created via <code>ccwb deploy networking</code> or use existing VPC</p>
+</li>
+<li>
+<p><strong>Route53 Hosted Zone (if using custom domain)</strong>:</p>
+</li>
+<li>
+<p>Must be in the <strong>same AWS account</strong> as the deployment (ACM certificate validation creates DNS records directly)</p>
+</li>
+<li>
+<p>If your zone is in a separate account (e.g., Control Tower shared networking), migrate or delegate it to the deployment account first</p>
+</li>
+<li>
+<p><strong>IdP Account with Admin Access</strong>:</p>
+</li>
+<li>
+<p>Ability to create web applications (OAuth2 confidential clients)</p>
+</li>
+<li>Access to client secrets</li>
+<li>
+<p>Ability to configure redirect URIs</p>
+</li>
+<li>
+<p><strong>Understanding of OAuth2/OIDC</strong>:</p>
+</li>
+<li>Authorization code flow</li>
+<li>Client credentials (ID + secret)</li>
+<li>Redirect URIs / callback URLs</li>
+</ul>
+<hr />
+<h2 id="presigned-s3-distribution-deployment">Presigned-S3 Distribution Deployment<a class="headerlink" href="#presigned-s3-distribution-deployment" title="Permanent link">&para;</a></h2>
+<p>Simple distribution workflow for small teams with no authentication requirements.</p>
+<h3 id="step-1-initialize-distribution-configuration">Step 1: Initialize Distribution Configuration<a class="headerlink" href="#step-1-initialize-distribution-configuration" title="Permanent link">&para;</a></h3>
+<p>Run the init wizard and select presigned S3 distribution:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>init
+</code></pre></div>
+<p>When prompted for distribution method:</p>
+<ul>
+<li>Select: <strong>"Presigned S3 URLs (simple, no authentication)"</strong></li>
+</ul>
+<p>The wizard will:</p>
+<ul>
+<li>Configure distribution settings in your profile</li>
+<li>Save configuration to <code>~/.ccwb/profiles/&lt;profile-name&gt;.json</code></li>
+</ul>
+<h3 id="step-2-deploy-distribution-stack">Step 2: Deploy Distribution Stack<a class="headerlink" href="#step-2-deploy-distribution-stack" title="Permanent link">&para;</a></h3>
+<p>Deploy the presigned-s3 distribution infrastructure:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>deploy<span class="w"> </span>distribution
+</code></pre></div>
+<p>This creates:</p>
+<ul>
+<li><strong>S3 Bucket</strong>: <code>{identity-pool-name}-dist-{account-id}</code></li>
+<li><strong>IAM User</strong>: With permissions to generate presigned URLs</li>
+<li><strong>Secrets Manager Secret</strong>: Stores IAM user credentials</li>
+</ul>
+<p><strong>Deployment time</strong>: ~2-3 minutes</p>
+<h3 id="step-3-build-packages">Step 3: Build Packages<a class="headerlink" href="#step-3-build-packages" title="Permanent link">&para;</a></h3>
+<p>Build packages for all platforms:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package<span class="w"> </span>--target-platform<span class="w"> </span>all
+</code></pre></div>
+<p>This creates executables in <code>dist/</code> directory:</p>
+<ul>
+<li><code>credential-process-macos-arm64</code></li>
+<li><code>credential-process-macos-intel</code></li>
+<li><code>credential-process-linux-x64</code></li>
+<li><code>credential-process-linux-arm64</code></li>
+<li><code>credential-process-windows.exe</code></li>
+<li>Installation scripts and configuration</li>
+</ul>
+<h3 id="step-4-distribute-packages">Step 4: Distribute Packages<a class="headerlink" href="#step-4-distribute-packages" title="Permanent link">&para;</a></h3>
+<p>Upload packages and generate presigned URLs:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute
+</code></pre></div>
+<p>Output includes:</p>
+<ul>
+<li><strong>Presigned URL</strong>: Valid for 48 hours by default (customize with <code>--expires-hours</code>, up to 168 hours / 7 days)</li>
+<li><strong>SHA256 Checksum</strong>: For package integrity verification</li>
+<li><strong>Download Instructions</strong>: For macOS/Linux and Windows</li>
+<li><strong>File Size</strong>: Package size information</li>
+</ul>
+<h3 id="step-5-share-with-users">Step 5: Share with Users<a class="headerlink" href="#step-5-share-with-users" title="Permanent link">&para;</a></h3>
+<p><strong>Copy the presigned URL and share via:</strong></p>
+<ul>
+<li>Messaging App</li>
+<li>Email</li>
+<li>Internal documentation</li>
+</ul>
+<p><strong>URL expires after 48 hours by default</strong> (7-day maximum via <code>--expires-hours</code>) - regenerate by running <code>ccwb distribute</code> again.</p>
+<p><strong>Retrieve latest URL</strong> without regenerating:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute<span class="w"> </span>--get-latest
+</code></pre></div>
+<h3 id="presigned-s3-stack-outputs">Presigned-S3 Stack Outputs<a class="headerlink" href="#presigned-s3-stack-outputs" title="Permanent link">&para;</a></h3>
+<p>View stack outputs:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>aws<span class="w"> </span>cloudformation<span class="w"> </span>describe-stacks<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span>--stack-name<span class="w"> </span><span class="o">{</span>identity-pool-name<span class="o">}</span>-distribution<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span>--query<span class="w"> </span><span class="s1">'Stacks[0].Outputs'</span>
+</code></pre></div>
+<p>Key outputs:</p>
+<ul>
+<li><code>DistributionBucket</code>: S3 bucket name</li>
+<li><code>IAMUserName</code>: IAM user for presigned URL generation</li>
+<li><code>IAMUserAccessKeySecretArn</code>: Secrets Manager ARN for credentials</li>
+</ul>
+<hr />
+<h2 id="landing-page-distribution-deployment">Landing-Page Distribution Deployment<a class="headerlink" href="#landing-page-distribution-deployment" title="Permanent link">&para;</a></h2>
+<p>Enterprise distribution with IdP authentication. <strong>Critical</strong>: IdP web application must be configured BEFORE and AFTER deployment.</p>
+<h3 id="deployment-overview">Deployment Overview<a class="headerlink" href="#deployment-overview" title="Permanent link">&para;</a></h3>
+<p>The landing page deployment requires a <strong>two-phase IdP configuration</strong>:</p>
+<ol>
+<li><strong>Phase 1 (BEFORE)</strong>: Create web application in IdP with placeholder redirect URI</li>
+<li><strong>Phase 2 (DURING)</strong>: Deploy infrastructure via ccwb</li>
+<li><strong>Phase 3 (AFTER)</strong>: Update IdP redirect URI with actual ALB DNS/domain</li>
+</ol>
+<p>This is necessary because:</p>
+<ul>
+<li>CloudFormation needs client ID/secret to deploy ALB OIDC</li>
+<li>ALB DNS name is only known AFTER deployment</li>
+<li>IdP redirect URI must match ALB DNS exactly</li>
+</ul>
+<hr />
+<h3 id="phase-1-idp-web-application-setup-before-ccwb-init">Phase 1: IdP Web Application Setup (BEFORE ccwb init)<a class="headerlink" href="#phase-1-idp-web-application-setup-before-ccwb-init" title="Permanent link">&para;</a></h3>
+<p>You must create a <strong>web application</strong> (OAuth2 confidential client) in your IdP. This is <strong>separate</strong> from the native CLI app.</p>
+<h4 id="why-two-separate-applications">Why Two Separate Applications?<a class="headerlink" href="#why-two-separate-applications" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>CLI Native App</th>
+<th>Distribution Web App</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OAuth2 Flow</strong></td>
+<td>Authorization Code + PKCE</td>
+<td>Authorization Code</td>
+</tr>
+<tr>
+<td><strong>Client Type</strong></td>
+<td>Public (no secret)</td>
+<td>Confidential (with secret)</td>
+</tr>
+<tr>
+<td><strong>Redirect URI</strong></td>
+<td><code>http://localhost:8400/callback</code></td>
+<td><code>https://&lt;alb-dns&gt;/oauth2/idpresponse</code></td>
+</tr>
+<tr>
+<td><strong>Used By</strong></td>
+<td>CLI credential process</td>
+<td>ALB OIDC authentication</td>
+</tr>
+<tr>
+<td><strong>Created When</strong></td>
+<td>During first ccwb init</td>
+<td>Before distribution setup</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4 id="okta-web-application-setup">Okta Web Application Setup<a class="headerlink" href="#okta-web-application-setup" title="Permanent link">&para;</a></h4>
+<ol>
+<li>
+<p><strong>Navigate to Applications</strong>:</p>
+</li>
+<li>
+<p>Okta Admin Console → Applications → Applications → Create App Integration</p>
+</li>
+<li>
+<p><strong>Create OIDC Web Application</strong>:</p>
+</li>
+<li>
+<p>Sign-in method: <strong>"OIDC - OpenID Connect"</strong></p>
+</li>
+<li>Application type: <strong>"Web Application"</strong></li>
+<li>
+<p>Click <strong>Next</strong></p>
+</li>
+<li>
+<p><strong>Configure Application Settings</strong>:</p>
+</li>
+<li>
+<p><strong>App integration name</strong>: <code>Claude Code Distribution</code></p>
+</li>
+<li><strong>Grant type</strong>: ✅ Authorization Code, ✅ Refresh Token</li>
+<li><strong>Sign-in redirect URIs</strong>:<ul>
+<li><code>https://placeholder.example.com/oauth2/idpresponse</code> (temporary - will update after deployment)</li>
+</ul>
+</li>
+<li><strong>Sign-out redirect URIs</strong>:<ul>
+<li><code>https://placeholder.example.com</code> (temporary)</li>
+</ul>
+</li>
+<li><strong>Controlled access</strong>: Configure based on your organization's needs</li>
+<li>
+<p>Click <strong>Save</strong></p>
+</li>
+<li>
+<p><strong>Copy Credentials</strong>:</p>
+</li>
+<li>
+<p><strong>Client ID</strong>: Copy from General tab</p>
+</li>
+<li><strong>Client Secret</strong>: Copy from General tab (click Show to reveal)</li>
+<li>
+<p><strong>Okta Domain</strong>: Your Okta domain (e.g., <code>company.okta.com</code>)</p>
+</li>
+<li>
+<p><strong>Assign Users/Groups</strong> (Optional):</p>
+</li>
+<li>Assignments tab → Assign to users or groups who should access distribution</li>
+</ol>
+<p><strong>Post-Deployment (Phase 3)</strong>: Return here to update redirect URIs with actual ALB DNS.</p>
+<hr />
+<h4 id="azure-ad-entra-id-web-application-setup">Azure AD / Entra ID Web Application Setup<a class="headerlink" href="#azure-ad-entra-id-web-application-setup" title="Permanent link">&para;</a></h4>
+<ol>
+<li>
+<p><strong>Navigate to App Registrations</strong>:</p>
+</li>
+<li>
+<p>Azure Portal → Azure Active Directory → App registrations → New registration</p>
+</li>
+<li>
+<p><strong>Register Application</strong>:</p>
+</li>
+<li>
+<p><strong>Name</strong>: <code>Claude Code Distribution</code></p>
+</li>
+<li><strong>Supported account types</strong>: <strong>"Accounts in this organizational directory only (Single tenant)"</strong></li>
+<li><strong>Redirect URI</strong>:<ul>
+<li>Platform: <strong>Web</strong></li>
+<li>URL: <code>https://placeholder.example.com/oauth2/idpresponse</code> (temporary)</li>
+</ul>
+</li>
+<li>
+<p>Click <strong>Register</strong></p>
+</li>
+<li>
+<p><strong>Copy Tenant and Client IDs</strong>:</p>
+</li>
+<li>
+<p>Overview page → Copy:</p>
+<ul>
+<li><strong>Application (client) ID</strong>: This is your client ID</li>
+<li><strong>Directory (tenant) ID</strong>: This is your tenant ID</li>
+</ul>
+</li>
+<li>
+<p><strong>Create Client Secret</strong>:</p>
+</li>
+<li>
+<p>Left menu → <strong>Certificates &amp; secrets</strong> → <strong>Client secrets</strong> tab</p>
+</li>
+<li>Click <strong>New client secret</strong></li>
+<li>Description: <code>Claude Code Distribution Landing Page</code></li>
+<li>Expires: Choose expiration (recommend 24 months)</li>
+<li>Click <strong>Add</strong></li>
+<li>
+<p><strong>Copy the secret value immediately</strong> (won't be shown again)</p>
+</li>
+<li>
+<p><strong>Configure API Permissions</strong> (if needed):</p>
+</li>
+<li>Left menu → <strong>API permissions</strong></li>
+<li>Ensure OpenID Connect permissions are granted</li>
+</ol>
+<p><strong>Post-Deployment (Phase 3)</strong>: Return to Authentication tab to update redirect URI.</p>
+<hr />
+<h4 id="auth0-web-application-setup">Auth0 Web Application Setup<a class="headerlink" href="#auth0-web-application-setup" title="Permanent link">&para;</a></h4>
+<ol>
+<li>
+<p><strong>Navigate to Applications</strong>:</p>
+</li>
+<li>
+<p>Auth0 Dashboard → Applications → Applications → Create Application</p>
+</li>
+<li>
+<p><strong>Create Application</strong>:</p>
+</li>
+<li>
+<p><strong>Name</strong>: <code>Claude Code Distribution</code></p>
+</li>
+<li><strong>Application type</strong>: <strong>"Regular Web Applications"</strong></li>
+<li>
+<p>Click <strong>Create</strong></p>
+</li>
+<li>
+<p><strong>Configure Settings</strong>:</p>
+</li>
+<li>
+<p>Settings tab:</p>
+<ul>
+<li><strong>Allowed Callback URLs</strong>:</li>
+<li><code>https://placeholder.example.com/oauth2/idpresponse</code> (temporary)</li>
+<li><strong>Allowed Logout URLs</strong>:</li>
+<li><code>https://placeholder.example.com</code> (temporary)</li>
+<li><strong>Allowed Web Origins</strong>: Leave empty</li>
+</ul>
+</li>
+<li>
+<p>Click <strong>Save Changes</strong></p>
+</li>
+<li>
+<p><strong>Copy Credentials</strong>:</p>
+</li>
+<li>
+<p>Settings tab → Basic Information:</p>
+<ul>
+<li><strong>Domain</strong>: Your Auth0 domain (e.g., <code>company.auth0.com</code> or <code>company.us.auth0.com</code>)</li>
+<li><strong>Client ID</strong>: Copy value</li>
+<li><strong>Client Secret</strong>: Copy value</li>
+</ul>
+</li>
+<li>
+<p><strong>Configure Connections</strong> (Optional):</p>
+</li>
+<li>Connections tab → Enable enterprise connections (e.g., SAML, Active Directory)</li>
+</ol>
+<p><strong>Post-Deployment (Phase 3)</strong>: Return to Settings tab to update callback URLs.</p>
+<hr />
+<h4 id="cognito-user-pool-web-client-setup">Cognito User Pool Web Client Setup<a class="headerlink" href="#cognito-user-pool-web-client-setup" title="Permanent link">&para;</a></h4>
+<p><strong>✨ AUTOMATED</strong>: Cognito configuration is now fully automated with zero copy-paste!</p>
+<p><strong>Prerequisites</strong>:</p>
+<ul>
+<li>Cognito User Pool deployed via <code>cognito-user-pool-setup.yaml</code> (latest version)</li>
+<li>Latest template includes <code>DistributionWebClient</code> + auto-secret-storage</li>
+</ul>
+<h5 id="step-1-deployupdate-cognito-stack">Step 1: Deploy/Update Cognito Stack<a class="headerlink" href="#step-1-deployupdate-cognito-stack" title="Permanent link">&para;</a></h5>
+<p>Ensure you're using the latest template with distribution support:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>aws<span class="w"> </span>cloudformation<span class="w"> </span>deploy<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span>--template-file<span class="w"> </span>deployment/infrastructure/cognito-user-pool-setup.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span>--stack-name<span class="w"> </span>&lt;your-cognito-stack-name&gt;<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span>--capabilities<span class="w"> </span>CAPABILITY_NAMED_IAM<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span>--parameter-overrides<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="nv">UserPoolName</span><span class="o">=</span>&lt;your-pool-name&gt;<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="nv">DomainPrefix</span><span class="o">=</span>&lt;your-domain-prefix&gt;
+</code></pre></div>
+<p><strong>What this creates</strong>:</p>
+<ul>
+<li>✅ User Pool with CLI native app client (existing)</li>
+<li>✅ Distribution web app client with client secret (NEW)</li>
+<li>✅ Client secret automatically stored in Secrets Manager (NEW)</li>
+<li>✅ All outputs available for auto-detection (NEW)</li>
+</ul>
+<p><strong>Deployment time</strong>: ~3-5 minutes</p>
+<h5 id="step-2-configuration-is-automatic">Step 2: Configuration is Automatic!<a class="headerlink" href="#step-2-configuration-is-automatic" title="Permanent link">&para;</a></h5>
+<p>When you run <code>poetry run ccwb init</code> (Phase 2), the wizard will:</p>
+<ol>
+<li><strong>Auto-detect</strong> your Cognito stack</li>
+<li><strong>Validate</strong> it has distribution support</li>
+<li><strong>Display</strong> detected configuration:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>✓ Found Cognito stack: my-cognito-stack
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>✓ Stack has all required outputs for distribution
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>Detected Configuration:
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>  • User Pool ID: us-east-1_ABC123XYZ
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>  • Domain: my-company
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>  • Client ID: 7a8b9c0d1e2f3g4h
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>  • Secret ARN: arn:aws:secretsmanager:...
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>Use these detected values? [Y/n] █
+</code></pre></div>
+<ol>
+<li><strong>Press Enter</strong> → Configuration complete! No copy-paste needed.</li>
+</ol>
+<p><strong>That's it!</strong> Cognito configuration is automated through stack outputs.</p>
+<hr />
+<h3 id="phase-2-initialize-and-deploy-distribution">Phase 2: Initialize and Deploy Distribution<a class="headerlink" href="#phase-2-initialize-and-deploy-distribution" title="Permanent link">&para;</a></h3>
+<p>Now that you have IdP web application credentials, configure and deploy the landing page.</p>
+<h4 id="step-21-initialize-distribution-configuration">Step 2.1: Initialize Distribution Configuration<a class="headerlink" href="#step-21-initialize-distribution-configuration" title="Permanent link">&para;</a></h4>
+<p>Run the init wizard:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>init
+</code></pre></div>
+<p>When prompted for distribution method:</p>
+<ul>
+<li>Select: <strong>"Authenticated Landing Page (IdP + ALB)"</strong></li>
+</ul>
+<p><strong>IdP Configuration Prompts</strong>:</p>
+<ol>
+<li><strong>Identity provider for web authentication</strong>:</li>
+<li>Select your IdP: Okta / Azure AD / Auth0 / Cognito</li>
+</ol>
+<p><strong>For Cognito</strong>: Auto-detection takes over! ✨</p>
+<ul>
+<li>Wizard searches for Cognito stack</li>
+<li>Displays detected configuration (User Pool ID, Domain, Client ID, Secret ARN)</li>
+<li>You press Enter to accept → Done! (Skip to Custom Domain prompt)</li>
+</ul>
+<p><strong>For Okta/Azure/Auth0</strong>: Manual entry required</p>
+<ol>
+<li>
+<p><strong>IdP Domain</strong> (Okta/Azure/Auth0 only):</p>
+</li>
+<li>
+<p><strong>Okta</strong>: <code>company.okta.com</code> (your Okta domain)</p>
+</li>
+<li><strong>Azure</strong>: Tenant ID (GUID from Azure app registration)</li>
+<li>
+<p><strong>Auth0</strong>: <code>company.auth0.com</code> (your Auth0 domain)</p>
+</li>
+<li>
+<p><strong>IdP Web Application Client ID</strong> (Okta/Azure/Auth0 only):</p>
+</li>
+<li>
+<p>Enter the client ID from Phase 1</p>
+</li>
+<li>
+<p><strong>IdP Web Application Client Secret</strong> (Okta/Azure/Auth0 only):</p>
+</li>
+<li>
+<p>Enter the client secret directly (will be stored in Secrets Manager automatically)</p>
+</li>
+<li>
+<p><strong>Custom Domain</strong> (Optional, all providers):</p>
+</li>
+<li>Enable custom domain? (yes/no)</li>
+<li>If yes:<ul>
+<li>Custom domain name: <code>downloads.company.com</code></li>
+<li>Route53 hosted zone ID: (if using Route53 for DNS)</li>
+</ul>
+</li>
+</ol>
+<p>The wizard will:</p>
+<ul>
+<li><strong>For Cognito</strong>: Auto-populate from stack outputs (zero copy-paste!)</li>
+<li><strong>For others</strong>: Store client secret in AWS Secrets Manager automatically</li>
+<li>Save configuration to <code>~/.ccwb/profiles/&lt;profile-name&gt;.json</code></li>
+<li>Set <code>distribution_type = "landing-page"</code></li>
+</ul>
+<h4 id="step-22-deploy-vpc-if-needed">Step 2.2: Deploy VPC (if needed)<a class="headerlink" href="#step-22-deploy-vpc-if-needed" title="Permanent link">&para;</a></h4>
+<p>Landing page requires VPC with public/private subnets in 2+ availability zones.</p>
+<p><strong>Option A: Use existing VPC/subnets</strong></p>
+<ul>
+<li>Ensure VPC has public subnets in 2+ AZs (for ALB)</li>
+<li>Ensure VPC has private subnets in 2+ AZs (for Lambda)</li>
+<li>Make note of VPC ID and subnet IDs</li>
+</ul>
+<p><strong>Option B: Create new VPC via ccwb</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>deploy<span class="w"> </span>networking
+</code></pre></div>
+<p>This creates:</p>
+<ul>
+<li>VPC with CIDR <code>10.0.0.0/16</code></li>
+<li>2 public subnets in different AZs</li>
+<li>2 private subnets in different AZs</li>
+<li>Internet Gateway</li>
+<li>NAT Gateway (for Lambda internet access)</li>
+<li>Route tables</li>
+</ul>
+<p><strong>Deployment time</strong>: ~3-5 minutes</p>
+<h4 id="step-23-deploy-landing-page-stack">Step 2.3: Deploy Landing Page Stack<a class="headerlink" href="#step-23-deploy-landing-page-stack" title="Permanent link">&para;</a></h4>
+<p>Deploy the authenticated landing page infrastructure:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>deploy<span class="w"> </span>distribution
+</code></pre></div>
+<p>This creates:</p>
+<ul>
+<li><strong>S3 Bucket</strong>: For package storage</li>
+<li><strong>Lambda Function</strong>: Generates landing page HTML and presigned URLs</li>
+<li><strong>ALB</strong>: Internet-facing load balancer with HTTPS listener</li>
+<li><strong>Security Groups</strong>: ALB ingress (port 443) and Lambda egress</li>
+<li><strong>Target Group</strong>: Routes ALB traffic to Lambda</li>
+<li><strong>ACM Certificate</strong>: If custom domain specified (auto-validated via Route53)</li>
+<li><strong>Route53 Record</strong>: If custom domain with Route53 specified</li>
+<li><strong>OIDC Configuration</strong>: ALB authenticates via IdP before forwarding to Lambda</li>
+</ul>
+<p><strong>Deployment time</strong>: ~5-10 minutes</p>
+<h4 id="step-24-capture-stack-outputs">Step 2.4: Capture Stack Outputs<a class="headerlink" href="#step-24-capture-stack-outputs" title="Permanent link">&para;</a></h4>
+<p>After deployment completes, get the stack outputs:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>deploy<span class="w"> </span>distribution
+</code></pre></div>
+<p>The deployment will display:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>✓ Landing page deployed successfully!
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>Distribution URL: https://&lt;alb-dns-name&gt;
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>⚠️  Configure your IdP web application:
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>   Redirect URI: https://&lt;alb-dns-name&gt;/oauth2/idpresponse
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>   Add this redirect URI to your IdP web application settings before users can authenticate.
+</code></pre></div>
+<p>Or query directly:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>aws<span class="w"> </span>cloudformation<span class="w"> </span>describe-stacks<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span>--stack-name<span class="w"> </span><span class="o">{</span>identity-pool-name<span class="o">}</span>-distribution<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span>--query<span class="w"> </span><span class="s1">'Stacks[0].Outputs'</span>
+</code></pre></div>
+<p>Key outputs:</p>
+<ul>
+<li><strong>DistributionURL</strong>: Landing page URL (ALB DNS or custom domain)</li>
+<li><strong>IdPRedirectURI</strong>: Callback URL to configure in IdP</li>
+<li><strong>DistributionBucket</strong>: S3 bucket name for packages</li>
+</ul>
+<p><strong>Copy the <code>IdPRedirectURI</code> value</strong> - you'll need it in Phase 3.</p>
+<hr />
+<h3 id="phase-3-post-deployment-idp-configuration">Phase 3: Post-Deployment IdP Configuration<a class="headerlink" href="#phase-3-post-deployment-idp-configuration" title="Permanent link">&para;</a></h3>
+<p><strong>CRITICAL</strong>: You must update the IdP redirect URI with the actual ALB DNS before authentication will work.</p>
+<h4 id="update-okta-redirect-uri">Update Okta Redirect URI<a class="headerlink" href="#update-okta-redirect-uri" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Okta Admin Console</strong> → Applications → Applications</li>
+<li>Select <strong>"Claude Code Distribution"</strong> application</li>
+<li><strong>General</strong> tab → Edit <strong>General Settings</strong></li>
+<li><strong>Sign-in redirect URIs</strong>:</li>
+<li>Remove: <code>https://placeholder.example.com/oauth2/idpresponse</code></li>
+<li>Add: <code>https://&lt;actual-alb-dns&gt;/oauth2/idpresponse</code> (from stack outputs)</li>
+<li><strong>Sign-out redirect URIs</strong>:</li>
+<li>Remove: <code>https://placeholder.example.com</code></li>
+<li>Add: <code>https://&lt;actual-alb-dns&gt;</code> (from stack outputs)</li>
+<li>Click <strong>Save</strong></li>
+</ol>
+<h4 id="update-azure-ad-redirect-uri">Update Azure AD Redirect URI<a class="headerlink" href="#update-azure-ad-redirect-uri" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Azure Portal</strong> → Azure Active Directory → App registrations</li>
+<li>Select <strong>"Claude Code Distribution"</strong> application</li>
+<li><strong>Authentication</strong> (left menu)</li>
+<li><strong>Web</strong> → Redirect URIs:</li>
+<li>Remove: <code>https://placeholder.example.com/oauth2/idpresponse</code></li>
+<li>Add: <code>https://&lt;actual-alb-dns&gt;/oauth2/idpresponse</code> (from stack outputs)</li>
+<li>Click <strong>Save</strong></li>
+</ol>
+<h4 id="update-auth0-callback-urls">Update Auth0 Callback URLs<a class="headerlink" href="#update-auth0-callback-urls" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Auth0 Dashboard</strong> → Applications → Applications</li>
+<li>Select <strong>"Claude Code Distribution"</strong> application</li>
+<li><strong>Settings</strong> tab</li>
+<li><strong>Allowed Callback URLs</strong>:</li>
+<li>Remove: <code>https://placeholder.example.com/oauth2/idpresponse</code></li>
+<li>Add: <code>https://&lt;actual-alb-dns&gt;/oauth2/idpresponse</code> (from stack outputs)</li>
+<li><strong>Allowed Logout URLs</strong>:</li>
+<li>Remove: <code>https://placeholder.example.com</code></li>
+<li>Add: <code>https://&lt;actual-alb-dns&gt;</code> (from stack outputs)</li>
+<li>Click <strong>Save Changes</strong></li>
+</ol>
+<h4 id="update-cognito-callback-urls">Update Cognito Callback URLs<a class="headerlink" href="#update-cognito-callback-urls" title="Permanent link">&para;</a></h4>
+<p>Using AWS CLI:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>aws<span class="w"> </span>cognito-idp<span class="w"> </span>update-user-pool-client<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span>--user-pool-id<span class="w"> </span>&lt;user-pool-id&gt;<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span>--client-id<span class="w"> </span>&lt;distribution-web-client-id&gt;<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">  </span>--callback-urls<span class="w"> </span><span class="s2">"https://&lt;actual-alb-dns&gt;/oauth2/idpresponse"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">  </span>--logout-urls<span class="w"> </span><span class="s2">"https://&lt;actual-alb-dns&gt;"</span>
+</code></pre></div>
+<p>Or via AWS Console:</p>
+<ol>
+<li><strong>AWS Console</strong> → Cognito → User Pools</li>
+<li>Select your User Pool</li>
+<li><strong>App integration</strong> → App clients → Select <strong>distribution-web-client</strong></li>
+<li><strong>Hosted UI</strong> → Edit:</li>
+<li><strong>Allowed callback URLs</strong>: Update to <code>https://&lt;actual-alb-dns&gt;/oauth2/idpresponse</code></li>
+<li><strong>Allowed sign-out URLs</strong>: Update to <code>https://&lt;actual-alb-dns&gt;</code></li>
+<li><strong>Save changes</strong></li>
+</ol>
+<hr />
+<h3 id="phase-4-publish-and-share-packages">Phase 4: Publish and Share Packages<a class="headerlink" href="#phase-4-publish-and-share-packages" title="Permanent link">&para;</a></h3>
+<h4 id="step-41-build-packages">Step 4.1: Build Packages<a class="headerlink" href="#step-41-build-packages" title="Permanent link">&para;</a></h4>
+<p>Build packages for all platforms:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package<span class="w"> </span>--target-platform<span class="w"> </span>all
+</code></pre></div>
+<h4 id="step-42-distribute-packages">Step 4.2: Distribute Packages<a class="headerlink" href="#step-42-distribute-packages" title="Permanent link">&para;</a></h4>
+<p>Upload packages to the landing page:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute
+</code></pre></div>
+<p>Output for landing-page type:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>✓ Packages published to landing page!
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>Users can download from: https://&lt;alb-dns-or-custom-domain&gt;
+</code></pre></div>
+<p>The command uploads packages to S3 but does NOT generate presigned URLs. Users will access the landing page which generates presigned URLs dynamically after authentication.</p>
+<h4 id="step-43-share-landing-page-url">Step 4.3: Share Landing Page URL<a class="headerlink" href="#step-43-share-landing-page-url" title="Permanent link">&para;</a></h4>
+<p><strong>Share the permanent landing page URL via:</strong></p>
+<ul>
+<li>Internal wiki/documentation</li>
+<li>Slack channel</li>
+<li>Email distribution list</li>
+<li>Onboarding documentation</li>
+</ul>
+<p><strong>Users will</strong>:</p>
+<ol>
+<li>Navigate to the landing page URL</li>
+<li>Be redirected to IdP for authentication</li>
+<li>Authenticate with corporate credentials</li>
+<li>View landing page with download buttons</li>
+<li>Click download (presigned URL generated on-the-fly, expires in 1 hour)</li>
+</ol>
+<p><strong>No need to regenerate URLs</strong> - the landing page URL is permanent. Only update packages by running <code>ccwb distribute</code> when you have new versions.</p>
+<hr />
+<h3 id="phase-5-test-the-landing-page">Phase 5: Test the Landing Page<a class="headerlink" href="#phase-5-test-the-landing-page" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Navigate to landing page URL</strong> in your browser</p>
+</li>
+<li>
+<p><strong>Expected</strong>: Redirect to IdP login page</p>
+</li>
+<li>
+<p><strong>Authenticate</strong> with your corporate credentials</p>
+</li>
+<li>
+<p><strong>Expected</strong>: Landing page displays:</p>
+</li>
+<li>
+<p>"Welcome, [your-email]"</p>
+</li>
+<li>Release date</li>
+<li>Platform-specific download buttons (Windows, Linux, macOS, All Platforms)</li>
+<li>File sizes</li>
+<li>
+<p>Installation instructions</p>
+</li>
+<li>
+<p><strong>Click download</strong> for your platform</p>
+</li>
+<li>
+<p><strong>Expected</strong>: Package downloads immediately</p>
+</li>
+<li>
+<p><strong>Verify checksum</strong> (optional):
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>sha256sum<span class="w"> </span>&lt;downloaded-file&gt;
+</code></pre></div></p>
+</li>
+</ol>
+<h4 id="if-authentication-fails">If Authentication Fails<a class="headerlink" href="#if-authentication-fails" title="Permanent link">&para;</a></h4>
+<p><strong>400 Bad Request</strong>:</p>
+<ul>
+<li><strong>Cause</strong>: IdP redirect URI not configured or mismatch</li>
+<li><strong>Fix</strong>: Verify IdP callback URL exactly matches <code>IdPRedirectURI</code> from stack outputs</li>
+</ul>
+<p><strong>OIDC Error / Invalid State</strong>:</p>
+<ul>
+<li><strong>Cause</strong>: Client secret mismatch</li>
+<li><strong>Fix</strong>: Verify Secrets Manager secret value matches IdP client secret</li>
+</ul>
+<p><strong>401 Unauthorized</strong>:</p>
+<ul>
+<li><strong>Cause</strong>: User not assigned to IdP application</li>
+<li><strong>Fix</strong>: Assign user to IdP application in IdP console</li>
+</ul>
+<p><strong>Redirect Loop</strong>:</p>
+<ul>
+<li><strong>Cause</strong>: Cookie issues or session configuration</li>
+<li><strong>Fix</strong>: Clear browser cookies, verify ALB session timeout settings</li>
+</ul>
+<hr />
+<h2 id="publishing-packages">Publishing Packages<a class="headerlink" href="#publishing-packages" title="Permanent link">&para;</a></h2>
+<p>Both distribution types use the same publishing workflow.</p>
+<h3 id="build-packages">Build Packages<a class="headerlink" href="#build-packages" title="Permanent link">&para;</a></h3>
+<p>Build executables for all platforms:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package<span class="w"> </span>--target-platform<span class="w"> </span>all
+</code></pre></div>
+<p>Or build for specific platforms:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># Using pre-built Go binaries (recommended — no build tools needed)</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package<span class="w"> </span>--go
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="c1"># macOS only</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package<span class="w"> </span>--go<span class="w"> </span>--target-platform<span class="w"> </span>macos-arm64
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="c1"># Windows only (no CodeBuild needed with Go)</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package<span class="w"> </span>--go<span class="w"> </span>--target-platform<span class="w"> </span>windows
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="c1"># Linux only</span>
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package<span class="w"> </span>--go<span class="w"> </span>--target-platform<span class="w"> </span>linux-x64
+</code></pre></div>
+<p>Packages are created in <code>dist/</code> directory:</p>
+<ul>
+<li>Credential process executables for each platform</li>
+<li>OTEL helper executables (if monitoring enabled)</li>
+<li>Installation scripts (<code>install.sh</code>, <code>install.bat</code> + <code>ccwb-install.ps1</code>)</li>
+<li>Configuration file (<code>config.json</code>)</li>
+<li>Claude Code settings directory (if configured)</li>
+</ul>
+<h3 id="distribute-packages">Distribute Packages<a class="headerlink" href="#distribute-packages" title="Permanent link">&para;</a></h3>
+<p>Upload packages and generate distribution URLs:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute
+</code></pre></div>
+<p><strong>For presigned-s3</strong>:</p>
+<ul>
+<li>Uploads package to S3</li>
+<li>Generates presigned URL (48-hour default expiry)</li>
+<li>Displays URL and download instructions</li>
+<li>Admin shares URL with users</li>
+</ul>
+<p><strong>For landing-page</strong>:</p>
+<ul>
+<li>Uploads packages to S3</li>
+<li>Displays landing page URL</li>
+<li>Admin shares landing page URL with users</li>
+<li>Users authenticate and download</li>
+</ul>
+<h3 id="custom-expiry-presigned-s3-only">Custom Expiry (Presigned-S3 Only)<a class="headerlink" href="#custom-expiry-presigned-s3-only" title="Permanent link">&para;</a></h3>
+<p>Set custom expiry time (1-168 hours):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># 48 hours (default)</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute<span class="w"> </span>--expires-hours<span class="w"> </span><span class="m">48</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="c1"># 1 hour (minimum)</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute<span class="w"> </span>--expires-hours<span class="w"> </span><span class="m">1</span>
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="c1"># 7 days (168 hours, maximum)</span>
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute<span class="w"> </span>--expires-hours<span class="w"> </span><span class="m">168</span>
+</code></pre></div>
+<p><strong>Note</strong>: IAM user presigned URLs have a maximum lifetime of 7 days (168 hours).</p>
+<h3 id="retrieve-latest-url-presigned-s3-only">Retrieve Latest URL (Presigned-S3 Only)<a class="headerlink" href="#retrieve-latest-url-presigned-s3-only" title="Permanent link">&para;</a></h3>
+<p>Get the latest presigned URL without regenerating:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute<span class="w"> </span>--get-latest
+</code></pre></div>
+<p>Displays:</p>
+<ul>
+<li>Current presigned URL</li>
+<li>Expiration time</li>
+<li>Package filename and checksum</li>
+<li>Download instructions</li>
+</ul>
+<hr />
+<h2 id="switching-distribution-types">Switching Distribution Types<a class="headerlink" href="#switching-distribution-types" title="Permanent link">&para;</a></h2>
+<p>You can switch between presigned-s3 and landing-page at any time.</p>
+<h3 id="process">Process<a class="headerlink" href="#process" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Reconfigure profile</strong>:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>init
+</code></pre></div>
+<ul>
+<li>Select different distribution type</li>
+<li>
+<p>Complete configuration (IdP setup if switching to landing-page)</p>
+</li>
+<li>
+<p><strong>Redeploy distribution stack</strong>:</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>deploy<span class="w"> </span>distribution
+</code></pre></div>
+<ul>
+<li>CloudFormation will <strong>replace</strong> the existing stack with new type</li>
+<li>Old stack resources (S3 bucket, IAM user, etc.) will be <strong>deleted</strong></li>
+<li>
+<p>New stack resources will be <strong>created</strong></p>
+</li>
+<li>
+<p><strong>Publish packages</strong> to new distribution:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute
+</code></pre></div></p>
+</li>
+</ul>
+<h3 id="important-notes">Important Notes<a class="headerlink" href="#important-notes" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Cannot have both deployed simultaneously</strong>: Both types use same stack name (<code>{identity-pool-name}-distribution</code>)</li>
+<li><strong>Existing packages will be deleted</strong>: S3 bucket is deleted and recreated</li>
+<li><strong>Backup packages if needed</strong>: Download from S3 before switching</li>
+<li><strong>Update user instructions</strong>: If switching to landing-page, users need new URL and IdP credentials</li>
+</ul>
+<hr />
+<h2 id="post-deployment-operations">Post-Deployment Operations<a class="headerlink" href="#post-deployment-operations" title="Permanent link">&para;</a></h2>
+<h3 id="updating-packages">Updating Packages<a class="headerlink" href="#updating-packages" title="Permanent link">&para;</a></h3>
+<p>To publish new package versions:</p>
+<ol>
+<li><strong>Build new packages</strong>:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package<span class="w"> </span>--target-platform<span class="w"> </span>all
+</code></pre></div>
+<ol>
+<li><strong>Upload to distribution</strong>:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute
+</code></pre></div>
+<ol>
+<li><strong>Notify users</strong>:</li>
+<li><strong>Presigned-S3</strong>: Share new URL (old URL still valid until expiry)</li>
+<li><strong>Landing-Page</strong>: No action needed (users refresh landing page for new release date)</li>
+</ol>
+<p><strong>No stack redeployment required</strong> for package updates.</p>
+<hr />
+<h3 id="adding-custom-domain-landing-page">Adding Custom Domain (Landing-Page)<a class="headerlink" href="#adding-custom-domain-landing-page" title="Permanent link">&para;</a></h3>
+<h4 id="prerequisites_1">Prerequisites<a class="headerlink" href="#prerequisites_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Route53 hosted zone for your domain</li>
+<li>Domain name (e.g., <code>downloads.company.com</code>)</li>
+<li>Hosted zone ID</li>
+</ul>
+<h4 id="process_1">Process<a class="headerlink" href="#process_1" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Reconfigure with custom domain</strong>:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>init
+</code></pre></div>
+<ul>
+<li>When prompted for custom domain: <strong>yes</strong></li>
+<li>Enter domain name: <code>downloads.company.com</code></li>
+<li>
+<p>Enter hosted zone ID: <code>Z1234567890ABC</code></p>
+</li>
+<li>
+<p><strong>Redeploy distribution stack</strong>:</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>deploy<span class="w"> </span>distribution
+</code></pre></div>
+<ul>
+<li>Creates ACM certificate</li>
+<li>Validates certificate via DNS (automatic with Route53)</li>
+<li>Creates Route53 A record pointing to ALB</li>
+<li>
+<p>Updates ALB listener with ACM certificate</p>
+</li>
+<li>
+<p><strong>Update IdP redirect URI</strong> with custom domain:</p>
+</li>
+<li>
+<p>Update callback URL from <code>https://&lt;alb-dns&gt;/oauth2/idpresponse</code> to <code>https://downloads.company.com/oauth2/idpresponse</code></p>
+</li>
+<li>
+<p>Follow Phase 3 instructions for your IdP</p>
+</li>
+<li>
+<p><strong>Test</strong>:</p>
+</li>
+<li>Navigate to <code>https://downloads.company.com</code></li>
+<li>Verify SSL certificate valid</li>
+<li>Verify IdP authentication works</li>
+</ul>
+<p><strong>DNS propagation</strong>: 2-5 minutes for Route53</p>
+<hr />
+<h2 id="security-considerations">Security Considerations<a class="headerlink" href="#security-considerations" title="Permanent link">&para;</a></h2>
+<h3 id="distribution-type-comparison">Distribution Type Comparison<a class="headerlink" href="#distribution-type-comparison" title="Permanent link">&para;</a></h3>
+<p><strong>Presigned-S3</strong>: Time-limited URLs (48-hour default expiry, 7-day maximum), no authentication, suitable for internal trusted users only. URLs can be shared/leaked with no access revocation.</p>
+<p><strong>Landing-Page</strong>: IdP authentication required, short-lived presigned URLs (1-hour expiry), ALB access logs for audit trail, suitable for enterprise compliance.</p>
+<h3 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Store all credentials in AWS Secrets Manager</li>
+<li>Verify package integrity using SHA256 checksums</li>
+<li>For landing-page: Enable MFA, rotate secrets every 90 days, restrict IdP app assignment</li>
+<li>Monitor downloads via S3/ALB access logs</li>
+</ul>
+<hr />
+<h2 id="reference-links">Reference Links<a class="headerlink" href="#reference-links" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Distribution Comparison</strong>: <a href="../comparison/">comparison.md</a> - Detailed comparison of presigned-s3 vs landing-page</li>
+<li><strong>IdP Provider Setup</strong>: <a href="../providers/">../providers/</a> - IdP-specific CLI authentication guides</li>
+<li><strong>Main Deployment Guide</strong>: <a href="../../DEPLOYMENT/">../DEPLOYMENT.md</a> - Overall deployment documentation</li>
+<li><strong>CLI Reference</strong>: <a href="../../CLI_REFERENCE/">../CLI_REFERENCE.md</a> - Complete command reference</li>
+<li><strong>Architecture</strong>: <a href="../../ARCHITECTURE/">../ARCHITECTURE.md</a> - Technical architecture documentation</li>
+</ul>
+<hr />
+<hr />
+<p><strong>Last Updated</strong>: 2025-01-03
+<strong>Version</strong>: 1.0.0
+<strong>Compatibility</strong>: Claude Code with Bedrock v1.0+</p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="August 23, 2026 14:42:58 UTC"><span class="timeago" datetime="2026-08-23T14:42:58+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 23, 2026 14:42:58 UTC">2026-08-23</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="November 18, 2025 05:12:26 UTC"><span class="timeago" datetime="2025-11-18T05:12:26+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 18, 2025 05:12:26 UTC">2025-11-18</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <nav class="md-footer__inner md-grid" aria-label="Footer" style="background: transparent;">
+    
+    <a href="../comparison/" class="md-footer__link md-footer__link--prev" style="color: #141413;">
+      <div class="md-footer__title">
+        <span class="md-footer__direction">Previous</span>
+        Platform Comparison
+      </div>
+    </a>
+    
+    
+    <a href="../../MONITORING/" class="md-footer__link md-footer__link--next" style="color: #141413;">
+      <div class="md-footer__title">
+        <span class="md-footer__direction">Next</span>
+        Monitoring
+      </div>
+    </a>
+    
+  </nav>
+  
+  <div class="md-footer-meta md-typeset" style="background-color: transparent;">
+    <div class="md-footer-meta__inner md-grid" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; padding: 2.5rem 0 2rem;">
+      <img src="../../assets/images/aws-logo.svg" alt="AWS" style="height: 18px; width: auto; opacity: 0.4;">
+      <span style="color: #141413; opacity: 0.35; font-size: 0.65rem;">Claude Code with Amazon Bedrock</span>
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit", "toc.follow", "toc.integrate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../js/timeago.min.js"></script>
+      
+        <script src="../../js/timeago_mkdocs_material.js"></script>
+      
+    
+  </body>
+</html>

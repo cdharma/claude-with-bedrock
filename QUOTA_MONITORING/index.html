@@ -1,0 +1,3487 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Enterprise deployment guide for Claude Code on Amazon Bedrock">
+      
+      
+      
+        <link rel="canonical" href="https://cdharma.github.io/claude-with-bedrock/QUOTA_MONITORING/">
+      
+      
+        <link rel="prev" href="../ANALYTICS/">
+      
+      
+        <link rel="next" href="../COST_ESTIMATES/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Quota Monitoring - Guidance for Claude Code and Cowork on Amazon Bedrock</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../css/timeago.css">
+    
+      <link rel="stylesheet" href="../stylesheets/custom.css?v=11">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#claude-code-quota-monitoring" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Guidance for Claude Code and Cowork on Amazon Bedrock" class="md-header__button md-logo" aria-label="Guidance for Claude Code and Cowork on Amazon Bedrock" data-md-component="logo">
+      
+  
+  <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 304 182" style="enable-background:new 0 0 304 182;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#141413;}
+	.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#141413;}
+</style>
+<g>
+	<path class="st0" d="M86.4,66.4c0,3.7,0.4,6.7,1.1,8.9c0.8,2.2,1.8,4.6,3.2,7.2c0.5,0.8,0.7,1.6,0.7,2.3c0,1-0.6,2-1.9,3l-6.3,4.2
+		c-0.9,0.6-1.8,0.9-2.6,0.9c-1,0-2-0.5-3-1.4C76.2,90,75,88.4,74,86.8c-1-1.7-2-3.6-3.1-5.9c-7.8,9.2-17.6,13.8-29.4,13.8
+		c-8.4,0-15.1-2.4-20-7.2c-4.9-4.8-7.4-11.2-7.4-19.2c0-8.5,3-15.4,9.1-20.6c6.1-5.2,14.2-7.8,24.5-7.8c3.4,0,6.9,0.3,10.6,0.8
+		c3.7,0.5,7.5,1.3,11.5,2.2v-7.3c0-7.6-1.6-12.9-4.7-16c-3.2-3.1-8.6-4.6-16.3-4.6c-3.5,0-7.1,0.4-10.8,1.3c-3.7,0.9-7.3,2-10.8,3.4
+		c-1.6,0.7-2.8,1.1-3.5,1.3c-0.7,0.2-1.2,0.3-1.6,0.3c-1.4,0-2.1-1-2.1-3.1v-4.9c0-1.6,0.2-2.8,0.7-3.5c0.5-0.7,1.4-1.4,2.8-2.1
+		c3.5-1.8,7.7-3.3,12.6-4.5c4.9-1.3,10.1-1.9,15.6-1.9c11.9,0,20.6,2.7,26.2,8.1c5.5,5.4,8.3,13.6,8.3,24.6V66.4z M45.8,81.6
+		c3.3,0,6.7-0.6,10.3-1.8c3.6-1.2,6.8-3.4,9.5-6.4c1.6-1.9,2.8-4,3.4-6.4c0.6-2.4,1-5.3,1-8.7v-4.2c-2.9-0.7-6-1.3-9.2-1.7
+		c-3.2-0.4-6.3-0.6-9.4-0.6c-6.7,0-11.6,1.3-14.9,4c-3.3,2.7-4.9,6.5-4.9,11.5c0,4.7,1.2,8.2,3.7,10.6
+		C37.7,80.4,41.2,81.6,45.8,81.6z M126.1,92.4c-1.8,0-3-0.3-3.8-1c-0.8-0.6-1.5-2-2.1-3.9L96.7,10.2c-0.6-2-0.9-3.3-0.9-4
+		c0-1.6,0.8-2.5,2.4-2.5h9.8c1.9,0,3.2,0.3,3.9,1c0.8,0.6,1.4,2,2,3.9l16.8,66.2l15.6-66.2c0.5-2,1.1-3.3,1.9-3.9c0.8-0.6,2.2-1,4-1
+		h8c1.9,0,3.2,0.3,4,1c0.8,0.6,1.5,2,1.9,3.9l15.8,67l17.3-67c0.6-2,1.3-3.3,2-3.9c0.8-0.6,2.1-1,3.9-1h9.3c1.6,0,2.5,0.8,2.5,2.5
+		c0,0.5-0.1,1-0.2,1.6c-0.1,0.6-0.3,1.4-0.7,2.5l-24.1,77.3c-0.6,2-1.3,3.3-2.1,3.9c-0.8,0.6-2.1,1-3.8,1h-8.6c-1.9,0-3.2-0.3-4-1
+		c-0.8-0.7-1.5-2-1.9-4L156,23l-15.4,64.4c-0.5,2-1.1,3.3-1.9,4c-0.8,0.7-2.2,1-4,1H126.1z M254.6,95.1c-5.2,0-10.4-0.6-15.4-1.8
+		c-5-1.2-8.9-2.5-11.5-4c-1.6-0.9-2.7-1.9-3.1-2.8c-0.4-0.9-0.6-1.9-0.6-2.8v-5.1c0-2.1,0.8-3.1,2.3-3.1c0.6,0,1.2,0.1,1.8,0.3
+		c0.6,0.2,1.5,0.6,2.5,1c3.4,1.5,7.1,2.7,11,3.5c4,0.8,7.9,1.2,11.9,1.2c6.3,0,11.2-1.1,14.6-3.3c3.4-2.2,5.2-5.4,5.2-9.5
+		c0-2.8-0.9-5.1-2.7-7c-1.8-1.9-5.2-3.6-10.1-5.2L246,52c-7.3-2.3-12.7-5.7-16-10.2c-3.3-4.4-5-9.3-5-14.5c0-4.2,0.9-7.9,2.7-11.1
+		c1.8-3.2,4.2-6,7.2-8.2c3-2.3,6.4-4,10.4-5.2c4-1.2,8.2-1.7,12.6-1.7c2.2,0,4.5,0.1,6.7,0.4c2.3,0.3,4.4,0.7,6.5,1.1
+		c2,0.5,3.9,1,5.7,1.6c1.8,0.6,3.2,1.2,4.2,1.8c1.4,0.8,2.4,1.6,3,2.5c0.6,0.8,0.9,1.9,0.9,3.3v4.7c0,2.1-0.8,3.2-2.3,3.2
+		c-0.8,0-2.1-0.4-3.8-1.2c-5.7-2.6-12.1-3.9-19.2-3.9c-5.7,0-10.2,0.9-13.3,2.8c-3.1,1.9-4.7,4.8-4.7,8.9c0,2.8,1,5.2,3,7.1
+		c2,1.9,5.7,3.8,11,5.5l14.2,4.5c7.2,2.3,12.4,5.5,15.5,9.6c3.1,4.1,4.6,8.8,4.6,14c0,4.3-0.9,8.2-2.6,11.6
+		c-1.8,3.4-4.2,6.4-7.3,8.8c-3.1,2.5-6.8,4.3-11.1,5.6C264.4,94.4,259.7,95.1,254.6,95.1z"/>
+	<g>
+		<path class="st1" d="M273.5,143.7c-32.9,24.3-80.7,37.2-121.8,37.2c-57.6,0-109.5-21.3-148.7-56.7c-3.1-2.8-0.3-6.6,3.4-4.4
+			c42.4,24.6,94.7,39.5,148.8,39.5c36.5,0,76.6-7.6,113.5-23.2C274.2,133.6,278.9,139.7,273.5,143.7z"/>
+		<path class="st1" d="M287.2,128.1c-4.2-5.4-27.8-2.6-38.5-1.3c-3.2,0.4-3.7-2.4-0.8-4.5c18.8-13.2,49.7-9.4,53.3-5
+			c3.6,4.5-1,35.4-18.6,50.2c-2.7,2.3-5.3,1.1-4.1-1.9C282.5,155.7,291.4,133.4,287.2,128.1z"/>
+	</g>
+</g>
+</svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Guidance for Claude Code and Cowork on Amazon Bedrock
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Quota Monitoring
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cdharma/claude-with-bedrock" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cdharma/claude-with-bedrock
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../QUICK_START/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../providers/okta-setup/" class="md-tabs__link">
+          
+  
+  
+  Authentication
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../DEPLOYMENT/" class="md-tabs__link">
+          
+  
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../distribution/comparison/" class="md-tabs__link">
+          
+  
+  
+  Distribution
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../MONITORING/" class="md-tabs__link">
+          
+  
+  
+  Operations
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../CLI_REFERENCE/" class="md-tabs__link">
+          
+  
+  
+  Usage
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Guidance for Claude Code and Cowork on Amazon Bedrock" class="md-nav__button md-logo" aria-label="Guidance for Claude Code and Cowork on Amazon Bedrock" data-md-component="logo">
+      
+  
+  <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 304 182" style="enable-background:new 0 0 304 182;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#141413;}
+	.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#141413;}
+</style>
+<g>
+	<path class="st0" d="M86.4,66.4c0,3.7,0.4,6.7,1.1,8.9c0.8,2.2,1.8,4.6,3.2,7.2c0.5,0.8,0.7,1.6,0.7,2.3c0,1-0.6,2-1.9,3l-6.3,4.2
+		c-0.9,0.6-1.8,0.9-2.6,0.9c-1,0-2-0.5-3-1.4C76.2,90,75,88.4,74,86.8c-1-1.7-2-3.6-3.1-5.9c-7.8,9.2-17.6,13.8-29.4,13.8
+		c-8.4,0-15.1-2.4-20-7.2c-4.9-4.8-7.4-11.2-7.4-19.2c0-8.5,3-15.4,9.1-20.6c6.1-5.2,14.2-7.8,24.5-7.8c3.4,0,6.9,0.3,10.6,0.8
+		c3.7,0.5,7.5,1.3,11.5,2.2v-7.3c0-7.6-1.6-12.9-4.7-16c-3.2-3.1-8.6-4.6-16.3-4.6c-3.5,0-7.1,0.4-10.8,1.3c-3.7,0.9-7.3,2-10.8,3.4
+		c-1.6,0.7-2.8,1.1-3.5,1.3c-0.7,0.2-1.2,0.3-1.6,0.3c-1.4,0-2.1-1-2.1-3.1v-4.9c0-1.6,0.2-2.8,0.7-3.5c0.5-0.7,1.4-1.4,2.8-2.1
+		c3.5-1.8,7.7-3.3,12.6-4.5c4.9-1.3,10.1-1.9,15.6-1.9c11.9,0,20.6,2.7,26.2,8.1c5.5,5.4,8.3,13.6,8.3,24.6V66.4z M45.8,81.6
+		c3.3,0,6.7-0.6,10.3-1.8c3.6-1.2,6.8-3.4,9.5-6.4c1.6-1.9,2.8-4,3.4-6.4c0.6-2.4,1-5.3,1-8.7v-4.2c-2.9-0.7-6-1.3-9.2-1.7
+		c-3.2-0.4-6.3-0.6-9.4-0.6c-6.7,0-11.6,1.3-14.9,4c-3.3,2.7-4.9,6.5-4.9,11.5c0,4.7,1.2,8.2,3.7,10.6
+		C37.7,80.4,41.2,81.6,45.8,81.6z M126.1,92.4c-1.8,0-3-0.3-3.8-1c-0.8-0.6-1.5-2-2.1-3.9L96.7,10.2c-0.6-2-0.9-3.3-0.9-4
+		c0-1.6,0.8-2.5,2.4-2.5h9.8c1.9,0,3.2,0.3,3.9,1c0.8,0.6,1.4,2,2,3.9l16.8,66.2l15.6-66.2c0.5-2,1.1-3.3,1.9-3.9c0.8-0.6,2.2-1,4-1
+		h8c1.9,0,3.2,0.3,4,1c0.8,0.6,1.5,2,1.9,3.9l15.8,67l17.3-67c0.6-2,1.3-3.3,2-3.9c0.8-0.6,2.1-1,3.9-1h9.3c1.6,0,2.5,0.8,2.5,2.5
+		c0,0.5-0.1,1-0.2,1.6c-0.1,0.6-0.3,1.4-0.7,2.5l-24.1,77.3c-0.6,2-1.3,3.3-2.1,3.9c-0.8,0.6-2.1,1-3.8,1h-8.6c-1.9,0-3.2-0.3-4-1
+		c-0.8-0.7-1.5-2-1.9-4L156,23l-15.4,64.4c-0.5,2-1.1,3.3-1.9,4c-0.8,0.7-2.2,1-4,1H126.1z M254.6,95.1c-5.2,0-10.4-0.6-15.4-1.8
+		c-5-1.2-8.9-2.5-11.5-4c-1.6-0.9-2.7-1.9-3.1-2.8c-0.4-0.9-0.6-1.9-0.6-2.8v-5.1c0-2.1,0.8-3.1,2.3-3.1c0.6,0,1.2,0.1,1.8,0.3
+		c0.6,0.2,1.5,0.6,2.5,1c3.4,1.5,7.1,2.7,11,3.5c4,0.8,7.9,1.2,11.9,1.2c6.3,0,11.2-1.1,14.6-3.3c3.4-2.2,5.2-5.4,5.2-9.5
+		c0-2.8-0.9-5.1-2.7-7c-1.8-1.9-5.2-3.6-10.1-5.2L246,52c-7.3-2.3-12.7-5.7-16-10.2c-3.3-4.4-5-9.3-5-14.5c0-4.2,0.9-7.9,2.7-11.1
+		c1.8-3.2,4.2-6,7.2-8.2c3-2.3,6.4-4,10.4-5.2c4-1.2,8.2-1.7,12.6-1.7c2.2,0,4.5,0.1,6.7,0.4c2.3,0.3,4.4,0.7,6.5,1.1
+		c2,0.5,3.9,1,5.7,1.6c1.8,0.6,3.2,1.2,4.2,1.8c1.4,0.8,2.4,1.6,3,2.5c0.6,0.8,0.9,1.9,0.9,3.3v4.7c0,2.1-0.8,3.2-2.3,3.2
+		c-0.8,0-2.1-0.4-3.8-1.2c-5.7-2.6-12.1-3.9-19.2-3.9c-5.7,0-10.2,0.9-13.3,2.8c-3.1,1.9-4.7,4.8-4.7,8.9c0,2.8,1,5.2,3,7.1
+		c2,1.9,5.7,3.8,11,5.5l14.2,4.5c7.2,2.3,12.4,5.5,15.5,9.6c3.1,4.1,4.6,8.8,4.6,14c0,4.3-0.9,8.2-2.6,11.6
+		c-1.8,3.4-4.2,6.4-7.3,8.8c-3.1,2.5-6.8,4.3-11.1,5.6C264.4,94.4,259.7,95.1,254.6,95.1z"/>
+	<g>
+		<path class="st1" d="M273.5,143.7c-32.9,24.3-80.7,37.2-121.8,37.2c-57.6,0-109.5-21.3-148.7-56.7c-3.1-2.8-0.3-6.6,3.4-4.4
+			c42.4,24.6,94.7,39.5,148.8,39.5c36.5,0,76.6-7.6,113.5-23.2C274.2,133.6,278.9,139.7,273.5,143.7z"/>
+		<path class="st1" d="M287.2,128.1c-4.2-5.4-27.8-2.6-38.5-1.3c-3.2,0.4-3.7-2.4-0.8-4.5c18.8-13.2,49.7-9.4,53.3-5
+			c3.6,4.5-1,35.4-18.6,50.2c-2.7,2.3-5.3,1.1-4.1-1.9C282.5,155.7,291.4,133.4,287.2,128.1z"/>
+	</g>
+</g>
+</svg>
+
+    </a>
+    Guidance for Claude Code and Cowork on Amazon Bedrock
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cdharma/claude-with-bedrock" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cdharma/claude-with-bedrock
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../QUICK_START/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Authentication
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/okta-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Okta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/microsoft-entra-id-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microsoft Entra ID
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/auth0-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auth0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/cognito-user-pool-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS Cognito
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/google-oidc-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google OIDC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/generic-oidc-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generic OIDC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/iam-identity-center-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IAM Identity Center
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deployment
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DEPLOYMENT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WINDOWS_BUILD_SYSTEM/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows Build System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Distribution
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Distribution
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../distribution/comparison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Comparison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../distribution/deployment-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MONITORING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ANALYTICS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analytics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quota Monitoring
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quota Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#architecture-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture Components
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-based-enforcement-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost-Based Enforcement (Recommended)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cost-Based Enforcement (Recommended)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How it works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-cost-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting cost limits
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pricing-rates-mtok" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pricing rates ($/MTok)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#handles-opusplan-correctly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Handles opusplan correctly
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backward-compatible" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backward compatible
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#token-based-limits-legacy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Token-Based Limits (Legacy)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#daily-limits-and-bill-shock-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Daily Limits and Bill Shock Protection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Daily Limits and Bill Shock Protection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-daily-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Daily Limits?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calculation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calculation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#burst-buffer-guidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Burst Buffer Guidance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enforcement-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enforcement Modes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fine-grained-quota-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fine-Grained Quota Policies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fine-Grained Quota Policies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#policy-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Policy Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#policy-precedence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Policy Precedence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limit-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limit Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#managing-policies-with-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Managing Policies with CLI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#token-value-shortcuts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Token Value Shortcuts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#group-membership-from-jwt-claims" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group Membership from JWT Claims
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alert-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alert Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Alert Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#alert-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alert Types
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Alert Types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#monthly-token-alert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monthly Token Alert
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#daily-token-alert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Daily Token Alert
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample-alert-content" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sample Alert Content
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#user-notifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Notifications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="User Notifications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#browser-notification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Browser Notification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#terminal-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Terminal Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#periodic-quota-re-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Periodic Quota Re-Check
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bulk-policy-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bulk Policy Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bulk Policy Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#export-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Export Policies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#import-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Import Policies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#csv-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CSV Template
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typical-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Typical Workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quick-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Issues
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost Considerations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Schema
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Schema">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#userquotametrics-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UserQuotaMetrics Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quotapolicies-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        QuotaPolicies Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration-from-basic-quotas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Migration from Basic Quotas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#access-blocking-phase-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Access Blocking (Phase 2)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Access Blocking (Phase 2)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-blocking-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Blocking Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-blocking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuring Blocking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#admin-override-unblock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Admin Override (Unblock)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-handling-fail-open-vs-fail-closed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error Handling: Fail-Open vs Fail-Closed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quota-check-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quota Check API
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quota Check API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Security
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deployment-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-responses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Responses
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enforcement-timing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enforcement Timing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Enforcement Timing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-timeline-1-hour-sts-session-silent-refresh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example Timeline (1-hour STS session, silent refresh)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recommendation-for-tight-enforcement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommendation for Tight Enforcement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sidecar-bypass-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sidecar Bypass Detection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sidecar Bypass Detection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#current-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current Limitations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#claude-desktop-cowork-3p-usage-counting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Claude Desktop (Cowork 3P) Usage Counting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-latency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Latency
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-enhancements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Future Enhancements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integration-points" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integration Points
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COST_ESTIMATES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cost Estimates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COST_ATTRIBUTION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cost Attribution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TROUBLESHOOTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RESOURCE_INVENTORY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resource Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CLI_REFERENCE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LOCAL_TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COWORK_3P/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude Desktop (Cowork)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PLUGINS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOOTSTRAP_SERVER/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bootstrap Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WEB_SEARCH/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Search
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/cdharma/claude-with-bedrock/edit/main/QUOTA_MONITORING.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="claude-code-quota-monitoring">Claude Code Quota Monitoring<a class="headerlink" href="#claude-code-quota-monitoring" title="Permanent link">&para;</a></h1>
+<p>Quota monitoring tracks user token consumption and sends automated alerts when usage thresholds are exceeded, helping administrators manage costs and prevent unexpected overages.</p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>The quota monitoring system is an optional CloudFormation stack that integrates with the dashboard stack to track monthly token consumption per user and send SNS alerts at configurable thresholds.</p>
+<h3 id="key-features">Key Features<a class="headerlink" href="#key-features" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Per-user token tracking</strong>: Monthly and daily consumption monitoring for each authenticated user</li>
+<li><strong>Fine-grained quota policies</strong>: Set limits at user, group, or default levels with precedence rules</li>
+<li><strong>Multiple limit types</strong>: Cost-based USD budgets (recommended) or raw token limits, monthly and daily</li>
+<li><strong>Configurable thresholds</strong>: Alerts at 80%, 90%, and 100% of limits</li>
+<li><strong>JWT group integration</strong>: Automatically extract group membership from identity provider claims</li>
+<li><strong>Alert deduplication</strong>: One alert per threshold per limit type per user per period</li>
+<li><strong>DynamoDB storage</strong>: Efficient tracking with automatic TTL cleanup</li>
+</ul>
+<h3 id="architecture-components">Architecture Components<a class="headerlink" href="#architecture-components" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>UserQuotaMetrics Table</strong>: DynamoDB table storing monthly/daily usage totals with token type breakdown</li>
+<li><strong>QuotaPolicies Table</strong>: DynamoDB table storing fine-grained quota policies (user/group/default)</li>
+<li><strong>Quota Monitor Lambda</strong>: Scheduled function checking thresholds every 15 minutes</li>
+<li><strong>SNS Topic</strong>: Alert delivery to administrators</li>
+<li><strong>EventBridge Rule</strong>: Lambda scheduling</li>
+<li><strong>Metrics Aggregator Integration</strong>: Updates quota table during metric processing</li>
+</ul>
+<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>Prerequisites</strong>: Monitoring must be enabled and the dashboard stack deployed. See the <a href="../CLI_REFERENCE/#deploy---deploy-infrastructure">CLI Reference</a> for deployment details.</p>
+</blockquote>
+<p>During <code>ccwb init</code>, quota monitoring is <strong>enabled by default</strong> when monitoring is enabled. You'll be prompted to configure:
+- Limit type: <strong>Cost-based ($ budget per user) [recommended]</strong> or token-based
+- Cost-based: monthly budget per user in USD (default: $50) and an optional daily budget (default: 0, no daily cap)
+- Token-based: monthly token limit per user (default: 225 million tokens), automatic threshold calculation (80% warning at 180M, 90% critical at 202.5M), and a daily token limit with burst buffer (auto-calculated from monthly)
+- Enforcement modes for daily and monthly limits</p>
+<p>Deploy using <code>poetry run ccwb deploy</code> (deploys all enabled stacks) or <code>poetry run ccwb deploy quota</code> for just the quota stack. The OIDC configuration is automatically passed from your profile settings. For complete deployment instructions, see the <a href="../CLI_REFERENCE/#deploy---deploy-infrastructure">CLI Reference</a>.</p>
+<h2 id="cost-based-enforcement-recommended">Cost-Based Enforcement (Recommended)<a class="headerlink" href="#cost-based-enforcement-recommended" title="Permanent link">&para;</a></h2>
+<p>Set dollar limits instead of (or alongside) token limits. Cost is calculated server-side using per-model Bedrock pricing rates.</p>
+<h3 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h3>
+<ol>
+<li><code>quota_monitor</code> queries PromQL by <code>(user.email, type, model)</code> every 15 minutes</li>
+<li>Each token batch is priced using the actual model: Opus tokens × Opus rate, Sonnet tokens × Sonnet rate</li>
+<li><code>cost_usd</code> and <code>daily_cost_usd</code> are accumulated in DynamoDB alongside raw token counts</li>
+<li><code>quota_check</code> compares against <code>monthly_cost_limit</code> / <code>daily_cost_limit</code> from the policy</li>
+</ol>
+<h3 id="setting-cost-limits">Setting cost limits<a class="headerlink" href="#setting-cost-limits" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Set $50/month budget for a user (--budget is shorthand for --monthly-cost-limit)</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>set-user<span class="w"> </span>user@company.com<span class="w"> </span>--budget<span class="w"> </span><span class="m">50</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Set $10/day budget for a team</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>set-group<span class="w"> </span>engineering<span class="w"> </span>--daily-budget<span class="w"> </span><span class="m">10</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># Interactive mode (prompts for budget when no flags provided)</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>set-user<span class="w"> </span>user@company.com
+</code></pre></div>
+<h3 id="pricing-rates-mtok">Pricing rates ($/MTok)<a class="headerlink" href="#pricing-rates-mtok" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Input</th>
+<th>Output</th>
+<th>Cache Read</th>
+<th>Cache Write</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fable</td>
+<td>$10.00</td>
+<td>$50.00</td>
+<td>$1.00</td>
+<td>$12.50</td>
+</tr>
+<tr>
+<td>Opus</td>
+<td>$5.00</td>
+<td>$25.00</td>
+<td>$0.50</td>
+<td>$6.25</td>
+</tr>
+<tr>
+<td>Sonnet</td>
+<td>$3.00</td>
+<td>$15.00</td>
+<td>$0.30</td>
+<td>$3.75</td>
+</tr>
+<tr>
+<td>Haiku</td>
+<td>$1.00</td>
+<td>$5.00</td>
+<td>$0.10</td>
+<td>$1.25</td>
+</tr>
+</tbody>
+</table>
+<p>Rates are overridable via <code>BEDROCK_PRICING_RATES_JSON</code> Lambda env var.</p>
+<h3 id="handles-opusplan-correctly">Handles opusplan correctly<a class="headerlink" href="#handles-opusplan-correctly" title="Permanent link">&para;</a></h3>
+<p>When using <code>opusplan</code> (Opus planning + Sonnet execution), each token batch includes the model dimension from OTEL. Opus tokens are priced at Opus rates, Sonnet tokens at Sonnet rates — no blending assumptions.</p>
+<h3 id="backward-compatible">Backward compatible<a class="headerlink" href="#backward-compatible" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Cost limits default to 0 (disabled) — existing token-only deployments unaffected</li>
+<li>Token limits still work independently — both can coexist</li>
+<li><code>cost_usd</code> field appears in DynamoDB on next <code>quota_monitor</code> run (ADD operation, non-breaking)</li>
+</ul>
+<blockquote>
+<p>⚠️ Cost estimates use published on-demand Bedrock rates. Actual billing may differ with committed throughput or custom agreements. Use AWS Cost Explorer for billing truth.</p>
+<p><strong>Why not use the client-side <code>claude_code.cost.usage</code> metric?</strong> Claude Code emits a cost estimate natively, but it uses generic Anthropic rates (not Bedrock-specific), resets per session (not accumulated monthly), and cannot be trusted for enforcement (client-controlled). Server-side calculation from raw token counts is tamper-resistant, uses admin-configurable Bedrock rates, and aggregates across all sessions.</p>
+<p><strong>Claude Desktop support:</strong> Claude Desktop cost enforcement works when the Cowork dashboard stack is deployed with the <code>model</code> MetricFilter dimension (included by default). Requires attribution headers configured so <code>user_email</code> and <code>model</code> dimensions are present in the events.</p>
+</blockquote>
+<h2 id="token-based-limits-legacy">Token-Based Limits (Legacy)<a class="headerlink" href="#token-based-limits-legacy" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MonthlyTokenLimit</td>
+<td>225M tokens</td>
+<td>Default maximum per user per month</td>
+</tr>
+<tr>
+<td>DailyTokenLimit</td>
+<td>~8.25M tokens</td>
+<td>Daily limit (auto-calculated with burst buffer)</td>
+</tr>
+<tr>
+<td>BurstBufferPercent</td>
+<td>10%</td>
+<td>Daily buffer for usage variation (5-25%)</td>
+</tr>
+<tr>
+<td>MonthlyEnforcementMode</td>
+<td>block</td>
+<td>Block access when monthly limit exceeded</td>
+</tr>
+<tr>
+<td>DailyEnforcementMode</td>
+<td>alert</td>
+<td>Alert only when daily limit exceeded</td>
+</tr>
+<tr>
+<td>Warning Threshold</td>
+<td>80% (180M)</td>
+<td>First alert level</td>
+</tr>
+<tr>
+<td>Critical Threshold</td>
+<td>90% (202.5M)</td>
+<td>Second alert level</td>
+</tr>
+<tr>
+<td>Check Frequency</td>
+<td>15 minutes</td>
+<td>Lambda execution interval</td>
+</tr>
+<tr>
+<td>Alert Retention</td>
+<td>60 days</td>
+<td>DynamoDB TTL for deduplication</td>
+</tr>
+<tr>
+<td>EnableFinegrainedQuotas</td>
+<td>false</td>
+<td>Enable fine-grained policy support</td>
+</tr>
+</tbody>
+</table>
+<p>To update limits: Re-run <code>ccwb init</code> and redeploy with <code>ccwb deploy quota</code>.</p>
+<h2 id="daily-limits-and-bill-shock-protection">Daily Limits and Bill Shock Protection<a class="headerlink" href="#daily-limits-and-bill-shock-protection" title="Permanent link">&para;</a></h2>
+<p>To prevent unexpected costs from runaway usage, the system auto-calculates a daily limit from your monthly quota with a configurable burst buffer.</p>
+<h3 id="why-daily-limits">Why Daily Limits?<a class="headerlink" href="#why-daily-limits" title="Permanent link">&para;</a></h3>
+<p>Without daily limits, a user could consume their entire monthly quota in just 2-3 days of heavy usage, leading to unexpected costs or blocked access mid-month. Daily limits catch runaway usage within 24 hours while still allowing legitimate work patterns.</p>
+<h3 id="calculation">Calculation<a class="headerlink" href="#calculation" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>daily_limit = monthly_limit ÷ 30 × (1 + burst_buffer%)
+</code></pre></div>
+<p>Example with 225M monthly limit and 10% burst:
+- Base daily: 225,000,000 ÷ 30 = 7,500,000 tokens/day
+- With 10% burst: 7,500,000 × 1.10 = <strong>8,250,000 tokens/day</strong></p>
+<h3 id="burst-buffer-guidance">Burst Buffer Guidance<a class="headerlink" href="#burst-buffer-guidance" title="Permanent link">&para;</a></h3>
+<p>The burst buffer allows for legitimate daily variation above the average:</p>
+<table>
+<thead>
+<tr>
+<th>Buffer</th>
+<th>Daily (225M/month)</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5% (strict)</td>
+<td>7,875,000 tokens</td>
+<td>Tight cost control, heavy days blocked quickly</td>
+</tr>
+<tr>
+<td>10% (default)</td>
+<td>8,250,000 tokens</td>
+<td>Balanced protection for typical usage</td>
+</tr>
+<tr>
+<td>25% (flexible)</td>
+<td>9,375,000 tokens</td>
+<td>Allows 1.25x average days, catches only extreme spikes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="enforcement-modes">Enforcement Modes<a class="headerlink" href="#enforcement-modes" title="Permanent link">&para;</a></h3>
+<p>Each limit type can be configured with different enforcement:</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Behavior</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>alert</strong></td>
+<td>Send notifications, allow continued use</td>
+<td>Monitoring, soft limits</td>
+</tr>
+<tr>
+<td><strong>block</strong></td>
+<td>Deny credential issuance when exceeded</td>
+<td>Hard cost control</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Recommended defaults:</strong>
+- <strong>Daily</strong>: <code>alert</code> - Warn about unusual patterns, don't interrupt work
+- <strong>Monthly</strong>: <code>block</code> - Hard stop at budget limit</p>
+<h3 id="example-configuration">Example Configuration<a class="headerlink" href="#example-configuration" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Monthly Limit: 225,000,000 tokens (block)
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Daily Limit:   8,250,000 tokens (alert)
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Burst Buffer:  10%
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Behavior:
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>- Day 1: User consumes 9M tokens → Daily alert sent
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>- Day 2: User consumes 8.5M tokens → Daily alert sent
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>- Day 3-5: Normal usage (~7M/day) → No alerts
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>- Day 15: Monthly usage reaches 180M → 80% warning alert
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>- Day 20: Monthly usage reaches 225M → Access blocked
+</code></pre></div>
+<h2 id="fine-grained-quota-policies">Fine-Grained Quota Policies<a class="headerlink" href="#fine-grained-quota-policies" title="Permanent link">&para;</a></h2>
+<p>Fine-grained quotas allow administrators to set different limits for different users and groups, with a clear precedence hierarchy.</p>
+<h3 id="policy-types">Policy Types<a class="headerlink" href="#policy-types" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>User Policies</strong>: Apply to a specific user by email address</li>
+<li><strong>Group Policies</strong>: Apply to all users in a group (from JWT claims)</li>
+<li><strong>Default Policy</strong>: Applies to all users without a more specific policy</li>
+</ol>
+<h3 id="policy-precedence">Policy Precedence<a class="headerlink" href="#policy-precedence" title="Permanent link">&para;</a></h3>
+<p>When determining the effective quota for a user:</p>
+<ol>
+<li><strong>User-specific policy</strong> (highest priority): If a policy exists for the user's email, use it</li>
+<li><strong>Group policy</strong> (most restrictive): If user belongs to multiple groups with policies, use the <strong>lowest limit</strong> (most restrictive)</li>
+<li><strong>Default policy</strong>: If no user or group policy applies, use the default</li>
+<li><strong>No policy</strong>: If no policies are defined, usage is <strong>unlimited</strong> (quota monitoring disabled for that user)</li>
+</ol>
+<h3 id="limit-types">Limit Types<a class="headerlink" href="#limit-types" title="Permanent link">&para;</a></h3>
+<p>Each policy can configure two types of limits:</p>
+<table>
+<thead>
+<tr>
+<th>Limit Type</th>
+<th>Description</th>
+<th>Reset Period</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Monthly Token Limit</td>
+<td>Maximum tokens per calendar month</td>
+<td>1st of each month</td>
+</tr>
+<tr>
+<td>Daily Token Limit</td>
+<td>Maximum tokens per day</td>
+<td>UTC midnight</td>
+</tr>
+</tbody>
+</table>
+<h3 id="managing-policies-with-cli">Managing Policies with CLI<a class="headerlink" href="#managing-policies-with-cli" title="Permanent link">&para;</a></h3>
+<p>Use the <code>ccwb quota</code> commands to manage policies:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Set a user-specific policy</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>set-user<span class="w"> </span>john.doe@company.com<span class="w"> </span>--monthly-limit<span class="w"> </span>500M<span class="w"> </span>--daily-limit<span class="w"> </span>20M
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Set a group policy</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>set-group<span class="w"> </span>engineering<span class="w"> </span>--monthly-limit<span class="w"> </span>400M
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1"># Set the default policy for all users</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>set-default<span class="w"> </span>--monthly-limit<span class="w"> </span>225M<span class="w"> </span>--daily-limit<span class="w"> </span>8M
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="c1"># List all policies</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>list
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>list<span class="w"> </span>--type<span class="w"> </span>group
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="c1"># Show effective policy for a user</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>show<span class="w"> </span>john.doe@company.com<span class="w"> </span>--groups<span class="w"> </span><span class="s2">"engineering,ml-team"</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="c1"># View current usage against limits</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>usage<span class="w"> </span>john.doe@company.com
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="c1"># Delete a policy</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>delete<span class="w"> </span>group<span class="w"> </span>engineering
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="c1"># Temporarily unblock a user who exceeded quota (Phase 2)</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>unblock<span class="w"> </span>john.doe@company.com<span class="w"> </span>--duration<span class="w"> </span>24h
+</code></pre></div>
+<h3 id="token-value-shortcuts">Token Value Shortcuts<a class="headerlink" href="#token-value-shortcuts" title="Permanent link">&para;</a></h3>
+<p>The CLI supports human-readable token values:</p>
+<ul>
+<li><code>225M</code> = 225,000,000 (225 million) - default limit</li>
+<li><code>500K</code> = 500,000 (500 thousand)</li>
+<li><code>1B</code> = 1,000,000,000 (1 billion)</li>
+</ul>
+<h3 id="group-membership-from-jwt-claims">Group Membership from JWT Claims<a class="headerlink" href="#group-membership-from-jwt-claims" title="Permanent link">&para;</a></h3>
+<p>The system automatically extracts group membership from JWT token claims:</p>
+<ul>
+<li><code>groups</code>: Standard groups claim</li>
+<li><code>cognito:groups</code>: Amazon Cognito groups</li>
+<li><code>custom:department</code>: Custom department claim (treated as a group)</li>
+</ul>
+<p>Configure your identity provider to include group claims in the JWT tokens issued to users.</p>
+<h2 id="alert-management">Alert Management<a class="headerlink" href="#alert-management" title="Permanent link">&para;</a></h2>
+<p>After deployment, subscribe to the SNS topic for notifications:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Get topic ARN from stack outputs</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>aws<span class="w"> </span>cloudformation<span class="w"> </span>describe-stacks<span class="w"> </span>--stack-name<span class="w"> </span>&lt;quota-stack-name&gt;<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span>--query<span class="w"> </span><span class="s1">'Stacks[0].Outputs[?OutputKey==`QuotaAlertTopicArn`].OutputValue'</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span>--output<span class="w"> </span>text
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1"># Subscribe (email, SMS, HTTPS webhook, etc.)</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>aws<span class="w"> </span>sns<span class="w"> </span>subscribe<span class="w"> </span>--topic-arn<span class="w"> </span>&lt;arn&gt;<span class="w"> </span>--protocol<span class="w"> </span>email<span class="w"> </span>--notification-endpoint<span class="w"> </span>admin@company.com
+</code></pre></div>
+<h3 id="alert-types">Alert Types<a class="headerlink" href="#alert-types" title="Permanent link">&para;</a></h3>
+<p>The system sends alerts for two limit types, each with three threshold levels:</p>
+<h4 id="monthly-token-alert">Monthly Token Alert<a class="headerlink" href="#monthly-token-alert" title="Permanent link">&para;</a></h4>
+<p>Sent when monthly token usage exceeds 80%, 90%, or 100% of the monthly limit.</p>
+<h4 id="daily-token-alert">Daily Token Alert<a class="headerlink" href="#daily-token-alert" title="Permanent link">&para;</a></h4>
+<p>Sent when daily token usage exceeds 80%, 90%, or 100% of the daily limit. Daily alerts can be sent each day (they include the date in the deduplication key).</p>
+<h3 id="sample-alert-content">Sample Alert Content<a class="headerlink" href="#sample-alert-content" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Subject: Claude Code CRITICAL - Monthly Token Quota - 92%
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>Claude Code Usage Alert - Monthly Token Quota
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>User: john.doe@company.com
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>Alert Level: CRITICAL
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>Month: November 2025
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>Policy: group:engineering
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>Current Usage: 207,000,000 tokens
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>Monthly Limit: 225,000,000 tokens
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>Percentage Used: 92.0%
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>Days Remaining in Month: 8
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>Daily Average: 9,409,091 tokens
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>Projected Monthly Total: 282,272,727 tokens
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>---
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>This alert is sent once per threshold level per month.
+</code></pre></div>
+<p>Alerts are deduplicated - each threshold triggers only once per user per period, with history stored in DynamoDB (60-day TTL).</p>
+<h2 id="user-notifications">User Notifications<a class="headerlink" href="#user-notifications" title="Permanent link">&para;</a></h2>
+<p>When users approach or exceed their quota limits, they receive visual notifications in both the terminal and browser.</p>
+<h3 id="browser-notification">Browser Notification<a class="headerlink" href="#browser-notification" title="Permanent link">&para;</a></h3>
+<p>The credential provider opens a browser page showing quota status when:</p>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Browser Opens?</th>
+<th>Access Granted?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Within quota (&lt;80%)</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Warning (80-99%)</td>
+<td>Yes (yellow)</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Blocked (100%+)</td>
+<td>Yes (red)</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<p>The browser page displays:
+- <strong>Status header</strong>: Warning (⚠️) or Blocked (🚫)
+- <strong>Monthly usage</strong>: Progress bar with percentage
+- <strong>Daily usage</strong>: Progress bar with percentage (if daily limits configured)
+- <strong>Message</strong>: Explanation and guidance</p>
+<h3 id="terminal-output">Terminal Output<a class="headerlink" href="#terminal-output" title="Permanent link">&para;</a></h3>
+<p>In addition to browser notifications, the terminal shows:</p>
+<p><strong>Warning (80%+ usage):</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>============================================================
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>QUOTA WARNING
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>============================================================
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>  Monthly: 180,000,000 / 225,000,000 tokens (80.0%)
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>  Daily: 6,600,000 / 8,250,000 tokens (80.0%)
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>============================================================
+</code></pre></div></p>
+<p><strong>Blocked (100%+ usage):</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>============================================================
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>ACCESS BLOCKED - QUOTA EXCEEDED
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>============================================================
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>Monthly quota exceeded: 225,000,000 / 225,000,000 tokens (100.0%).
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>Contact your administrator for assistance.
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>Current Usage:
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>  Monthly: 225,000,000 / 225,000,000 tokens (100.0%)
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>Policy: user:john.doe@company.com
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>To request an unblock, contact your administrator.
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>============================================================
+</code></pre></div></p>
+<h3 id="periodic-quota-re-check">Periodic Quota Re-Check<a class="headerlink" href="#periodic-quota-re-check" title="Permanent link">&para;</a></h3>
+<p>By default, quota is re-checked every 30 minutes even when credentials are cached. This closes the enforcement gap where users could continue working for up to 12 hours after being blocked (the credential cache duration).</p>
+<p>Configure during <code>ccwb init</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Interval</th>
+<th>Check Frequency</th>
+<th>Max Enforcement Delay</th>
+<th>UX Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Every request</td>
+<td>Immediate</td>
+<td>~200ms per request</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Every 15 min</td>
+<td>15 minutes</td>
+<td>Minimal</td>
+</tr>
+<tr>
+<td>30 (default)</td>
+<td>Every 30 min</td>
+<td>30 minutes</td>
+<td>Imperceptible</td>
+</tr>
+<tr>
+<td>60</td>
+<td>Every hour</td>
+<td>1 hour</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>How it works:</strong></p>
+<ol>
+<li>User requests credentials (cached or fresh)</li>
+<li>If last quota check was more than <code>interval</code> minutes ago:</li>
+<li>Call quota API (~200ms)</li>
+<li>Update timestamp</li>
+<li>If blocked: Show browser notification, deny credentials</li>
+<li>If warning (80%+): Show browser notification, issue credentials</li>
+<li>If OK: Issue credentials silently</li>
+</ol>
+<p><strong>Trade-offs:</strong></p>
+<ul>
+<li><strong>Interval = 0</strong> (strictest): Every request checks quota. Adds ~200ms latency to each credential request. Use for strict cost control where immediate enforcement is critical.</li>
+<li><strong>Interval = 30</strong> (recommended): Balance between enforcement tightness and user experience. Users are blocked within 30 minutes of exceeding quota.</li>
+<li><strong>Interval = 60+</strong> (relaxed): Minimal impact but users may work up to an hour after being blocked.</li>
+</ul>
+<p>The check happens in the background when returning cached credentials - users only see a browser notification if their quota status changes.</p>
+<h2 id="bulk-policy-management">Bulk Policy Management<a class="headerlink" href="#bulk-policy-management" title="Permanent link">&para;</a></h2>
+<p>For organizations with many users, the CLI provides import/export commands to manage policies in bulk.</p>
+<h3 id="export-policies">Export Policies<a class="headerlink" href="#export-policies" title="Permanent link">&para;</a></h3>
+<p>Export existing policies to JSON or CSV for backup, audit, or migration:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Export all policies to JSON</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>ccwb<span class="w"> </span>quota<span class="w"> </span><span class="nb">export</span><span class="w"> </span>policies.json
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># Export to CSV for spreadsheet editing</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>ccwb<span class="w"> </span>quota<span class="w"> </span><span class="nb">export</span><span class="w"> </span>policies.csv
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c1"># Export only user policies</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>ccwb<span class="w"> </span>quota<span class="w"> </span><span class="nb">export</span><span class="w"> </span>users.json<span class="w"> </span>--type<span class="w"> </span>user
+</code></pre></div>
+<h3 id="import-policies">Import Policies<a class="headerlink" href="#import-policies" title="Permanent link">&para;</a></h3>
+<p>Import policies from a file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># Import from CSV, creating new and updating existing</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>import<span class="w"> </span>users.csv<span class="w"> </span>--update
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># Preview changes without applying</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>import<span class="w"> </span>users.csv<span class="w"> </span>--dry-run
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="c1"># Auto-calculate daily limits (monthly / 30 + burst buffer)</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>import<span class="w"> </span>users.csv<span class="w"> </span>--auto-daily<span class="w"> </span>--burst<span class="w"> </span><span class="m">15</span>
+</code></pre></div>
+<h3 id="csv-template">CSV Template<a class="headerlink" href="#csv-template" title="Permanent link">&para;</a></h3>
+<p>Create a CSV file with these columns:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>type,identifier,monthly_token_limit,daily_token_limit,enforcement_mode,enabled
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>user,alice@example.com,300M,15M,alert,true
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>user,bob@example.com,200M,,block,true
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>group,engineering,500M,25M,alert,true
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>default,default,225M,8M,alert,true
+</code></pre></div>
+<p><strong>Required columns:</strong> <code>type</code>, <code>identifier</code>, <code>monthly_token_limit</code></p>
+<p><strong>Token format:</strong> Supports <code>K</code> (thousands), <code>M</code> (millions), <code>B</code> (billions), e.g., <code>300M</code> = 300,000,000 tokens</p>
+<h3 id="typical-workflow">Typical Workflow<a class="headerlink" href="#typical-workflow" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Initial setup from HR system:</strong>
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Export user list from HR, create CSV</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>import<span class="w"> </span>users.csv<span class="w"> </span>--auto-daily<span class="w"> </span>--update
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Backup before changes:</strong>
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>ccwb<span class="w"> </span>quota<span class="w"> </span><span class="nb">export</span><span class="w"> </span>backup-<span class="k">$(</span>date<span class="w"> </span>+%Y%m%d<span class="k">)</span>.json
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Cross-environment sync:</strong>
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># Export from staging</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>ccwb<span class="w"> </span>quota<span class="w"> </span><span class="nb">export</span><span class="w"> </span>policies.json<span class="w"> </span>--profile<span class="w"> </span>staging
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="c1"># Import to production</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>import<span class="w"> </span>policies.json<span class="w"> </span>--profile<span class="w"> </span>production<span class="w"> </span>--update
+</code></pre></div></p>
+</li>
+</ol>
+<p>See <a href="../CLI_REFERENCE/#quota-export---export-policies">CLI Reference</a> for full documentation.</p>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="quick-checks">Quick Checks<a class="headerlink" href="#quick-checks" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># View Lambda logs</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>aws<span class="w"> </span>logs<span class="w"> </span>tail<span class="w"> </span>/aws/lambda/claude-code-quota-monitor<span class="w"> </span>--follow
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="c1"># Query user quotas</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>aws<span class="w"> </span>dynamodb<span class="w"> </span>scan<span class="w"> </span>--table-name<span class="w"> </span>UserQuotaMetrics<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">  </span>--projection-expression<span class="w"> </span><span class="s2">"email, total_tokens, daily_tokens"</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="c1"># List quota policies</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>aws<span class="w"> </span>dynamodb<span class="w"> </span>scan<span class="w"> </span>--table-name<span class="w"> </span>QuotaPolicies<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="w">  </span>--filter-expression<span class="w"> </span><span class="s2">"sk = :current"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="w">  </span>--expression-attribute-values<span class="w"> </span><span class="s1">'{":current": {"S": "CURRENT"}}'</span>
+</code></pre></div>
+<h3 id="common-issues">Common Issues<a class="headerlink" href="#common-issues" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>No alerts</strong>: Verify SNS subscriptions are confirmed and EventBridge rule is enabled</li>
+<li><strong>Missing users</strong>: Check JWT tokens include email claim</li>
+<li><strong>Wrong policy applied</strong>: Verify group claims are present in JWT tokens</li>
+<li><strong>Groups not detected</strong>: Check that <code>ENABLE_FINEGRAINED_QUOTAS</code> is set to <code>true</code></li>
+</ul>
+<p>For detailed monitoring setup, see the <a href="../MONITORING/">Monitoring Guide</a>.</p>
+<h2 id="cost-considerations">Cost Considerations<a class="headerlink" href="#cost-considerations" title="Permanent link">&para;</a></h2>
+<p><strong>Estimated monthly costs for &lt;1000 users: $2-10</strong>
+- Lambda: ~2,880 invocations x $0.0000002 = $0.58
+- DynamoDB: Pay-per-request for user count x 2,880 operations
+- SNS: $0.50 per million notifications
+- CloudWatch Logs: Standard retention pricing
+- QuotaPolicies table: Minimal cost (policies rarely change)</p>
+<h2 id="data-schema">Data Schema<a class="headerlink" href="#data-schema" title="Permanent link">&para;</a></h2>
+<h3 id="userquotametrics-table">UserQuotaMetrics Table<a class="headerlink" href="#userquotametrics-table" title="Permanent link">&para;</a></h3>
+<p><strong>User Totals</strong>: <code>PK: USER#{email}</code>, <code>SK: MONTH#{YYYY-MM}</code>
+- Attributes: <code>total_tokens</code>, <code>daily_tokens</code>, <code>daily_date</code>, <code>input_tokens</code>, <code>output_tokens</code>, <code>cache_tokens</code>, <code>groups</code>, <code>last_updated</code>, <code>email</code>
+- TTL: End of following month</p>
+<p><strong>Alert History</strong>: <code>PK: ALERTS</code>, <code>SK: {YYYY-MM}#ALERT#{email}#{type}#{level}[#{date}]</code>
+- Attributes: <code>sent_at</code>, <code>alert_type</code>, <code>alert_level</code>, <code>usage_at_alert</code>, <code>policy_info</code>
+- TTL: 60 days</p>
+<h3 id="quotapolicies-table">QuotaPolicies Table<a class="headerlink" href="#quotapolicies-table" title="Permanent link">&para;</a></h3>
+<p><strong>Policy Records</strong>: <code>PK: POLICY#{type}#{identifier}</code>, <code>SK: CURRENT</code>
+- Attributes: <code>policy_type</code>, <code>identifier</code>, <code>monthly_token_limit</code>, <code>daily_token_limit</code>, <code>warning_threshold_80</code>, <code>warning_threshold_90</code>, <code>enforcement_mode</code>, <code>enabled</code>, <code>created_at</code>, <code>updated_at</code>, <code>created_by</code></p>
+<p><strong>GSI: PolicyTypeIndex</strong>
+- PK: <code>policy_type</code> (user, group, default)
+- SK: <code>identifier</code>
+- Enables efficient queries like "list all group policies"</p>
+<h2 id="migration-from-basic-quotas">Migration from Basic Quotas<a class="headerlink" href="#migration-from-basic-quotas" title="Permanent link">&para;</a></h2>
+<p>If you're upgrading from the basic quota system (single global limit):</p>
+<ol>
+<li>Deploy the updated CloudFormation stack (adds QuotaPolicies table)</li>
+<li>Existing UserQuotaMetrics data continues working (new fields are nullable)</li>
+<li>Set <code>EnableFinegrainedQuotas: true</code> in stack parameters</li>
+<li>Optionally create a default policy to maintain previous behavior:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>set-default<span class="w"> </span>--monthly-limit<span class="w"> </span>225M
+</code></pre></div></li>
+<li>Gradually add group/user policies as needed</li>
+</ol>
+<p><strong>No breaking changes</strong> - this is an enhancement that's opt-in through policy creation.</p>
+<h2 id="access-blocking-phase-2">Access Blocking (Phase 2)<a class="headerlink" href="#access-blocking-phase-2" title="Permanent link">&para;</a></h2>
+<p>When <code>enforcement_mode</code> is set to <code>"block"</code> for a policy, the system will deny credential issuance when a user exceeds their quota limits.</p>
+<h3 id="how-blocking-works">How Blocking Works<a class="headerlink" href="#how-blocking-works" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Quota Check API</strong>: A real-time API endpoint checks user quota before credential issuance</li>
+<li><strong>Enforcement Point</strong>: The credential provider calls the quota check API after OIDC authentication</li>
+<li><strong>Block Triggers</strong>: Access is blocked when:</li>
+<li>Monthly token usage ≥ monthly_token_limit</li>
+<li>Daily token usage ≥ daily_token_limit (if configured)</li>
+</ol>
+<h3 id="configuring-blocking">Configuring Blocking<a class="headerlink" href="#configuring-blocking" title="Permanent link">&para;</a></h3>
+<p>Enable blocking for a policy:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># Set user policy with blocking enabled</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>set-user<span class="w"> </span>john.doe@company.com<span class="w"> </span>--monthly-limit<span class="w"> </span>10M<span class="w"> </span>--enforcement<span class="w"> </span>block
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1"># Set group policy with blocking</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>set-group<span class="w"> </span>engineering<span class="w"> </span>--monthly-limit<span class="w"> </span>50M<span class="w"> </span>--enforcement<span class="w"> </span>block
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="c1"># Set default with blocking</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>set-default<span class="w"> </span>--monthly-limit<span class="w"> </span>225M<span class="w"> </span>--enforcement<span class="w"> </span>block
+</code></pre></div>
+<h3 id="admin-override-unblock">Admin Override (Unblock)<a class="headerlink" href="#admin-override-unblock" title="Permanent link">&para;</a></h3>
+<p>Administrators can temporarily unblock users who have exceeded their quota:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1"># Unblock for 24 hours (default)</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>unblock<span class="w"> </span>john.doe@company.com
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="c1"># Unblock for 7 days</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>unblock<span class="w"> </span>john.doe@company.com<span class="w"> </span>--duration<span class="w"> </span>7d
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="c1"># Unblock until end of month (quota reset)</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>unblock<span class="w"> </span>john.doe@company.com<span class="w"> </span>--duration<span class="w"> </span>until-reset
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="c1"># With reason</span>
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>ccwb<span class="w"> </span>quota<span class="w"> </span>unblock<span class="w"> </span>john.doe@company.com<span class="w"> </span>--duration<span class="w"> </span>24h<span class="w"> </span>--reason<span class="w"> </span><span class="s2">"Urgent project deadline"</span>
+</code></pre></div>
+<p>The unblock record expires automatically and is cleaned up by DynamoDB TTL.</p>
+<h3 id="error-handling-fail-open-vs-fail-closed">Error Handling: Fail-Open vs Fail-Closed<a class="headerlink" href="#error-handling-fail-open-vs-fail-closed" title="Permanent link">&para;</a></h3>
+<p>By default, the system uses <strong>fail-open</strong> behavior - if the quota check API is unavailable, access is allowed. This prevents service disruptions due to network issues.</p>
+<p>Configure fail mode in your profile config:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="p">{</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="nt">"quota_fail_mode"</span><span class="p">:</span><span class="w"> </span><span class="nt">"open"</span><span class="w">   </span><span class="c1">// Allow on error (default)</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">  </span><span class="c1">// OR</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">  </span><span class="nt">"quota_fail_mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"closed"</span><span class="w"> </span><span class="c1">// Deny on error (stricter)</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="p">}</span>
+</code></pre></div>
+<p>The 15-minute Lambda monitoring job continues to run regardless, so alerts will still be sent even if real-time checks fail.</p>
+<h3 id="quota-check-api">Quota Check API<a class="headerlink" href="#quota-check-api" title="Permanent link">&para;</a></h3>
+<p>The Quota Check API is a secured HTTP endpoint that validates user quotas before credential issuance.</p>
+<h4 id="api-security">API Security<a class="headerlink" href="#api-security" title="Permanent link">&para;</a></h4>
+<p>The API requires JWT authentication using your OIDC provider's tokens:</p>
+<blockquote>
+<p><strong>IAM Identity Center users</strong>: Quota enforcement uses IAM SigV4 authentication instead of JWT. The credential-process signs the quota API request with SigV4 (<code>execute-api</code> service). API Gateway validates IAM credentials, and the quota Lambda extracts the user email from the caller ARN session name (<code>arn:aws:sts::ACCOUNT:assumed-role/Role/user@company.com</code>). Same per-user DynamoDB lookup and enforcement as OIDC. Identity Center may live in a different region than the deployment — the quota request is signed for the quota API's own region (derived from its <code>execute-api</code> endpoint URL), so cross-region IDC works. See <a href="../providers/iam-identity-center-setup/">IAM Identity Center Setup</a> for details.</p>
+</blockquote>
+<ul>
+<li><strong>Authentication</strong>: JWT token in <code>Authorization: Bearer &lt;token&gt;</code> header (OIDC) or SigV4-signed request (IDC)</li>
+<li><strong>Validation</strong>: API Gateway JWT Authorizer validates the token against your OIDC provider</li>
+<li><strong>User Identity</strong>: Email and group membership extracted from validated JWT claims (no query parameters)</li>
+</ul>
+<p>This ensures:
+- Only authenticated users can check quotas
+- User identity cannot be spoofed (claims come from validated JWT)
+- No additional credentials needed (uses same OIDC token from auth flow)</p>
+<h4 id="deployment-configuration">Deployment Configuration<a class="headerlink" href="#deployment-configuration" title="Permanent link">&para;</a></h4>
+<p>When using <code>ccwb deploy quota</code>, the OIDC configuration is <strong>automatically passed</strong> from your profile settings (configured during <code>ccwb init</code>). No manual parameter configuration is required.</p>
+<p>For manual CloudFormation deployments, provide your OIDC configuration:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>aws<span class="w"> </span>cloudformation<span class="w"> </span>deploy<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span>--stack-name<span class="w"> </span>claude-code-quota<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">  </span>--template-file<span class="w"> </span>quota-monitoring.yaml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">  </span>--parameter-overrides<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="w">    </span><span class="nv">OidcIssuerUrl</span><span class="o">=</span><span class="s2">"https://company.okta.com"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="w">    </span><span class="nv">OidcClientId</span><span class="o">=</span><span class="s2">"your-client-id"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="w">    </span><span class="c1"># ... other parameters</span>
+</code></pre></div>
+<p>The OIDC parameters must match your credential provider configuration:
+- <code>OidcIssuerUrl</code>: Your identity provider's issuer URL (e.g., <code>https://company.okta.com</code> for Okta)
+- <code>OidcClientId</code>: The client ID configured in your identity provider</p>
+<p>After deploying, get the API endpoint from stack outputs:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># Get quota check API endpoint</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>aws<span class="w"> </span>cloudformation<span class="w"> </span>describe-stacks<span class="w"> </span>--stack-name<span class="w"> </span>&lt;quota-stack-name&gt;<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">  </span>--query<span class="w"> </span><span class="s1">'Stacks[0].Outputs[?OutputKey==`QuotaCheckApiEndpoint`].OutputValue'</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">  </span>--output<span class="w"> </span>text
+</code></pre></div>
+<p>Configure the endpoint in your credential provider config.json:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="p">{</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">  </span><span class="nt">"profiles"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">    </span><span class="nt">"ClaudeCode"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="w">      </span><span class="nt">"quota_api_endpoint"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://xxx.execute-api.us-east-1.amazonaws.com"</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="p">}</span>
+</code></pre></div>
+<h4 id="api-responses">API Responses<a class="headerlink" href="#api-responses" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>HTTP Status</th>
+<th>Response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No/invalid JWT</td>
+<td>401</td>
+<td>Unauthorized (API Gateway rejects)</td>
+</tr>
+<tr>
+<td>Valid JWT, quota OK</td>
+<td>200</td>
+<td><code>{"allowed": true, ...}</code></td>
+</tr>
+<tr>
+<td>Valid JWT, quota exceeded</td>
+<td>200</td>
+<td><code>{"allowed": false, "reason": "monthly_exceeded", ...}</code></td>
+</tr>
+<tr>
+<td>Valid JWT, missing email claim</td>
+<td>200</td>
+<td><code>{"allowed": true, "reason": "missing_email_claim"}</code> (fail-open)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="enforcement-timing">Enforcement Timing<a class="headerlink" href="#enforcement-timing" title="Permanent link">&para;</a></h3>
+<p><strong>Important</strong>: Quota enforcement occurs at credential issuance time — every time the credential-process exchanges tokens for AWS credentials. This includes both browser re-authentication and silent refresh (via stored refresh_token).</p>
+<p>With silent refresh enabled (default since June 2026), the credential-process automatically renews credentials without browser interaction. Quota is checked on each renewal, so enforcement gaps are bounded by the STS session duration, not by how often the user sees a browser prompt.</p>
+<h4 id="example-timeline-1-hour-sts-session-silent-refresh">Example Timeline (1-hour STS session, silent refresh)<a class="headerlink" href="#example-timeline-1-hour-sts-session-silent-refresh" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>09:00 - User authenticates via browser, quota check passes (at 50%)
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>09:00 - AWS credentials issued, valid for 1 hour
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>10:00 - Credentials expire, silent refresh triggers
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>10:00 - Quota check passes (at 80%), new credentials issued
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>11:00 - Silent refresh triggers again
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>11:00 - Quota check BLOCKS access (user exceeded limit)
+</code></pre></div>
+<p>The enforcement gap equals the STS session duration (typically 1 hour), regardless of refresh_token lifetime.</p>
+<h4 id="recommendation-for-tight-enforcement">Recommendation for Tight Enforcement<a class="headerlink" href="#recommendation-for-tight-enforcement" title="Permanent link">&para;</a></h4>
+<p>Reduce <code>max_session_duration</code> when blocking is enabled:</p>
+<table>
+<thead>
+<tr>
+<th>Session Duration</th>
+<th>Enforcement Gap</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>12h (default)</td>
+<td>Up to 12 hours</td>
+<td>Alert-only mode</td>
+</tr>
+<tr>
+<td>4h</td>
+<td>Up to 4 hours</td>
+<td>Moderate enforcement</td>
+</tr>
+<tr>
+<td>1h (recommended)</td>
+<td>Up to 1 hour</td>
+<td>Strict cost control</td>
+</tr>
+</tbody>
+</table>
+<p>Configure in your profile:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="p">{</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">  </span><span class="nt">"profiles"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">    </span><span class="nt">"ClaudeCode"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">      </span><span class="nt">"max_session_duration"</span><span class="p">:</span><span class="w"> </span><span class="mi">3600</span><span class="p">,</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="w">      </span><span class="nt">"quota_api_endpoint"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://xxx.execute-api.us-east-1.amazonaws.com"</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="p">}</span>
+</code></pre></div>
+<p><strong>Trade-off</strong>: Shorter sessions mean more frequent re-authentication prompts for users, but provide tighter quota enforcement.</p>
+<h2 id="sidecar-bypass-detection">Sidecar Bypass Detection<a class="headerlink" href="#sidecar-bypass-detection" title="Permanent link">&para;</a></h2>
+<p>In sidecar mode, per-user token usage is measured from telemetry the local OTEL
+sidecar sends to CloudWatch. If a developer stops the sidecar on their machine,
+their usage stops being counted — so the quota check never sees them exceed a
+limit, even though they can still invoke Bedrock. This is an inherent property
+of client-side telemetry.</p>
+<p>Sidecar bypass detection is an <strong>opt-in detective control</strong> that surfaces this.
+It does not block access; it reports which users are invoking Bedrock without
+reporting telemetry, so administrators can follow up.</p>
+<h3 id="how-it-works_1">How It Works<a class="headerlink" href="#how-it-works_1" title="Permanent link">&para;</a></h3>
+<p>A scheduled Lambda (<code>claude-code-bypass-detection</code>) runs every 15 minutes and:</p>
+<ol>
+<li>Queries <strong>CloudTrail</strong> for Bedrock invocation events (<code>InvokeModel</code>,
+   <code>InvokeModelWithResponseStream</code>, <code>Converse</code>, <code>ConverseStream</code>) in the last
+   window. These are logged as CloudTrail <strong>management events</strong> — captured by
+   default, with no trail or data-event charges. The caller's email is read from
+   the assumed-role session name (<code>assumed-role/&lt;role&gt;/&lt;email&gt;</code>), making this a
+   tamper-proof source of truth for who actually used Bedrock.</li>
+<li>For each of those (typically few) active users, does a single DynamoDB
+   <code>GetItem</code> point read on their <code>UserQuotaMetrics</code> record and checks whether
+   <code>last_updated</code> falls within the window. This scales with the number of
+   <em>active</em> users, not the total user count — no full-table scan.</li>
+<li>A user active in CloudTrail whose record is missing or stale has a
+   stopped/bypassed sidecar.</li>
+<li>Publishes CloudWatch metrics under the <code>ClaudeCode/SidecarHealth</code> namespace
+   (<code>SidecarStopped</code> per user, <code>SidecarStoppedUserCount</code> aggregate) and sends an
+   SNS alert (via the existing quota alert topic) listing affected users.</li>
+</ol>
+<h3 id="configuration_1">Configuration<a class="headerlink" href="#configuration_1" title="Permanent link">&para;</a></h3>
+<p>Disabled by default (opt-in). Enable during <code>ccwb init</code> (sidecar mode only) —
+<code>ccwb deploy quota</code> passes the <code>EnableBypassDetection</code> template parameter from
+your profile. In central mode the collector runs server-side (users cannot stop
+it), so this control is disabled automatically.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># Enable during init</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>ccwb<span class="w"> </span>init<span class="w">          </span><span class="c1"># Select "Yes" for bypass detection when prompted (sidecar mode)</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="c1"># To enable on an existing deployment, re-run init, then redeploy the quota stack</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>ccwb<span class="w"> </span>deploy<span class="w"> </span>quota
+</code></pre></div>
+<p>Because <code>ccwb deploy</code> always sets this parameter from the profile, changing it
+directly in CloudFormation would be reverted on the next deploy.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EnableBypassDetection</td>
+<td>false</td>
+<td>Enable sidecar bypass detection (sidecar mode)</td>
+</tr>
+<tr>
+<td>BypassDetectionLookbackMinutes</td>
+<td>15</td>
+<td>Detection window; should match the detection schedule</td>
+</tr>
+</tbody>
+</table>
+<h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Detective, not preventive.</strong> It reports bypass; it does not block Bedrock.
+  For tamper-proof enforcement, source quota usage from Bedrock model invocation
+  logging (server-side) — a larger change tracked as a future enhancement.</li>
+<li>Relies on Bedrock runtime calls being present in CloudTrail management events
+  (the default). Detection lag is one schedule interval (15 minutes).</li>
+<li>Alerts fire every schedule interval (15 min) while bypass is active. To reduce
+  notification frequency, create a CloudWatch Alarm on <code>SidecarStoppedUserCount</code>
+  with a longer evaluation period (e.g., 1 hour) instead of relying on raw SNS.</li>
+</ul>
+<h2 id="current-limitations">Current Limitations<a class="headerlink" href="#current-limitations" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Quotas reset on calendar month/day (UTC timezone)</li>
+<li>Requires email claim in JWT tokens, or email as IAM session name for Identity Center users (see <a href="../providers/iam-identity-center-setup/#how-it-works">IAM Identity Center Setup</a>)</li>
+<li>Group membership requires JWT group claims from identity provider (not available for IDC users — user-level policies only)</li>
+<li>Enforcement only at credential issuance (see <a href="#enforcement-timing">Enforcement Timing</a> for mitigation)</li>
+</ul>
+<h2 id="claude-desktop-cowork-3p-usage-counting">Claude Desktop (Cowork 3P) Usage Counting<a class="headerlink" href="#claude-desktop-cowork-3p-usage-counting" title="Permanent link">&para;</a></h2>
+<p>When the Cowork dashboard stack is deployed, Claude Desktop (Cowork 3P) token usage is automatically counted toward the same per-user quota as Claude Code:</p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Namespace</th>
+<th>Metric</th>
+<th>Dimension</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Claude Code</td>
+<td><code>ClaudeCode</code></td>
+<td><code>claude_code.token.usage</code></td>
+<td><code>user.email</code></td>
+</tr>
+<tr>
+<td>Claude Desktop (Cowork 3P)</td>
+<td><code>ClaudeCoWork</code></td>
+<td><code>token.usage.input</code> / <code>token.usage.output</code></td>
+<td><code>user_email</code></td>
+</tr>
+</tbody>
+</table>
+<p>The <code>quota_monitor</code> Lambda queries both namespaces and merges the results into a single DynamoDB record per user. This means:</p>
+<ul>
+<li><code>ccwb quota usage &lt;email&gt;</code> shows combined Claude Code + Claude Desktop usage</li>
+<li>Quota limits apply to the combined total</li>
+<li>A user hitting their limit on Claude Desktop will be blocked on the next Claude Code credential refresh (and vice versa)</li>
+</ul>
+<p><strong>Requirements:</strong>
+- Cowork dashboard stack deployed (<code>ccwb deploy cowork-dashboard</code>)
+- Attribution headers configured (collector injects <code>user_email</code> from <code>x-user-email</code> HTTP header)
+- Central or sidecar monitoring mode (both support Claude Desktop telemetry counting)</p>
+<p><strong>Without attribution headers:</strong> Claude Desktop usage is aggregate-only and cannot be counted toward individual user quotas. The <code>quota_monitor</code> Cowork query gracefully returns empty results.</p>
+<h2 id="data-latency">Data Latency<a class="headerlink" href="#data-latency" title="Permanent link">&para;</a></h2>
+<p>Different data paths have different latency characteristics:</p>
+<table>
+<thead>
+<tr>
+<th>Data path</th>
+<th>Latency</th>
+<th>Use case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Quota enforcement (DynamoDB)</td>
+<td>~1-5 seconds</td>
+<td>Real-time quota checks</td>
+</tr>
+<tr>
+<td>CloudWatch metrics/dashboards</td>
+<td>~1-5 minutes</td>
+<td>Live operational monitoring</td>
+</tr>
+<tr>
+<td>Analytics (Firehose → S3 → Athena)</td>
+<td>Up to 15 minutes</td>
+<td>Historical reporting, cost analysis</td>
+</tr>
+</tbody>
+</table>
+<p>The analytics pipeline uses Kinesis Firehose with a configurable buffer interval
+(<code>FirehoseBufferInterval</code> parameter, default 900 seconds / 15 minutes). Firehose
+accumulates records before flushing to S3 to reduce cost and API calls.</p>
+<p>To reduce analytics latency, lower the buffer interval (minimum 60 seconds) at
+the cost of more frequent S3 writes. Set <code>firehose_buffer_interval</code> in your
+profile (<code>~/.ccwb/config.json</code>), then redeploy the analytics stack:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>ccwb<span class="w"> </span>deploy<span class="w"> </span>analytics
+</code></pre></div>
+<p>Because <code>ccwb deploy</code> always passes the buffer interval from the profile,
+changing the parameter directly in CloudFormation would be reverted on the
+next deploy.</p>
+<h2 id="future-enhancements">Future Enhancements<a class="headerlink" href="#future-enhancements" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Tamper-proof enforcement</strong>: Source quota usage from Bedrock model invocation
+  logging (server-side) so usage is counted even if the sidecar is stopped,
+  upgrading sidecar health monitoring from detective to preventive.</li>
+<li><strong>Quota reporting</strong>: Generate usage reports across all users</li>
+</ul>
+<h2 id="integration-points">Integration Points<a class="headerlink" href="#integration-points" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Dashboard</strong>: Shares DynamoDB metrics table and OTEL pipeline</li>
+<li><strong>Analytics</strong>: Quota data available in Athena queries (see <a href="../ANALYTICS/">Analytics Guide</a>)</li>
+<li><strong>External Systems</strong>: SNS topic supports webhooks, Lambda triggers, and third-party integrations</li>
+<li><strong>Identity Provider</strong>: Group membership extracted from JWT claims</li>
+</ul>
+<p>For complete monitoring setup and general telemetry information, see the <a href="../MONITORING/">Monitoring Guide</a>.</p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="August 23, 2026 14:42:57 UTC"><span class="timeago" datetime="2026-08-23T14:42:57+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 23, 2026 14:42:57 UTC">2026-08-23</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 18, 2025 03:46:54 UTC"><span class="timeago" datetime="2025-09-18T03:46:54+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 18, 2025 03:46:54 UTC">2025-09-18</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <nav class="md-footer__inner md-grid" aria-label="Footer" style="background: transparent;">
+    
+    <a href="../ANALYTICS/" class="md-footer__link md-footer__link--prev" style="color: #141413;">
+      <div class="md-footer__title">
+        <span class="md-footer__direction">Previous</span>
+        Analytics
+      </div>
+    </a>
+    
+    
+    <a href="../COST_ESTIMATES/" class="md-footer__link md-footer__link--next" style="color: #141413;">
+      <div class="md-footer__title">
+        <span class="md-footer__direction">Next</span>
+        Cost Estimates
+      </div>
+    </a>
+    
+  </nav>
+  
+  <div class="md-footer-meta md-typeset" style="background-color: transparent;">
+    <div class="md-footer-meta__inner md-grid" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; padding: 2.5rem 0 2rem;">
+      <img src="../assets/images/aws-logo.svg" alt="AWS" style="height: 18px; width: auto; opacity: 0.4;">
+      <span style="color: #141413; opacity: 0.35; font-size: 0.65rem;">Claude Code with Amazon Bedrock</span>
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit", "toc.follow", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../js/timeago.min.js"></script>
+      
+        <script src="../js/timeago_mkdocs_material.js"></script>
+      
+    
+  </body>
+</html>

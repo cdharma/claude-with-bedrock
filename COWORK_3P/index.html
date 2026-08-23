@@ -1,0 +1,2837 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Enterprise deployment guide for Claude Code on Amazon Bedrock">
+      
+      
+      
+        <link rel="canonical" href="https://cdharma.github.io/claude-with-bedrock/COWORK_3P/">
+      
+      
+        <link rel="prev" href="../LOCAL_TESTING/">
+      
+      
+        <link rel="next" href="../PLUGINS/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Claude Desktop (Cowork) - Guidance for Claude Code and Cowork on Amazon Bedrock</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../css/timeago.css">
+    
+      <link rel="stylesheet" href="../stylesheets/custom.css?v=11">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#claude-desktop-cowork-3p-on-amazon-bedrock" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Guidance for Claude Code and Cowork on Amazon Bedrock" class="md-header__button md-logo" aria-label="Guidance for Claude Code and Cowork on Amazon Bedrock" data-md-component="logo">
+      
+  
+  <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 304 182" style="enable-background:new 0 0 304 182;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#141413;}
+	.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#141413;}
+</style>
+<g>
+	<path class="st0" d="M86.4,66.4c0,3.7,0.4,6.7,1.1,8.9c0.8,2.2,1.8,4.6,3.2,7.2c0.5,0.8,0.7,1.6,0.7,2.3c0,1-0.6,2-1.9,3l-6.3,4.2
+		c-0.9,0.6-1.8,0.9-2.6,0.9c-1,0-2-0.5-3-1.4C76.2,90,75,88.4,74,86.8c-1-1.7-2-3.6-3.1-5.9c-7.8,9.2-17.6,13.8-29.4,13.8
+		c-8.4,0-15.1-2.4-20-7.2c-4.9-4.8-7.4-11.2-7.4-19.2c0-8.5,3-15.4,9.1-20.6c6.1-5.2,14.2-7.8,24.5-7.8c3.4,0,6.9,0.3,10.6,0.8
+		c3.7,0.5,7.5,1.3,11.5,2.2v-7.3c0-7.6-1.6-12.9-4.7-16c-3.2-3.1-8.6-4.6-16.3-4.6c-3.5,0-7.1,0.4-10.8,1.3c-3.7,0.9-7.3,2-10.8,3.4
+		c-1.6,0.7-2.8,1.1-3.5,1.3c-0.7,0.2-1.2,0.3-1.6,0.3c-1.4,0-2.1-1-2.1-3.1v-4.9c0-1.6,0.2-2.8,0.7-3.5c0.5-0.7,1.4-1.4,2.8-2.1
+		c3.5-1.8,7.7-3.3,12.6-4.5c4.9-1.3,10.1-1.9,15.6-1.9c11.9,0,20.6,2.7,26.2,8.1c5.5,5.4,8.3,13.6,8.3,24.6V66.4z M45.8,81.6
+		c3.3,0,6.7-0.6,10.3-1.8c3.6-1.2,6.8-3.4,9.5-6.4c1.6-1.9,2.8-4,3.4-6.4c0.6-2.4,1-5.3,1-8.7v-4.2c-2.9-0.7-6-1.3-9.2-1.7
+		c-3.2-0.4-6.3-0.6-9.4-0.6c-6.7,0-11.6,1.3-14.9,4c-3.3,2.7-4.9,6.5-4.9,11.5c0,4.7,1.2,8.2,3.7,10.6
+		C37.7,80.4,41.2,81.6,45.8,81.6z M126.1,92.4c-1.8,0-3-0.3-3.8-1c-0.8-0.6-1.5-2-2.1-3.9L96.7,10.2c-0.6-2-0.9-3.3-0.9-4
+		c0-1.6,0.8-2.5,2.4-2.5h9.8c1.9,0,3.2,0.3,3.9,1c0.8,0.6,1.4,2,2,3.9l16.8,66.2l15.6-66.2c0.5-2,1.1-3.3,1.9-3.9c0.8-0.6,2.2-1,4-1
+		h8c1.9,0,3.2,0.3,4,1c0.8,0.6,1.5,2,1.9,3.9l15.8,67l17.3-67c0.6-2,1.3-3.3,2-3.9c0.8-0.6,2.1-1,3.9-1h9.3c1.6,0,2.5,0.8,2.5,2.5
+		c0,0.5-0.1,1-0.2,1.6c-0.1,0.6-0.3,1.4-0.7,2.5l-24.1,77.3c-0.6,2-1.3,3.3-2.1,3.9c-0.8,0.6-2.1,1-3.8,1h-8.6c-1.9,0-3.2-0.3-4-1
+		c-0.8-0.7-1.5-2-1.9-4L156,23l-15.4,64.4c-0.5,2-1.1,3.3-1.9,4c-0.8,0.7-2.2,1-4,1H126.1z M254.6,95.1c-5.2,0-10.4-0.6-15.4-1.8
+		c-5-1.2-8.9-2.5-11.5-4c-1.6-0.9-2.7-1.9-3.1-2.8c-0.4-0.9-0.6-1.9-0.6-2.8v-5.1c0-2.1,0.8-3.1,2.3-3.1c0.6,0,1.2,0.1,1.8,0.3
+		c0.6,0.2,1.5,0.6,2.5,1c3.4,1.5,7.1,2.7,11,3.5c4,0.8,7.9,1.2,11.9,1.2c6.3,0,11.2-1.1,14.6-3.3c3.4-2.2,5.2-5.4,5.2-9.5
+		c0-2.8-0.9-5.1-2.7-7c-1.8-1.9-5.2-3.6-10.1-5.2L246,52c-7.3-2.3-12.7-5.7-16-10.2c-3.3-4.4-5-9.3-5-14.5c0-4.2,0.9-7.9,2.7-11.1
+		c1.8-3.2,4.2-6,7.2-8.2c3-2.3,6.4-4,10.4-5.2c4-1.2,8.2-1.7,12.6-1.7c2.2,0,4.5,0.1,6.7,0.4c2.3,0.3,4.4,0.7,6.5,1.1
+		c2,0.5,3.9,1,5.7,1.6c1.8,0.6,3.2,1.2,4.2,1.8c1.4,0.8,2.4,1.6,3,2.5c0.6,0.8,0.9,1.9,0.9,3.3v4.7c0,2.1-0.8,3.2-2.3,3.2
+		c-0.8,0-2.1-0.4-3.8-1.2c-5.7-2.6-12.1-3.9-19.2-3.9c-5.7,0-10.2,0.9-13.3,2.8c-3.1,1.9-4.7,4.8-4.7,8.9c0,2.8,1,5.2,3,7.1
+		c2,1.9,5.7,3.8,11,5.5l14.2,4.5c7.2,2.3,12.4,5.5,15.5,9.6c3.1,4.1,4.6,8.8,4.6,14c0,4.3-0.9,8.2-2.6,11.6
+		c-1.8,3.4-4.2,6.4-7.3,8.8c-3.1,2.5-6.8,4.3-11.1,5.6C264.4,94.4,259.7,95.1,254.6,95.1z"/>
+	<g>
+		<path class="st1" d="M273.5,143.7c-32.9,24.3-80.7,37.2-121.8,37.2c-57.6,0-109.5-21.3-148.7-56.7c-3.1-2.8-0.3-6.6,3.4-4.4
+			c42.4,24.6,94.7,39.5,148.8,39.5c36.5,0,76.6-7.6,113.5-23.2C274.2,133.6,278.9,139.7,273.5,143.7z"/>
+		<path class="st1" d="M287.2,128.1c-4.2-5.4-27.8-2.6-38.5-1.3c-3.2,0.4-3.7-2.4-0.8-4.5c18.8-13.2,49.7-9.4,53.3-5
+			c3.6,4.5-1,35.4-18.6,50.2c-2.7,2.3-5.3,1.1-4.1-1.9C282.5,155.7,291.4,133.4,287.2,128.1z"/>
+	</g>
+</g>
+</svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Guidance for Claude Code and Cowork on Amazon Bedrock
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Claude Desktop (Cowork)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cdharma/claude-with-bedrock" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cdharma/claude-with-bedrock
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../QUICK_START/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../providers/okta-setup/" class="md-tabs__link">
+          
+  
+  
+  Authentication
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../DEPLOYMENT/" class="md-tabs__link">
+          
+  
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../distribution/comparison/" class="md-tabs__link">
+          
+  
+  
+  Distribution
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../MONITORING/" class="md-tabs__link">
+          
+  
+  
+  Operations
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../CLI_REFERENCE/" class="md-tabs__link">
+          
+  
+  
+  Usage
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Guidance for Claude Code and Cowork on Amazon Bedrock" class="md-nav__button md-logo" aria-label="Guidance for Claude Code and Cowork on Amazon Bedrock" data-md-component="logo">
+      
+  
+  <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 304 182" style="enable-background:new 0 0 304 182;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#141413;}
+	.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#141413;}
+</style>
+<g>
+	<path class="st0" d="M86.4,66.4c0,3.7,0.4,6.7,1.1,8.9c0.8,2.2,1.8,4.6,3.2,7.2c0.5,0.8,0.7,1.6,0.7,2.3c0,1-0.6,2-1.9,3l-6.3,4.2
+		c-0.9,0.6-1.8,0.9-2.6,0.9c-1,0-2-0.5-3-1.4C76.2,90,75,88.4,74,86.8c-1-1.7-2-3.6-3.1-5.9c-7.8,9.2-17.6,13.8-29.4,13.8
+		c-8.4,0-15.1-2.4-20-7.2c-4.9-4.8-7.4-11.2-7.4-19.2c0-8.5,3-15.4,9.1-20.6c6.1-5.2,14.2-7.8,24.5-7.8c3.4,0,6.9,0.3,10.6,0.8
+		c3.7,0.5,7.5,1.3,11.5,2.2v-7.3c0-7.6-1.6-12.9-4.7-16c-3.2-3.1-8.6-4.6-16.3-4.6c-3.5,0-7.1,0.4-10.8,1.3c-3.7,0.9-7.3,2-10.8,3.4
+		c-1.6,0.7-2.8,1.1-3.5,1.3c-0.7,0.2-1.2,0.3-1.6,0.3c-1.4,0-2.1-1-2.1-3.1v-4.9c0-1.6,0.2-2.8,0.7-3.5c0.5-0.7,1.4-1.4,2.8-2.1
+		c3.5-1.8,7.7-3.3,12.6-4.5c4.9-1.3,10.1-1.9,15.6-1.9c11.9,0,20.6,2.7,26.2,8.1c5.5,5.4,8.3,13.6,8.3,24.6V66.4z M45.8,81.6
+		c3.3,0,6.7-0.6,10.3-1.8c3.6-1.2,6.8-3.4,9.5-6.4c1.6-1.9,2.8-4,3.4-6.4c0.6-2.4,1-5.3,1-8.7v-4.2c-2.9-0.7-6-1.3-9.2-1.7
+		c-3.2-0.4-6.3-0.6-9.4-0.6c-6.7,0-11.6,1.3-14.9,4c-3.3,2.7-4.9,6.5-4.9,11.5c0,4.7,1.2,8.2,3.7,10.6
+		C37.7,80.4,41.2,81.6,45.8,81.6z M126.1,92.4c-1.8,0-3-0.3-3.8-1c-0.8-0.6-1.5-2-2.1-3.9L96.7,10.2c-0.6-2-0.9-3.3-0.9-4
+		c0-1.6,0.8-2.5,2.4-2.5h9.8c1.9,0,3.2,0.3,3.9,1c0.8,0.6,1.4,2,2,3.9l16.8,66.2l15.6-66.2c0.5-2,1.1-3.3,1.9-3.9c0.8-0.6,2.2-1,4-1
+		h8c1.9,0,3.2,0.3,4,1c0.8,0.6,1.5,2,1.9,3.9l15.8,67l17.3-67c0.6-2,1.3-3.3,2-3.9c0.8-0.6,2.1-1,3.9-1h9.3c1.6,0,2.5,0.8,2.5,2.5
+		c0,0.5-0.1,1-0.2,1.6c-0.1,0.6-0.3,1.4-0.7,2.5l-24.1,77.3c-0.6,2-1.3,3.3-2.1,3.9c-0.8,0.6-2.1,1-3.8,1h-8.6c-1.9,0-3.2-0.3-4-1
+		c-0.8-0.7-1.5-2-1.9-4L156,23l-15.4,64.4c-0.5,2-1.1,3.3-1.9,4c-0.8,0.7-2.2,1-4,1H126.1z M254.6,95.1c-5.2,0-10.4-0.6-15.4-1.8
+		c-5-1.2-8.9-2.5-11.5-4c-1.6-0.9-2.7-1.9-3.1-2.8c-0.4-0.9-0.6-1.9-0.6-2.8v-5.1c0-2.1,0.8-3.1,2.3-3.1c0.6,0,1.2,0.1,1.8,0.3
+		c0.6,0.2,1.5,0.6,2.5,1c3.4,1.5,7.1,2.7,11,3.5c4,0.8,7.9,1.2,11.9,1.2c6.3,0,11.2-1.1,14.6-3.3c3.4-2.2,5.2-5.4,5.2-9.5
+		c0-2.8-0.9-5.1-2.7-7c-1.8-1.9-5.2-3.6-10.1-5.2L246,52c-7.3-2.3-12.7-5.7-16-10.2c-3.3-4.4-5-9.3-5-14.5c0-4.2,0.9-7.9,2.7-11.1
+		c1.8-3.2,4.2-6,7.2-8.2c3-2.3,6.4-4,10.4-5.2c4-1.2,8.2-1.7,12.6-1.7c2.2,0,4.5,0.1,6.7,0.4c2.3,0.3,4.4,0.7,6.5,1.1
+		c2,0.5,3.9,1,5.7,1.6c1.8,0.6,3.2,1.2,4.2,1.8c1.4,0.8,2.4,1.6,3,2.5c0.6,0.8,0.9,1.9,0.9,3.3v4.7c0,2.1-0.8,3.2-2.3,3.2
+		c-0.8,0-2.1-0.4-3.8-1.2c-5.7-2.6-12.1-3.9-19.2-3.9c-5.7,0-10.2,0.9-13.3,2.8c-3.1,1.9-4.7,4.8-4.7,8.9c0,2.8,1,5.2,3,7.1
+		c2,1.9,5.7,3.8,11,5.5l14.2,4.5c7.2,2.3,12.4,5.5,15.5,9.6c3.1,4.1,4.6,8.8,4.6,14c0,4.3-0.9,8.2-2.6,11.6
+		c-1.8,3.4-4.2,6.4-7.3,8.8c-3.1,2.5-6.8,4.3-11.1,5.6C264.4,94.4,259.7,95.1,254.6,95.1z"/>
+	<g>
+		<path class="st1" d="M273.5,143.7c-32.9,24.3-80.7,37.2-121.8,37.2c-57.6,0-109.5-21.3-148.7-56.7c-3.1-2.8-0.3-6.6,3.4-4.4
+			c42.4,24.6,94.7,39.5,148.8,39.5c36.5,0,76.6-7.6,113.5-23.2C274.2,133.6,278.9,139.7,273.5,143.7z"/>
+		<path class="st1" d="M287.2,128.1c-4.2-5.4-27.8-2.6-38.5-1.3c-3.2,0.4-3.7-2.4-0.8-4.5c18.8-13.2,49.7-9.4,53.3-5
+			c3.6,4.5-1,35.4-18.6,50.2c-2.7,2.3-5.3,1.1-4.1-1.9C282.5,155.7,291.4,133.4,287.2,128.1z"/>
+	</g>
+</g>
+</svg>
+
+    </a>
+    Guidance for Claude Code and Cowork on Amazon Bedrock
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cdharma/claude-with-bedrock" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cdharma/claude-with-bedrock
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../QUICK_START/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Authentication
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/okta-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Okta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/microsoft-entra-id-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microsoft Entra ID
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/auth0-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auth0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/cognito-user-pool-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS Cognito
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/google-oidc-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google OIDC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/generic-oidc-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generic OIDC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/iam-identity-center-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IAM Identity Center
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deployment
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DEPLOYMENT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WINDOWS_BUILD_SYSTEM/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows Build System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Distribution
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Distribution
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../distribution/comparison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Comparison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../distribution/deployment-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MONITORING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ANALYTICS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analytics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../QUOTA_MONITORING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quota Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COST_ESTIMATES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cost Estimates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COST_ATTRIBUTION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cost Attribution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TROUBLESHOOTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RESOURCE_INVENTORY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resource Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CLI_REFERENCE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LOCAL_TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude Desktop (Cowork)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude Desktop (Cowork)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Started
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-generate-via-cli-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 1: Generate via CLI (Recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-configure-via-setup-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 2: Configure via Setup UI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-3-json-mdm-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 3: JSON MDM Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-configuration-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Configuration Fields
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Configuration Fields">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model-entries-with-family-tier-v113576" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model Entries with Family Tier (v1.13576+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-credentials-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Credentials Flow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How Credentials Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#credential-helper-mode-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Credential Helper Mode (Recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aws-profile-mode-legacy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS Profile Mode (Legacy)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#macos-mdm-configuration-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS (MDM Configuration Profile)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows (Registry)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vdi-environments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VDI Environments
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inference-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inference Settings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deployment-and-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deployment and Updates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp-plugins-and-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP, Plugins, and Tools
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#telemetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Telemetry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workspace-and-usage-caps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workspace and Usage Caps
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-mdm-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Custom MDM Keys
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Custom MDM Keys">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enabling-via-ccwb-init" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enabling via ccwb init
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-via-profile-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuring via profile JSON
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#web-search-via-agentcore-gateway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Web search via AgentCore Gateway
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Web search via AgentCore Gateway">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enabling-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enabling it
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-authentication-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How authentication works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#things-to-know" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Things to know
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitoring
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Monitoring">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#per-device-identity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Per-device identity
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quota-enforcement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quota Enforcement
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quota Enforcement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-enforcement-applies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How enforcement applies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-cowork-usage-is-counted" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Cowork usage is counted
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requirements-for-per-user-cowork-quota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requirements for per-user Cowork quota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Additional Resources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PLUGINS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOOTSTRAP_SERVER/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bootstrap Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WEB_SEARCH/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Search
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/cdharma/claude-with-bedrock/edit/main/COWORK_3P.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="claude-desktop-cowork-3p-on-amazon-bedrock">Claude Desktop (Cowork 3P) on Amazon Bedrock<a class="headerlink" href="#claude-desktop-cowork-3p-on-amazon-bedrock" title="Permanent link">&para;</a></h1>
+<p>This guide explains how to use this solution's credential helper with <strong>Claude Desktop</strong> (Cowork) in third-party platform mode, enabling enterprise-managed Claude Desktop deployments that authenticate through your existing identity provider.</p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p><a href="https://support.claude.com/en/articles/14680741-install-and-configure-claude-cowork-with-third-party-platforms">Claude Cowork with third-party platforms</a> allows IT administrators to deploy Claude Desktop with Amazon Bedrock as the inference backend, managed via MDM configuration profiles. Users get core Claude Desktop capabilities including projects, artifacts, memory, file upload/export, and MCP servers — with consumption-based pricing through your existing AWS billing (no Anthropic seat licensing). Feature availability on Bedrock may differ from claude.ai.</p>
+<blockquote>
+<p><strong>Note:</strong> Features that require Anthropic-hosted inference — including the Chat tab, Computer Use, and the Skills Marketplace — are not available in third-party platform mode. See the <a href="https://claude.com/docs/cowork/3p/feature-matrix">Feature Matrix</a> for a full comparison.</p>
+</blockquote>
+<p><strong>Key insight:</strong> The same authentication infrastructure this solution provides for Claude Code CLI also covers Claude Cowork 3P. This means a single deployment supports both:</p>
+<ul>
+<li><strong>Claude Code</strong> (terminal-based coding tool for developers)</li>
+<li><strong>Claude Cowork</strong> (Claude Desktop for knowledge workers — product managers, analysts, operations teams)</li>
+</ul>
+<p>No additional AWS infrastructure is required — if you've already deployed this solution for Claude Code, you can extend it to Claude Cowork immediately. Your data stays within your AWS account: Amazon Bedrock does not store prompts, files, tool inputs/outputs, or model responses.</p>
+<h3 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h3>
+<p>The following diagram from the <a href="https://aws.amazon.com/blogs/machine-learning/from-developer-desks-to-the-whole-organization-running-claude-cowork-in-amazon-bedrock/">AWS Blog</a> illustrates the end-to-end flow for Claude Cowork with Amazon Bedrock:</p>
+<p><img alt="Claude Cowork with Amazon Bedrock — Architecture" src="../../assets/images/cowork-3p-architecture.png" /></p>
+<p>The application has three outbound paths: model inference to Amazon Bedrock in your configured regions, MCP server connections to endpoints you approve, and optional aggregate telemetry to Anthropic (which can be disabled).</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<p>Before configuring Claude Cowork 3P, ensure:</p>
+<ol>
+<li><strong>This solution is deployed</strong> — Follow the <a href="../../QUICK_START.md">Quick Start Guide</a> to deploy authentication infrastructure</li>
+<li><strong>Users have the credential-process installed</strong> — Distribute via <code>ccwb package</code> as described in <a href="../../QUICK_START.md#step-4-create-distribution-package">Step 4 of Quick Start</a></li>
+<li><strong>Claude Desktop is installed</strong> — Download from <a href="https://claude.com/download">claude.com/download</a></li>
+<li><strong>MDM solution available</strong> — For deploying configuration profiles to managed devices</li>
+</ol>
+<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
+<p>The workflow depends on whether you've already deployed this solution for Claude Code:</p>
+<p><strong>Existing deployments</strong> (already ran <code>ccwb init</code> + <code>ccwb deploy</code>):
+1. Run <code>ccwb cowork generate</code> to create MDM configuration files
+2. Deploy the generated files to managed devices via your MDM solution
+3. Distribute the <code>credential-process</code> binary to users (if not already done)</p>
+<p><strong>New deployments</strong> (starting from scratch):
+1. Follow the <a href="../../QUICK_START.md">Quick Start Guide</a> to deploy authentication infrastructure
+2. Run <code>ccwb package</code> to build distribution packages — Cowork 3P configs are auto-generated alongside (see the zero-binary exception below)
+3. Deploy MDM configuration files and distribute packages to users</p>
+<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
+<p>There are three ways to create the MDM configuration. <strong>Option 1 (CLI)</strong> is recommended as it auto-generates from your deployment profile.</p>
+<h3 id="option-1-generate-via-cli-recommended">Option 1: Generate via CLI (Recommended)<a class="headerlink" href="#option-1-generate-via-cli-recommended" title="Permanent link">&para;</a></h3>
+<p>If you've deployed this solution, the <code>ccwb cowork generate</code> command auto-generates MDM configuration files from your existing deployment profile — no manual JSON editing required:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Generate all formats (JSON, macOS .mobileconfig, Windows .reg)</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>cowork<span class="w"> </span>generate
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Generate only macOS profile</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>cowork<span class="w"> </span>generate<span class="w"> </span>--format<span class="w"> </span>mobileconfig
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># Custom model list</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>cowork<span class="w"> </span>generate<span class="w"> </span>--models<span class="w"> </span>opus,sonnet,haiku
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># Specific deployment profile</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>cowork<span class="w"> </span>generate<span class="w"> </span>--profile<span class="w"> </span>Production
+</code></pre></div>
+<p>Generated files are saved to <code>dist/cowork-3p/</code> by default. See <a href="../CLI_REFERENCE/#cowork-generate---generate-mdm-configuration">CLI Reference</a> for all options.</p>
+<p>Cowork 3P configs are also auto-generated alongside distribution packages during <code>ccwb package</code> when enabled via <code>ccwb init</code>.</p>
+<blockquote>
+<p><strong>Exception — IDC zero-binary packages:</strong> when auth is IAM Identity Center <strong>without</strong> quota monitoring, <code>ccwb package</code> builds a zero-binary package (no <code>credential-process</code> binary) and deliberately <strong>skips</strong> the Claude Desktop MDM config, with a warning — Claude Desktop authentication requires the credential-process binary. Enabling quota monitoring restores binary packaging and MDM generation.</p>
+</blockquote>
+<h3 id="option-2-configure-via-setup-ui">Option 2: Configure via Setup UI<a class="headerlink" href="#option-2-configure-via-setup-ui" title="Permanent link">&para;</a></h3>
+<p>Claude Desktop includes a built-in configuration interface for third-party inference. Once the credential-process is installed on the user's machine, you can configure it visually:</p>
+<ol>
+<li>Open Claude Desktop</li>
+<li>Navigate to <strong>Menu Bar → Help → Troubleshooting → Enable Developer mode</strong></li>
+<li>Go to <strong>Developer → Configure third-party inference</strong></li>
+<li>Select <strong>Bedrock</strong> as the inference provider</li>
+</ol>
+<p><img alt="Claude Desktop - Configure third-party inference" src="../../assets/images/cowork-3p-setup-ui.png" /></p>
+<p>In the <strong>Bedrock Credentials</strong> section, configure:
+- <strong>AWS region</strong>: Your Bedrock region (e.g., <code>us-west-2</code>)
+- <strong>AWS profile</strong>: The named profile the installer writes to <code>~/.aws/config</code> — <code>ClaudeCode</code> by default</p>
+<p>In the <strong>Identity &amp; Models</strong> section:
+- <strong>Model list</strong>: Add the model aliases your organization has enabled (e.g., <code>opus</code>, <code>sonnet</code>, <code>haiku</code>)</p>
+<p>Once configured, use <strong>Export</strong> to generate a <code>.mobileconfig</code> (macOS) or <code>.reg</code> (Windows) file for MDM distribution, or <strong>Apply locally</strong> for immediate testing.</p>
+<p>After applying the configuration, Claude Desktop will detect the Bedrock setup and present the option to continue:</p>
+<p><img alt="Claude Desktop - Bedrock configuration detected" src="../../assets/images/cowork-3p-bedrock-detected.png" /></p>
+<p>Select <strong>Continue with Bedrock</strong> to start using Claude with your organization's credentials.</p>
+<h3 id="option-3-json-mdm-configuration">Option 3: JSON MDM Configuration<a class="headerlink" href="#option-3-json-mdm-configuration" title="Permanent link">&para;</a></h3>
+<p>For automated deployment at scale, create an MDM profile with the following essential keys:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">"inferenceProvider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bedrock"</span><span class="p">,</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">"inferenceBedrockRegion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"us-west-2"</span><span class="p">,</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nt">"inferenceBedrockProfile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ClaudeCode"</span><span class="p">,</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="nt">"inferenceModels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"opus"</span><span class="p">,</span><span class="w"> </span><span class="s2">"sonnet"</span><span class="p">,</span><span class="w"> </span><span class="s2">"haiku"</span><span class="p">]</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> <code>inferenceBedrockProfile</code> must match a profile defined in the user's <code>~/.aws/config</code> (or <code>%USERPROFILE%\.aws\config</code> on Windows). The <code>install.sh</code> / <code>install.bat</code> installer shipped by <code>ccwb package</code> writes that profile automatically with <code>credential_process = credential-process --profile &lt;name&gt;</code>, so Claude Desktop reuses the same authentication pipeline as Claude Code CLI — no extra wrapper script to ship or maintain.</p>
+<p><strong>Note:</strong> See the <a href="#configuration-reference">Configuration Reference</a> below for the full set of optional MDM keys (telemetry, extensions, auto-updates, workspace caps, etc.).</p>
+</blockquote>
+<h3 id="key-configuration-fields">Key Configuration Fields<a class="headerlink" href="#key-configuration-fields" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>inferenceProvider</code></td>
+<td>Must be set to <code>"bedrock"</code> to activate third-party platform mode with Amazon Bedrock</td>
+</tr>
+<tr>
+<td><code>inferenceBedrockProfile</code></td>
+<td>Name of the AWS named profile in <code>~/.aws/config</code> that Claude Desktop should use for Bedrock calls. The installer configures this profile with <code>credential_process</code> pointing at the bundled <code>credential-process</code> binary</td>
+</tr>
+<tr>
+<td><code>inferenceBedrockRegion</code></td>
+<td>AWS region for Bedrock API calls (e.g., <code>us-west-2</code>, <code>us-east-1</code>)</td>
+</tr>
+<tr>
+<td><code>inferenceBedrockAwsDir</code></td>
+<td>Path to the directory containing AWS config/credentials files (default: <code>~/.aws</code>)</td>
+</tr>
+<tr>
+<td><code>inferenceModels</code></td>
+<td>JSON array of model entries. Supports simple aliases (<code>["opus", "sonnet", "haiku"]</code>) or object entries with tier tagging (see below). First entry is the default</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note:</strong> The model aliases used by Cowork 3P (<code>opus</code>, <code>sonnet</code>, <code>haiku</code>) are resolved internally by Claude Desktop and may differ from the CRIS model IDs configured for Claude Code via <code>ANTHROPIC_MODEL</code>. The <code>ccwb cowork generate</code> command includes all available aliases by default. Use <code>--models</code> to customize the list for your organization.</p>
+</blockquote>
+<h4 id="model-entries-with-family-tier-v113576">Model Entries with Family Tier (v1.13576+)<a class="headerlink" href="#model-entries-with-family-tier-v113576" title="Permanent link">&para;</a></h4>
+<p>Claude Desktop supports object entries in <code>inferenceModels</code> with <code>anthropicFamilyTier</code> and <code>isFamilyDefault</code> fields. This lets tier shortcuts (like "opus" and "sonnet" in the model picker) resolve to your specific Bedrock model IDs:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">"inferenceModels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="p">{</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"global.anthropic.claude-opus-4-8"</span><span class="p">,</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="nt">"labelOverride"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Claude Opus 4.8"</span><span class="p">,</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="nt">"anthropicFamilyTier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"opus"</span><span class="p">,</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="nt">"isFamilyDefault"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">  </span><span class="p">{</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"global.anthropic.claude-sonnet-4-6"</span><span class="p">,</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="nt">"labelOverride"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Claude Sonnet 4.6"</span><span class="p">,</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="nt">"anthropicFamilyTier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sonnet"</span><span class="p">,</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="nt">"isFamilyDefault"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">  </span><span class="p">{</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"global.anthropic.claude-haiku-4-5-20251001-v1:0"</span><span class="p">,</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">    </span><span class="nt">"labelOverride"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Claude Haiku 4.5"</span><span class="p">,</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">    </span><span class="nt">"anthropicFamilyTier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"haiku"</span><span class="p">,</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">    </span><span class="nt">"isFamilyDefault"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="p">]</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>string</td>
+<td>The model ID your provider routes (e.g., CRIS inference profile ID)</td>
+</tr>
+<tr>
+<td><code>labelOverride</code></td>
+<td>string</td>
+<td>Optional display name in the model picker</td>
+</tr>
+<tr>
+<td><code>anthropicFamilyTier</code></td>
+<td>string</td>
+<td>Which Claude tier this model stands in for: <code>opus</code>, <code>sonnet</code>, <code>haiku</code>, or <code>fable</code></td>
+</tr>
+<tr>
+<td><code>isFamilyDefault</code></td>
+<td>boolean</td>
+<td>Whether this is the default model when the tier shortcut is used</td>
+</tr>
+<tr>
+<td><code>supports1m</code></td>
+<td>boolean</td>
+<td>Whether the model supports 1M token context</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>When to use object format:</strong> Use it when your Bedrock setup uses specific CRIS inference profile IDs (e.g., <code>global.anthropic.claude-opus-4-8</code>) and you want the tier shortcuts in the Claude Desktop model picker to resolve to those exact model IDs. The simple alias format (<code>["opus", "sonnet", "haiku"]</code>) still works and lets Claude Desktop handle resolution internally.</p>
+</blockquote>
+<h3 id="how-credentials-flow">How Credentials Flow<a class="headerlink" href="#how-credentials-flow" title="Permanent link">&para;</a></h3>
+<p>This solution supports two credential modes for Cowork. The <strong>credential helper</strong> mode (default since v2.6.0) is recommended because it gives Claude Desktop direct control over credential lifecycle, eliminating the stale-credential bug that required manual app restarts.</p>
+<h4 id="credential-helper-mode-recommended">Credential Helper Mode (Recommended)<a class="headerlink" href="#credential-helper-mode-recommended" title="Permanent link">&para;</a></h4>
+<p>When Claude Cowork starts a session:</p>
+<ol>
+<li>Claude Desktop reads <code>inferenceCredentialHelper</code> from the MDM policy — this points directly at the credential-process binary</li>
+<li>Claude Desktop runs the binary and reads temporary AWS credentials from stdout</li>
+<li>The output is cached for <code>inferenceCredentialHelperTtlSec</code> seconds (default: 3500, just under the 1h STS token lifetime)</li>
+<li>When the cache expires, Claude Desktop automatically re-runs the helper — <strong>no restart required</strong></li>
+<li>If credentials are rejected mid-session, Claude Desktop re-runs with <code>CLAUDE_HELPER_CONTEXT=mid-session-refresh</code> for seamless recovery (20s timeout)</li>
+<li>Because this mode also sets <code>inferenceBedrockProfile</code> (as an AWS SDK region/metadata fallback, not the active auth path), this solution additionally sets <code>inferenceCredentialKind</code> to <code>helper-script</code> so Claude Desktop doesn't have to pick between the two — without it, Desktop may prefer the profile instead and authentication fails</li>
+</ol>
+<p>The credential-process binary handles the <code>CLAUDE_HELPER_CONTEXT</code> environment variable:
+- <code>interactive</code> → Full browser-based OIDC authentication
+- <code>mid-session-refresh</code> → Silent refresh via cached refresh_token (no browser)
+- <code>background</code> / <code>setup-test</code> → Silent path only, exit non-zero if unavailable</p>
+<p>This mode resolves the known issue where Cowork doesn't automatically refresh AWS credentials after token expiry (affecting both IDC and OIDC/Azure AD federated auth users).</p>
+<p>Ref: <a href="https://claude.com/docs/third-party/claude-desktop/credential-helper">Claude Desktop Credential Helper documentation</a></p>
+<h4 id="aws-profile-mode-legacy">AWS Profile Mode (Legacy)<a class="headerlink" href="#aws-profile-mode-legacy" title="Permanent link">&para;</a></h4>
+<p>The legacy flow uses <code>inferenceBedrockProfile</code> instead:</p>
+<ol>
+<li>Claude Desktop reads <code>inferenceBedrockProfile</code> from the applied MDM policy (registry on Windows, managed preference on macOS)</li>
+<li>It hands that profile name to the AWS SDK, which resolves the corresponding <code>[profile &lt;name&gt;]</code> stanza in <code>~/.aws/config</code></li>
+<li>The stanza's <code>credential_process = .../credential-process --profile &lt;name&gt;</code> entry runs the bundled credential-process binary</li>
+<li>The binary authenticates the user via your OIDC provider (Okta, Azure AD, Auth0, etc.) and returns temporary AWS credentials in the standard AWS <code>credential_process</code> JSON format</li>
+<li>The AWS SDK signs each Bedrock call with those credentials; caching and refresh are handled automatically by the SDK</li>
+</ol>
+<p>To use this mode, set <code>cowork_credential_mode = "profile"</code> in your deployment profile before running <code>ccwb cowork generate</code>.</p>
+<p>No wrapper script is required — Cowork reuses the same <code>credential-process</code> binary and <code>~/.aws/config</code> entry that <code>install.sh</code> / <code>install.bat</code> already configure for Claude Code CLI.</p>
+<blockquote>
+<p>⚠️ <strong>boto3 resolves <code>~/.aws/credentials</code> before <code>~/.aws/config</code>.</strong> If <code>~/.aws/credentials</code> contains a <code>[&lt;profile-name&gt;]</code> block matching <code>inferenceBedrockProfile</code> — whether written by another tool or by this solution in session-storage mode — boto3 uses it directly and does <strong>not</strong> fall through to <code>credential_process</code> to refresh it. Cowork works as long as those static credentials remain valid, then fails with <code>403 The security token included in the request is invalid</code> the moment they expire (or immediately, if the block contains stale <code>EXPIRED</code> placeholders from a past logout). The installer shipped by <code>ccwb package</code> purges any such stanza before writing the new profile, and keyring-mode builds never write to <code>~/.aws/credentials</code> at all — which is why <strong>Keyring is the recommended credential storage method when Cowork 3P is in scope</strong>.</p>
+</blockquote>
+<h2 id="deployment">Deployment<a class="headerlink" href="#deployment" title="Permanent link">&para;</a></h2>
+<h3 id="macos-mdm-configuration-profile">macOS (MDM Configuration Profile)<a class="headerlink" href="#macos-mdm-configuration-profile" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Create the MDM configuration JSON with your settings</li>
+<li>Export as a <code>.mobileconfig</code> file or use Claude Desktop's built-in setup UI:</li>
+<li>Open Claude Desktop → Menu Bar → Help → Troubleshooting → Enable Developer mode</li>
+<li>Developer → Configure third-party inference</li>
+<li>Configure fields and export the <code>.mobileconfig</code></li>
+<li>Deploy via your MDM solution (Jamf, Kandji, Mosyle, etc.)</li>
+</ol>
+<h3 id="windows-registry">Windows (Registry)<a class="headerlink" href="#windows-registry" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Create the MDM configuration JSON with your settings</li>
+<li>Export as a <code>.reg</code> file via the Claude Desktop setup UI, or create registry entries manually</li>
+<li>Deploy via Group Policy, Intune, or your MDM solution</li>
+</ol>
+<h3 id="vdi-environments">VDI Environments<a class="headerlink" href="#vdi-environments" title="Permanent link">&para;</a></h3>
+<p>In VDI deployments, either:
+- Set MDM keys in the golden image so every cloned session inherits them
+- Push keys at runtime through your VDI broker's policy system</p>
+<p>Ensure the <code>credential-process</code> binary is included in the VDI image and that <code>~/.aws/config</code> contains the named profile referenced by <code>inferenceBedrockProfile</code>.</p>
+<h2 id="configuration-reference">Configuration Reference<a class="headerlink" href="#configuration-reference" title="Permanent link">&para;</a></h2>
+<p>The full set of MDM configuration keys is documented in the <a href="https://support.claude.com/en/articles/14680741-install-and-configure-claude-cowork-with-third-party-platforms">official Anthropic guide</a>. Below is a summary of the most relevant categories.</p>
+<h3 id="inference-settings">Inference Settings<a class="headerlink" href="#inference-settings" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>inferenceProvider</code></td>
+<td>string</td>
+<td>Selects inference backend. Set to <code>bedrock</code> for Amazon Bedrock</td>
+</tr>
+<tr>
+<td><code>inferenceBedrockRegion</code></td>
+<td>string</td>
+<td>AWS region for Bedrock</td>
+</tr>
+<tr>
+<td><code>inferenceBedrockAwsDir</code></td>
+<td>string</td>
+<td>Path to AWS config directory (default: <code>~/.aws</code>)</td>
+</tr>
+<tr>
+<td><code>inferenceBedrockBaseUrl</code></td>
+<td>string</td>
+<td>Override Bedrock endpoint (e.g., VPC interface endpoint)</td>
+</tr>
+<tr>
+<td><code>inferenceModels</code></td>
+<td>string</td>
+<td>JSON-encoded array of model aliases (e.g., <code>"[\"opus\", \"sonnet\", \"haiku\"]"</code>)</td>
+</tr>
+<tr>
+<td><code>inferenceBedrockProfile</code></td>
+<td>string</td>
+<td>Named AWS profile (in <code>~/.aws/config</code>) that Claude Desktop uses for Bedrock authentication</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note:</strong> Array-typed MDM keys (such as <code>inferenceModels</code>, <code>managedMcpServers</code>, <code>allowedWorkspaceFolders</code>) are delivered as <strong>JSON-encoded strings</strong> — the value is a string containing a JSON array, not a native array. For example, <code>inferenceModels</code> is set to <code>"[\"opus\", \"sonnet\"]"</code>, not <code>["opus", "sonnet"]</code>. The Claude Desktop Setup UI and the <code>.mobileconfig</code>/<code>.reg</code> export handle this encoding automatically.</p>
+</blockquote>
+<h3 id="deployment-and-updates">Deployment and Updates<a class="headerlink" href="#deployment-and-updates" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>deploymentOrganizationUuid</code></td>
+<td>string</td>
+<td>Stable UUID identifying this deployment</td>
+</tr>
+<tr>
+<td><code>disableDeploymentModeChooser</code></td>
+<td>boolean</td>
+<td>Hide the deployment mode chooser UI</td>
+</tr>
+<tr>
+<td><code>disableAutoUpdates</code></td>
+<td>boolean</td>
+<td>Block automatic update checks and downloads</td>
+</tr>
+<tr>
+<td><code>autoUpdaterEnforcementHours</code></td>
+<td>integer</td>
+<td>Force pending update after this many hours</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mcp-plugins-and-tools">MCP, Plugins, and Tools<a class="headerlink" href="#mcp-plugins-and-tools" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>isClaudeCodeForDesktopEnabled</code></td>
+<td>boolean</td>
+<td>Show the Code tab (terminal coding sessions)</td>
+</tr>
+<tr>
+<td><code>isDesktopExtensionEnabled</code></td>
+<td>boolean</td>
+<td>Permit local desktop extension installation</td>
+</tr>
+<tr>
+<td><code>isDesktopExtensionDirectoryEnabled</code></td>
+<td>boolean</td>
+<td>Show the Anthropic extension directory</td>
+</tr>
+<tr>
+<td><code>isDesktopExtensionSignatureRequired</code></td>
+<td>boolean</td>
+<td>Require signed desktop extensions</td>
+</tr>
+<tr>
+<td><code>isLocalDevMcpEnabled</code></td>
+<td>boolean</td>
+<td>Permit user-added local MCP servers</td>
+</tr>
+<tr>
+<td><code>managedMcpServers</code></td>
+<td>string</td>
+<td>JSON array of managed MCP server configs</td>
+</tr>
+<tr>
+<td><code>disabledBuiltinTools</code></td>
+<td>string</td>
+<td>JSON array of tool names to disable</td>
+</tr>
+</tbody>
+</table>
+<h3 id="telemetry">Telemetry<a class="headerlink" href="#telemetry" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>disableEssentialTelemetry</code></td>
+<td>boolean</td>
+<td>Block crash/error reports and performance data</td>
+</tr>
+<tr>
+<td><code>disableNonessentialTelemetry</code></td>
+<td>boolean</td>
+<td>Block product usage analytics</td>
+</tr>
+<tr>
+<td><code>disableNonessentialServices</code></td>
+<td>boolean</td>
+<td>Block connector favicons and artifact preview</td>
+</tr>
+<tr>
+<td><code>otlpEndpoint</code></td>
+<td>string</td>
+<td>OTLP collector URL for observability export</td>
+</tr>
+<tr>
+<td><code>otlpProtocol</code></td>
+<td>string</td>
+<td>OTLP protocol (<code>http/protobuf</code>, <code>http/json</code>, or <code>grpc</code>)</td>
+</tr>
+<tr>
+<td><code>otlpHeaders</code></td>
+<td>string</td>
+<td>Headers for OTLP requests</td>
+</tr>
+</tbody>
+</table>
+<h3 id="workspace-and-usage-caps">Workspace and Usage Caps<a class="headerlink" href="#workspace-and-usage-caps" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>allowedWorkspaceFolders</code></td>
+<td>string</td>
+<td>JSON array of allowed workspace folder paths</td>
+</tr>
+<tr>
+<td><code>inferenceMaxTokensPerWindow</code></td>
+<td>integer</td>
+<td>Token cap per tumbling window</td>
+</tr>
+<tr>
+<td><code>inferenceTokenWindowHours</code></td>
+<td>integer</td>
+<td>Tumbling window length in hours (max 720)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="custom-mdm-keys">Custom MDM Keys<a class="headerlink" href="#custom-mdm-keys" title="Permanent link">&para;</a></h2>
+<p>Administrators often need to set additional MDM keys beyond the defaults generated by <code>ccwb cowork generate</code>. Common examples include:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>coworkEgressAllowedHosts</code></td>
+<td>Allow Claude Desktop to access external hosts (required for Web Fetch)</td>
+</tr>
+<tr>
+<td><code>coworkWebSearchEnabled</code></td>
+<td>Enable web search capability</td>
+</tr>
+<tr>
+<td><code>managedMcpServers</code></td>
+<td>Deploy managed MCP servers (e.g., Brave Search for web search on Bedrock)</td>
+</tr>
+<tr>
+<td><code>disabledBuiltinTools</code></td>
+<td>Lock down specific tools</td>
+</tr>
+<tr>
+<td><code>allowedWorkspaceFolders</code></td>
+<td>Restrict workspace access to approved directories</td>
+</tr>
+</tbody>
+</table>
+<h3 id="enabling-via-ccwb-init">Enabling via <code>ccwb init</code><a class="headerlink" href="#enabling-via-ccwb-init" title="Permanent link">&para;</a></h3>
+<p>The interactive <code>ccwb init</code> wizard asks whether to generate the MDM configuration during packaging:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Claude Desktop Support
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Generate MDM configuration for Claude Desktop with Amazon Bedrock
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Enable Claude Desktop support? Yes
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>✓ Claude Desktop MDM config will be generated during packaging
+</code></pre></div>
+<p>The wizard preserves any custom MDM keys already configured; to add or change them, edit the profile JSON directly as described below.</p>
+<h3 id="configuring-via-profile-json">Configuring via profile JSON<a class="headerlink" href="#configuring-via-profile-json" title="Permanent link">&para;</a></h3>
+<p>You can also edit the profile JSON directly at <code>~/.ccwb/profiles/&lt;name&gt;.json</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">"cowork_3p_enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">"cowork_3p_extra_keys"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="nt">"coworkEgressAllowedHosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[\"*\"]"</span><span class="p">,</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="nt">"coworkWebSearchEnabled"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="nt">"managedMcpServers"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[{\"name\":\"brave-search\",\"command\":\"npx\",\"args\":[\"-y\",\"@anthropic-ai/mcp-server-brave-search\"]}]"</span><span class="p">,</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="nt">"allowedWorkspaceFolders"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[\"/Users\",\"/home\"]"</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="p">}</span>
+</code></pre></div>
+<p>Custom keys are merged into the generated MDM configuration after the base keys and monitoring configuration, so they can override defaults if needed.</p>
+<blockquote>
+<p><strong>Note:</strong> Values should be strings, including for booleans (<code>"true"</code>) and arrays (<code>"[\"item1\"]"</code>). This matches how MDM systems deliver configuration — all values are stored as strings in the OS preference store.</p>
+</blockquote>
+<h2 id="web-search-via-agentcore-gateway">Web search via AgentCore Gateway<a class="headerlink" href="#web-search-via-agentcore-gateway" title="Permanent link">&para;</a></h2>
+<p>In addition to a self-managed MCP server (such as the <code>brave-search</code> example above, which runs locally via <code>npx</code> and a third-party API), the solution can provision a <strong>fully managed, AWS-native web search</strong> through an <strong>Amazon Bedrock AgentCore Gateway</strong> with the managed Web Search connector. Queries are served by Amazon's web index and <strong>never leave AWS</strong> — no third-party search API or outbound search credentials are involved.</p>
+<p>When enabled, <code>ccwb package</code> (and <code>ccwb cowork generate</code>) automatically inject a <code>managedMcpServers</code> entry named <strong><code>agentcore-websearch</code></strong> into the generated MDM config — you do <strong>not</strong> add it by hand.</p>
+<h3 id="enabling-it">Enabling it<a class="headerlink" href="#enabling-it" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong><code>ccwb init</code></strong> — answer <em>yes</em> to the web search question (web search is opt-in, default off).</li>
+<li><strong><code>ccwb deploy websearch</code></strong> — deploys the AgentCore Gateway + Web Search connector, reusing your existing identity provider for inbound authorization. The gateway endpoint is saved to your profile.</li>
+<li><strong><code>ccwb package</code></strong> (or <code>ccwb cowork generate</code>) — injects the <code>agentcore-websearch</code> MCP server into the <code>.json</code> / <code>.mobileconfig</code> / <code>.reg</code> outputs, and <code>install.sh</code> drops a small <code>websearch-headers</code> helper next to <code>credential-process</code>.</li>
+</ol>
+<p>The generated entry is a <strong>remote MCP server</strong> pointing at your gateway, authenticated with a <code>headersHelper</code> script. It is emitted as a JSON-encoded string, like all array/object MDM values:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agentcore-websearch"</span><span class="p">,</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://&lt;gateway-id&gt;.gateway.bedrock-agentcore.us-east-1.amazonaws.com/mcp"</span><span class="p">,</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="nt">"headersHelper"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/Users/&lt;you&gt;/claude-code-with-bedrock/websearch-headers"</span><span class="p">,</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span><span class="nt">"headersHelperTtlSec"</span><span class="p">:</span><span class="w"> </span><span class="mi">900</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="p">}</span>
+</code></pre></div>
+<p>Claude Desktop treats this as a generic remote MCP server and speaks standard MCP JSON-RPC, which the AgentCore Gateway understands. (The built-in <code>server: "websearch"</code> / <code>provider: "custom"</code> connector is <strong>not</strong> used: it sends a request body the gateway cannot parse, which surfaces in Cowork as "No results" even though authentication succeeds.)</p>
+<h3 id="how-authentication-works">How authentication works<a class="headerlink" href="#how-authentication-works" title="Permanent link">&para;</a></h3>
+<p>The <code>headersHelper</code> is a tiny executable that <code>ccwb package</code> installs next to <code>credential-process</code> (<code>&lt;home&gt;/claude-code-with-bedrock/websearch-headers</code>). On each MCP request — and again every <code>headersHelperTtlSec</code> (900s) — Claude Desktop runs it and attaches whatever headers it prints. The helper execs <code>credential-process --get-mcp-auth-header</code> (the browserless, Go/Python-parity MCP-header mode) which emits:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span><span class="nt">"Authorization"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bearer &lt;id_token&gt;"</span><span class="p">}</span>
+</code></pre></div>
+<p>That mode reads the cached id_token and silently refreshes it via the stored refresh token when expired; it <strong>never</strong> opens a browser (a headersHelper cannot drive an interactive login). The gateway's <code>CUSTOM_JWT</code> authorizer validates that id_token. An OIDC <strong>id_token</strong> carries <code>aud = clientId</code> for every provider, so the gateway is deployed with <strong><code>AllowedAudience = [clientId]</code></strong> (the template default) — there is no provider-specific authorizer to configure. The TTL is kept below the token lifetime (Cognito ~1h) so an expiring bearer is refreshed before it lapses.</p>
+<blockquote>
+<p><strong>Absolute paths (important).</strong> Claude Desktop on macOS does <strong>not</strong> expand <code>~</code> (or env vars) in MDM string values, so the <code>headersHelper</code>/<code>inferenceCredentialHelper</code> paths must be absolute. Because the <code>.mobileconfig</code> is generated centrally, the macOS paths embed a <code>__CCWB_HOME__</code> placeholder and <code>install.sh</code> substitutes it with the user's real <code>$HOME</code> at install time — one artifact distributes centrally, each machine gets a correct absolute path. Windows uses the native <code>%USERPROFILE%</code>. To pin a fixed path yourself, set <code>websearch_headers_helper_path</code> on the profile (applied verbatim to every format).</p>
+<p><strong>Web Fetch.</strong> Web search returns titles, URLs, and snippets; opening those result pages needs sandbox egress, which Cowork blocks by default. When web search is enabled, <code>ccwb</code> sets <code>coworkEgressAllowedHosts=["*"]</code> automatically (with a warning) so results are usable out of the box. <code>["*"]</code> allows egress to <strong>all</strong> hosts — <strong>narrow it to a targeted domain list for production</strong> by setting <code>coworkEgressAllowedHosts</code> yourself (e.g. via <code>cowork_3p_extra_keys</code>); an admin-provided value is never overwritten.</p>
+</blockquote>
+<h3 id="things-to-know">Things to know<a class="headerlink" href="#things-to-know" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Region:</strong> the managed Web Search connector is currently available in <strong><code>us-east-1</code> only</strong>, so the gateway is deployed there regardless of your other stacks' region.</li>
+<li><strong>Data residency:</strong> web search queries (or fragments of user prompts) are processed in <code>us-east-1</code>. Review compliance impact for regulated workloads before enabling.</li>
+<li><strong>Cost:</strong> approximately <strong>$7 per 1,000 queries</strong>, billed to your AWS account.</li>
+<li><strong>Identity providers:</strong> works with the solution's OIDC providers (Amazon Cognito, Microsoft Entra ID, Okta, Auth0, Google, generic OIDC). Because the bearer is an id_token (<code>aud = clientId</code>) validated by <code>AllowedAudience</code>, <strong>no provider-specific setup is required</strong>. See <a href="../providers/microsoft-entra-id-setup/#10-web-search-for-claude-cowork-entra-id-notes">Microsoft Entra ID setup → web search</a> for notes.</li>
+</ul>
+<blockquote>
+<p><strong>Claude Code &amp; joint documentation.</strong> The equivalent web search capability for the <strong>Claude Code CLI</strong> (injected into <code>settings.json</code> via the credential helper) is delivered by a separate contribution and is <strong>not</strong> documented here yet. The gateway itself, its template parameters, and the Claude Desktop setup flow are documented in <a href="../WEB_SEARCH/">WEB_SEARCH.md</a>.</p>
+</blockquote>
+<h2 id="verification">Verification<a class="headerlink" href="#verification" title="Permanent link">&para;</a></h2>
+<p>After deploying the MDM profile:</p>
+<ol>
+<li>Launch Claude Desktop on a test machine</li>
+<li>Verify you see the third-party platform mode indicator (no login prompt for claude.ai)</li>
+<li>Start a conversation — Claude should respond using Bedrock inference</li>
+<li>Check that the credential helper authenticates correctly (user may see an SSO browser prompt on first use)</li>
+</ol>
+<p>If users see an error at launch, verify:
+- The <code>inferenceProvider</code> key is set to <code>bedrock</code>
+- The <code>inferenceBedrockProfile</code> value matches a profile defined in the user's <code>~/.aws/config</code>
+- That profile's <code>credential_process</code> line points at the installed <code>credential-process</code> binary and includes <code>--profile &lt;name&gt;</code>
+- The <code>credential-process</code> binary exists at <code>~/claude-code-with-bedrock/</code> (or <code>%USERPROFILE%\claude-code-with-bedrock\</code> on Windows) and is executable
+- The user has completed at least one authentication via <code>credential-process</code> (to establish the initial SSO session)</p>
+<h2 id="monitoring">Monitoring<a class="headerlink" href="#monitoring" title="Permanent link">&para;</a></h2>
+<p>When a monitoring stack is deployed, <code>ccwb cowork generate</code> automatically includes the <code>otlpEndpoint</code> in the generated MDM config, pointing Claude Cowork at the same OpenTelemetry collector used by Claude Code. No manual configuration is required.</p>
+<p>Claude Cowork sends the following OTLP metrics to the collector:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>claude_code.token.usage</code></td>
+<td>Token counts by type (<code>input</code>, <code>output</code>, <code>cacheRead</code>, <code>cacheCreation</code>)</td>
+</tr>
+<tr>
+<td><code>claude_code.cost.usage</code></td>
+<td>Estimated cost in USD (client-side approximation)</td>
+</tr>
+<tr>
+<td><code>claude_code.session.count</code></td>
+<td>Number of active sessions</td>
+</tr>
+</tbody>
+</table>
+<p>These are displayed in the <strong>Claude Cowork Dashboard</strong> in CloudWatch, which shows aggregate token usage, cost, sessions, model breakdown, and platform distribution.</p>
+<h3 id="per-device-identity">Per-device identity<a class="headerlink" href="#per-device-identity" title="Permanent link">&para;</a></h3>
+<p>Every Cowork 3P OTEL event includes a <code>user.id</code> attribute — an anonymous device/installation UUID generated by Claude Desktop. This identifies each device uniquely and can be used for:</p>
+<ul>
+<li>Per-device cost attribution and chargeback</li>
+<li>Identifying high-usage devices</li>
+<li>Correlating Cowork usage with Claude Code quota data</li>
+</ul>
+<blockquote>
+<p><strong>Note:</strong> <code>user.id</code> is a device identifier, not a human identity. To map devices to users, maintain a device enrollment registry (e.g., populated during <code>ccwb package</code> distribution or MDM enrollment).</p>
+<p><strong>Note:</strong> <code>user.email</code>, <code>user.account_uuid</code>, and <code>organization.id</code> are only available in Claude.ai-managed Cowork deployments (not 3P).  </p>
+</blockquote>
+<p>Per-device dashboard dimensions are planned — see <a href="https://github.com/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock/issues/585">#585</a>. Both central and sidecar monitoring modes are supported for Cowork telemetry.</p>
+<p><img alt="Claude Cowork Dashboard" src="../../assets/images/ClaudeCoworkDashboard.png" /></p>
+<h2 id="quota-enforcement">Quota Enforcement<a class="headerlink" href="#quota-enforcement" title="Permanent link">&para;</a></h2>
+<p>Cowork 3P usage is subject to the same per-user quota enforcement as Claude Code. Here's how it works:</p>
+<h3 id="how-enforcement-applies">How enforcement applies<a class="headerlink" href="#how-enforcement-applies" title="Permanent link">&para;</a></h3>
+<p>Cowork uses <code>credential-process</code> for credential refresh (via the <code>inferenceBedrockProfile</code> AWS named profile). The credential-process binary checks the quota API on every refresh cycle:</p>
+<ol>
+<li>Cowork's AWS session token expires (~1 hour)</li>
+<li>AWS SDK calls <code>credential-process --profile &lt;name&gt;</code> for fresh credentials</li>
+<li><code>credential-process</code> calls the quota-check API (<code>GET /check</code>)</li>
+<li>If the user is over quota → credentials are denied → Cowork loses Bedrock access</li>
+<li>If under quota → fresh credentials issued → Cowork continues</li>
+</ol>
+<p><strong>Enforcement granularity:</strong> Per credential refresh (~1 hour). A user can exceed their quota within a session but will be blocked on the next refresh.</p>
+<h3 id="how-cowork-usage-is-counted">How Cowork usage is counted<a class="headerlink" href="#how-cowork-usage-is-counted" title="Permanent link">&para;</a></h3>
+<p>Cowork sends OTLP <strong>log events</strong> (not metrics) to the collector. The monitoring pipeline processes them:</p>
+<ol>
+<li>Cowork sends <code>claude_code.api_request</code> log events to the OTEL collector</li>
+<li>Collector injects <code>user_email</code> from HTTP attribution headers</li>
+<li>Events are written to <code>/aws/claude-cowork/events</code> CloudWatch Logs</li>
+<li>MetricFilters extract per-user token counts into the Cowork CloudWatch metric namespace (with <code>user_email</code> dimension)</li>
+<li><code>quota_monitor</code> Lambda queries both the Claude Code and Cowork metric namespaces</li>
+<li>Combined usage is aggregated into a single DynamoDB record per user</li>
+</ol>
+<p><strong>Result:</strong> A user's total quota includes both Claude Code CLI and Cowork Desktop usage.</p>
+<h3 id="requirements-for-per-user-cowork-quota">Requirements for per-user Cowork quota<a class="headerlink" href="#requirements-for-per-user-cowork-quota" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Monitoring stack deployed (central mode with custom domain + HTTPS, or sidecar mode with local proxy)</li>
+<li>Cowork service token configured (<code>ccwb init</code> generates it)</li>
+<li>Attribution headers flowing (credential-process provides <code>x-user-email</code>)</li>
+<li>Cowork dashboard stack deployed (<code>ccwb deploy cowork-dashboard</code>)</li>
+</ul>
+<h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>No inline blocking:</strong> Cowork calls Bedrock directly via AWS credentials. There is no per-request interception — enforcement happens at credential refresh boundaries only.</li>
+<li><strong>Attribution required:</strong> If <code>x-user-email</code> header is not configured, Cowork usage is aggregate-only and cannot be attributed to individual users for quota purposes.</li>
+<li><strong>Cowork-native <code>user.id</code>:</strong> The opaque hash in raw Cowork events cannot be mapped back to an email without a separate device registry.</li>
+</ul>
+<h2 id="additional-resources">Additional Resources<a class="headerlink" href="#additional-resources" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://aws.amazon.com/blogs/machine-learning/from-developer-desks-to-the-whole-organization-running-claude-cowork-in-amazon-bedrock/">AWS Blog: From Developer Desks to the Whole Organization — Running Claude Cowork in Amazon Bedrock</a></li>
+<li><a href="https://support.claude.com/en/articles/14680741-install-and-configure-claude-cowork-with-third-party-platforms">Official Anthropic Guide: Install and Configure Claude Cowork with Third-Party Platforms</a></li>
+<li><a href="https://claude.com/docs/cowork/3p/configuration">Claude Cowork 3P Configuration Reference</a></li>
+<li><a href="https://claude.com/docs/cowork/3p/feature-matrix">Claude Cowork 3P Feature Matrix</a></li>
+<li><a href="https://support.claude.com/en/articles/14680729-use-claude-cowork-with-third-party-platforms">Claude Cowork with Third-Party Platforms Overview</a></li>
+<li><a href="https://support.claude.com/en/articles/14680753-extend-claude-cowork-with-third-party-platforms">Extend Claude Cowork with Third-Party Platforms</a></li>
+<li><a href="../../QUICK_START.md">Quick Start Guide</a> — Deploy the authentication infrastructure</li>
+<li><a href="../MONITORING/">Monitoring Guide</a> — OpenTelemetry monitoring setup</li>
+</ul>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="August 23, 2026 14:42:58 UTC"><span class="timeago" datetime="2026-08-23T14:42:58+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 23, 2026 14:42:58 UTC">2026-08-23</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="April 21, 2026 22:53:25 UTC"><span class="timeago" datetime="2026-04-21T22:53:25+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="April 21, 2026 22:53:25 UTC">2026-04-21</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <nav class="md-footer__inner md-grid" aria-label="Footer" style="background: transparent;">
+    
+    <a href="../LOCAL_TESTING/" class="md-footer__link md-footer__link--prev" style="color: #141413;">
+      <div class="md-footer__title">
+        <span class="md-footer__direction">Previous</span>
+        Local Testing
+      </div>
+    </a>
+    
+    
+    <a href="../PLUGINS/" class="md-footer__link md-footer__link--next" style="color: #141413;">
+      <div class="md-footer__title">
+        <span class="md-footer__direction">Next</span>
+        Plugins
+      </div>
+    </a>
+    
+  </nav>
+  
+  <div class="md-footer-meta md-typeset" style="background-color: transparent;">
+    <div class="md-footer-meta__inner md-grid" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; padding: 2.5rem 0 2rem;">
+      <img src="../assets/images/aws-logo.svg" alt="AWS" style="height: 18px; width: auto; opacity: 0.4;">
+      <span style="color: #141413; opacity: 0.35; font-size: 0.65rem;">Claude Code with Amazon Bedrock</span>
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit", "toc.follow", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../js/timeago.min.js"></script>
+      
+        <script src="../js/timeago_mkdocs_material.js"></script>
+      
+    
+  </body>
+</html>

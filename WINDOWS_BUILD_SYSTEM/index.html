@@ -1,0 +1,3007 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Enterprise deployment guide for Claude Code on Amazon Bedrock">
+      
+      
+      
+        <link rel="canonical" href="https://cdharma.github.io/claude-with-bedrock/WINDOWS_BUILD_SYSTEM/">
+      
+      
+        <link rel="prev" href="../ARCHITECTURE/">
+      
+      
+        <link rel="next" href="../distribution/comparison/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Windows Build System - Guidance for Claude Code and Cowork on Amazon Bedrock</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../css/timeago.css">
+    
+      <link rel="stylesheet" href="../stylesheets/custom.css?v=11">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#windows-build-system-documentation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Guidance for Claude Code and Cowork on Amazon Bedrock" class="md-header__button md-logo" aria-label="Guidance for Claude Code and Cowork on Amazon Bedrock" data-md-component="logo">
+      
+  
+  <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 304 182" style="enable-background:new 0 0 304 182;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#141413;}
+	.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#141413;}
+</style>
+<g>
+	<path class="st0" d="M86.4,66.4c0,3.7,0.4,6.7,1.1,8.9c0.8,2.2,1.8,4.6,3.2,7.2c0.5,0.8,0.7,1.6,0.7,2.3c0,1-0.6,2-1.9,3l-6.3,4.2
+		c-0.9,0.6-1.8,0.9-2.6,0.9c-1,0-2-0.5-3-1.4C76.2,90,75,88.4,74,86.8c-1-1.7-2-3.6-3.1-5.9c-7.8,9.2-17.6,13.8-29.4,13.8
+		c-8.4,0-15.1-2.4-20-7.2c-4.9-4.8-7.4-11.2-7.4-19.2c0-8.5,3-15.4,9.1-20.6c6.1-5.2,14.2-7.8,24.5-7.8c3.4,0,6.9,0.3,10.6,0.8
+		c3.7,0.5,7.5,1.3,11.5,2.2v-7.3c0-7.6-1.6-12.9-4.7-16c-3.2-3.1-8.6-4.6-16.3-4.6c-3.5,0-7.1,0.4-10.8,1.3c-3.7,0.9-7.3,2-10.8,3.4
+		c-1.6,0.7-2.8,1.1-3.5,1.3c-0.7,0.2-1.2,0.3-1.6,0.3c-1.4,0-2.1-1-2.1-3.1v-4.9c0-1.6,0.2-2.8,0.7-3.5c0.5-0.7,1.4-1.4,2.8-2.1
+		c3.5-1.8,7.7-3.3,12.6-4.5c4.9-1.3,10.1-1.9,15.6-1.9c11.9,0,20.6,2.7,26.2,8.1c5.5,5.4,8.3,13.6,8.3,24.6V66.4z M45.8,81.6
+		c3.3,0,6.7-0.6,10.3-1.8c3.6-1.2,6.8-3.4,9.5-6.4c1.6-1.9,2.8-4,3.4-6.4c0.6-2.4,1-5.3,1-8.7v-4.2c-2.9-0.7-6-1.3-9.2-1.7
+		c-3.2-0.4-6.3-0.6-9.4-0.6c-6.7,0-11.6,1.3-14.9,4c-3.3,2.7-4.9,6.5-4.9,11.5c0,4.7,1.2,8.2,3.7,10.6
+		C37.7,80.4,41.2,81.6,45.8,81.6z M126.1,92.4c-1.8,0-3-0.3-3.8-1c-0.8-0.6-1.5-2-2.1-3.9L96.7,10.2c-0.6-2-0.9-3.3-0.9-4
+		c0-1.6,0.8-2.5,2.4-2.5h9.8c1.9,0,3.2,0.3,3.9,1c0.8,0.6,1.4,2,2,3.9l16.8,66.2l15.6-66.2c0.5-2,1.1-3.3,1.9-3.9c0.8-0.6,2.2-1,4-1
+		h8c1.9,0,3.2,0.3,4,1c0.8,0.6,1.5,2,1.9,3.9l15.8,67l17.3-67c0.6-2,1.3-3.3,2-3.9c0.8-0.6,2.1-1,3.9-1h9.3c1.6,0,2.5,0.8,2.5,2.5
+		c0,0.5-0.1,1-0.2,1.6c-0.1,0.6-0.3,1.4-0.7,2.5l-24.1,77.3c-0.6,2-1.3,3.3-2.1,3.9c-0.8,0.6-2.1,1-3.8,1h-8.6c-1.9,0-3.2-0.3-4-1
+		c-0.8-0.7-1.5-2-1.9-4L156,23l-15.4,64.4c-0.5,2-1.1,3.3-1.9,4c-0.8,0.7-2.2,1-4,1H126.1z M254.6,95.1c-5.2,0-10.4-0.6-15.4-1.8
+		c-5-1.2-8.9-2.5-11.5-4c-1.6-0.9-2.7-1.9-3.1-2.8c-0.4-0.9-0.6-1.9-0.6-2.8v-5.1c0-2.1,0.8-3.1,2.3-3.1c0.6,0,1.2,0.1,1.8,0.3
+		c0.6,0.2,1.5,0.6,2.5,1c3.4,1.5,7.1,2.7,11,3.5c4,0.8,7.9,1.2,11.9,1.2c6.3,0,11.2-1.1,14.6-3.3c3.4-2.2,5.2-5.4,5.2-9.5
+		c0-2.8-0.9-5.1-2.7-7c-1.8-1.9-5.2-3.6-10.1-5.2L246,52c-7.3-2.3-12.7-5.7-16-10.2c-3.3-4.4-5-9.3-5-14.5c0-4.2,0.9-7.9,2.7-11.1
+		c1.8-3.2,4.2-6,7.2-8.2c3-2.3,6.4-4,10.4-5.2c4-1.2,8.2-1.7,12.6-1.7c2.2,0,4.5,0.1,6.7,0.4c2.3,0.3,4.4,0.7,6.5,1.1
+		c2,0.5,3.9,1,5.7,1.6c1.8,0.6,3.2,1.2,4.2,1.8c1.4,0.8,2.4,1.6,3,2.5c0.6,0.8,0.9,1.9,0.9,3.3v4.7c0,2.1-0.8,3.2-2.3,3.2
+		c-0.8,0-2.1-0.4-3.8-1.2c-5.7-2.6-12.1-3.9-19.2-3.9c-5.7,0-10.2,0.9-13.3,2.8c-3.1,1.9-4.7,4.8-4.7,8.9c0,2.8,1,5.2,3,7.1
+		c2,1.9,5.7,3.8,11,5.5l14.2,4.5c7.2,2.3,12.4,5.5,15.5,9.6c3.1,4.1,4.6,8.8,4.6,14c0,4.3-0.9,8.2-2.6,11.6
+		c-1.8,3.4-4.2,6.4-7.3,8.8c-3.1,2.5-6.8,4.3-11.1,5.6C264.4,94.4,259.7,95.1,254.6,95.1z"/>
+	<g>
+		<path class="st1" d="M273.5,143.7c-32.9,24.3-80.7,37.2-121.8,37.2c-57.6,0-109.5-21.3-148.7-56.7c-3.1-2.8-0.3-6.6,3.4-4.4
+			c42.4,24.6,94.7,39.5,148.8,39.5c36.5,0,76.6-7.6,113.5-23.2C274.2,133.6,278.9,139.7,273.5,143.7z"/>
+		<path class="st1" d="M287.2,128.1c-4.2-5.4-27.8-2.6-38.5-1.3c-3.2,0.4-3.7-2.4-0.8-4.5c18.8-13.2,49.7-9.4,53.3-5
+			c3.6,4.5-1,35.4-18.6,50.2c-2.7,2.3-5.3,1.1-4.1-1.9C282.5,155.7,291.4,133.4,287.2,128.1z"/>
+	</g>
+</g>
+</svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Guidance for Claude Code and Cowork on Amazon Bedrock
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Windows Build System
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cdharma/claude-with-bedrock" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cdharma/claude-with-bedrock
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../QUICK_START/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../providers/okta-setup/" class="md-tabs__link">
+          
+  
+  
+  Authentication
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../DEPLOYMENT/" class="md-tabs__link">
+          
+  
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../distribution/comparison/" class="md-tabs__link">
+          
+  
+  
+  Distribution
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../MONITORING/" class="md-tabs__link">
+          
+  
+  
+  Operations
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../CLI_REFERENCE/" class="md-tabs__link">
+          
+  
+  
+  Usage
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Guidance for Claude Code and Cowork on Amazon Bedrock" class="md-nav__button md-logo" aria-label="Guidance for Claude Code and Cowork on Amazon Bedrock" data-md-component="logo">
+      
+  
+  <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 304 182" style="enable-background:new 0 0 304 182;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#141413;}
+	.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#141413;}
+</style>
+<g>
+	<path class="st0" d="M86.4,66.4c0,3.7,0.4,6.7,1.1,8.9c0.8,2.2,1.8,4.6,3.2,7.2c0.5,0.8,0.7,1.6,0.7,2.3c0,1-0.6,2-1.9,3l-6.3,4.2
+		c-0.9,0.6-1.8,0.9-2.6,0.9c-1,0-2-0.5-3-1.4C76.2,90,75,88.4,74,86.8c-1-1.7-2-3.6-3.1-5.9c-7.8,9.2-17.6,13.8-29.4,13.8
+		c-8.4,0-15.1-2.4-20-7.2c-4.9-4.8-7.4-11.2-7.4-19.2c0-8.5,3-15.4,9.1-20.6c6.1-5.2,14.2-7.8,24.5-7.8c3.4,0,6.9,0.3,10.6,0.8
+		c3.7,0.5,7.5,1.3,11.5,2.2v-7.3c0-7.6-1.6-12.9-4.7-16c-3.2-3.1-8.6-4.6-16.3-4.6c-3.5,0-7.1,0.4-10.8,1.3c-3.7,0.9-7.3,2-10.8,3.4
+		c-1.6,0.7-2.8,1.1-3.5,1.3c-0.7,0.2-1.2,0.3-1.6,0.3c-1.4,0-2.1-1-2.1-3.1v-4.9c0-1.6,0.2-2.8,0.7-3.5c0.5-0.7,1.4-1.4,2.8-2.1
+		c3.5-1.8,7.7-3.3,12.6-4.5c4.9-1.3,10.1-1.9,15.6-1.9c11.9,0,20.6,2.7,26.2,8.1c5.5,5.4,8.3,13.6,8.3,24.6V66.4z M45.8,81.6
+		c3.3,0,6.7-0.6,10.3-1.8c3.6-1.2,6.8-3.4,9.5-6.4c1.6-1.9,2.8-4,3.4-6.4c0.6-2.4,1-5.3,1-8.7v-4.2c-2.9-0.7-6-1.3-9.2-1.7
+		c-3.2-0.4-6.3-0.6-9.4-0.6c-6.7,0-11.6,1.3-14.9,4c-3.3,2.7-4.9,6.5-4.9,11.5c0,4.7,1.2,8.2,3.7,10.6
+		C37.7,80.4,41.2,81.6,45.8,81.6z M126.1,92.4c-1.8,0-3-0.3-3.8-1c-0.8-0.6-1.5-2-2.1-3.9L96.7,10.2c-0.6-2-0.9-3.3-0.9-4
+		c0-1.6,0.8-2.5,2.4-2.5h9.8c1.9,0,3.2,0.3,3.9,1c0.8,0.6,1.4,2,2,3.9l16.8,66.2l15.6-66.2c0.5-2,1.1-3.3,1.9-3.9c0.8-0.6,2.2-1,4-1
+		h8c1.9,0,3.2,0.3,4,1c0.8,0.6,1.5,2,1.9,3.9l15.8,67l17.3-67c0.6-2,1.3-3.3,2-3.9c0.8-0.6,2.1-1,3.9-1h9.3c1.6,0,2.5,0.8,2.5,2.5
+		c0,0.5-0.1,1-0.2,1.6c-0.1,0.6-0.3,1.4-0.7,2.5l-24.1,77.3c-0.6,2-1.3,3.3-2.1,3.9c-0.8,0.6-2.1,1-3.8,1h-8.6c-1.9,0-3.2-0.3-4-1
+		c-0.8-0.7-1.5-2-1.9-4L156,23l-15.4,64.4c-0.5,2-1.1,3.3-1.9,4c-0.8,0.7-2.2,1-4,1H126.1z M254.6,95.1c-5.2,0-10.4-0.6-15.4-1.8
+		c-5-1.2-8.9-2.5-11.5-4c-1.6-0.9-2.7-1.9-3.1-2.8c-0.4-0.9-0.6-1.9-0.6-2.8v-5.1c0-2.1,0.8-3.1,2.3-3.1c0.6,0,1.2,0.1,1.8,0.3
+		c0.6,0.2,1.5,0.6,2.5,1c3.4,1.5,7.1,2.7,11,3.5c4,0.8,7.9,1.2,11.9,1.2c6.3,0,11.2-1.1,14.6-3.3c3.4-2.2,5.2-5.4,5.2-9.5
+		c0-2.8-0.9-5.1-2.7-7c-1.8-1.9-5.2-3.6-10.1-5.2L246,52c-7.3-2.3-12.7-5.7-16-10.2c-3.3-4.4-5-9.3-5-14.5c0-4.2,0.9-7.9,2.7-11.1
+		c1.8-3.2,4.2-6,7.2-8.2c3-2.3,6.4-4,10.4-5.2c4-1.2,8.2-1.7,12.6-1.7c2.2,0,4.5,0.1,6.7,0.4c2.3,0.3,4.4,0.7,6.5,1.1
+		c2,0.5,3.9,1,5.7,1.6c1.8,0.6,3.2,1.2,4.2,1.8c1.4,0.8,2.4,1.6,3,2.5c0.6,0.8,0.9,1.9,0.9,3.3v4.7c0,2.1-0.8,3.2-2.3,3.2
+		c-0.8,0-2.1-0.4-3.8-1.2c-5.7-2.6-12.1-3.9-19.2-3.9c-5.7,0-10.2,0.9-13.3,2.8c-3.1,1.9-4.7,4.8-4.7,8.9c0,2.8,1,5.2,3,7.1
+		c2,1.9,5.7,3.8,11,5.5l14.2,4.5c7.2,2.3,12.4,5.5,15.5,9.6c3.1,4.1,4.6,8.8,4.6,14c0,4.3-0.9,8.2-2.6,11.6
+		c-1.8,3.4-4.2,6.4-7.3,8.8c-3.1,2.5-6.8,4.3-11.1,5.6C264.4,94.4,259.7,95.1,254.6,95.1z"/>
+	<g>
+		<path class="st1" d="M273.5,143.7c-32.9,24.3-80.7,37.2-121.8,37.2c-57.6,0-109.5-21.3-148.7-56.7c-3.1-2.8-0.3-6.6,3.4-4.4
+			c42.4,24.6,94.7,39.5,148.8,39.5c36.5,0,76.6-7.6,113.5-23.2C274.2,133.6,278.9,139.7,273.5,143.7z"/>
+		<path class="st1" d="M287.2,128.1c-4.2-5.4-27.8-2.6-38.5-1.3c-3.2,0.4-3.7-2.4-0.8-4.5c18.8-13.2,49.7-9.4,53.3-5
+			c3.6,4.5-1,35.4-18.6,50.2c-2.7,2.3-5.3,1.1-4.1-1.9C282.5,155.7,291.4,133.4,287.2,128.1z"/>
+	</g>
+</g>
+</svg>
+
+    </a>
+    Guidance for Claude Code and Cowork on Amazon Bedrock
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cdharma/claude-with-bedrock" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cdharma/claude-with-bedrock
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../QUICK_START/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Authentication
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/okta-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Okta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/microsoft-entra-id-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microsoft Entra ID
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/auth0-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auth0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/cognito-user-pool-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS Cognito
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/google-oidc-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google OIDC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/generic-oidc-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generic OIDC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/iam-identity-center-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IAM Identity Center
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deployment
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DEPLOYMENT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows Build System
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows Build System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#go-build-system-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Go Build System (Recommended)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Go Build System (Recommended)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows-specific-build-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows-Specific Build Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#three-build-paths-for-end-user-binaries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three build paths for end-user binaries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-windows-binaries-cross-compile-any-admin-os" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building Windows binaries (cross-compile, any admin OS)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-on-a-windows-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building on a Windows machine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#legacy-build-system-nuitkacodebuild" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Legacy Build System (Nuitka/CodeBuild)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#system-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        System Components
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-flow-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build Flow Sequence
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#local-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aws-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initial-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Initial Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Initial Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-clone-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Clone Repository
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-install-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Install Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-initialize-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Initialize Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-deploy-infrastructure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Deploy Infrastructure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-verify-codebuild-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Verify CodeBuild Deployment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build Process
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Build Process">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#starting-a-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Starting a Build
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checking-build-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checking Build Status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listing-recent-builds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listing Recent Builds
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLI Commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CLI Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#package-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package Command
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#builds-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Builds Command
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#distribute-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Distribute Command
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Distribution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Distribution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#package-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package Contents
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#end-user-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        End User Installation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-build-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Build Issues
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Build Issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-build-fails-immediately" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Build Fails Immediately
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-build-times-out" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Build Times Out
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-no-artifacts-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. No Artifacts Found
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-powershell-syntax-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. PowerShell Syntax Errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checking-build-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checking Build Logs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technical-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Technical Details
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Technical Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows-build-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows Build Environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#software-versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Software Versions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nuitka-compilation-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nuitka Compilation Settings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Build Performance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cost-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-system-locations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File System Locations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#complete-build-process-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete Build Process Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quick-reference-card" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Reference Card
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Distribution
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Distribution
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../distribution/comparison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Comparison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../distribution/deployment-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MONITORING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ANALYTICS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analytics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../QUOTA_MONITORING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quota Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COST_ESTIMATES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cost Estimates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COST_ATTRIBUTION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cost Attribution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TROUBLESHOOTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RESOURCE_INVENTORY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resource Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CLI_REFERENCE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LOCAL_TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COWORK_3P/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude Desktop (Cowork)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PLUGINS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOOTSTRAP_SERVER/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bootstrap Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WEB_SEARCH/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Search
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/cdharma/claude-with-bedrock/edit/main/WINDOWS_BUILD_SYSTEM.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="windows-build-system-documentation">Windows Build System Documentation<a class="headerlink" href="#windows-build-system-documentation" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>NOTE: The Nuitka/CodeBuild build system documented below has been replaced by Go cross-compilation.</strong> Go produces native statically-linked binaries for all 5 platforms from a single machine, eliminating the need for CodeBuild, Docker, and per-platform toolchains. See the <a href="#go-build-system-recommended">Go Build System</a> section below.</p>
+</blockquote>
+<h2 id="go-build-system-recommended">Go Build System (Recommended)<a class="headerlink" href="#go-build-system-recommended" title="Permanent link">&para;</a></h2>
+<p>Native Go binaries replace the previous PyInstaller/Nuitka build pipeline. Key advantages:</p>
+<ul>
+<li><strong>No AV false positives</strong>: Go binaries pass Windows Defender (PyInstaller/Nuitka triggered Error 225)</li>
+<li><strong>Cross-compile from any OS</strong>: All 5 platforms built from a single <code>make all</code> command</li>
+<li><strong>No CodeBuild needed</strong>: Eliminates 3 CodeBuild projects and 30+ minute Windows builds</li>
+<li><strong>4x smaller</strong>: ~14 MB vs ~60-80 MB for credential-process</li>
+<li><strong>Fast cross-compilation</strong>: All 5 platforms built in ~10 seconds from any machine with Go installed</li>
+</ul>
+<h3 id="windows-specific-build-requirements">Windows-Specific Build Requirements<a class="headerlink" href="#windows-specific-build-requirements" title="Permanent link">&para;</a></h3>
+<p>Windows binaries have special requirements to avoid Defender cloud ML (Wacatac.B!ml) detections:</p>
+<ol>
+<li><strong>Do NOT strip</strong>: No <code>-s -w</code> ldflags (stripping triggers Defender ML heuristics)</li>
+<li><strong>Embed PE version info</strong>: Use <code>go-winres</code> to embed RT_VERSION + RT_MANIFEST resources</li>
+<li><strong><code>.syso</code> files</strong>: Located at <code>cmd/credential-process/rsrc_windows_amd64.syso</code> and <code>cmd/otel-helper/rsrc_windows_amd64.syso</code>, auto-linked by the Go compiler for Windows builds</li>
+</ol>
+<h3 id="three-build-paths-for-end-user-binaries">Three build paths for end-user binaries<a class="headerlink" href="#three-build-paths-for-end-user-binaries" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Command</th>
+<th>Requires</th>
+<th>Runs on Windows admin?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Go cross-compile via ccwb</strong> (default, recommended)</td>
+<td><code>ccwb package</code></td>
+<td>Go 1.24+ installed</td>
+<td>✅ Yes, natively</td>
+</tr>
+<tr>
+<td><strong>Go cross-compile via Makefile</strong></td>
+<td><code>cd source/go &amp;&amp; make all</code></td>
+<td>Go 1.24+ and a Unix shell (Git Bash, WSL, or macOS/Linux)</td>
+<td>⚠️ <strong>No</strong> — see below</td>
+</tr>
+<tr>
+<td><strong>Legacy</strong> (opt-in via <code>--legacy</code>, deprecated)</td>
+<td><code>ccwb package --legacy</code></td>
+<td>PyInstaller + Docker (Linux builds) + CodeBuild (Windows builds)</td>
+<td>⚠️ Partial — native Windows Nuitka works; Linux builds need Docker</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The Go build is the default.</strong> Bare <code>ccwb package</code> builds with Go; it falls back to the legacy PyInstaller/Nuitka/Docker/CodeBuild path only if Go 1.24+ is not installed. Pass <code>--legacy</code> to opt into the deprecated path explicitly (the old <code>--go</code> flag still works and is a no-op).</p>
+<h3 id="building-windows-binaries-cross-compile-any-admin-os">Building Windows binaries (cross-compile, any admin OS)<a class="headerlink" href="#building-windows-binaries-cross-compile-any-admin-os" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>source/go
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># Build all 10 binaries (Windows unstripped, others stripped)</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>make<span class="w"> </span>all
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># Or build just Windows:</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nv">CGO_ENABLED</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">GOOS</span><span class="o">=</span>windows<span class="w"> </span><span class="nv">GOARCH</span><span class="o">=</span>amd64<span class="w"> </span>go<span class="w"> </span>build<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span>-ldflags<span class="w"> </span><span class="s2">"-X ccwb-go/internal/version.Version=2.0.0"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span>-o<span class="w"> </span>bin/credential-process-windows.exe<span class="w"> </span>./cmd/credential-process/
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="nv">CGO_ENABLED</span><span class="o">=</span><span class="m">0</span><span class="w"> </span><span class="nv">GOOS</span><span class="o">=</span>windows<span class="w"> </span><span class="nv">GOARCH</span><span class="o">=</span>amd64<span class="w"> </span>go<span class="w"> </span>build<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">  </span>-ldflags<span class="w"> </span><span class="s2">"-X ccwb-go/internal/version.Version=2.0.0"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">  </span>-o<span class="w"> </span>bin/otel-helper-windows.exe<span class="w"> </span>./cmd/otel-helper/
+</code></pre></div>
+<p>Verified working from macOS Apple Silicon: all 10 binaries (5 platforms × 2 binaries) produced in ~3 minutes. Each binary matches its target platform (<code>file &lt;binary&gt;</code> confirms Mach-O/ELF/PE32+), passes strings-leak checks, and the native macOS binary runs successfully with <code>--version</code>.</p>
+<h3 id="building-on-a-windows-machine">Building on a Windows machine<a class="headerlink" href="#building-on-a-windows-machine" title="Permanent link">&para;</a></h3>
+<p><strong><code>ccwb package</code> works natively on Windows</strong> — Python subprocess calls <code>go build</code> directly and passes env vars as a dict (not shell syntax), with cross-platform <code>pathlib.Path</code> handling. Requires only Go 1.24+ installed and on <code>PATH</code>. <strong>This is the recommended path for Windows admins.</strong></p>
+<p>If Go 1.24+ is not installed, <code>ccwb package</code> falls back to the legacy PyInstaller/Nuitka/Docker/CodeBuild path, which on Windows requires CodeBuild to be enabled during <code>ccwb init</code> and takes 12-15 minutes per build. Installing Go avoids all of that.</p>
+<p><strong><code>make all</code> does NOT work on native Windows cmd.exe or PowerShell.</strong> The Makefile uses Unix-only shell constructs (<code>mkdir -p</code>, <code>rm -rf</code>). Options if you must use the Makefile on Windows:</p>
+<ol>
+<li><strong>Git Bash</strong> (bundled with Git for Windows): <code>make all</code> works as-is</li>
+<li><strong>WSL (Windows Subsystem for Linux)</strong>: <code>make all</code> works after installing <code>make</code> and <code>go</code></li>
+<li><strong>Native PowerShell alternative</strong> — skip the Makefile and call <code>go build</code> directly:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">cd </span><span class="n">source</span><span class="p">\</span><span class="n">go</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nv">$env:CGO_ENABLED</span><span class="p">=</span><span class="s2">"0"</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nv">$env:GOOS</span><span class="p">=</span><span class="s2">"windows"</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nv">$env:GOARCH</span><span class="p">=</span><span class="s2">"amd64"</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c"># Windows binaries must NOT be stripped (no -s -w) — see the rule above</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">go</span> <span class="n">build</span> <span class="n">-trimpath</span> <span class="n">-o</span> <span class="n">bin</span><span class="p">\</span><span class="n">credential-process-windows</span><span class="p">.</span><span class="n">exe</span> <span class="p">.\</span><span class="n">cmd</span><span class="p">\</span><span class="n">credential-process</span><span class="p">\</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">go</span> <span class="n">build</span> <span class="n">-trimpath</span> <span class="n">-o</span> <span class="n">bin</span><span class="p">\</span><span class="n">otel-helper-windows</span><span class="p">.</span><span class="n">exe</span> <span class="p">.\</span><span class="n">cmd</span><span class="p">\</span><span class="n">otel-helper</span><span class="p">\</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c"># For other platforms, change $env:GOOS and $env:GOARCH (stripping is fine off Windows):</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="nv">$env:GOOS</span><span class="p">=</span><span class="s2">"linux"</span><span class="p">;</span> <span class="nv">$env:GOARCH</span><span class="p">=</span><span class="s2">"amd64"</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="n">go</span> <span class="n">build</span> <span class="n">-trimpath</span> <span class="n">-ldflags</span> <span class="s2">"-s -w"</span> <span class="n">-o</span> <span class="n">bin</span><span class="p">\</span><span class="n">credential-process-linux-x64</span> <span class="p">.\</span><span class="n">cmd</span><span class="p">\</span><span class="n">credential-process</span><span class="p">\</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="c"># ...etc</span>
+</code></pre></div>
+<p><strong>Recommended path for Windows admins</strong>: just run <code>ccwb package</code> (the Go build is the default). The Makefile is only needed if you want to build outside of the <code>ccwb</code> tooling.</p>
+<h3 id="verification">Verification<a class="headerlink" href="#verification" title="Permanent link">&para;</a></h3>
+<p>Binaries have been verified on Windows EC2 with Defender real-time + cloud protection enabled:
+- Defender scan: <strong>No threats found</strong>
+- Binary execution: <strong>Works</strong> (credential-process --version)
+- Claude Code E2E: <strong>Working</strong> with OIDC auth flow</p>
+<hr />
+<h2 id="legacy-build-system-nuitkacodebuild">Legacy Build System (Nuitka/CodeBuild)<a class="headerlink" href="#legacy-build-system-nuitkacodebuild" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>Deprecated</strong>: The following documentation is preserved for reference. New deployments should use Go binaries.</p>
+</blockquote>
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#architecture">Architecture</a></li>
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#initial-setup">Initial Setup</a></li>
+<li><a href="#build-process">Build Process</a></li>
+<li><a href="#cli-commands">CLI Commands</a></li>
+<li><a href="#distribution">Distribution</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#technical-details">Technical Details</a></li>
+</ol>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>The legacy Windows build system used Nuitka via AWS CodeBuild with Windows Server 2022 containers. This approach has been replaced by Go cross-compilation due to Windows Defender false positives (Error 225) with Nuitka-compiled binaries.</p>
+<h3 id="key-features">Key Features<a class="headerlink" href="#key-features" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Cross-platform support</strong>: Builds Windows, macOS, and Linux binaries</li>
+<li><strong>Asynchronous builds</strong>: Non-blocking build process with status tracking</li>
+<li><strong>Secure distribution</strong>: Time-limited presigned URLs for package distribution</li>
+<li><strong>Automated compilation</strong>: Uses Nuitka for Python-to-native compilation</li>
+<li><strong>No manual intervention</strong>: Fully automated through CLI commands</li>
+</ul>
+<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
+<h3 id="system-components">System Components<a class="headerlink" href="#system-components" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>graph TB
+    subgraph "Developer Machine"
+        CLI[Claude Code CLI&lt;br/&gt;poetry run ccwb]
+        LOCAL[Local Build&lt;br/&gt;macOS/Linux]
+    end
+
+    subgraph "AWS Cloud"
+        subgraph "CodeBuild"
+            CB[Windows Build Project&lt;br/&gt;Windows Server 2022&lt;br/&gt;BUILD_GENERAL1_LARGE]
+        end
+
+        subgraph "Storage"
+            S3[S3 Bucket&lt;br/&gt;Build Artifacts]
+            PS[Parameter Store&lt;br/&gt;Distribution URLs]
+        end
+
+        subgraph "Infrastructure"
+            CF[CloudFormation&lt;br/&gt;Stack Management]
+        end
+    end
+
+    CLI --&gt;|1. Start Build| CB
+    CB --&gt;|2. Compile Binaries| CB
+    CB --&gt;|3. Upload Artifacts| S3
+    CLI --&gt;|4. Create Distribution| S3
+    S3 --&gt;|5. Generate URL| PS
+    CLI --&gt;|Build locally| LOCAL
+    CF --&gt;|Manages| CB
+    CF --&gt;|Manages| S3</code></pre>
+<h3 id="build-flow-sequence">Build Flow Sequence<a class="headerlink" href="#build-flow-sequence" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant User
+    participant CLI
+    participant CodeBuild
+    participant S3
+    participant PS as Parameter Store
+
+    User-&gt;&gt;CLI: poetry run ccwb package
+    CLI-&gt;&gt;CLI: Build macOS binaries locally
+    CLI-&gt;&gt;CodeBuild: Start Windows build (async)
+    CodeBuild--&gt;&gt;CLI: Return build ID immediately
+    CLI--&gt;&gt;User: Build started (ID: xxx)
+
+    Note over CodeBuild: Building (20+ mins)
+
+    User-&gt;&gt;CLI: poetry run ccwb package --status latest
+    CLI-&gt;&gt;CodeBuild: Check build status
+    CodeBuild--&gt;&gt;CLI: Status: IN_PROGRESS/SUCCEEDED
+    CLI--&gt;&gt;User: Build status
+
+    CodeBuild-&gt;&gt;S3: Upload artifacts
+
+    User-&gt;&gt;CLI: poetry run ccwb distribute
+    CLI-&gt;&gt;S3: Create package
+    S3-&gt;&gt;S3: Generate presigned URL
+    CLI-&gt;&gt;PS: Store URL metadata
+    CLI--&gt;&gt;User: Distribution URL</code></pre>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<h3 id="local-requirements">Local Requirements<a class="headerlink" href="#local-requirements" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Python 3.10, 3.11, or 3.12 (not 3.13+)</li>
+<li>Poetry package manager</li>
+<li>AWS CLI v2 configured</li>
+<li>Git</li>
+</ul>
+<h3 id="aws-requirements">AWS Requirements<a class="headerlink" href="#aws-requirements" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AWS account with appropriate IAM permissions</li>
+<li>Ability to create CloudFormation stacks</li>
+<li>Permissions for:</li>
+<li>CodeBuild projects</li>
+<li>S3 buckets</li>
+<li>Systems Manager Parameter Store</li>
+<li>CloudWatch Logs</li>
+</ul>
+<h2 id="initial-setup">Initial Setup<a class="headerlink" href="#initial-setup" title="Permanent link">&para;</a></h2>
+<h3 id="1-clone-repository">1. Clone Repository<a class="headerlink" href="#1-clone-repository" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git<span class="w"> </span>clone<span class="w"> </span>&lt;repository-url&gt;
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">cd</span><span class="w"> </span>guidance-for-claude-code-with-amazon-bedrock/source
+</code></pre></div>
+<h3 id="2-install-dependencies">2. Install Dependencies<a class="headerlink" href="#2-install-dependencies" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>poetry<span class="w"> </span>install
+</code></pre></div>
+<h3 id="3-initialize-configuration">3. Initialize Configuration<a class="headerlink" href="#3-initialize-configuration" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>init
+</code></pre></div>
+<p>During initialization, you'll be prompted for:</p>
+<ul>
+<li>Identity provider domain (e.g., <code>us-east-1xxxxx.auth.us-east-1.amazoncognito.com</code>)</li>
+<li>Client ID from your identity provider</li>
+<li>AWS region for deployment</li>
+<li>Cross-region Bedrock access configuration</li>
+<li><strong>Enable CodeBuild for Windows binary builds? [Y/n]</strong> - Select Yes</li>
+<li>Monitoring preferences</li>
+</ul>
+<h3 id="4-deploy-infrastructure">4. Deploy Infrastructure<a class="headerlink" href="#4-deploy-infrastructure" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>deploy
+</code></pre></div>
+<p>This creates the following CloudFormation stacks:</p>
+<ul>
+<li><strong>Authentication stack</strong>: IAM roles, identity pool</li>
+<li><strong>Networking stack</strong>: VPC and subnets (if monitoring enabled)</li>
+<li><strong>Monitoring stack</strong>: OpenTelemetry collector (optional)</li>
+<li><strong>CodeBuild stack</strong>: Windows build project</li>
+<li><strong>Dashboard stack</strong>: CloudWatch dashboard (optional)</li>
+<li><strong>Analytics stack</strong>: Athena and Kinesis (optional)</li>
+</ul>
+<h3 id="5-verify-codebuild-deployment">5. Verify CodeBuild Deployment<a class="headerlink" href="#5-verify-codebuild-deployment" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>status
+</code></pre></div>
+<p>Verify CodeBuild is deployed:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>CodeBuild Stack:
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>• Status: CREATE_COMPLETE
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>• Project: claude-code-auth-windows-build
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>• S3 Bucket: claude-code-auth-codebuild-buildbucket-xxxxx
+</code></pre></div>
+<h2 id="build-process">Build Process<a class="headerlink" href="#build-process" title="Permanent link">&para;</a></h2>
+<h3 id="starting-a-build">Starting a Build<a class="headerlink" href="#starting-a-build" title="Permanent link">&para;</a></h3>
+<p>The package command now operates asynchronously by default:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Fetching deployment information...
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>╭─────────────────────────────────────────────────────────────╮
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>│                                                             │
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>│  Package Builder                                            │
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>│                                                             │
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>│  Creating distribution package for                          │
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>│  us-east-1xxxxx.auth.us-east-1.amazoncognito.com           │
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>│                                                             │
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>╰─────────────────────────────────────────────────────────────╯
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>Package Configuration:
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>  Configuration Profile: default
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>  AWS Profile: ClaudeCode
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>  OIDC Provider: us-east-1xxxxx.auth.us-east-1.amazoncognito.com
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>  Client ID: 3k67m9eb6c78o2tgnk7hjhd169
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>  AWS Region: us-east-1
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>  Identity Pool: us-east-1:1a794053-7af4-444d-b2cd-c35f22daecca
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>  Claude Model: Claude Opus 4.1
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>  Source Region: us-west-2
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>  Bedrock Regions: US Cross-Region (us-east-1, us-east-2, us-west-2)
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a>Building package...
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a>✓ Building credential process for macos...
+<a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a>✓ Building OTEL helper for macos...
+<a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a>
+<a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a>Build ID: claude-code-auth-windows-build:abc123-def456-789
+<a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a>Estimated cost: ~$0.10
+<a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a>
+<a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a>Windows build started!
+<a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a>Build will take approximately 12-15 minutes to complete.
+<a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a>
+<a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a>To check status:
+<a id="__codelineno-9-33" name="__codelineno-9-33" href="#__codelineno-9-33"></a>  poetry run ccwb package --status claude-code-auth-windows-build:abc123-def456-789
+<a id="__codelineno-9-34" name="__codelineno-9-34" href="#__codelineno-9-34"></a>
+<a id="__codelineno-9-35" name="__codelineno-9-35" href="#__codelineno-9-35"></a>To view logs in AWS Console:
+<a id="__codelineno-9-36" name="__codelineno-9-36" href="#__codelineno-9-36"></a>  https://console.aws.amazon.com/codesuite/codebuild/projects/claude-code-auth-windows-build/build/abc123-def456-789
+</code></pre></div>
+<h3 id="checking-build-status">Checking Build Status<a class="headerlink" href="#checking-build-status" title="Permanent link">&para;</a></h3>
+<p>Check the latest build:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package<span class="w"> </span>--status<span class="w"> </span>latest
+</code></pre></div>
+<p>Check a specific build:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package<span class="w"> </span>--status<span class="w"> </span>claude-code-auth-windows-build:abc123-def456-789
+</code></pre></div>
+<p>Status outputs:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>⏳ Build in progress
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>Phase: BUILD
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>Elapsed: 5 minutes
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>✓ Build succeeded!
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>Duration: 13 minutes
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>Artifacts are ready. Run the following to complete packaging:
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>poetry run ccwb package --complete
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>✗ Build failed
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>Failed in phase: BUILD
+</code></pre></div>
+<h3 id="listing-recent-builds">Listing Recent Builds<a class="headerlink" href="#listing-recent-builds" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>builds
+</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>               Recent Builds for claude-code-auth-windows-build
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>┏━━━━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━┓
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>┃ Build ID ┃ Status         ┃ Started          ┃ Duration ┃ Phase     ┃
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>┡━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━┩
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>│ abc12345 │ ✓ Succeeded    │ 2024-08-24 10:30 │ 13 min   │ COMPLETED │
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>│ def67890 │ ✓ Succeeded    │ 2024-08-24 09:15 │ 12 min   │ COMPLETED │
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>│ ghi11111 │ ✗ Failed       │ 2024-08-24 08:00 │ 2 min    │ BUILD     │
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>└──────────┴────────────────┴──────────────────┴──────────┴───────────┘
+</code></pre></div>
+<h2 id="cli-commands">CLI Commands<a class="headerlink" href="#cli-commands" title="Permanent link">&para;</a></h2>
+<h3 id="package-command">Package Command<a class="headerlink" href="#package-command" title="Permanent link">&para;</a></h3>
+<p><strong>Basic usage:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Options:</strong>
+| Option | Description | Default |
+|--------|-------------|---------|
+| <code>--target-platform</code> | Platform to build for (macos/linux/windows/all) | all |
+| <code>--profile</code> | Configuration profile to use | default |
+| <code>--distribute</code> | Create distribution after build | false |
+| <code>--expires-hours</code> | Distribution URL expiration (1-168) | 48 |
+| <code>--status</code> | Check build status (build-id or "latest") | - |</p>
+<p><strong>Examples:</strong></p>
+<p>Build all platforms (returns immediately for Windows):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package
+</code></pre></div>
+<p>Build and distribute:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package<span class="w"> </span>--distribute
+</code></pre></div>
+<p>Check status:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package<span class="w"> </span>--status<span class="w"> </span>latest
+</code></pre></div>
+<h3 id="builds-command">Builds Command<a class="headerlink" href="#builds-command" title="Permanent link">&para;</a></h3>
+<p><strong>Basic usage:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>builds<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Options:</strong>
+| Option | Description | Default |
+|--------|-------------|---------|
+| <code>--limit</code> | Number of builds to show | 10 |
+| <code>--project</code> | CodeBuild project name | auto-detect |</p>
+<h3 id="distribute-command">Distribute Command<a class="headerlink" href="#distribute-command" title="Permanent link">&para;</a></h3>
+<p><strong>Basic usage:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Options:</strong>
+| Option | Description | Default |
+|--------|-------------|---------|
+| <code>--get-latest</code> | Get existing URL without creating new | false |
+| <code>--expires-hours</code> | URL expiration time (1-168) | 48 |
+| <code>--package-path</code> | Path to package directory | dist |
+| <code>--allowed-ips</code> | IP restrictions (comma-separated) | - |
+| <code>--qr</code> | Generate QR code | false |</p>
+<p><strong>Examples:</strong></p>
+<p>Create new distribution:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute
+</code></pre></div>
+<p>Get existing URL:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute<span class="w"> </span>--get-latest
+</code></pre></div>
+<h2 id="distribution">Distribution<a class="headerlink" href="#distribution" title="Permanent link">&para;</a></h2>
+<h3 id="package-contents">Package Contents<a class="headerlink" href="#package-contents" title="Permanent link">&para;</a></h3>
+<p>The distribution package (<code>dist/</code>) contains:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>dist/
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>├── credential-process-windows.exe      # Windows auth binary (~28 MB)
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>├── credential-process-macos-arm64      # macOS ARM64 binary (~26 MB)
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>├── otel-helper-windows.exe            # Windows telemetry helper (~28 MB)
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>├── otel-helper-macos-arm64            # macOS telemetry helper (~26 MB)
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>├── config.json                        # Configuration with Cognito settings
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>├── install.sh                         # macOS/Linux installer script
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>├── install.bat                        # Windows installer launcher
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>├── ccwb-install.ps1                   # Windows PowerShell installer logic
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>├── README.md                          # Installation instructions
+<a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>└── .claude/
+<a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>    └── settings.json                  # Claude Code telemetry settings
+</code></pre></div>
+<h3 id="end-user-installation">End User Installation<a class="headerlink" href="#end-user-installation" title="Permanent link">&para;</a></h3>
+<p><strong>Windows:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1">REM Download the package</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>curl -L -o claude-code-package.zip <span class="s2">"&lt;presigned-url&gt;"</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="c1">REM Extract</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>tar -xf claude-code-package.zip
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="c1">REM Install</span>
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="k">cd</span> dist
+<a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>install.bat
+</code></pre></div>
+<p><strong>macOS/Linux:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="c1"># Download the package</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>curl<span class="w"> </span>-L<span class="w"> </span>-o<span class="w"> </span>claude-code-package.zip<span class="w"> </span><span class="s2">"&lt;presigned-url&gt;"</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="c1"># Extract</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>unzip<span class="w"> </span>claude-code-package.zip
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="c1"># Install</span>
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="nb">cd</span><span class="w"> </span>dist
+<a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>chmod<span class="w"> </span>+x<span class="w"> </span>install.sh
+<a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>./install.sh
+</code></pre></div>
+<p>The installer will:</p>
+<ol>
+<li>Create <code>~/claude-code-with-bedrock/</code> directory</li>
+<li>Copy binaries to the directory</li>
+<li>Configure AWS CLI profile named <code>ClaudeCode</code></li>
+<li>Test authentication</li>
+</ol>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="common-build-issues">Common Build Issues<a class="headerlink" href="#common-build-issues" title="Permanent link">&para;</a></h3>
+<h4 id="1-build-fails-immediately">1. Build Fails Immediately<a class="headerlink" href="#1-build-fails-immediately" title="Permanent link">&para;</a></h4>
+<p><strong>Error:</strong> "The Python version '3.12' is not supported by Nuitka '2.0'"
+<strong>Solution:</strong> This has been fixed - we now use Nuitka 2.7.12 which supports Python 3.12</p>
+<h4 id="2-build-times-out">2. Build Times Out<a class="headerlink" href="#2-build-times-out" title="Permanent link">&para;</a></h4>
+<p><strong>Error:</strong> "Build timed out after 20 minutes"
+<strong>Solution:</strong> Normal build time is 12-15 minutes. Check CodeBuild logs for compilation errors.</p>
+<h4 id="3-no-artifacts-found">3. No Artifacts Found<a class="headerlink" href="#3-no-artifacts-found" title="Permanent link">&para;</a></h4>
+<p><strong>Error:</strong> "no matching artifact paths found"
+<strong>Solution:</strong> Check that the build phase completed successfully:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>aws<span class="w"> </span>logs<span class="w"> </span>tail<span class="w"> </span>/aws/codebuild/claude-code-auth-windows-build<span class="w"> </span>--region<span class="w"> </span>us-east-1<span class="w"> </span>--since<span class="w"> </span>30m
+</code></pre></div>
+<h4 id="4-powershell-syntax-errors">4. PowerShell Syntax Errors<a class="headerlink" href="#4-powershell-syntax-errors" title="Permanent link">&para;</a></h4>
+<p><strong>Error:</strong> "The term 'SET' is not recognized"
+<strong>Solution:</strong> CodeBuild uses PowerShell, not CMD. The buildspec has been updated to use PowerShell syntax.</p>
+<h3 id="checking-build-logs">Checking Build Logs<a class="headerlink" href="#checking-build-logs" title="Permanent link">&para;</a></h3>
+<p><strong>Via AWS CLI:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="c1"># Get recent logs</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>aws<span class="w"> </span>logs<span class="w"> </span>tail<span class="w"> </span>/aws/codebuild/claude-code-auth-windows-build<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">  </span>--region<span class="w"> </span>us-east-1<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="w">  </span>--since<span class="w"> </span>30m
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="c1"># Search for errors</span>
+<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a>aws<span class="w"> </span>logs<span class="w"> </span>filter-log-events<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a><span class="w">  </span>--log-group-name<span class="w"> </span>/aws/codebuild/claude-code-auth-windows-build<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a><span class="w">  </span>--region<span class="w"> </span>us-east-1<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a><span class="w">  </span>--filter-pattern<span class="w"> </span><span class="s2">"ERROR"</span>
+</code></pre></div>
+<p><strong>Via Console:</strong>
+The package command provides a direct link to the AWS Console for each build.</p>
+<h2 id="technical-details">Technical Details<a class="headerlink" href="#technical-details" title="Permanent link">&para;</a></h2>
+<h3 id="windows-build-environment">Windows Build Environment<a class="headerlink" href="#windows-build-environment" title="Permanent link">&para;</a></h3>
+<p><strong>CodeBuild Configuration:</strong></p>
+<ul>
+<li><strong>Environment Type:</strong> <code>WINDOWS_SERVER_2022_CONTAINER</code></li>
+<li><strong>Compute Type:</strong> <code>BUILD_GENERAL1_LARGE</code> (4 vCPUs, 8 GB memory)</li>
+<li><strong>Base Image:</strong> <code>aws/codebuild/windows-base:2022-1.0</code></li>
+<li><strong>Timeout:</strong> 30 minutes</li>
+<li><strong>Region:</strong> us-east-1 (hardcoded for consistency)</li>
+</ul>
+<h3 id="software-versions">Software Versions<a class="headerlink" href="#software-versions" title="Permanent link">&para;</a></h3>
+<p><strong>Build Environment:</strong></p>
+<ul>
+<li>Windows Server 2022</li>
+<li>Python 3.12.10 (installed via Chocolatey)</li>
+<li>Nuitka 2.7.12</li>
+<li>pip 24.x</li>
+</ul>
+<p><strong>Dependencies installed during build:</strong></p>
+<ul>
+<li>nuitka==2.7.12</li>
+<li>ordered-set</li>
+<li>zstandard</li>
+<li>boto3</li>
+<li>requests</li>
+<li>PyJWT</li>
+<li>keyring</li>
+<li>cryptography</li>
+<li>questionary</li>
+<li>rich</li>
+<li>cleo</li>
+<li>pydantic</li>
+<li>pyyaml</li>
+</ul>
+<h3 id="nuitka-compilation-settings">Nuitka Compilation Settings<a class="headerlink" href="#nuitka-compilation-settings" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>C:<span class="se">\P</span>ython312<span class="se">\p</span>ython.exe<span class="w"> </span>-m<span class="w"> </span>nuitka<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="w">  </span>--standalone<span class="w"> </span><span class="se">\ </span><span class="w">                   </span><span class="c1"># Include all dependencies</span>
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="w">  </span>--onefile<span class="w"> </span><span class="se">\ </span><span class="w">                     </span><span class="c1"># Single executable file</span>
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="w">  </span>--assume-yes-for-downloads<span class="w"> </span><span class="se">\ </span><span class="w">     </span><span class="c1"># Auto-download requirements</span>
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a><span class="w">  </span>--windows-disable-console<span class="w"> </span><span class="se">\ </span><span class="w">      </span><span class="c1"># No console window popup</span>
+<a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a><span class="w">  </span>--company-name<span class="o">=</span><span class="s2">"Claude Code"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a><span class="w">  </span>--product-name<span class="o">=</span><span class="s2">"Claude Code Credential Process"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a><span class="w">  </span>--file-version<span class="o">=</span><span class="s2">"1.0.0.0"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a><span class="w">  </span>--product-version<span class="o">=</span><span class="s2">"1.0.0.0"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a><span class="w">  </span>--windows-file-description<span class="o">=</span><span class="s2">"AWS Credential Process for Claude Code"</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a><span class="w">  </span>--output-filename<span class="o">=</span>credential-process-windows.exe<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-28-12" name="__codelineno-28-12" href="#__codelineno-28-12"></a><span class="w">  </span>--output-dir<span class="o">=</span>.<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-28-13" name="__codelineno-28-13" href="#__codelineno-28-13"></a><span class="w">  </span>--remove-output<span class="w"> </span><span class="se">\ </span><span class="w">               </span><span class="c1"># Clean up build artifacts</span>
+<a id="__codelineno-28-14" name="__codelineno-28-14" href="#__codelineno-28-14"></a><span class="w">  </span>source/credential_provider/__main__.py
+</code></pre></div>
+<h3 id="build-performance">Build Performance<a class="headerlink" href="#build-performance" title="Permanent link">&para;</a></h3>
+<p><strong>Typical build times:</strong></p>
+<ul>
+<li>macOS ARM64 (local): ~30 seconds</li>
+<li>Windows (CodeBuild): 12-15 minutes</li>
+<li>Install phase: ~1 minute</li>
+<li>Pre-build (dependencies): ~2 minutes</li>
+<li>Build (Nuitka compilation): ~10-12 minutes</li>
+<li>Post-build: ~30 seconds</li>
+</ul>
+<p><strong>Optimization history:</strong></p>
+<ol>
+<li>Initial: PyInstaller, MEDIUM instance → 16+ minutes</li>
+<li>Nuitka 2.0.0, MEDIUM instance → Failed (Python 3.12 incompatible)</li>
+<li>Nuitka 2.7.12, LARGE instance → 12-13 minutes (current)</li>
+<li>Attempted 2XLARGE → Not supported for Windows containers</li>
+</ol>
+<h3 id="security">Security<a class="headerlink" href="#security" title="Permanent link">&para;</a></h3>
+<p><strong>S3 Bucket:</strong></p>
+<ul>
+<li>Private bucket with versioning enabled</li>
+<li>Server-side encryption (SSE-S3)</li>
+<li>Lifecycle rules for old packages (90 days)</li>
+</ul>
+<p><strong>Presigned URLs:</strong></p>
+<ul>
+<li>Default expiration: 48 hours</li>
+<li>Maximum expiration: 168 hours (7 days)</li>
+<li>Optional IP restrictions via bucket policy</li>
+</ul>
+<p><strong>IAM Permissions Required:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="p">{</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">  </span><span class="nt">"Version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-10-17"</span><span class="p">,</span>
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">  </span><span class="nt">"Statement"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="w">      </span><span class="nt">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Allow"</span><span class="p">,</span>
+<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="w">      </span><span class="nt">"Action"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a><span class="w">        </span><span class="s2">"codebuild:StartBuild"</span><span class="p">,</span>
+<a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a><span class="w">        </span><span class="s2">"codebuild:BatchGetBuilds"</span><span class="p">,</span>
+<a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a><span class="w">        </span><span class="s2">"codebuild:ListBuildsForProject"</span>
+<a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a><span class="w">      </span><span class="p">],</span>
+<a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a><span class="w">      </span><span class="nt">"Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"arn:aws:codebuild:us-east-1:*:project/claude-code-auth-windows-build"</span>
+<a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-29-13" name="__codelineno-29-13" href="#__codelineno-29-13"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-29-14" name="__codelineno-29-14" href="#__codelineno-29-14"></a><span class="w">      </span><span class="nt">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Allow"</span><span class="p">,</span>
+<a id="__codelineno-29-15" name="__codelineno-29-15" href="#__codelineno-29-15"></a><span class="w">      </span><span class="nt">"Action"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"s3:PutObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"s3:GetObject"</span><span class="p">,</span><span class="w"> </span><span class="s2">"s3:ListBucket"</span><span class="p">],</span>
+<a id="__codelineno-29-16" name="__codelineno-29-16" href="#__codelineno-29-16"></a><span class="w">      </span><span class="nt">"Resource"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-29-17" name="__codelineno-29-17" href="#__codelineno-29-17"></a><span class="w">        </span><span class="s2">"arn:aws:s3:::claude-code-auth-codebuild-buildbucket-*"</span><span class="p">,</span>
+<a id="__codelineno-29-18" name="__codelineno-29-18" href="#__codelineno-29-18"></a><span class="w">        </span><span class="s2">"arn:aws:s3:::claude-code-auth-codebuild-buildbucket-*/*"</span>
+<a id="__codelineno-29-19" name="__codelineno-29-19" href="#__codelineno-29-19"></a><span class="w">      </span><span class="p">]</span>
+<a id="__codelineno-29-20" name="__codelineno-29-20" href="#__codelineno-29-20"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-29-21" name="__codelineno-29-21" href="#__codelineno-29-21"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-29-22" name="__codelineno-29-22" href="#__codelineno-29-22"></a><span class="w">      </span><span class="nt">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Allow"</span><span class="p">,</span>
+<a id="__codelineno-29-23" name="__codelineno-29-23" href="#__codelineno-29-23"></a><span class="w">      </span><span class="nt">"Action"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"ssm:PutParameter"</span><span class="p">,</span><span class="w"> </span><span class="s2">"ssm:GetParameter"</span><span class="p">],</span>
+<a id="__codelineno-29-24" name="__codelineno-29-24" href="#__codelineno-29-24"></a><span class="w">      </span><span class="nt">"Resource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"arn:aws:ssm:*:*:parameter/claude-code/*"</span>
+<a id="__codelineno-29-25" name="__codelineno-29-25" href="#__codelineno-29-25"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-29-26" name="__codelineno-29-26" href="#__codelineno-29-26"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-29-27" name="__codelineno-29-27" href="#__codelineno-29-27"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="cost-analysis">Cost Analysis<a class="headerlink" href="#cost-analysis" title="Permanent link">&para;</a></h3>
+<p><strong>Per build:</strong></p>
+<ul>
+<li>CodeBuild: ~$0.10 (13 minutes × $0.005/minute for LARGE instance)</li>
+<li>S3 storage: ~$0.01 (100 MB stored)</li>
+<li>Data transfer: Varies by downloads</li>
+</ul>
+<p><strong>Monthly estimate (daily builds):</strong></p>
+<ul>
+<li>30 builds × $0.10 = $3.00 CodeBuild</li>
+<li>Storage: ~$0.50</li>
+<li><strong>Total: ~$3.50/month</strong></li>
+</ul>
+<h3 id="file-system-locations">File System Locations<a class="headerlink" href="#file-system-locations" title="Permanent link">&para;</a></h3>
+<p><strong>Source files:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>/source/
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>├── credential_provider/
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>│   └── __main__.py           # Main authentication module
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>├── otel_helper/
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>│   └── __main__.py           # Telemetry helper module
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>├── claude_code_with_bedrock/
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>│   └── cli/
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>│       └── commands/
+<a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>│           ├── package.py    # Package build logic
+<a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a>│           ├── builds.py     # Build listing logic
+<a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a>│           └── distribute.py # Distribution logic
+<a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a>└── deployment/
+<a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a>    └── infrastructure/
+<a id="__codelineno-30-14" name="__codelineno-30-14" href="#__codelineno-30-14"></a>        └── codebuild-windows.yaml  # CodeBuild CloudFormation
+</code></pre></div>
+<p><strong>Build artifacts:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>~/.claude-code/
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>└── latest-build.json         # Latest build metadata
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>dist/                         # Local package output
+<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>└── [platform binaries]
+<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>
+<a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>S3: claude-code-auth-codebuild-buildbucket-xxxxx/
+<a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>├── windows-binaries.zip      # Windows build artifacts
+<a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>└── packages/
+<a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a>    └── YYYYMMDD-HHMMSS/
+<a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a>        └── claude-code-package-*.zip
+</code></pre></div>
+<h2 id="appendix">Appendix<a class="headerlink" href="#appendix" title="Permanent link">&para;</a></h2>
+<h3 id="complete-build-process-flow">Complete Build Process Flow<a class="headerlink" href="#complete-build-process-flow" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>flowchart TD
+    Start([User runs: poetry run ccwb package])
+    Start --&gt; CheckPlatform{Target platform?}
+
+    CheckPlatform --&gt;|macOS/Linux| LocalBuild[Build locally with Nuitka]
+    CheckPlatform --&gt;|Windows/All| StartCodeBuild[Start CodeBuild project]
+
+    LocalBuild --&gt; LocalSuccess[✓ Local binaries created]
+
+    StartCodeBuild --&gt; ReturnID[Return build ID immediately]
+    ReturnID --&gt; UserWait[User continues working]
+
+    StartCodeBuild --&gt; CBInstall[CodeBuild: Install Python 3.12]
+    CBInstall --&gt; CBDeps[CodeBuild: Install dependencies]
+    CBDeps --&gt; CBNuitka[CodeBuild: Run Nuitka compilation]
+    CBNuitka --&gt; CBUpload[CodeBuild: Upload to S3]
+
+    UserWait --&gt; CheckStatus([User runs: package --status])
+    CheckStatus --&gt; ShowStatus{Build status?}
+    ShowStatus --&gt;|In Progress| StillBuilding[Show progress]
+    ShowStatus --&gt;|Succeeded| ReadyDist[Ready for distribution]
+    ShowStatus --&gt;|Failed| ShowError[Show error details]
+
+    LocalSuccess --&gt; Distribute([User runs: distribute])
+    ReadyDist --&gt; Distribute
+    Distribute --&gt; CreateZip[Create distribution package]
+    CreateZip --&gt; UploadS3[Upload to S3]
+    UploadS3 --&gt; GenerateURL[Generate presigned URL]
+    GenerateURL --&gt; SaveParam[Save to Parameter Store]
+    SaveParam --&gt; Done([Distribution URL ready])</code></pre>
+<h3 id="quick-reference-card">Quick Reference Card<a class="headerlink" href="#quick-reference-card" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="c1"># Daily workflow</span>
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package<span class="w">                    </span><span class="c1"># Start build (async)</span>
+<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>builds<span class="w">                     </span><span class="c1"># Check recent builds</span>
+<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package<span class="w"> </span>--status<span class="w"> </span>latest<span class="w">    </span><span class="c1"># Check if done</span>
+<a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute<span class="w">                 </span><span class="c1"># Create distribution</span>
+<a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>
+<a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a><span class="c1"># Get existing URL (no rebuild)</span>
+<a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute<span class="w"> </span>--get-latest
+<a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a>
+<a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a><span class="c1"># Debug failed build</span>
+<a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package<span class="w"> </span>--status<span class="w"> </span>latest
+<a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a>aws<span class="w"> </span>logs<span class="w"> </span>tail<span class="w"> </span>/aws/codebuild/claude-code-auth-windows-build<span class="w"> </span>--region<span class="w"> </span>us-east-1
+<a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a>
+<a id="__codelineno-32-14" name="__codelineno-32-14" href="#__codelineno-32-14"></a><span class="c1"># Extended distribution (7 days)</span>
+<a id="__codelineno-32-15" name="__codelineno-32-15" href="#__codelineno-32-15"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute<span class="w"> </span>--expires-hours<span class="w"> </span><span class="m">168</span>
+</code></pre></div>
+<hr />
+<p><em>Last updated: August 2024</em>
+<em>Version: 1.0.0</em></p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="August 23, 2026 14:42:58 UTC"><span class="timeago" datetime="2026-08-23T14:42:58+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 23, 2026 14:42:58 UTC">2026-08-23</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 2, 2025 18:48:54 UTC"><span class="timeago" datetime="2025-09-02T18:48:54+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 2, 2025 18:48:54 UTC">2025-09-02</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <nav class="md-footer__inner md-grid" aria-label="Footer" style="background: transparent;">
+    
+    <a href="../ARCHITECTURE/" class="md-footer__link md-footer__link--prev" style="color: #141413;">
+      <div class="md-footer__title">
+        <span class="md-footer__direction">Previous</span>
+        Architecture
+      </div>
+    </a>
+    
+    
+    <a href="../distribution/comparison/" class="md-footer__link md-footer__link--next" style="color: #141413;">
+      <div class="md-footer__title">
+        <span class="md-footer__direction">Next</span>
+        Platform Comparison
+      </div>
+    </a>
+    
+  </nav>
+  
+  <div class="md-footer-meta md-typeset" style="background-color: transparent;">
+    <div class="md-footer-meta__inner md-grid" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; padding: 2.5rem 0 2rem;">
+      <img src="../assets/images/aws-logo.svg" alt="AWS" style="height: 18px; width: auto; opacity: 0.4;">
+      <span style="color: #141413; opacity: 0.35; font-size: 0.65rem;">Claude Code with Amazon Bedrock</span>
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit", "toc.follow", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../js/timeago.min.js"></script>
+      
+        <script src="../js/timeago_mkdocs_material.js"></script>
+      
+    
+  </body>
+</html>

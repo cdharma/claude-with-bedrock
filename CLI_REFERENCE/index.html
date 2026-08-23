@@ -1,0 +1,3377 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Enterprise deployment guide for Claude Code on Amazon Bedrock">
+      
+      
+      
+        <link rel="canonical" href="https://cdharma.github.io/claude-with-bedrock/CLI_REFERENCE/">
+      
+      
+        <link rel="prev" href="../RESOURCE_INVENTORY/">
+      
+      
+        <link rel="next" href="../LOCAL_TESTING/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>CLI Reference - Guidance for Claude Code and Cowork on Amazon Bedrock</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../css/timeago.css">
+    
+      <link rel="stylesheet" href="../stylesheets/custom.css?v=11">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#claude-code-with-bedrock-cli-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Guidance for Claude Code and Cowork on Amazon Bedrock" class="md-header__button md-logo" aria-label="Guidance for Claude Code and Cowork on Amazon Bedrock" data-md-component="logo">
+      
+  
+  <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 304 182" style="enable-background:new 0 0 304 182;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#141413;}
+	.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#141413;}
+</style>
+<g>
+	<path class="st0" d="M86.4,66.4c0,3.7,0.4,6.7,1.1,8.9c0.8,2.2,1.8,4.6,3.2,7.2c0.5,0.8,0.7,1.6,0.7,2.3c0,1-0.6,2-1.9,3l-6.3,4.2
+		c-0.9,0.6-1.8,0.9-2.6,0.9c-1,0-2-0.5-3-1.4C76.2,90,75,88.4,74,86.8c-1-1.7-2-3.6-3.1-5.9c-7.8,9.2-17.6,13.8-29.4,13.8
+		c-8.4,0-15.1-2.4-20-7.2c-4.9-4.8-7.4-11.2-7.4-19.2c0-8.5,3-15.4,9.1-20.6c6.1-5.2,14.2-7.8,24.5-7.8c3.4,0,6.9,0.3,10.6,0.8
+		c3.7,0.5,7.5,1.3,11.5,2.2v-7.3c0-7.6-1.6-12.9-4.7-16c-3.2-3.1-8.6-4.6-16.3-4.6c-3.5,0-7.1,0.4-10.8,1.3c-3.7,0.9-7.3,2-10.8,3.4
+		c-1.6,0.7-2.8,1.1-3.5,1.3c-0.7,0.2-1.2,0.3-1.6,0.3c-1.4,0-2.1-1-2.1-3.1v-4.9c0-1.6,0.2-2.8,0.7-3.5c0.5-0.7,1.4-1.4,2.8-2.1
+		c3.5-1.8,7.7-3.3,12.6-4.5c4.9-1.3,10.1-1.9,15.6-1.9c11.9,0,20.6,2.7,26.2,8.1c5.5,5.4,8.3,13.6,8.3,24.6V66.4z M45.8,81.6
+		c3.3,0,6.7-0.6,10.3-1.8c3.6-1.2,6.8-3.4,9.5-6.4c1.6-1.9,2.8-4,3.4-6.4c0.6-2.4,1-5.3,1-8.7v-4.2c-2.9-0.7-6-1.3-9.2-1.7
+		c-3.2-0.4-6.3-0.6-9.4-0.6c-6.7,0-11.6,1.3-14.9,4c-3.3,2.7-4.9,6.5-4.9,11.5c0,4.7,1.2,8.2,3.7,10.6
+		C37.7,80.4,41.2,81.6,45.8,81.6z M126.1,92.4c-1.8,0-3-0.3-3.8-1c-0.8-0.6-1.5-2-2.1-3.9L96.7,10.2c-0.6-2-0.9-3.3-0.9-4
+		c0-1.6,0.8-2.5,2.4-2.5h9.8c1.9,0,3.2,0.3,3.9,1c0.8,0.6,1.4,2,2,3.9l16.8,66.2l15.6-66.2c0.5-2,1.1-3.3,1.9-3.9c0.8-0.6,2.2-1,4-1
+		h8c1.9,0,3.2,0.3,4,1c0.8,0.6,1.5,2,1.9,3.9l15.8,67l17.3-67c0.6-2,1.3-3.3,2-3.9c0.8-0.6,2.1-1,3.9-1h9.3c1.6,0,2.5,0.8,2.5,2.5
+		c0,0.5-0.1,1-0.2,1.6c-0.1,0.6-0.3,1.4-0.7,2.5l-24.1,77.3c-0.6,2-1.3,3.3-2.1,3.9c-0.8,0.6-2.1,1-3.8,1h-8.6c-1.9,0-3.2-0.3-4-1
+		c-0.8-0.7-1.5-2-1.9-4L156,23l-15.4,64.4c-0.5,2-1.1,3.3-1.9,4c-0.8,0.7-2.2,1-4,1H126.1z M254.6,95.1c-5.2,0-10.4-0.6-15.4-1.8
+		c-5-1.2-8.9-2.5-11.5-4c-1.6-0.9-2.7-1.9-3.1-2.8c-0.4-0.9-0.6-1.9-0.6-2.8v-5.1c0-2.1,0.8-3.1,2.3-3.1c0.6,0,1.2,0.1,1.8,0.3
+		c0.6,0.2,1.5,0.6,2.5,1c3.4,1.5,7.1,2.7,11,3.5c4,0.8,7.9,1.2,11.9,1.2c6.3,0,11.2-1.1,14.6-3.3c3.4-2.2,5.2-5.4,5.2-9.5
+		c0-2.8-0.9-5.1-2.7-7c-1.8-1.9-5.2-3.6-10.1-5.2L246,52c-7.3-2.3-12.7-5.7-16-10.2c-3.3-4.4-5-9.3-5-14.5c0-4.2,0.9-7.9,2.7-11.1
+		c1.8-3.2,4.2-6,7.2-8.2c3-2.3,6.4-4,10.4-5.2c4-1.2,8.2-1.7,12.6-1.7c2.2,0,4.5,0.1,6.7,0.4c2.3,0.3,4.4,0.7,6.5,1.1
+		c2,0.5,3.9,1,5.7,1.6c1.8,0.6,3.2,1.2,4.2,1.8c1.4,0.8,2.4,1.6,3,2.5c0.6,0.8,0.9,1.9,0.9,3.3v4.7c0,2.1-0.8,3.2-2.3,3.2
+		c-0.8,0-2.1-0.4-3.8-1.2c-5.7-2.6-12.1-3.9-19.2-3.9c-5.7,0-10.2,0.9-13.3,2.8c-3.1,1.9-4.7,4.8-4.7,8.9c0,2.8,1,5.2,3,7.1
+		c2,1.9,5.7,3.8,11,5.5l14.2,4.5c7.2,2.3,12.4,5.5,15.5,9.6c3.1,4.1,4.6,8.8,4.6,14c0,4.3-0.9,8.2-2.6,11.6
+		c-1.8,3.4-4.2,6.4-7.3,8.8c-3.1,2.5-6.8,4.3-11.1,5.6C264.4,94.4,259.7,95.1,254.6,95.1z"/>
+	<g>
+		<path class="st1" d="M273.5,143.7c-32.9,24.3-80.7,37.2-121.8,37.2c-57.6,0-109.5-21.3-148.7-56.7c-3.1-2.8-0.3-6.6,3.4-4.4
+			c42.4,24.6,94.7,39.5,148.8,39.5c36.5,0,76.6-7.6,113.5-23.2C274.2,133.6,278.9,139.7,273.5,143.7z"/>
+		<path class="st1" d="M287.2,128.1c-4.2-5.4-27.8-2.6-38.5-1.3c-3.2,0.4-3.7-2.4-0.8-4.5c18.8-13.2,49.7-9.4,53.3-5
+			c3.6,4.5-1,35.4-18.6,50.2c-2.7,2.3-5.3,1.1-4.1-1.9C282.5,155.7,291.4,133.4,287.2,128.1z"/>
+	</g>
+</g>
+</svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Guidance for Claude Code and Cowork on Amazon Bedrock
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              CLI Reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cdharma/claude-with-bedrock" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cdharma/claude-with-bedrock
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../QUICK_START/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../providers/okta-setup/" class="md-tabs__link">
+          
+  
+  
+  Authentication
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../DEPLOYMENT/" class="md-tabs__link">
+          
+  
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../distribution/comparison/" class="md-tabs__link">
+          
+  
+  
+  Distribution
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../MONITORING/" class="md-tabs__link">
+          
+  
+  
+  Operations
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  Usage
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Guidance for Claude Code and Cowork on Amazon Bedrock" class="md-nav__button md-logo" aria-label="Guidance for Claude Code and Cowork on Amazon Bedrock" data-md-component="logo">
+      
+  
+  <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 304 182" style="enable-background:new 0 0 304 182;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#141413;}
+	.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#141413;}
+</style>
+<g>
+	<path class="st0" d="M86.4,66.4c0,3.7,0.4,6.7,1.1,8.9c0.8,2.2,1.8,4.6,3.2,7.2c0.5,0.8,0.7,1.6,0.7,2.3c0,1-0.6,2-1.9,3l-6.3,4.2
+		c-0.9,0.6-1.8,0.9-2.6,0.9c-1,0-2-0.5-3-1.4C76.2,90,75,88.4,74,86.8c-1-1.7-2-3.6-3.1-5.9c-7.8,9.2-17.6,13.8-29.4,13.8
+		c-8.4,0-15.1-2.4-20-7.2c-4.9-4.8-7.4-11.2-7.4-19.2c0-8.5,3-15.4,9.1-20.6c6.1-5.2,14.2-7.8,24.5-7.8c3.4,0,6.9,0.3,10.6,0.8
+		c3.7,0.5,7.5,1.3,11.5,2.2v-7.3c0-7.6-1.6-12.9-4.7-16c-3.2-3.1-8.6-4.6-16.3-4.6c-3.5,0-7.1,0.4-10.8,1.3c-3.7,0.9-7.3,2-10.8,3.4
+		c-1.6,0.7-2.8,1.1-3.5,1.3c-0.7,0.2-1.2,0.3-1.6,0.3c-1.4,0-2.1-1-2.1-3.1v-4.9c0-1.6,0.2-2.8,0.7-3.5c0.5-0.7,1.4-1.4,2.8-2.1
+		c3.5-1.8,7.7-3.3,12.6-4.5c4.9-1.3,10.1-1.9,15.6-1.9c11.9,0,20.6,2.7,26.2,8.1c5.5,5.4,8.3,13.6,8.3,24.6V66.4z M45.8,81.6
+		c3.3,0,6.7-0.6,10.3-1.8c3.6-1.2,6.8-3.4,9.5-6.4c1.6-1.9,2.8-4,3.4-6.4c0.6-2.4,1-5.3,1-8.7v-4.2c-2.9-0.7-6-1.3-9.2-1.7
+		c-3.2-0.4-6.3-0.6-9.4-0.6c-6.7,0-11.6,1.3-14.9,4c-3.3,2.7-4.9,6.5-4.9,11.5c0,4.7,1.2,8.2,3.7,10.6
+		C37.7,80.4,41.2,81.6,45.8,81.6z M126.1,92.4c-1.8,0-3-0.3-3.8-1c-0.8-0.6-1.5-2-2.1-3.9L96.7,10.2c-0.6-2-0.9-3.3-0.9-4
+		c0-1.6,0.8-2.5,2.4-2.5h9.8c1.9,0,3.2,0.3,3.9,1c0.8,0.6,1.4,2,2,3.9l16.8,66.2l15.6-66.2c0.5-2,1.1-3.3,1.9-3.9c0.8-0.6,2.2-1,4-1
+		h8c1.9,0,3.2,0.3,4,1c0.8,0.6,1.5,2,1.9,3.9l15.8,67l17.3-67c0.6-2,1.3-3.3,2-3.9c0.8-0.6,2.1-1,3.9-1h9.3c1.6,0,2.5,0.8,2.5,2.5
+		c0,0.5-0.1,1-0.2,1.6c-0.1,0.6-0.3,1.4-0.7,2.5l-24.1,77.3c-0.6,2-1.3,3.3-2.1,3.9c-0.8,0.6-2.1,1-3.8,1h-8.6c-1.9,0-3.2-0.3-4-1
+		c-0.8-0.7-1.5-2-1.9-4L156,23l-15.4,64.4c-0.5,2-1.1,3.3-1.9,4c-0.8,0.7-2.2,1-4,1H126.1z M254.6,95.1c-5.2,0-10.4-0.6-15.4-1.8
+		c-5-1.2-8.9-2.5-11.5-4c-1.6-0.9-2.7-1.9-3.1-2.8c-0.4-0.9-0.6-1.9-0.6-2.8v-5.1c0-2.1,0.8-3.1,2.3-3.1c0.6,0,1.2,0.1,1.8,0.3
+		c0.6,0.2,1.5,0.6,2.5,1c3.4,1.5,7.1,2.7,11,3.5c4,0.8,7.9,1.2,11.9,1.2c6.3,0,11.2-1.1,14.6-3.3c3.4-2.2,5.2-5.4,5.2-9.5
+		c0-2.8-0.9-5.1-2.7-7c-1.8-1.9-5.2-3.6-10.1-5.2L246,52c-7.3-2.3-12.7-5.7-16-10.2c-3.3-4.4-5-9.3-5-14.5c0-4.2,0.9-7.9,2.7-11.1
+		c1.8-3.2,4.2-6,7.2-8.2c3-2.3,6.4-4,10.4-5.2c4-1.2,8.2-1.7,12.6-1.7c2.2,0,4.5,0.1,6.7,0.4c2.3,0.3,4.4,0.7,6.5,1.1
+		c2,0.5,3.9,1,5.7,1.6c1.8,0.6,3.2,1.2,4.2,1.8c1.4,0.8,2.4,1.6,3,2.5c0.6,0.8,0.9,1.9,0.9,3.3v4.7c0,2.1-0.8,3.2-2.3,3.2
+		c-0.8,0-2.1-0.4-3.8-1.2c-5.7-2.6-12.1-3.9-19.2-3.9c-5.7,0-10.2,0.9-13.3,2.8c-3.1,1.9-4.7,4.8-4.7,8.9c0,2.8,1,5.2,3,7.1
+		c2,1.9,5.7,3.8,11,5.5l14.2,4.5c7.2,2.3,12.4,5.5,15.5,9.6c3.1,4.1,4.6,8.8,4.6,14c0,4.3-0.9,8.2-2.6,11.6
+		c-1.8,3.4-4.2,6.4-7.3,8.8c-3.1,2.5-6.8,4.3-11.1,5.6C264.4,94.4,259.7,95.1,254.6,95.1z"/>
+	<g>
+		<path class="st1" d="M273.5,143.7c-32.9,24.3-80.7,37.2-121.8,37.2c-57.6,0-109.5-21.3-148.7-56.7c-3.1-2.8-0.3-6.6,3.4-4.4
+			c42.4,24.6,94.7,39.5,148.8,39.5c36.5,0,76.6-7.6,113.5-23.2C274.2,133.6,278.9,139.7,273.5,143.7z"/>
+		<path class="st1" d="M287.2,128.1c-4.2-5.4-27.8-2.6-38.5-1.3c-3.2,0.4-3.7-2.4-0.8-4.5c18.8-13.2,49.7-9.4,53.3-5
+			c3.6,4.5-1,35.4-18.6,50.2c-2.7,2.3-5.3,1.1-4.1-1.9C282.5,155.7,291.4,133.4,287.2,128.1z"/>
+	</g>
+</g>
+</svg>
+
+    </a>
+    Guidance for Claude Code and Cowork on Amazon Bedrock
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cdharma/claude-with-bedrock" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cdharma/claude-with-bedrock
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../QUICK_START/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Authentication
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/okta-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Okta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/microsoft-entra-id-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Microsoft Entra ID
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/auth0-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auth0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/cognito-user-pool-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS Cognito
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/google-oidc-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Google OIDC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/generic-oidc-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generic OIDC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/iam-identity-center-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IAM Identity Center
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deployment
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DEPLOYMENT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WINDOWS_BUILD_SYSTEM/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows Build System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Distribution
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Distribution
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../distribution/comparison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platform Comparison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../distribution/deployment-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operations
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Operations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MONITORING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ANALYTICS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analytics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../QUOTA_MONITORING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quota Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COST_ESTIMATES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cost Estimates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COST_ATTRIBUTION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cost Attribution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TROUBLESHOOTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RESOURCE_INVENTORY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resource Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Command Reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Command Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#init-configure-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        init - Configure Deployment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-deploy-infrastructure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        deploy - Deploy Infrastructure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="deploy - Deploy Infrastructure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-to-use-ccwb-deploy-vs-ccwb-deploy-quota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to Use ccwb deploy vs ccwb deploy quota
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-test-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        test - Test Package
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#package-create-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        package - Create Distribution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="package - Create Distribution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cross-arch-macos-build-setup-legacy-mode-only-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-arch macOS Build Setup (legacy mode only, optional)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#builds-list-and-manage-codebuild-builds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        builds - List and Manage CodeBuild Builds
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#distribute-share-packages-via-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        distribute - Share Packages via Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#status-check-deployment-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        status - Check Deployment Status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cleanup-remove-installed-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cleanup - Remove Installed Components
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#claude-desktop-cowork-3p" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Claude Desktop (Cowork 3P)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Claude Desktop (Cowork 3P)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cowork-generate-generate-mdm-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cowork generate - Generate MDM Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quota-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quota Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quota Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quota-set-user-set-user-quota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        quota set-user - Set User Quota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quota-set-group-set-group-quota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        quota set-group - Set Group Quota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quota-set-default-set-default-quota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        quota set-default - Set Default Quota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quota-list-list-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        quota list - List Policies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quota-delete-delete-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        quota delete - Delete Policy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quota-show-show-effective-quota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        quota show - Show Effective Quota
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quota-usage-show-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        quota usage - Show Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quota-unblock-unblock-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        quota unblock - Unblock User
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quota-export-export-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        quota export - Export Policies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quota-import-import-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        quota import - Import Policies
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#profile-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Profile Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Profile Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#context-list-list-all-profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        context list - List All Profiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#context-current-show-active-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        context current - Show Active Profile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#context-use-switch-active-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        context use - Switch Active Profile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#context-show-display-profile-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        context show - Display Profile Details
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-validate-validate-profile-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        config validate - Validate Profile Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-export-export-profile-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        config export - Export Profile Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#config-import-import-profile-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        config import - Import Profile Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#destroy-remove-infrastructure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        destroy - Remove Infrastructure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#doctor-validate-installation-health" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        doctor - Validate Installation Health
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#go-binary-diagnostic-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Go Binary Diagnostic Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LOCAL_TESTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../COWORK_3P/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude Desktop (Cowork)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PLUGINS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOOTSTRAP_SERVER/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bootstrap Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WEB_SEARCH/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Search
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/cdharma/claude-with-bedrock/edit/main/CLI_REFERENCE.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="claude-code-with-bedrock-cli-reference">Claude Code with Bedrock - CLI Reference<a class="headerlink" href="#claude-code-with-bedrock-cli-reference" title="Permanent link">&para;</a></h1>
+<p>This document provides a complete reference for all <code>ccwb</code> (Claude Code with Bedrock) commands.</p>
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="#claude-code-with-bedrock---cli-reference">Claude Code with Bedrock - CLI Reference</a></li>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#command-reference">Command Reference</a><ul>
+<li><a href="#init---configure-deployment"><code>init</code> - Configure Deployment</a></li>
+<li><a href="#deploy---deploy-infrastructure"><code>deploy</code> - Deploy Infrastructure</a></li>
+<li><a href="#test---test-package"><code>test</code> - Test Package</a></li>
+<li><a href="#package---create-distribution"><code>package</code> - Create Distribution</a></li>
+<li><a href="#builds---list-and-manage-codebuild-builds"><code>builds</code> - List and Manage CodeBuild Builds</a></li>
+<li><a href="#distribute---share-packages-via-distribution"><code>distribute</code> - Share Packages via Distribution</a></li>
+<li><a href="#status---check-deployment-status"><code>status</code> - Check Deployment Status</a></li>
+<li><a href="#cleanup---remove-installed-components"><code>cleanup</code> - Remove Installed Components</a></li>
+</ul>
+</li>
+<li><a href="#quota-management">Quota Management</a><ul>
+<li><a href="#quota-set-user---set-user-quota"><code>quota set-user</code> - Set User Quota</a></li>
+<li><a href="#quota-set-group---set-group-quota"><code>quota set-group</code> - Set Group Quota</a></li>
+<li><a href="#quota-set-default---set-default-quota"><code>quota set-default</code> - Set Default Quota</a></li>
+<li><a href="#quota-list---list-policies"><code>quota list</code> - List Policies</a></li>
+<li><a href="#quota-delete---delete-policy"><code>quota delete</code> - Delete Policy</a></li>
+<li><a href="#quota-show---show-effective-quota"><code>quota show</code> - Show Effective Quota</a></li>
+<li><a href="#quota-usage---show-usage"><code>quota usage</code> - Show Usage</a></li>
+<li><a href="#quota-unblock---unblock-user"><code>quota unblock</code> - Unblock User</a></li>
+<li><a href="#quota-export---export-policies"><code>quota export</code> - Export Policies</a></li>
+<li><a href="#quota-import---import-policies"><code>quota import</code> - Import Policies</a></li>
+</ul>
+</li>
+<li><a href="#claude-desktop-cowork-3p">Claude Desktop (Cowork 3P)</a><ul>
+<li><a href="#cowork-generate---generate-mdm-configuration"><code>cowork generate</code> - Generate MDM Configuration</a></li>
+</ul>
+</li>
+<li><a href="#profile-management">Profile Management</a><ul>
+<li><a href="#context-list---list-all-profiles"><code>context list</code> - List All Profiles</a></li>
+<li><a href="#context-current---show-active-profile"><code>context current</code> - Show Active Profile</a></li>
+<li><a href="#context-use---switch-active-profile"><code>context use</code> - Switch Active Profile</a></li>
+<li><a href="#context-show---display-profile-details"><code>context show</code> - Display Profile Details</a></li>
+<li><a href="#config-validate---validate-profile-configuration"><code>config validate</code> - Validate Profile Configuration</a></li>
+<li><a href="#config-export---export-profile-configuration"><code>config export</code> - Export Profile Configuration</a></li>
+<li><a href="#config-import---import-profile-configuration"><code>config import</code> - Import Profile Configuration</a></li>
+<li><a href="#destroy---remove-infrastructure"><code>destroy</code> - Remove Infrastructure</a></li>
+<li><a href="#doctor---validate-installation-health"><code>doctor</code> - Validate Installation Health</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>The Claude Code with Bedrock CLI (<code>ccwb</code>) provides commands for IT administrators to:</p>
+<ul>
+<li>Configure OIDC authentication</li>
+<li>Deploy AWS infrastructure</li>
+<li>Create distribution packages</li>
+<li>Manage deployments</li>
+</ul>
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Clone the repository</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/cdharma/claude-with-bedrock.git
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">cd</span><span class="w"> </span>claude-with-bedrock/source
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># Install dependencies</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>poetry<span class="w"> </span>install
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1"># Run commands with poetry</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>&lt;command&gt;
+</code></pre></div>
+<h2 id="command-reference">Command Reference<a class="headerlink" href="#command-reference" title="Permanent link">&para;</a></h2>
+<h3 id="init-configure-deployment"><code>init</code> - Configure Deployment<a class="headerlink" href="#init-configure-deployment" title="Permanent link">&para;</a></h3>
+<p>Creates or updates the configuration for your Claude Code deployment.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>init<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--profile &lt;name&gt;</code> - Configuration profile name (optional, will prompt if not specified)</li>
+<li><code>--managed</code> - Deploy settings to OS-level managed-settings.json (highest precedence, non-overridable by users)</li>
+</ul>
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Checks prerequisites (AWS CLI, credentials, Python version)</li>
+<li>Prompts for authentication method (OIDC, IAM Identity Center, or None)</li>
+<li>For OIDC: prompts for provider configuration (domain, client ID) and federation type:</li>
+<li>Direct STS: Uses IAM OIDC Provider for federation</li>
+<li>Cognito: Uses Cognito Identity Pool for federation</li>
+<li>For IAM Identity Center: prompts for start URL, SSO region, AWS account ID, and permission set name</li>
+<li>Configures AWS settings (region, stack names)</li>
+<li>Prompts for Claude model selection (Opus, Sonnet, Haiku)</li>
+<li>Configures cross-region inference profiles (US, Europe, APAC)</li>
+<li>Prompts for source region selection for model inference</li>
+<li>Sets up monitoring options</li>
+<li>Prompts for monitoring mode (central collector on ECS Fargate, or sidecar collector running locally on each developer's machine)</li>
+<li>Configures quota monitoring:</li>
+<li>Limit type: cost-based USD budgets (recommended, default $50/month per user) or token-based limits</li>
+<li>Monthly and daily budgets (cost mode), or monthly token limit with a burst-buffer daily limit (token mode)</li>
+<li>Enforcement modes (alert vs block) for daily and monthly limits</li>
+<li>Quota re-check interval (how often to verify quota with cached credentials)</li>
+<li>Prompts for Windows build support via AWS CodeBuild (optional)</li>
+<li>Saves configuration to <code>~/.ccwb/profiles/&lt;name&gt;.json</code> (one file per profile); <code>~/.ccwb/config.json</code> tracks the active profile. Legacy <code>.ccwb-config</code> locations are auto-migrated on load</li>
+</ul>
+<p><strong>Note:</strong> This command only creates configuration. Use <code>deploy</code> to create AWS resources.</p>
+<h3 id="deploy-deploy-infrastructure"><code>deploy</code> - Deploy Infrastructure<a class="headerlink" href="#deploy-deploy-infrastructure" title="Permanent link">&para;</a></h3>
+<p>Deploys CloudFormation stacks for authentication and monitoring.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>deploy<span class="w"> </span><span class="o">[</span>stack<span class="o">]</span><span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>stack</code> - Specific stack to deploy: <code>auth</code>, <code>networking</code>, <code>monitoring</code>, <code>dashboard</code>, <code>cowork-dashboard</code>, <code>analytics</code>, <code>quota</code>, <code>distribution</code>, <code>codebuild</code>, <code>websearch</code>, or <code>bootstrap</code> (optional)</li>
+</ul>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--profile &lt;name&gt;</code> - Configuration profile to use (defaults to active profile)</li>
+<li><code>--dry-run</code> - Show what would be deployed without executing</li>
+<li><code>--show-commands</code> - Display AWS CLI commands instead of executing</li>
+<li><code>--parallel</code> - Deploy independent stacks concurrently in dependency waves (faster; per-stack progress spinners are suppressed)</li>
+</ul>
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Deploys authentication infrastructure (IAM OIDC Provider or Cognito Identity Pool)</li>
+<li>Creates IAM roles and policies for Bedrock access</li>
+<li>Deploys monitoring infrastructure (if enabled)</li>
+<li>Shows stack outputs including authentication resource identifiers</li>
+</ul>
+<p><strong>Stacks deployed:</strong></p>
+<ol>
+<li><strong>auth</strong> - Authentication infrastructure and IAM roles (always required)</li>
+<li><strong>networking</strong> - VPC and networking resources for monitoring (central mode only)</li>
+<li><strong>monitoring</strong> - OpenTelemetry collector on ECS Fargate (central mode only)</li>
+<li><strong>dashboard</strong> - CloudWatch dashboard for usage metrics (optional)</li>
+<li><strong>cowork-dashboard</strong> - CloudWatch dashboard for Claude Desktop (Cowork 3P) usage (optional)</li>
+<li><strong>analytics</strong> - Kinesis Firehose and Athena SQL query pipeline (central mode only, optional)</li>
+<li><strong>quota</strong> - Per-user quota monitoring and alerts (optional, requires dashboard)</li>
+<li><strong>distribution</strong> - Package distribution infrastructure: presigned S3 bucket or authenticated landing page (optional)</li>
+<li><strong>codebuild</strong> - AWS CodeBuild for Windows binary builds (optional, only if enabled during init)</li>
+<li><strong>websearch</strong> - Web search gateway (optional)</li>
+<li><strong>bootstrap</strong> - Bootstrap server delivering Claude Desktop settings and plugins at sign-in (optional)</li>
+</ol>
+<blockquote>
+<p><strong>Note</strong>: In sidecar monitoring mode, the auth and dashboard stacks are deployed. The networking, monitoring, and analytics stacks are skipped because the OpenTelemetry collector runs locally on each developer's machine. Both modes include the same PromQL CloudWatch dashboard with full metric analytics.</p>
+</blockquote>
+<p><strong>Examples:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Deploy all configured stacks</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>deploy
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Deploy only authentication</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>deploy<span class="w"> </span>auth
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1"># Deploy quota monitoring (requires dashboard stack first)</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>deploy<span class="w"> </span>quota
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="c1"># Deploy all configured stacks, independent stacks concurrently</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>deploy<span class="w"> </span>--parallel
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="c1"># Show commands without executing</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>deploy<span class="w"> </span>--show-commands
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="c1"># Dry run to see what would be deployed</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>deploy<span class="w"> </span>--dry-run
+</code></pre></div>
+<blockquote>
+<p><strong>Note</strong>: Quota monitoring requires the dashboard stack to be deployed first. See <a href="../QUOTA_MONITORING/">Quota Monitoring Guide</a> for detailed information.</p>
+</blockquote>
+<h4 id="when-to-use-ccwb-deploy-vs-ccwb-deploy-quota">When to Use <code>ccwb deploy</code> vs <code>ccwb deploy quota</code><a class="headerlink" href="#when-to-use-ccwb-deploy-vs-ccwb-deploy-quota" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ccwb deploy</code></td>
+<td>Initial setup - deploys all enabled stacks including quota (when enabled)</td>
+</tr>
+<tr>
+<td><code>ccwb deploy quota</code></td>
+<td>Update quota settings, late enablement, or troubleshooting</td>
+</tr>
+</tbody>
+</table>
+<p><strong>When <code>ccwb deploy</code> deploys quota</strong>: If <code>quota_monitoring_enabled=True</code> in your profile (set during <code>ccwb init</code>), running <code>ccwb deploy</code> will automatically deploy the quota stack as part of the full deployment.</p>
+<p><strong>When to use <code>ccwb deploy quota</code></strong>:
+- You want to update quota configuration without redeploying other stacks
+- You initially deployed without quota and now want to add it
+- You need to troubleshoot or redeploy just the quota stack
+- Your organization requires phased deployments with explicit control</p>
+<h3 id="test-test-package"><code>test</code> - Test Package<a class="headerlink" href="#test-test-package" title="Permanent link">&para;</a></h3>
+<p>Tests the packaged distribution as an end user would experience it.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span><span class="nb">test</span><span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--profile, -p &lt;name&gt;</code> - Profile name to test (defaults to active profile)</li>
+<li><code>--full</code> - Test all allowed regions (default: tests 3 representative regions)</li>
+<li><code>--quota-only</code> - Run only quota monitoring tests (API, policies, usage capture)</li>
+<li><code>--quota-api &lt;endpoint&gt;</code> - Test quota API with optional custom endpoint override</li>
+</ul>
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Finds the latest package for the profile in <code>dist/{profile}/{timestamp}/</code></li>
+<li>Verifies package contents (binary, config, OTEL helper)</li>
+<li>Tests credential process binary execution</li>
+<li>Tests authentication and IAM role assumption</li>
+<li>Tests Bedrock API access in configured regions</li>
+<li>Tests inference profile availability</li>
+<li>Tests quota monitoring API (if enabled)</li>
+</ul>
+<p><strong>Quota Testing (<code>--quota-only</code>):</strong></p>
+<p>When using <code>--quota-only</code>, runs comprehensive quota monitoring tests:</p>
+<ol>
+<li><strong>Quota Config</strong> - Validates all quota configuration is present</li>
+<li><strong>Quota API</strong> - Tests the <code>/check</code> endpoint with JWT authentication</li>
+<li><strong>Create Policy</strong> - Creates a test user policy in DynamoDB</li>
+<li><strong>List Policies</strong> - Verifies the policy appears in the list</li>
+<li><strong>Resolve Quota</strong> - Tests policy resolution for users</li>
+<li><strong>Delete Policy</strong> - Cleans up the test policy</li>
+</ol>
+<p><strong>Examples:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Run standard tests</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span><span class="nb">test</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># Run only quota monitoring tests (fastest for quota validation)</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--quota-only
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1"># Test quota API against a staging endpoint</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--quota-only<span class="w"> </span>--quota-api<span class="w"> </span>https://staging-api.example.com/prod
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="c1"># Run all tests with custom quota endpoint</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--quota-api<span class="w"> </span>https://my-api.execute-api.us-east-1.amazonaws.com/prod
+</code></pre></div>
+<p><strong>Note:</strong> API tests run by default and make actual calls to Bedrock (minimal cost ~$0.001).</p>
+<h3 id="package-create-distribution"><code>package</code> - Create Distribution<a class="headerlink" href="#package-create-distribution" title="Permanent link">&para;</a></h3>
+<p>Creates a distribution package for end users.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--target-platform &lt;platform&gt;</code> - Target platform(s), comma-separated (default: "all")</li>
+<li><code>macos-arm64</code> - Apple Silicon Macs (M1/M2/M3/M4)</li>
+<li><code>macos-intel</code> - Intel Macs</li>
+<li><code>linux-x64</code> - Linux x86-64</li>
+<li><code>linux-arm64</code> - Linux ARM64 (Graviton, etc.)</li>
+<li><code>windows</code> - Windows x64</li>
+<li><code>all</code> - All 5 platforms</li>
+<li><code>--profile &lt;name&gt;</code> - Configuration profile to use (defaults to active profile)</li>
+<li><code>--legacy</code> - Use the deprecated legacy PyInstaller/Nuitka build pipeline instead of Go</li>
+<li><code>--go</code> - Build using Go (already the default; kept for backwards compatibility)</li>
+<li><code>--build-local</code> - Build binaries locally instead of downloading pre-built</li>
+<li><code>--no-cache</code> - Force re-download of pre-built binaries</li>
+<li><code>--build-verbose</code> - Enable verbose logging for build processes</li>
+<li><code>--skip-validation</code> - Skip configuration validation checks</li>
+<li><code>--prepare-offline</code> - Prepare an offline bundle (OCB binary + Go module cache) for air-gapped builds</li>
+<li><code>--regenerate-installers</code> - Regenerate config and install scripts using existing binaries from latest dist</li>
+<li><code>--status &lt;id&gt;</code> - [Deprecated] Check build status by ID or "latest" — use <code>ccwb builds</code> instead</li>
+</ul>
+<p>To upload the finished package and generate a download URL, use <a href="#distribute---share-packages-via-distribution"><code>ccwb distribute</code></a>.</p>
+<p><strong>What it does:</strong></p>
+<ol>
+<li>Cross-compiles native Go binaries for all selected platforms (default build mode)</li>
+<li>Creates <code>config.json</code> with federation config read from the admin profile</li>
+<li>Creates <code>claude-settings/settings.json</code> with Bedrock model and OTel endpoint (or <code>managed-settings.json</code> if <code>--managed</code> was used during init)</li>
+<li>Creates installer scripts (<code>install.sh</code>, <code>install.bat</code>, <code>ccwb-install.ps1</code>)</li>
+<li>Outputs to <code>dist/{profile}/{timestamp}/</code></li>
+</ol>
+<p><strong>Build Modes:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Flag</th>
+<th>Requirements</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Go cross-compile</strong> (default)</td>
+<td>none needed (<code>--go</code> accepted for backwards compatibility)</td>
+<td>Go 1.24+ installed</td>
+<td>All admins — fast, all 5 platforms from one machine</td>
+</tr>
+<tr>
+<td><strong>Legacy</strong> (deprecated)</td>
+<td><code>--legacy</code></td>
+<td>PyInstaller, Docker, CodeBuild</td>
+<td>Python binaries; also the automatic fallback when Go 1.24+ is not installed</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Platform Support (Go Cross-Compilation, default):</strong></p>
+<p>In the default Go build mode, all 5 platforms are always available regardless of the admin's OS. No Docker, CodeBuild, x86 venvs, or platform-specific toolchains needed.</p>
+<ul>
+<li><strong>macOS ARM64</strong>: Native Apple Silicon binary (~9 MB)</li>
+<li><strong>macOS Intel</strong>: Native x86-64 binary (~10 MB)</li>
+<li><strong>Linux x64</strong>: Statically linked, works on any distro (~10 MB)</li>
+<li><strong>Linux ARM64</strong>: Statically linked for Graviton/ARM (~9 MB)</li>
+<li><strong>Windows x64</strong>: Native PE with embedded version info (~14 MB, unstripped for Defender compatibility)</li>
+</ul>
+<p><strong>Offline Packaging:</strong></p>
+<p><code>ccwb package</code> normally needs internet on the admin machine for three things: Go module downloads for <code>source/go</code>, the OCB (OpenTelemetry Collector Builder) binary from GitHub, and Go module downloads for the OCB-generated collector module (sidecar mode only). A <code>vendor/</code> directory cannot cover the collector build — OCB generates a fresh Go module in a temp directory on every run.</p>
+<p>For air-gapped environments, use <code>--prepare-offline</code> to pre-seed everything:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># On an internet-connected machine (same OS/arch and Go version as the offline box):</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package<span class="w"> </span>--prepare-offline
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># Transfer ccwb-offline-go-bundle.tar.gz to the offline machine, extract, then:</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>tar<span class="w"> </span>xzf<span class="w"> </span>ccwb-offline-go-bundle.tar.gz
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>./scripts/prepare-offline-go-bundle.sh<span class="w"> </span>install
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="nb">source</span><span class="w"> </span>ccwb-offline-go-bundle/offline-env.sh
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>package
+</code></pre></div>
+<p>The bundle contains the pinned OCB binary (installed to <code>~/.cache/ocb/</code>, where <code>package.py</code> looks before downloading) and a pre-populated Go module cache covering both <code>source/go</code> and the collector. Because every <code>go</code>/<code>ocb</code> subprocess inherits the environment, <code>GOPROXY=off</code> plus the seeded <code>GOMODCACHE</code> satisfies all module resolution — including the <code>go mod tidy</code> OCB runs internally. The <code>prepare</code> step rehearses a fully offline collector build before archiving, so a bundle that ships is a bundle that works.</p>
+<p><strong>Legacy mode platform details (PyInstaller / Nuitka / Docker):</strong></p>
+<p>PyInstaller is a runtime bundler, not a cross-OS compiler. It emits binaries in the host OS's native format (Mach-O on macOS, ELF on Linux). That constrains which targets each build host can produce:</p>
+<table>
+<thead>
+<tr>
+<th>Target binary</th>
+<th>Build host required</th>
+<th>Tooling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>macos-arm64</code>, <code>macos-intel</code></td>
+<td><strong>macOS</strong></td>
+<td>PyInstaller (native)</td>
+</tr>
+<tr>
+<td><code>linux-x64</code>, <code>linux-arm64</code></td>
+<td>Linux, <strong>or</strong> macOS with Docker Desktop</td>
+<td>PyInstaller (Docker container when building from macOS)</td>
+</tr>
+<tr>
+<td><code>windows</code></td>
+<td>any host</td>
+<td>AWS CodeBuild (remote)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Linux admins cannot build macOS binaries.</strong> There is no supported path for producing Mach-O binaries on Linux — Apple's platform design makes this infeasible. If <code>ccwb package</code> detects a macOS target on a non-macOS host, the build refuses with a clear error rather than silently producing an ELF binary labeled as macOS (which would fail on end-user Macs with <code>exec format error</code>).</p>
+<p>To produce macOS binaries, use a macOS workstation, a CI macOS runner (GitHub Actions <code>macos-latest</code>, AWS CodeBuild macOS project, or a self-hosted Mac runner), or an EC2 Mac instance, and collect the artifacts from there.</p>
+</blockquote>
+<ul>
+<li><strong>macOS</strong>: Uses PyInstaller with architecture-specific builds</li>
+<li>ARM64: Native build on Apple Silicon Macs only — cannot run on Intel Macs</li>
+<li>Intel: Runs natively on Intel Macs and on Apple Silicon via Rosetta — covers all Mac users with one binary</li>
+<li>Cross-arch: <strong>Optional</strong> — build the other architecture from your current Mac; requires a universal2 Python (see below)</li>
+<li><strong>Linux</strong>: Uses PyInstaller in Docker containers (cross-compiled from macOS host)</li>
+<li>x64: Uses linux/amd64 Docker platform</li>
+<li>ARM64: Uses linux/arm64 Docker platform</li>
+<li>Docker Desktop handles architecture emulation automatically</li>
+<li><strong>Requires Docker Desktop to be installed and running</strong> — see Graceful Fallback Behavior below</li>
+<li>On a Linux host, PyInstaller runs natively — Docker is not required</li>
+<li><strong>Windows</strong>: Uses Nuitka via AWS CodeBuild (if enabled during init)</li>
+<li>Automated builds take 12-15 minutes</li>
+<li>Requires CodeBuild to be enabled during <code>init</code></li>
+<li>Will be skipped if CodeBuild is not enabled</li>
+</ul>
+<h4 id="cross-arch-macos-build-setup-legacy-mode-only-optional">Cross-arch macOS Build Setup (legacy mode only, optional)<a class="headerlink" href="#cross-arch-macos-build-setup-legacy-mode-only-optional" title="Permanent link">&para;</a></h4>
+<p>By default, legacy-mode <code>ccwb package --legacy</code> builds a binary for your Mac's own architecture. The Intel (<code>macos-intel</code>) binary covers all Mac users — it runs natively on Intel Macs and via Rosetta on Apple Silicon — so an Apple Silicon admin who needs to support Intel Mac users should build the Intel binary using this setup.</p>
+<p>To build for the other architecture (e.g. Intel binary on Apple Silicon, or ARM64 binary on Intel), install a universal2 Python:</p>
+<ol>
+<li>Download the <strong>macOS 64-bit universal2 installer</strong> for Python 3.12 from <a href="https://www.python.org/downloads/macos/">python.org/downloads/macos</a></li>
+<li>Run the installer — it places Python at <code>/Library/Frameworks/Python.framework/</code></li>
+<li>Re-run <code>ccwb package</code> — it detects the universal2 Python automatically</li>
+</ol>
+<p><code>ccwb</code> creates an isolated per-arch build environment at <code>~/.ccwb/build-venvs/</code> on first cross-arch build (~30s). Subsequent runs reuse it.</p>
+<p>(In the default Go build mode, cross-arch builds are unnecessary — Go cross-compiles all platforms natively.)</p>
+<p><strong>Behavior when universal2 Python is not installed:</strong></p>
+<ul>
+<li>For <code>--target-platform=all</code>: Skips the cross-arch target with a note, builds all other platforms normally</li>
+<li>For an explicit cross-arch target (e.g. <code>--target-platform=macos-intel</code> on Apple Silicon): Fails with a clear error pointing to the python.org installer</li>
+<li>The package process continues successfully without cross-arch binaries</li>
+<li>Note: Intel (<code>macos-intel</code>) binaries run natively on Intel Macs and via Rosetta on Apple Silicon — they cover all Mac users. ARM64 binaries only run on Apple Silicon and cannot run on Intel Macs.</li>
+</ul>
+<p><strong>Graceful Fallback Behavior (legacy mode):</strong></p>
+<p>The package command is designed to handle missing optional components gracefully:</p>
+<ul>
+<li><strong>Cross-arch macOS builds</strong>: Skipped if universal2 Python is not installed (see Cross-arch macOS Build Setup above)</li>
+<li><strong>Windows builds</strong>: Skipped if CodeBuild was not enabled during <code>init</code></li>
+<li><strong>Linux builds (from macOS)</strong>: Skipped with a warning in two cases:</li>
+<li>Docker is not installed (<code>docker</code> binary not found in <code>$PATH</code>) — install Docker Desktop from https://docs.docker.com/get-docker/</li>
+<li>Docker is installed but the daemon is not running — open Docker Desktop and wait for it to start, then retry</li>
+<li>macOS and Windows builds are <strong>unaffected</strong> by Docker availability</li>
+<li><strong>macOS builds (from non-macOS host)</strong>: Refused with a clear error explaining that PyInstaller cannot cross-compile and listing alternative paths (macOS workstation, CI runner, EC2 Mac). Other targets in the same <code>ccwb package</code> invocation continue to build normally.</li>
+<li><strong>At least one platform must build successfully</strong> for the package command to succeed</li>
+</ul>
+<p>This ensures that packaging always works, even if some optional platforms are not available.</p>
+<p><strong>Output files:</strong></p>
+<ul>
+<li><code>credential-process-&lt;platform&gt;</code> - Authentication executable</li>
+<li><code>credential-process-macos-arm64</code> - macOS Apple Silicon</li>
+<li><code>credential-process-macos-intel</code> - macOS Intel</li>
+<li><code>credential-process-linux-x64</code> - Linux x64</li>
+<li><code>credential-process-linux-arm64</code> - Linux ARM64</li>
+<li><code>credential-process-windows.exe</code> - Windows x64</li>
+<li><code>otel-helper-&lt;platform&gt;</code> - OTEL helper (if monitoring enabled)</li>
+<li><code>config.json</code> - Configuration</li>
+<li><code>install.sh</code> - Unix installer script (auto-detects architecture)</li>
+<li><code>install.bat</code> - Windows installer launcher</li>
+<li><code>ccwb-install.ps1</code> - Windows PowerShell installer logic (called by install.bat)</li>
+<li><code>README.md</code> - Installation instructions</li>
+<li>Includes Claude Code telemetry settings (if monitoring enabled)</li>
+<li>Configures environment variables for model selection (ANTHROPIC_MODEL, ANTHROPIC_SMALL_FAST_MODEL)</li>
+</ul>
+<p><strong>Credential process binary flags (for end users):</strong></p>
+<p>The distributed <code>credential-process</code> binary accepts the following flags directly:</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--profile, -p &lt;name&gt;</code></td>
+<td>Profile to use (default: <code>ClaudeCode</code>, or <code>$CCWB_PROFILE</code>)</td>
+</tr>
+<tr>
+<td><code>--clear-cache</code></td>
+<td>Clear cached credentials and force re-authentication</td>
+</tr>
+<tr>
+<td><code>--check-expiration</code></td>
+<td>Exit 0 if credentials valid, 1 if expired</td>
+</tr>
+<tr>
+<td><code>--refresh-if-needed</code></td>
+<td>Refresh credentials if expired (session storage mode only)</td>
+</tr>
+<tr>
+<td><code>--get-monitoring-token</code></td>
+<td>Return cached OIDC monitoring token</td>
+</tr>
+<tr>
+<td><code>--set-client-secret</code></td>
+<td>Store Azure AD client secret in OS secure storage. Uses an interactive prompt by default; set <code>CCWB_CLIENT_SECRET</code> env var for non-interactive use. Press Enter at the prompt (or set the env var to an empty string) to clear the stored secret.</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>--set-client-secret</code> usage examples:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Interactive (prompts for secret):</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>~/claude-code-with-bedrock/credential-process<span class="w"> </span>--set-client-secret<span class="w"> </span>--profile<span class="w"> </span>ClaudeCode
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># Non-interactive (MDM/scripted deployment) — avoids secret appearing in shell history:</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="nv">CCWB_CLIENT_SECRET</span><span class="o">=</span>&lt;your-client-secret&gt;<span class="w"> </span>~/claude-code-with-bedrock/credential-process<span class="w"> </span>--set-client-secret<span class="w"> </span>--profile<span class="w"> </span>ClaudeCode
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c1"># Clear a stored secret:</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>~/claude-code-with-bedrock/credential-process<span class="w"> </span>--set-client-secret<span class="w"> </span>--profile<span class="w"> </span>ClaudeCode
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="c1"># (press Enter without typing a value)</span>
+</code></pre></div>
+<p><strong>Certificate path environment variables (confidential client — certificate mode):</strong></p>
+<p>When certificate paths recorded in <code>config.json</code> are absolute, they may not resolve on end-user machines with a different install layout. Set these env vars to override the paths stored in <code>config.json</code> at runtime:</p>
+<table>
+<thead>
+<tr>
+<th>Environment variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AZURE_CLIENT_CERTIFICATE_PATH</code></td>
+<td>Path to the PEM certificate file. Overrides <code>client_certificate_path</code> in <code>config.json</code>.</td>
+</tr>
+<tr>
+<td><code>AZURE_CLIENT_CERTIFICATE_KEY_PATH</code></td>
+<td>Path to the PEM private key file. Overrides <code>client_certificate_key_path</code> in <code>config.json</code>.</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># Override certificate paths (e.g. via MDM launch agent environment):</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nv">AZURE_CLIENT_CERTIFICATE_PATH</span><span class="o">=</span>~/certs/cert.pem<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="nv">AZURE_CLIENT_CERTIFICATE_KEY_PATH</span><span class="o">=</span>~/certs/key.pem<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>~/claude-code-with-bedrock/credential-process<span class="w"> </span>--profile<span class="w"> </span>ClaudeCode
+</code></pre></div>
+<p><strong>Output structure:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>dist/
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>├── credential-process-macos-arm64     # macOS ARM64 executable
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>├── credential-process-macos-intel     # macOS Intel executable
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>├── credential-process-linux-x64       # Linux x64 executable
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>├── credential-process-linux-arm64     # Linux ARM64 executable
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>├── credential-process-windows.exe     # Windows x64 executable
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>├── otel-helper-macos-arm64           # macOS ARM64 OTEL helper
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>├── otel-helper-macos-intel           # macOS Intel OTEL helper
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>├── otel-helper-linux-x64             # Linux x64 OTEL helper
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>├── otel-helper-linux-arm64           # Linux ARM64 OTEL helper
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>├── otel-helper-windows.exe           # Windows OTEL helper
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>├── config.json                       # Configuration
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>├── install.sh                        # Unix installer (auto-detects architecture)
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>├── install.bat                       # Windows installer launcher
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>├── ccwb-install.ps1                  # Windows PowerShell installer logic
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>├── README.md                         # User instructions
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>└── .claude/
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>    └── settings.json                 # Telemetry settings (optional)
+</code></pre></div>
+<h3 id="builds-list-and-manage-codebuild-builds"><code>builds</code> - List and Manage CodeBuild Builds<a class="headerlink" href="#builds-list-and-manage-codebuild-builds" title="Permanent link">&para;</a></h3>
+<p>Shows recent Windows binary builds and their status.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>builds<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--profile &lt;name&gt;</code> - Configuration profile to use (defaults to active profile)</li>
+<li><code>--limit &lt;n&gt;</code> - Number of builds to show (default: "10")</li>
+<li><code>--project &lt;name&gt;</code> - CodeBuild project name (default: auto-detect)</li>
+<li><code>--status &lt;id&gt;</code> - Check status of a specific build by ID</li>
+<li><code>--download</code> - Download completed Windows artifacts to dist folder</li>
+</ul>
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Lists recent CodeBuild builds for Windows binaries</li>
+<li>Shows build status, duration, and completion time</li>
+<li>Provides console links to view full build logs</li>
+<li>Monitors in-progress builds</li>
+<li>Uses active profile or specified profile for CodeBuild project detection</li>
+</ul>
+<p><strong>Note:</strong> This command requires CodeBuild to be enabled during the <code>init</code> process. If CodeBuild was not enabled, you'll need to re-run <code>init</code> and enable Windows build support.</p>
+<p><strong>Examples:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># List builds for active profile</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>builds
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1"># List builds for specific profile</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>builds<span class="w"> </span>--profile<span class="w"> </span>production
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="c1"># Check status of specific build</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>builds<span class="w"> </span>--status<span class="w"> </span>abc12345
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="c1"># Check latest build status and download artifacts</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>builds<span class="w"> </span>--status<span class="w"> </span>latest<span class="w"> </span>--download
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="c1"># List last 20 builds</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>builds<span class="w"> </span>--limit<span class="w"> </span><span class="m">20</span>
+</code></pre></div>
+<p><strong>Example output:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Recent Windows Builds
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>| Build ID | Status | Started | Duration |
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>|----------|--------|---------|----------|
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>| project:abc123 | SUCCEEDED | 2024-08-26 10:15 | 12m 34s |
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>| project:def456 | IN_PROGRESS | 2024-08-26 10:30 | - |
+</code></pre></div>
+<h3 id="distribute-share-packages-via-distribution"><code>distribute</code> - Share Packages via Distribution<a class="headerlink" href="#distribute-share-packages-via-distribution" title="Permanent link">&para;</a></h3>
+<p>Upload and distribute built packages via presigned S3 URLs or authenticated landing page.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--expires-hours &lt;hours&gt;</code> - URL expiration time in hours (1-168) [default: "48"]</li>
+<li><code>--get-latest</code> - Retrieve the latest distribution URL (presigned-s3 only)</li>
+<li><code>--profile &lt;name&gt;</code> - Configuration profile to use (uses active profile if not specified)</li>
+<li><code>--package-path &lt;path&gt;</code> - Path to package directory [default: "dist"]</li>
+<li><code>--build-profile &lt;name&gt;</code> - Select build by profile name</li>
+<li><code>--timestamp &lt;timestamp&gt;</code> - Select build by timestamp (format: YYYY-MM-DD-HHMMSS)</li>
+<li><code>--latest</code> - Auto-select latest build without wizard</li>
+<li><code>--allowed-ips &lt;ranges&gt;</code> - Comma-separated IP ranges for access control (presigned-s3 only)</li>
+<li><code>--show-qr</code> - Display QR code for URL (requires qrcode library)</li>
+</ul>
+<p><strong>What it does:</strong></p>
+<p>Behavior depends on your configured distribution type:</p>
+<p><strong>Presigned S3 URLs (Simple):</strong>
+- Uploads packages to S3 bucket
+- Generates secure presigned URLs (default 48 hours)
+- Stores URLs in Parameter Store for team access
+- Share URLs via email/Slack
+- No authentication required for downloads</p>
+<p><strong>Landing Page (Enterprise):</strong>
+- Uploads platform-specific packages (windows/linux/mac/all-platforms)
+- Updates S3 metadata (profile, timestamp, release date)
+- Provides landing page URL for authenticated access
+- Users authenticate via IdP (Okta/Azure/Auth0/Cognito)
+- Platform auto-detection and recommendations</p>
+<p><strong>Distribution workflow:</strong></p>
+<ol>
+<li>Build packages: <code>poetry run ccwb package</code></li>
+<li>Upload and distribute: <code>poetry run ccwb distribute</code></li>
+<li><strong>Presigned-s3</strong>: Share generated URLs with developers</li>
+<li><strong>Landing-page</strong>: Direct users to your landing page URL</li>
+</ol>
+<p><strong>Examples:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># Distribute latest build (interactive build selection)</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="c1"># Distribute latest build automatically (skip wizard)</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute<span class="w"> </span>--latest
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="c1"># Distribute specific build by timestamp</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute<span class="w"> </span>--timestamp<span class="w"> </span><span class="m">2024</span>-11-14-083022
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="c1"># Distribute with custom expiration (presigned-s3 only)</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute<span class="w"> </span>--expires-hours<span class="o">=</span><span class="m">72</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="c1"># Get existing URL without re-uploading (presigned-s3 only)</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute<span class="w"> </span>--get-latest
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="c1"># Distribute with QR code for mobile sharing</span>
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute<span class="w"> </span>--show-qr
+</code></pre></div>
+<p><strong>Build Selection:</strong></p>
+<p>If you have multiple builds in <code>dist/</code>, the command will:
+1. Scan for organized profile/timestamp builds
+2. Show interactive wizard to select which build to distribute
+3. Display build date, size, and platforms included
+4. Allow selection by profile name or timestamp</p>
+<p>Use <code>--latest</code> to skip the wizard and auto-select the most recent build.</p>
+<p><strong>Platform-Specific Uploads (Landing Page):</strong></p>
+<p>For landing-page distribution, packages are organized by platform:
+- <code>packages/windows/latest.zip</code> - Windows package
+- <code>packages/linux/latest.zip</code> - Linux package
+- <code>packages/mac/latest.zip</code> - macOS package
+- <code>packages/all-platforms/latest.zip</code> - All platforms bundle</p>
+<p>Landing page auto-detects user's OS and recommends appropriate package.</p>
+<h3 id="status-check-deployment-status"><code>status</code> - Check Deployment Status<a class="headerlink" href="#status-check-deployment-status" title="Permanent link">&para;</a></h3>
+<p>Shows the current deployment status and configuration.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>status<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--profile &lt;name&gt;</code> - Profile to check (uses active profile if not specified)</li>
+<li><code>--json</code> - Output in JSON format</li>
+<li><code>--detailed</code> - Show detailed information</li>
+</ul>
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Shows current configuration including:</li>
+<li>Configuration profile and AWS profile names</li>
+<li>OIDC provider and client ID</li>
+<li>Selected Claude model and cross-region profile</li>
+<li>Source region for model inference</li>
+<li>Analytics and monitoring status</li>
+<li>Checks CloudFormation stack status</li>
+<li>Displays Identity Pool information</li>
+<li>Shows monitoring configuration and endpoints</li>
+<li>In sidecar monitoring mode, shows local collector status (running/stopped) and the local OTLP endpoint</li>
+</ul>
+<h3 id="cleanup-remove-installed-components"><code>cleanup</code> - Remove Installed Components<a class="headerlink" href="#cleanup-remove-installed-components" title="Permanent link">&para;</a></h3>
+<p>Removes components installed by the test command or manual installation.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>cleanup<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--force</code> - Skip confirmation prompts</li>
+<li><code>--profile &lt;name&gt;</code> - AWS profile name to remove (default: "ClaudeCode")</li>
+</ul>
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Removes <code>~/claude-code-with-bedrock/</code> directory</li>
+<li>Removes AWS profile from <code>~/.aws/config</code></li>
+<li>Removes Claude settings from <code>~/.claude/settings.json</code></li>
+<li>Shows what will be removed before taking action</li>
+</ul>
+<p><strong>Use this to:</strong></p>
+<ul>
+<li>Clean up after testing</li>
+<li>Remove failed installations</li>
+<li>Start fresh with a new configuration</li>
+</ul>
+<h2 id="claude-desktop-cowork-3p">Claude Desktop (Cowork 3P)<a class="headerlink" href="#claude-desktop-cowork-3p" title="Permanent link">&para;</a></h2>
+<h3 id="cowork-generate-generate-mdm-configuration"><code>cowork generate</code> - Generate MDM Configuration<a class="headerlink" href="#cowork-generate-generate-mdm-configuration" title="Permanent link">&para;</a></h3>
+<p>Generate Claude Desktop (Cowork 3P) MDM configuration files for deploying Claude Desktop with Amazon Bedrock as the inference backend.</p>
+<p>This command reads your existing deployment profile (region, model, monitoring stack) and generates ready-to-deploy MDM configuration files.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># Generate all formats (JSON, macOS .mobileconfig, Windows .reg)</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>cowork<span class="w"> </span>generate
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="c1"># Generate specific format</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>cowork<span class="w"> </span>generate<span class="w"> </span>--format<span class="w"> </span>mobileconfig
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>cowork<span class="w"> </span>generate<span class="w"> </span>--format<span class="w"> </span>reg
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>cowork<span class="w"> </span>generate<span class="w"> </span>--format<span class="w"> </span>json
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="c1"># Custom model aliases</span>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>cowork<span class="w"> </span>generate<span class="w"> </span>--models<span class="w"> </span>opus,sonnet,haiku
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="c1"># Custom output directory</span>
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>cowork<span class="w"> </span>generate<span class="w"> </span>-o<span class="w"> </span>./my-mdm-configs/
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="c1"># Specific profile</span>
+<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>cowork<span class="w"> </span>generate<span class="w"> </span>--profile<span class="w"> </span>Production
+</code></pre></div>
+<p><strong>Options:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--profile</code></td>
+<td>Configuration profile to use</td>
+<td>Active profile</td>
+</tr>
+<tr>
+<td><code>--output</code>, <code>-o</code></td>
+<td>Output directory</td>
+<td><code>dist/cowork-3p/</code></td>
+</tr>
+<tr>
+<td><code>--format</code>, <code>-f</code></td>
+<td>Output format: <code>all</code>, <code>json</code>, <code>mobileconfig</code>, <code>reg</code></td>
+<td><code>all</code></td>
+</tr>
+<tr>
+<td><code>--models</code>, <code>-m</code></td>
+<td>Comma-separated model aliases</td>
+<td>Auto-detected from profile</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Generated files:</strong></p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Platform</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cowork-3p-config.json</code></td>
+<td>All</td>
+<td>Raw MDM configuration JSON (for Claude Desktop Setup UI import)</td>
+</tr>
+<tr>
+<td><code>cowork-3p.mobileconfig</code></td>
+<td>macOS</td>
+<td>MDM configuration profile (deploy via Jamf, Kandji, Mosyle)</td>
+</tr>
+<tr>
+<td><code>cowork-3p.reg</code></td>
+<td>Windows</td>
+<td>Registry file (deploy via Group Policy, Intune, SCCM)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Automatic integration with <code>ccwb package</code>:</strong></p>
+<p>Claude Desktop MDM configs are also auto-generated during <code>ccwb package</code> when enabled via <code>ccwb init</code>. Both paths use the same shared configuration logic to ensure identical output. (Exception: IDC zero-binary packages — IAM Identity Center auth without quota — skip MDM generation with a warning, because they intentionally ship no credential-process binary for Claude Desktop to invoke.)</p>
+<p>See the <a href="../COWORK_3P/">Claude Desktop (Cowork 3P) Guide</a> for detailed setup and deployment instructions.</p>
+<h2 id="quota-management">Quota Management<a class="headerlink" href="#quota-management" title="Permanent link">&para;</a></h2>
+<p>Commands for managing per-user and group token quotas. Requires quota monitoring to be enabled during <code>init</code>.</p>
+<p>For detailed architecture and configuration, see <a href="../QUOTA_MONITORING/">QUOTA_MONITORING.md</a>.</p>
+<h3 id="quota-set-user-set-user-quota"><code>quota set-user</code> - Set User Quota<a class="headerlink" href="#quota-set-user-set-user-quota" title="Permanent link">&para;</a></h3>
+<p>Sets a quota policy for a specific user.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span>set-user<span class="w"> </span>&lt;email&gt;<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Arguments:</strong>
+- <code>&lt;email&gt;</code> - User's email address</p>
+<p><strong>Options:</strong>
+- <code>--monthly-limit, -m &lt;tokens&gt;</code> - Monthly token limit (supports K, M, B suffixes: 10M = 10,000,000)
+- <code>--daily-limit, -d &lt;tokens&gt;</code> - Daily token limit (optional)
+- <code>--budget, -b &lt;usd&gt;</code> - Monthly budget in USD (e.g., 50) — for cost-based quotas
+- <code>--monthly-cost-limit &lt;usd&gt;</code> - Monthly cost limit in USD (same as <code>--budget</code>)
+- <code>--daily-budget &lt;usd&gt;</code> - Daily budget in USD (e.g., 10)
+- <code>--daily-cost-limit &lt;usd&gt;</code> - Daily cost limit in USD (same as <code>--daily-budget</code>)
+- <code>--enforcement, -e &lt;mode&gt;</code> - Monthly enforcement mode: <code>alert</code> (monitor only) or <code>block</code> (deny access)
+- <code>--daily-enforcement &lt;mode&gt;</code> - Daily enforcement mode: <code>alert</code> or <code>block</code>
+- <code>--disabled</code> - Create policy in disabled state
+- <code>--profile, -p &lt;name&gt;</code> - Configuration profile</p>
+<p>Provide at least one monthly limit: <code>--monthly-limit</code> (token-based) or <code>--budget</code>/<code>--monthly-cost-limit</code> (cost-based).</p>
+<p><strong>Examples:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># Token-based quota</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span>set-user<span class="w"> </span>alice@example.com<span class="w"> </span>-m<span class="w"> </span>5M<span class="w"> </span>-e<span class="w"> </span>block
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="c1"># Cost-based quota: $50/month, $5/day</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span>set-user<span class="w"> </span>alice@example.com<span class="w"> </span>--budget<span class="w"> </span><span class="m">50</span><span class="w"> </span>--daily-budget<span class="w"> </span><span class="m">5</span><span class="w"> </span>-e<span class="w"> </span>block
+</code></pre></div></p>
+<h3 id="quota-set-group-set-group-quota"><code>quota set-group</code> - Set Group Quota<a class="headerlink" href="#quota-set-group-set-group-quota" title="Permanent link">&para;</a></h3>
+<p>Sets a quota policy for a group (applies to all users in the group).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span>set-group<span class="w"> </span>&lt;group&gt;<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Arguments:</strong>
+- <code>&lt;group&gt;</code> - Group name (from OIDC groups claim)</p>
+<p><strong>Options:</strong>
+- Same as <code>set-user</code></p>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span>set-group<span class="w"> </span>engineering<span class="w"> </span>-m<span class="w"> </span>20M<span class="w"> </span>-d<span class="w"> </span>1M<span class="w"> </span>-e<span class="w"> </span>alert
+</code></pre></div></p>
+<h3 id="quota-set-default-set-default-quota"><code>quota set-default</code> - Set Default Quota<a class="headerlink" href="#quota-set-default-set-default-quota" title="Permanent link">&para;</a></h3>
+<p>Sets the default quota policy for all users without a specific user or group policy.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span>set-default<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Options:</strong>
+- Same as <code>set-user</code></p>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span>set-default<span class="w"> </span>-m<span class="w"> </span>225M<span class="w"> </span>-e<span class="w"> </span>alert
+</code></pre></div></p>
+<h3 id="quota-list-list-policies"><code>quota list</code> - List Policies<a class="headerlink" href="#quota-list-list-policies" title="Permanent link">&para;</a></h3>
+<p>Lists all quota policies.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span>list<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Options:</strong>
+- <code>--type &lt;type&gt;</code> - Filter by type: <code>user</code>, <code>group</code>, or <code>default</code>
+- <code>--profile, -p &lt;name&gt;</code> - Configuration profile</p>
+<h3 id="quota-delete-delete-policy"><code>quota delete</code> - Delete Policy<a class="headerlink" href="#quota-delete-delete-policy" title="Permanent link">&para;</a></h3>
+<p>Deletes a quota policy.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span>delete<span class="w"> </span>&lt;type&gt;<span class="w"> </span>&lt;identifier&gt;<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Arguments:</strong>
+- <code>&lt;type&gt;</code> - Policy type: <code>user</code>, <code>group</code>, or <code>default</code>
+- <code>&lt;identifier&gt;</code> - Email (for user), group name, or "default"</p>
+<p><strong>Options:</strong>
+- <code>--profile, -p &lt;name&gt;</code> - Configuration profile</p>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span>delete<span class="w"> </span>user<span class="w"> </span>alice@example.com
+</code></pre></div></p>
+<h3 id="quota-show-show-effective-quota"><code>quota show</code> - Show Effective Quota<a class="headerlink" href="#quota-show-show-effective-quota" title="Permanent link">&para;</a></h3>
+<p>Shows the effective quota policy for a user (resolves user &gt; group &gt; default precedence).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span>show<span class="w"> </span>&lt;email&gt;<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Arguments:</strong>
+- <code>&lt;email&gt;</code> - User's email address</p>
+<p><strong>Options:</strong>
+- <code>--profile, -p &lt;name&gt;</code> - Configuration profile</p>
+<h3 id="quota-usage-show-usage"><code>quota usage</code> - Show Usage<a class="headerlink" href="#quota-usage-show-usage" title="Permanent link">&para;</a></h3>
+<p>Shows current usage against quota limits for a user.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span>usage<span class="w"> </span>&lt;email&gt;<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Arguments:</strong>
+- <code>&lt;email&gt;</code> - User's email address</p>
+<p><strong>Options:</strong>
+- <code>--profile, -p &lt;name&gt;</code> - Configuration profile</p>
+<h3 id="quota-unblock-unblock-user"><code>quota unblock</code> - Unblock User<a class="headerlink" href="#quota-unblock-unblock-user" title="Permanent link">&para;</a></h3>
+<p>Temporarily unblocks a user who has been blocked due to quota exceeded.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span>unblock<span class="w"> </span>&lt;email&gt;<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Arguments:</strong>
+- <code>&lt;email&gt;</code> - User's email address</p>
+<p><strong>Options:</strong>
+- <code>--duration &lt;time&gt;</code> - Duration: <code>24h</code>, <code>7d</code>, <code>until-reset</code>, or custom (e.g., <code>48h</code>, <code>3d</code>)
+- <code>--reason &lt;text&gt;</code> - Reason for unblock (for audit trail)
+- <code>--profile, -p &lt;name&gt;</code> - Configuration profile</p>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span>unblock<span class="w"> </span>alice@example.com<span class="w"> </span>--duration<span class="w"> </span>24h<span class="w"> </span>--reason<span class="w"> </span><span class="s2">"Emergency project deadline"</span>
+</code></pre></div></p>
+<h3 id="quota-export-export-policies"><code>quota export</code> - Export Policies<a class="headerlink" href="#quota-export-export-policies" title="Permanent link">&para;</a></h3>
+<p>Exports quota policies to a JSON or CSV file for backup, migration, or auditing.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span><span class="nb">export</span><span class="w"> </span>&lt;file&gt;<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Arguments:</strong>
+- <code>&lt;file&gt;</code> - Output file path (.json or .csv)</p>
+<p><strong>Options:</strong>
+- <code>--type, -t &lt;type&gt;</code> - Filter by policy type: <code>user</code>, <code>group</code>, or <code>default</code>
+- <code>--stdout</code> - Output to stdout instead of file
+- <code>--profile, -p &lt;name&gt;</code> - Configuration profile</p>
+<p><strong>Examples:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="c1"># Export all policies to JSON</span>
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span><span class="nb">export</span><span class="w"> </span>policies.json
+<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>
+<a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a><span class="c1"># Export to CSV for spreadsheet editing</span>
+<a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span><span class="nb">export</span><span class="w"> </span>policies.csv
+<a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>
+<a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a><span class="c1"># Export only user policies</span>
+<a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span><span class="nb">export</span><span class="w"> </span>users.json<span class="w"> </span>--type<span class="w"> </span>user
+<a id="__codelineno-33-9" name="__codelineno-33-9" href="#__codelineno-33-9"></a>
+<a id="__codelineno-33-10" name="__codelineno-33-10" href="#__codelineno-33-10"></a><span class="c1"># Export to stdout (for piping)</span>
+<a id="__codelineno-33-11" name="__codelineno-33-11" href="#__codelineno-33-11"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span><span class="nb">export</span><span class="w"> </span>--stdout<span class="w"> </span>&gt;<span class="w"> </span>backup.json
+</code></pre></div></p>
+<p><strong>JSON output format:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="p">{</span>
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="w">  </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0"</span><span class="p">,</span>
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="w">  </span><span class="nt">"exported_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-11-29T10:30:00Z"</span><span class="p">,</span>
+<a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a><span class="w">  </span><span class="nt">"policies"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a><span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="p">,</span>
+<a id="__codelineno-34-7" name="__codelineno-34-7" href="#__codelineno-34-7"></a><span class="w">      </span><span class="nt">"identifier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"alice@example.com"</span><span class="p">,</span>
+<a id="__codelineno-34-8" name="__codelineno-34-8" href="#__codelineno-34-8"></a><span class="w">      </span><span class="nt">"monthly_token_limit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"300M"</span><span class="p">,</span>
+<a id="__codelineno-34-9" name="__codelineno-34-9" href="#__codelineno-34-9"></a><span class="w">      </span><span class="nt">"daily_token_limit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"15M"</span><span class="p">,</span>
+<a id="__codelineno-34-10" name="__codelineno-34-10" href="#__codelineno-34-10"></a><span class="w">      </span><span class="nt">"enforcement_mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"alert"</span><span class="p">,</span>
+<a id="__codelineno-34-11" name="__codelineno-34-11" href="#__codelineno-34-11"></a><span class="w">      </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-34-12" name="__codelineno-34-12" href="#__codelineno-34-12"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-34-13" name="__codelineno-34-13" href="#__codelineno-34-13"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-34-14" name="__codelineno-34-14" href="#__codelineno-34-14"></a><span class="p">}</span>
+</code></pre></div></p>
+<p><strong>CSV output format:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>type,identifier,monthly_token_limit,daily_token_limit,enforcement_mode,enabled
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>user,alice@example.com,300M,15M,alert,true
+<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>group,engineering,500M,25M,block,true
+<a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>default,default,225M,8M,alert,true
+</code></pre></div></p>
+<h3 id="quota-import-import-policies"><code>quota import</code> - Import Policies<a class="headerlink" href="#quota-import-import-policies" title="Permanent link">&para;</a></h3>
+<p>Imports quota policies from a JSON or CSV file. Supports bulk policy creation with conflict handling.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span>import<span class="w"> </span>&lt;file&gt;<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Arguments:</strong>
+- <code>&lt;file&gt;</code> - Input file path (.json or .csv)</p>
+<p><strong>Options:</strong>
+- <code>--skip-existing</code> - Skip policies that already exist
+- <code>--update</code> - Update existing policies (upsert mode)
+- <code>--dry-run</code> - Preview changes without applying
+- <code>--type, -t &lt;type&gt;</code> - Import only specific type: <code>user</code>, <code>group</code>, or <code>default</code>
+- <code>--auto-daily</code> - Auto-calculate daily limits for policies missing <code>daily_token_limit</code>
+- <code>--burst &lt;percent&gt;</code> - Burst buffer percentage for auto-daily calculation (default: 10)
+- <code>--profile, -p &lt;name&gt;</code> - Configuration profile</p>
+<p><strong>Examples:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="c1"># Import from JSON, skip existing policies</span>
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span>import<span class="w"> </span>policies.json<span class="w"> </span>--skip-existing
+<a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>
+<a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a><span class="c1"># Import from CSV, update existing policies</span>
+<a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span>import<span class="w"> </span>policies.csv<span class="w"> </span>--update
+<a id="__codelineno-37-6" name="__codelineno-37-6" href="#__codelineno-37-6"></a>
+<a id="__codelineno-37-7" name="__codelineno-37-7" href="#__codelineno-37-7"></a><span class="c1"># Preview import without making changes</span>
+<a id="__codelineno-37-8" name="__codelineno-37-8" href="#__codelineno-37-8"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span>import<span class="w"> </span>policies.json<span class="w"> </span>--dry-run
+<a id="__codelineno-37-9" name="__codelineno-37-9" href="#__codelineno-37-9"></a>
+<a id="__codelineno-37-10" name="__codelineno-37-10" href="#__codelineno-37-10"></a><span class="c1"># Import users only</span>
+<a id="__codelineno-37-11" name="__codelineno-37-11" href="#__codelineno-37-11"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span>import<span class="w"> </span>all-policies.csv<span class="w"> </span>--type<span class="w"> </span>user<span class="w"> </span>--update
+<a id="__codelineno-37-12" name="__codelineno-37-12" href="#__codelineno-37-12"></a>
+<a id="__codelineno-37-13" name="__codelineno-37-13" href="#__codelineno-37-13"></a><span class="c1"># Auto-calculate daily limits with 15% burst buffer</span>
+<a id="__codelineno-37-14" name="__codelineno-37-14" href="#__codelineno-37-14"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>quota<span class="w"> </span>import<span class="w"> </span>users.csv<span class="w"> </span>--auto-daily<span class="w"> </span>--burst<span class="w"> </span><span class="m">15</span>
+</code></pre></div></p>
+<p><strong>Output example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>✓ Created: alice@example.com (user) - 300M
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>✓ Created: bob@example.com (user) - 200M
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>⚠ Skipped: engineering (group) - already exists
+<a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>✓ Updated: ml-team (group) - 1B
+<a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>
+<a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>Import Summary
+<a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a>  Created: 2
+<a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a>  Updated: 1
+<a id="__codelineno-38-9" name="__codelineno-38-9" href="#__codelineno-38-9"></a>  Skipped: 1
+<a id="__codelineno-38-10" name="__codelineno-38-10" href="#__codelineno-38-10"></a>  Errors:  0
+</code></pre></div></p>
+<p><strong>Required CSV columns:</strong>
+- <code>type</code> - Policy type: <code>user</code>, <code>group</code>, or <code>default</code>
+- <code>identifier</code> - User email, group name, or <code>default</code>
+- <code>monthly_token_limit</code> - Monthly limit (supports K/M/B suffix, e.g., <code>300M</code>)</p>
+<p><strong>Optional CSV columns:</strong>
+- <code>daily_token_limit</code> - Daily limit (auto-calculated if <code>--auto-daily</code>)
+- <code>enforcement_mode</code> - <code>alert</code> (default) or <code>block</code>
+- <code>enabled</code> - <code>true</code> (default) or <code>false</code></p>
+<h2 id="profile-management">Profile Management<a class="headerlink" href="#profile-management" title="Permanent link">&para;</a></h2>
+<p>The following commands manage multiple deployment profiles (v2.0+). Profiles let you manage configurations for different AWS accounts, regions, or organizations from a single machine.</p>
+<h3 id="context-list-list-all-profiles"><code>context list</code> - List All Profiles<a class="headerlink" href="#context-list-list-all-profiles" title="Permanent link">&para;</a></h3>
+<p>Shows all available profiles with an indicator for the active profile.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>context<span class="w"> </span>list
+</code></pre></div>
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Lists all profiles in <code>~/.ccwb/profiles/</code></li>
+<li>Displays profile name, AWS region, and stack name</li>
+<li>Highlights the currently active profile</li>
+<li>Shows profile count</li>
+</ul>
+<p><strong>Example output:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>Available Profiles:
+<a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>  * production (us-east-1, stack: claude-code-prod)
+<a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>    development (us-west-2, stack: claude-code-dev)
+<a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>    eu-deployment (eu-west-1, stack: claude-code-eu)
+<a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>
+<a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a>Active profile: production
+<a id="__codelineno-40-7" name="__codelineno-40-7" href="#__codelineno-40-7"></a>Total profiles: 3
+</code></pre></div>
+<h3 id="context-current-show-active-profile"><code>context current</code> - Show Active Profile<a class="headerlink" href="#context-current-show-active-profile" title="Permanent link">&para;</a></h3>
+<p>Displays the currently active profile name.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>context<span class="w"> </span>current
+</code></pre></div>
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Shows the name of the active profile</li>
+<li>Exits with error if no active profile is set</li>
+</ul>
+<p><strong>Example output:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>Current profile: production
+</code></pre></div>
+<h3 id="context-use-switch-active-profile"><code>context use</code> - Switch Active Profile<a class="headerlink" href="#context-use-switch-active-profile" title="Permanent link">&para;</a></h3>
+<p>Changes the active profile to the specified one.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>context<span class="w"> </span>use<span class="w"> </span>&lt;profile-name&gt;
+</code></pre></div>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>profile-name</code> - Name of the profile to activate (required)</li>
+</ul>
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Sets the specified profile as active</li>
+<li>Validates that the profile exists</li>
+<li>Updates global configuration file</li>
+</ul>
+<p><strong>Examples:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="c1"># Switch to production profile</span>
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>context<span class="w"> </span>use<span class="w"> </span>production
+<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>
+<a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a><span class="c1"># Switch to development profile</span>
+<a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>context<span class="w"> </span>use<span class="w"> </span>development
+</code></pre></div>
+<h3 id="context-show-display-profile-details"><code>context show</code> - Display Profile Details<a class="headerlink" href="#context-show-display-profile-details" title="Permanent link">&para;</a></h3>
+<p>Shows detailed configuration for a profile.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>context<span class="w"> </span>show<span class="w"> </span><span class="o">[</span>profile-name<span class="o">]</span>
+</code></pre></div>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>profile-name</code> - Profile to display (optional, defaults to active profile)</li>
+</ul>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--json</code> - Output in JSON format</li>
+</ul>
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Displays full profile configuration including:</li>
+<li>AWS region and account</li>
+<li>OIDC provider settings</li>
+<li>Stack names</li>
+<li>Model selection</li>
+<li>Monitoring configuration</li>
+<li>Masks sensitive values (client secrets)</li>
+</ul>
+<p><strong>Examples:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="c1"># Show active profile details</span>
+<a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>context<span class="w"> </span>show
+<a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>
+<a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a><span class="c1"># Show specific profile</span>
+<a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>context<span class="w"> </span>show<span class="w"> </span>production
+<a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a>
+<a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a><span class="c1"># Output as JSON</span>
+<a id="__codelineno-46-8" name="__codelineno-46-8" href="#__codelineno-46-8"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>context<span class="w"> </span>show<span class="w"> </span>--json
+</code></pre></div>
+<h3 id="config-validate-validate-profile-configuration"><code>config validate</code> - Validate Profile Configuration<a class="headerlink" href="#config-validate-validate-profile-configuration" title="Permanent link">&para;</a></h3>
+<p>Validates profile configuration for errors.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>config<span class="w"> </span>validate<span class="w"> </span><span class="o">[</span>profile-name<span class="p">|</span>all<span class="o">]</span>
+</code></pre></div>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>profile-name</code> - Profile to validate (optional, defaults to active profile)</li>
+<li><code>all</code> - Validate all profiles</li>
+</ul>
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Checks required fields are present</li>
+<li>Validates field formats (region, stack names, URLs)</li>
+<li>Verifies AWS credentials exist</li>
+<li>Reports validation errors with suggestions</li>
+</ul>
+<p><strong>Examples:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="c1"># Validate active profile</span>
+<a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>config<span class="w"> </span>validate
+<a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a>
+<a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a><span class="c1"># Validate specific profile</span>
+<a id="__codelineno-48-5" name="__codelineno-48-5" href="#__codelineno-48-5"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>config<span class="w"> </span>validate<span class="w"> </span>production
+<a id="__codelineno-48-6" name="__codelineno-48-6" href="#__codelineno-48-6"></a>
+<a id="__codelineno-48-7" name="__codelineno-48-7" href="#__codelineno-48-7"></a><span class="c1"># Validate all profiles</span>
+<a id="__codelineno-48-8" name="__codelineno-48-8" href="#__codelineno-48-8"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>config<span class="w"> </span>validate<span class="w"> </span>all
+</code></pre></div>
+<h3 id="config-export-export-profile-configuration"><code>config export</code> - Export Profile Configuration<a class="headerlink" href="#config-export-export-profile-configuration" title="Permanent link">&para;</a></h3>
+<p>Exports a profile configuration to a file (sanitized).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>config<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="o">[</span>profile-name<span class="o">]</span><span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>profile-name</code> - Profile to export (optional, defaults to active profile)</li>
+</ul>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--output &lt;file&gt;</code> - Output file path (default: <code>&lt;profile-name&gt;.json</code>)</li>
+<li><code>--include-secrets</code> - Include sensitive values (not recommended)</li>
+</ul>
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Exports profile configuration to JSON file</li>
+<li>Removes sensitive values by default (client secrets)</li>
+<li>Creates portable configuration file</li>
+</ul>
+<p><strong>Examples:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a><span class="c1"># Export active profile (secrets removed)</span>
+<a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>config<span class="w"> </span><span class="nb">export</span>
+<a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a>
+<a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a><span class="c1"># Export specific profile to custom path</span>
+<a id="__codelineno-50-5" name="__codelineno-50-5" href="#__codelineno-50-5"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>config<span class="w"> </span><span class="nb">export</span><span class="w"> </span>production<span class="w"> </span>--output<span class="w"> </span>prod-config.json
+<a id="__codelineno-50-6" name="__codelineno-50-6" href="#__codelineno-50-6"></a>
+<a id="__codelineno-50-7" name="__codelineno-50-7" href="#__codelineno-50-7"></a><span class="c1"># Export with secrets (use caution)</span>
+<a id="__codelineno-50-8" name="__codelineno-50-8" href="#__codelineno-50-8"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>config<span class="w"> </span><span class="nb">export</span><span class="w"> </span>--include-secrets
+</code></pre></div>
+<h3 id="config-import-import-profile-configuration"><code>config import</code> - Import Profile Configuration<a class="headerlink" href="#config-import-import-profile-configuration" title="Permanent link">&para;</a></h3>
+<p>Imports a profile configuration from a file.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>config<span class="w"> </span>import<span class="w"> </span>&lt;file&gt;<span class="w"> </span><span class="o">[</span>name<span class="o">]</span>
+</code></pre></div>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>file</code> - Path to configuration file (required)</li>
+<li><code>name</code> - Name for imported profile (optional, uses name from file)</li>
+</ul>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--overwrite</code> - Overwrite if profile already exists</li>
+<li><code>--set-active</code> - Set as active profile after import</li>
+</ul>
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Imports profile configuration from JSON file</li>
+<li>Validates configuration before importing</li>
+<li>Creates new profile in <code>~/.ccwb/profiles/</code></li>
+<li>Optionally sets as active profile</li>
+</ul>
+<p><strong>Examples:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a><span class="c1"># Import profile with default name</span>
+<a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>config<span class="w"> </span>import<span class="w"> </span>prod-config.json
+<a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a>
+<a id="__codelineno-52-4" name="__codelineno-52-4" href="#__codelineno-52-4"></a><span class="c1"># Import with custom name</span>
+<a id="__codelineno-52-5" name="__codelineno-52-5" href="#__codelineno-52-5"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>config<span class="w"> </span>import<span class="w"> </span>config.json<span class="w"> </span>staging
+<a id="__codelineno-52-6" name="__codelineno-52-6" href="#__codelineno-52-6"></a>
+<a id="__codelineno-52-7" name="__codelineno-52-7" href="#__codelineno-52-7"></a><span class="c1"># Import and set as active</span>
+<a id="__codelineno-52-8" name="__codelineno-52-8" href="#__codelineno-52-8"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>config<span class="w"> </span>import<span class="w"> </span>config.json<span class="w"> </span>--set-active
+<a id="__codelineno-52-9" name="__codelineno-52-9" href="#__codelineno-52-9"></a>
+<a id="__codelineno-52-10" name="__codelineno-52-10" href="#__codelineno-52-10"></a><span class="c1"># Overwrite existing profile</span>
+<a id="__codelineno-52-11" name="__codelineno-52-11" href="#__codelineno-52-11"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>config<span class="w"> </span>import<span class="w"> </span>config.json<span class="w"> </span>production<span class="w"> </span>--overwrite
+</code></pre></div>
+<h3 id="destroy-remove-infrastructure"><code>destroy</code> - Remove Infrastructure<a class="headerlink" href="#destroy-remove-infrastructure" title="Permanent link">&para;</a></h3>
+<p>Removes deployed AWS infrastructure.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>destroy<span class="w"> </span><span class="o">[</span>stack<span class="o">]</span><span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>stack</code> - Specific stack to destroy: codebuild, analytics, quota, cowork-dashboard, dashboard, monitoring, distribution, networking, s3bucket, or auth (optional)</li>
+</ul>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--profile &lt;name&gt;</code> - Configuration profile to use (uses active profile if not specified)</li>
+<li><code>--force</code> - Skip confirmation prompts</li>
+</ul>
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Deletes CloudFormation stacks in reverse dependency order (codebuild → analytics → quota → cowork-dashboard → dashboard → monitoring → distribution → networking → s3bucket → auth), skipping any not enabled for the profile</li>
+<li>Shows resources to be deleted before proceeding</li>
+<li>Warns about manual cleanup requirements (e.g., CloudWatch LogGroups)</li>
+</ul>
+<p><strong>Note:</strong> Some resources like CloudWatch LogGroups may require manual deletion.</p>
+<h3 id="doctor-validate-installation-health"><code>doctor</code> - Validate Installation Health<a class="headerlink" href="#doctor-validate-installation-health" title="Permanent link">&para;</a></h3>
+<p>Runs health checks on the local machine to catch misconfigurations and aid troubleshooting.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>doctor<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
+</code></pre></div>
+<p><strong>Options:</strong></p>
+<ul>
+<li><code>--verbose</code> / <code>-v</code> - Show raw JSON from <code>credential-process --explain</code> and <code>otel-helper --status</code></li>
+<li><code>--live</code> / <code>-l</code> - Also attempt authentication and check proxy connectivity</li>
+<li><code>--json</code> - Machine-readable JSON output (for CI or support)</li>
+<li><code>--profile &lt;name&gt;</code> - Check a specific profile</li>
+</ul>
+<p><strong>Health Checks:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>What it validates</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>credential-process</code></td>
+<td>Binary exists in install dir (.exe/.cmd/.ps1 on Windows)</td>
+</tr>
+<tr>
+<td><code>config.json</code></td>
+<td>Present, valid JSON, lists profiles</td>
+</tr>
+<tr>
+<td><code>aws-profile</code></td>
+<td><code>~/.aws/config</code> references credential-process</td>
+</tr>
+<tr>
+<td><code>settings.json</code></td>
+<td>Claude Code settings file with env/hooks</td>
+</tr>
+<tr>
+<td><code>explain</code></td>
+<td>Calls <code>credential-process --explain</code> — shows resolved auth mode, provider, quota</td>
+</tr>
+<tr>
+<td><code>otel-helper</code></td>
+<td>Telemetry binary exists (only FAIL if monitoring configured)</td>
+</tr>
+<tr>
+<td><code>otel-status</code></td>
+<td>Calls <code>otel-helper --status</code> — proxy running? headers cached?</td>
+</tr>
+<tr>
+<td><code>auth-test</code></td>
+<td>(--live only) Attempts credential check</td>
+</tr>
+<tr>
+<td><code>proxy-health</code></td>
+<td>(--live only) TCP connect to OTEL proxy port</td>
+</tr>
+</tbody>
+</table>
+<p><strong>On failure:</strong> Generates a pre-filled GitHub issue URL with diagnostics, environment, and auth mode.</p>
+<h3 id="go-binary-diagnostic-flags">Go Binary Diagnostic Flags<a class="headerlink" href="#go-binary-diagnostic-flags" title="Permanent link">&para;</a></h3>
+<p>These flags are available on the installed Go binaries (v2.5.0+):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a><span class="c1"># Print resolved configuration (no auth, no network)</span>
+<a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a>credential-process<span class="w"> </span>--explain
+<a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a>
+<a id="__codelineno-55-4" name="__codelineno-55-4" href="#__codelineno-55-4"></a><span class="c1"># Print proxy and cache status</span>
+<a id="__codelineno-55-5" name="__codelineno-55-5" href="#__codelineno-55-5"></a>otel-helper<span class="w"> </span>--status
+<a id="__codelineno-55-6" name="__codelineno-55-6" href="#__codelineno-55-6"></a>
+<a id="__codelineno-55-7" name="__codelineno-55-7" href="#__codelineno-55-7"></a><span class="c1"># Show version with commit SHA</span>
+<a id="__codelineno-55-8" name="__codelineno-55-8" href="#__codelineno-55-8"></a>credential-process<span class="w"> </span>--version<span class="w">   </span><span class="c1"># → credential-process v2.5.0-beta.91 (62a232f)</span>
+</code></pre></div>
+<p><code>--explain</code> output includes: auth mode (oidc/idc/passthrough), provider type, federation type, quota config, storage mode, and file paths. Useful for verifying the binary detected the correct configuration before debugging auth failures.</p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="August 23, 2026 14:42:54 UTC"><span class="timeago" datetime="2026-08-23T14:42:54+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 23, 2026 14:42:54 UTC">2026-08-23</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="July 25, 2025 07:10:58 UTC"><span class="timeago" datetime="2025-07-25T07:10:58+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="July 25, 2025 07:10:58 UTC">2025-07-25</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <nav class="md-footer__inner md-grid" aria-label="Footer" style="background: transparent;">
+    
+    <a href="../RESOURCE_INVENTORY/" class="md-footer__link md-footer__link--prev" style="color: #141413;">
+      <div class="md-footer__title">
+        <span class="md-footer__direction">Previous</span>
+        Resource Inventory
+      </div>
+    </a>
+    
+    
+    <a href="../LOCAL_TESTING/" class="md-footer__link md-footer__link--next" style="color: #141413;">
+      <div class="md-footer__title">
+        <span class="md-footer__direction">Next</span>
+        Local Testing
+      </div>
+    </a>
+    
+  </nav>
+  
+  <div class="md-footer-meta md-typeset" style="background-color: transparent;">
+    <div class="md-footer-meta__inner md-grid" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; padding: 2.5rem 0 2rem;">
+      <img src="../assets/images/aws-logo.svg" alt="AWS" style="height: 18px; width: auto; opacity: 0.4;">
+      <span style="color: #141413; opacity: 0.35; font-size: 0.65rem;">Claude Code with Amazon Bedrock</span>
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit", "toc.follow", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../js/timeago.min.js"></script>
+      
+        <script src="../js/timeago_mkdocs_material.js"></script>
+      
+    
+  </body>
+</html>
