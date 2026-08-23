@@ -293,12 +293,16 @@ func (a *credentialApp) resolveIDCCredentials() (aws.Credentials, int) {
 	debugPrint("IDC credentials retrieved successfully (key=%s...)", creds.AccessKeyID[:8])
 
 	// Quota check (SigV4-signed with the IDC credentials we just resolved).
+	// The signing region is derived from the quota endpoint URL inside the
+	// quota package; the region passed here is only the fallback for
+	// non-standard endpoints — and it must NOT default to the IDC/SSO region
+	// (see quotaSigningFallbackRegion).
 	if a.cfg.QuotaAPIEndpoint != "" {
 		debugPrint("Performing quota check via SigV4 with IDC credentials...")
 		qr := quota.CheckWithResolvedCreds(
 			a.cfg.QuotaAPIEndpoint,
 			creds,
-			region,
+			quotaSigningFallbackRegion(a.cfg.AWSRegion, region),
 			a.cfg.QuotaCheckTimeout,
 			a.cfg.QuotaFailMode,
 		)
@@ -315,6 +319,22 @@ func (a *credentialApp) resolveIDCCredentials() (aws.Credentials, int) {
 	a.writeOtelCacheFromIDC(creds, region)
 
 	return creds, 0
+}
+
+// quotaSigningFallbackRegion picks the SigV4 signing region for the quota
+// check when the quota endpoint URL itself doesn't embed one (the quota
+// package extracts the region from …execute-api.<region>.amazonaws.com and
+// uses this value only as a fallback). The quota API lives in the DEPLOYMENT
+// region (aws_region), not the Identity Center region — when a customer's IDC
+// instance is in a different region than the deployment (e.g. IDC in
+// us-east-1, stack in ap-south-1), signing with the IDC region yields a
+// credential scope API Gateway rejects with 403. SSO/OIDC device auth and STS
+// still use the IDC region; only quota signing prefers aws_region.
+func quotaSigningFallbackRegion(awsRegion, idcRegion string) string {
+	if awsRegion != "" {
+		return awsRegion
+	}
+	return idcRegion
 }
 
 // writeOtelCacheFromIDC resolves user identity via STS GetCallerIdentity
@@ -521,11 +541,11 @@ func stderrIsTerminal() bool {
 // device authorization rather than failing fast. See runDeviceAuthorization for
 // the full rationale. Two cases qualify:
 //
-//	1. stderr is a live terminal (direct CLI use): we print the URL/code live.
-//	2. loginMode (the --login / awsAuthRefresh slot): Claude Code streams the
-//	   hook's stderr live as a status line, so the URL + code reach the user even
-//	   with captured stderr and no local browser (headless/SSH). Verified by
-//	   desktop testing where the status line updated while polling.
+//  1. stderr is a live terminal (direct CLI use): we print the URL/code live.
+//  2. loginMode (the --login / awsAuthRefresh slot): Claude Code streams the
+//     hook's stderr live as a status line, so the URL + code reach the user even
+//     with captured stderr and no local browser (headless/SSH). Verified by
+//     desktop testing where the status line updated while polling.
 //
 // The silent credential-export path (loginMode=false with captured stderr)
 // returns false, preserving the never-hang guarantee for non-interactive

@@ -6,18 +6,26 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
+	"strings"
 	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
-	awsconfig "github.com/aws/aws-sdk-go-v2/config"
 	v4 "github.com/aws/aws-sdk-go-v2/aws/signer/v4"
+	awsconfig "github.com/aws/aws-sdk-go-v2/config"
 )
+
+// sigv4Transport is the HTTP transport used for SigV4-signed quota requests.
+// nil means http.DefaultTransport. Tests override it to route synthetic
+// execute-api hostnames to a local test server so the signed Authorization
+// header (credential scope) can be inspected.
+var sigv4Transport http.RoundTripper
 
 // Result represents the quota check API response.
 type Result struct {
-	Allowed bool              `json:"allowed"`
-	Reason  string            `json:"reason"`
-	Message string            `json:"message"`
+	Allowed bool                   `json:"allowed"`
+	Reason  string                 `json:"reason"`
+	Message string                 `json:"message"`
 	Usage   map[string]interface{} `json:"usage"`
 	Policy  map[string]interface{} `json:"policy"`
 }
@@ -93,6 +101,44 @@ func CheckWithResolvedCreds(endpoint string, creds aws.Credentials, region strin
 	return checkWithSigV4(endpoint, creds, region, timeout, failMode)
 }
 
+// regionFromEndpoint extracts the AWS region embedded in an API Gateway
+// execute-api endpoint URL:
+//
+//	https://abc123.execute-api.ap-south-1.amazonaws.com/prod   -> "ap-south-1"
+//	https://abc123.execute-api.cn-north-1.amazonaws.com.cn/p   -> "cn-north-1"
+//
+// Returns "" when the endpoint doesn't look like a standard execute-api URL
+// (custom domains, garbage input), so callers can fall back to a configured
+// region.
+func regionFromEndpoint(endpoint string) string {
+	u, err := url.Parse(endpoint)
+	if err != nil {
+		return ""
+	}
+	host := strings.ToLower(u.Hostname())
+
+	var suffix string
+	switch {
+	case strings.HasSuffix(host, ".amazonaws.com"):
+		suffix = ".amazonaws.com"
+	case strings.HasSuffix(host, ".amazonaws.com.cn"):
+		suffix = ".amazonaws.com.cn"
+	default:
+		return ""
+	}
+
+	labels := strings.Split(strings.TrimSuffix(host, suffix), ".")
+	// Expect at least <api-id>.execute-api.<region>
+	if len(labels) < 3 {
+		return ""
+	}
+	region := labels[len(labels)-1]
+	if labels[len(labels)-2] != "execute-api" || region == "" {
+		return ""
+	}
+	return region
+}
+
 // checkWithSigV4 signs and sends the quota check request using the provided credentials.
 func checkWithSigV4(endpoint string, creds aws.Credentials, region string, timeout int, failMode string) *Result {
 	ctx := context.Background()
@@ -103,15 +149,26 @@ func checkWithSigV4(endpoint string, creds aws.Credentials, region string, timeo
 		return failResult(failMode, "error", fmt.Sprintf("creating request: %v", err))
 	}
 
+	// Sign for the region the quota API actually lives in — the endpoint URL
+	// embeds it (…execute-api.<region>.amazonaws.com). The caller-supplied
+	// region is only a fallback for non-standard endpoints. Signing with any
+	// other region (e.g. the IDC/SSO region when Identity Center lives in a
+	// different region than the deployment) produces a credential scope that
+	// API Gateway rejects with 403.
+	signRegion := regionFromEndpoint(endpoint)
+	if signRegion == "" {
+		signRegion = region
+	}
+
 	// Sign the request with SigV4 for execute-api service
 	signer := v4.NewSigner()
 	hash := "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" // SHA256 of empty body
-	err = signer.SignHTTP(ctx, creds, req, hash, "execute-api", region, time.Now())
+	err = signer.SignHTTP(ctx, creds, req, hash, "execute-api", signRegion, time.Now())
 	if err != nil {
 		return failResult(failMode, "sigv4_error", fmt.Sprintf("Could not sign request: %v", err))
 	}
 
-	client := &http.Client{Timeout: time.Duration(timeout) * time.Second}
+	client := &http.Client{Timeout: time.Duration(timeout) * time.Second, Transport: sigv4Transport}
 	resp, err := client.Do(req)
 	if err != nil {
 		return failResult(failMode, "connection_error", fmt.Sprintf("Could not connect to quota service: %v", err))
