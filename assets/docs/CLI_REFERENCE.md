@@ -14,7 +14,7 @@ This document provides a complete reference for all `ccwb` (Claude Code with Bed
     - [`test` - Test Package](#test---test-package)
     - [`package` - Create Distribution](#package---create-distribution)
     - [`builds` - List and Manage CodeBuild Builds](#builds---list-and-manage-codebuild-builds)
-    - [`distribute` - Create Distribution URLs](#distribute---create-distribution-urls)
+    - [`distribute` - Share Packages via Distribution](#distribute---share-packages-via-distribution)
     - [`status` - Check Deployment Status](#status---check-deployment-status)
     - [`cleanup` - Remove Installed Components](#cleanup---remove-installed-components)
   - [Quota Management](#quota-management)
@@ -28,7 +28,7 @@ This document provides a complete reference for all `ccwb` (Claude Code with Bed
     - [`quota unblock` - Unblock User](#quota-unblock---unblock-user)
     - [`quota export` - Export Policies](#quota-export---export-policies)
     - [`quota import` - Import Policies](#quota-import---import-policies)
-  - [Claude Cowork 3P](#claude-cowork-3p)
+  - [Claude Desktop (Cowork 3P)](#claude-desktop-cowork-3p)
     - [`cowork generate` - Generate MDM Configuration](#cowork-generate---generate-mdm-configuration)
   - [Profile Management](#profile-management)
     - [`context list` - List All Profiles](#context-list---list-all-profiles)
@@ -39,6 +39,7 @@ This document provides a complete reference for all `ccwb` (Claude Code with Bed
     - [`config export` - Export Profile Configuration](#config-export---export-profile-configuration)
     - [`config import` - Import Profile Configuration](#config-import---import-profile-configuration)
     - [`destroy` - Remove Infrastructure](#destroy---remove-infrastructure)
+    - [`doctor` - Validate Installation Health](#doctor---validate-installation-health)
 
 ## Overview
 
@@ -53,8 +54,8 @@ The Claude Code with Bedrock CLI (`ccwb`) provides commands for IT administrator
 
 ```bash
 # Clone the repository
-git clone [<repository-url>](https://github.com/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock.git)
-cd guidance-for-claude-code-with-amazon-bedrock/source
+git clone https://github.com/cdharma/claude-with-bedrock.git
+cd claude-with-bedrock/source
 
 # Install dependencies
 poetry install
@@ -81,10 +82,11 @@ poetry run ccwb init [options]
 **What it does:**
 
 - Checks prerequisites (AWS CLI, credentials, Python version)
-- Prompts for OIDC provider configuration
-- Prompts for authentication method selection:
-  - Direct IAM: Uses IAM OIDC Provider for federation
+- Prompts for authentication method (OIDC, IAM Identity Center, or None)
+- For OIDC: prompts for provider configuration (domain, client ID) and federation type:
+  - Direct STS: Uses IAM OIDC Provider for federation
   - Cognito: Uses Cognito Identity Pool for federation
+- For IAM Identity Center: prompts for start URL, SSO region, AWS account ID, and permission set name
 - Configures AWS settings (region, stack names)
 - Prompts for Claude model selection (Opus, Sonnet, Haiku)
 - Configures cross-region inference profiles (US, Europe, APAC)
@@ -92,12 +94,12 @@ poetry run ccwb init [options]
 - Sets up monitoring options
 - Prompts for monitoring mode (central collector on ECS Fargate, or sidecar collector running locally on each developer's machine)
 - Configures quota monitoring:
-  - Monthly token limit per user
-  - Daily token limit with burst buffer (auto-calculated from monthly)
+  - Limit type: cost-based USD budgets (recommended, default $50/month per user) or token-based limits
+  - Monthly and daily budgets (cost mode), or monthly token limit with a burst-buffer daily limit (token mode)
   - Enforcement modes (alert vs block) for daily and monthly limits
   - Quota re-check interval (how often to verify quota with cached credentials)
 - Prompts for Windows build support via AWS CodeBuild (optional)
-- Saves configuration to `.ccwb-config/config.json` in the project directory
+- Saves configuration to `~/.ccwb/profiles/<name>.json` (one file per profile); `~/.ccwb/config.json` tracks the active profile. Legacy `.ccwb-config` locations are auto-migrated on load
 
 **Note:** This command only creates configuration. Use `deploy` to create AWS resources.
 
@@ -111,13 +113,14 @@ poetry run ccwb deploy [stack] [options]
 
 **Arguments:**
 
-- `stack` - Specific stack to deploy: auth, networking, monitoring, dashboard, analytics, or quota (optional)
+- `stack` - Specific stack to deploy: `auth`, `networking`, `monitoring`, `dashboard`, `cowork-dashboard`, `analytics`, `quota`, `distribution`, `codebuild`, `websearch`, or `bootstrap` (optional)
 
 **Options:**
 
-- `--profile <name>` - Configuration profile to use (default: "default")
+- `--profile <name>` - Configuration profile to use (defaults to active profile)
 - `--dry-run` - Show what would be deployed without executing
 - `--show-commands` - Display AWS CLI commands instead of executing
+- `--parallel` - Deploy independent stacks concurrently in dependency waves (faster; per-stack progress spinners are suppressed)
 
 **What it does:**
 
@@ -132,9 +135,13 @@ poetry run ccwb deploy [stack] [options]
 2. **networking** - VPC and networking resources for monitoring (central mode only)
 3. **monitoring** - OpenTelemetry collector on ECS Fargate (central mode only)
 4. **dashboard** - CloudWatch dashboard for usage metrics (optional)
-5. **analytics** - Kinesis Firehose and Athena SQL query pipeline (central mode only, optional)
-6. **quota** - Per-user token quota monitoring and alerts (optional, requires dashboard)
-7. **codebuild** - AWS CodeBuild for Windows binary builds (optional, only if enabled during init)
+5. **cowork-dashboard** - CloudWatch dashboard for Claude Desktop (Cowork 3P) usage (optional)
+6. **analytics** - Kinesis Firehose and Athena SQL query pipeline (central mode only, optional)
+7. **quota** - Per-user quota monitoring and alerts (optional, requires dashboard)
+8. **distribution** - Package distribution infrastructure: presigned S3 bucket or authenticated landing page (optional)
+9. **codebuild** - AWS CodeBuild for Windows binary builds (optional, only if enabled during init)
+10. **websearch** - Web search gateway (optional)
+11. **bootstrap** - Bootstrap server delivering Claude Desktop settings and plugins at sign-in (optional)
 
 > **Note**: In sidecar monitoring mode, the auth and dashboard stacks are deployed. The networking, monitoring, and analytics stacks are skipped because the OpenTelemetry collector runs locally on each developer's machine. Both modes include the same PromQL CloudWatch dashboard with full metric analytics.
 
@@ -149,6 +156,9 @@ poetry run ccwb deploy auth
 
 # Deploy quota monitoring (requires dashboard stack first)
 poetry run ccwb deploy quota
+
+# Deploy all configured stacks, independent stacks concurrently
+poetry run ccwb deploy --parallel
 
 # Show commands without executing
 poetry run ccwb deploy --show-commands
@@ -238,22 +248,29 @@ poetry run ccwb package [options]
 
 **Options:**
 
-- `--target-platform <platform>` - Target platform for binary (default: "all")
+- `--target-platform <platform>` - Target platform(s), comma-separated (default: "all")
   - `macos-arm64` - Apple Silicon Macs (M1/M2/M3/M4)
   - `macos-intel` - Intel Macs
   - `linux-x64` - Linux x86-64
   - `linux-arm64` - Linux ARM64 (Graviton, etc.)
   - `windows` - Windows x64
   - `all` - All 5 platforms
-- `--go` - Cross-compile Go binaries locally (requires Go 1.24+ installed)
-- `--distribute` - Upload package and generate distribution URL
-- `--expires-hours <hours>` - Distribution URL expiration in hours (with --distribute) [default: "48"]
-- `--profile <name>` - Configuration profile to use [default: active profile]
+- `--profile <name>` - Configuration profile to use (defaults to active profile)
+- `--legacy` - Use the deprecated legacy PyInstaller/Nuitka build pipeline instead of Go
+- `--go` - Build using Go (already the default; kept for backwards compatibility)
+- `--build-local` - Build binaries locally instead of downloading pre-built
+- `--no-cache` - Force re-download of pre-built binaries
+- `--build-verbose` - Enable verbose logging for build processes
+- `--skip-validation` - Skip configuration validation checks
+- `--prepare-offline` - Prepare an offline bundle (OCB binary + Go module cache) for air-gapped builds
 - `--regenerate-installers` - Regenerate config and install scripts using existing binaries from latest dist
+- `--status <id>` - [Deprecated] Check build status by ID or "latest" — use `ccwb builds` instead
+
+To upload the finished package and generate a download URL, use [`ccwb distribute`](#distribute---share-packages-via-distribution).
 
 **What it does:**
 
-1. Cross-compiles native Go binaries for all selected platforms (with `--go`)
+1. Cross-compiles native Go binaries for all selected platforms (default build mode)
 2. Creates `config.json` with federation config read from the admin profile
 3. Creates `claude-settings/settings.json` with Bedrock model and OTel endpoint (or `managed-settings.json` if `--managed` was used during init)
 4. Creates installer scripts (`install.sh`, `install.bat`, `ccwb-install.ps1`)
@@ -261,14 +278,14 @@ poetry run ccwb package [options]
 
 **Build Modes:**
 
-| Mode | Flag | Requirements | Best for |
+| Mode | Flag | Requirements | Notes |
 |---|---|---|---|
-| **Go cross-compile** (recommended) | `--go` | Go 1.24+ installed | All admins — fast, all platforms from one machine |
-| **Legacy** | (default) | PyInstaller, Docker, CodeBuild | Backward compatibility with Python binaries |
+| **Go cross-compile** (default) | none needed (`--go` accepted for backwards compatibility) | Go 1.24+ installed | All admins — fast, all 5 platforms from one machine |
+| **Legacy** (deprecated) | `--legacy` | PyInstaller, Docker, CodeBuild | Python binaries; also the automatic fallback when Go 1.24+ is not installed |
 
-**Platform Support (Go Cross-Compilation):**
+**Platform Support (Go Cross-Compilation, default):**
 
-With `--go`, all 5 platforms are always available regardless of the admin's OS. No Docker, CodeBuild, x86 venvs, or platform-specific toolchains needed.
+In the default Go build mode, all 5 platforms are always available regardless of the admin's OS. No Docker, CodeBuild, x86 venvs, or platform-specific toolchains needed.
 
 - **macOS ARM64**: Native Apple Silicon binary (~9 MB)
 - **macOS Intel**: Native x86-64 binary (~10 MB)
@@ -323,9 +340,9 @@ PyInstaller is a runtime bundler, not a cross-OS compiler. It emits binaries in 
   - Requires CodeBuild to be enabled during `init`
   - Will be skipped if CodeBuild is not enabled
 
-**Cross-arch macOS Build Setup (legacy mode only, optional):**
+#### Cross-arch macOS Build Setup (legacy mode only, optional)
 
-By default, legacy-mode `ccwb package` builds a binary for your Mac's own architecture. The Intel (`macos-intel`) binary covers all Mac users — it runs natively on Intel Macs and via Rosetta on Apple Silicon — so an Apple Silicon admin who needs to support Intel Mac users should build the Intel binary using this setup.
+By default, legacy-mode `ccwb package --legacy` builds a binary for your Mac's own architecture. The Intel (`macos-intel`) binary covers all Mac users — it runs natively on Intel Macs and via Rosetta on Apple Silicon — so an Apple Silicon admin who needs to support Intel Mac users should build the Intel binary using this setup.
 
 To build for the other architecture (e.g. Intel binary on Apple Silicon, or ARM64 binary on Intel), install a universal2 Python:
 
@@ -335,7 +352,7 @@ To build for the other architecture (e.g. Intel binary on Apple Silicon, or ARM6
 
 `ccwb` creates an isolated per-arch build environment at `~/.ccwb/build-venvs/` on first cross-arch build (~30s). Subsequent runs reuse it.
 
-(With `--go`, cross-arch builds are unnecessary — Go cross-compiles all platforms natively.)
+(In the default Go build mode, cross-arch builds are unnecessary — Go cross-compiles all platforms natively.)
 
 **Behavior when universal2 Python is not installed:**
 
@@ -638,11 +655,11 @@ poetry run ccwb cleanup [options]
 - Remove failed installations
 - Start fresh with a new configuration
 
-## Claude Cowork 3P
+## Claude Desktop (Cowork 3P)
 
 ### `cowork generate` - Generate MDM Configuration
 
-Generate Claude Cowork 3P MDM configuration files for deploying Claude Desktop with Amazon Bedrock as the inference backend.
+Generate Claude Desktop (Cowork 3P) MDM configuration files for deploying Claude Desktop with Amazon Bedrock as the inference backend.
 
 This command reads your existing deployment profile (region, model, monitoring stack) and generates ready-to-deploy MDM configuration files.
 
@@ -684,9 +701,9 @@ poetry run ccwb cowork generate --profile Production
 
 **Automatic integration with `ccwb package`:**
 
-CoWork 3P configs are also auto-generated during `ccwb package` when enabled via `ccwb init`. Both paths use the same shared configuration logic to ensure identical output.
+Claude Desktop MDM configs are also auto-generated during `ccwb package` when enabled via `ccwb init`. Both paths use the same shared configuration logic to ensure identical output. (Exception: IDC zero-binary packages — IAM Identity Center auth without quota — skip MDM generation with a warning, because they intentionally ship no credential-process binary for Claude Desktop to invoke.)
 
-See [CoWork 3P Guide](COWORK_3P.md) for detailed setup and deployment instructions.
+See the [Claude Desktop (Cowork 3P) Guide](COWORK_3P.md) for detailed setup and deployment instructions.
 
 ## Quota Management
 
@@ -708,13 +725,24 @@ poetry run ccwb quota set-user <email> [options]
 **Options:**
 - `--monthly-limit, -m <tokens>` - Monthly token limit (supports K, M, B suffixes: 10M = 10,000,000)
 - `--daily-limit, -d <tokens>` - Daily token limit (optional)
-- `--enforcement, -e <mode>` - Enforcement mode: `alert` (monitor only) or `block` (deny access)
+- `--budget, -b <usd>` - Monthly budget in USD (e.g., 50) — for cost-based quotas
+- `--monthly-cost-limit <usd>` - Monthly cost limit in USD (same as `--budget`)
+- `--daily-budget <usd>` - Daily budget in USD (e.g., 10)
+- `--daily-cost-limit <usd>` - Daily cost limit in USD (same as `--daily-budget`)
+- `--enforcement, -e <mode>` - Monthly enforcement mode: `alert` (monitor only) or `block` (deny access)
+- `--daily-enforcement <mode>` - Daily enforcement mode: `alert` or `block`
 - `--disabled` - Create policy in disabled state
 - `--profile, -p <name>` - Configuration profile
 
-**Example:**
+Provide at least one monthly limit: `--monthly-limit` (token-based) or `--budget`/`--monthly-cost-limit` (cost-based).
+
+**Examples:**
 ```bash
+# Token-based quota
 poetry run ccwb quota set-user alice@example.com -m 5M -e block
+
+# Cost-based quota: $50/month, $5/day
+poetry run ccwb quota set-user alice@example.com --budget 50 --daily-budget 5 -e block
 ```
 
 ### `quota set-group` - Set Group Quota

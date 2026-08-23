@@ -15,22 +15,11 @@ Complete deployment walkthrough for IT administrators deploying Claude Code with
 - Poetry (dependency management)
 - AWS CLI v2
 - Git
-- Go 1.24+ (optional — only for `ccwb package --go` builds; [pre-built binaries](https://github.com/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock/releases) available from v2.4.0+)
+- Go 1.24+ (used by the default `ccwb package` build — cross-compiles binaries for all 5 platforms from any admin OS; if Go is missing, packaging falls back to the deprecated legacy PyInstaller pipeline)
 
 > **End users** need only Claude Code or Claude Desktop installed. No Python, Poetry, Go, or AWS account required — IT distributes pre-built packages.
 
-**macOS admins — check your machine architecture before building:**
-
-```bash
-uname -m
-```
-
-| Output | Your Mac | Builds natively |
-|--------|----------|----------------|
-| `arm64` | Apple Silicon (M1/M2/M3/M4) | `macos-arm64` — Apple Silicon only; Intel Macs cannot run it |
-| `x86_64` | Intel Mac | `macos-intel` — covers all Macs (runs natively on Intel, via Rosetta on Apple Silicon) |
-
-> Intel (`macos-intel`) binaries run via Rosetta on Apple Silicon Macs, so a single Intel binary covers your entire Mac fleet. ARM64 binaries only run on Apple Silicon. If your admin is on Apple Silicon, use the [cross-arch setup](assets/docs/CLI_REFERENCE.md#cross-arch-macos-build-setup-optional) to build the Intel binary.
+**macOS fleets:** the default build produces both `macos-arm64` (Apple Silicon) and `macos-intel` binaries from any admin OS, and the installer picks the right one automatically. Intel binaries also run on Apple Silicon via Rosetta; ARM64 binaries do not run on Intel Macs. Only the deprecated `--legacy` build mode has host-architecture constraints — see [Cross-arch macOS Build Setup](assets/docs/CLI_REFERENCE.md#cross-arch-macos-build-setup-legacy-mode-only-optional).
 
 ### AWS Requirements
 
@@ -43,9 +32,9 @@ uname -m
   - (Optional) AWS CodeBuild
 - Amazon Bedrock activated in target regions
 
-### OIDC Provider Requirements
+### Identity Provider Requirements
 
-This guide covers the **AWS infrastructure** side of the deployment. It assumes you have already configured your identity provider (IdP). **You must complete your IdP setup before running `ccwb init`** — the wizard will ask for your provider domain and client ID, and will fail without them.
+This guide covers the **AWS infrastructure** side of the deployment. It assumes you have already configured your identity provider (IdP). **You must complete your IdP setup before running `ccwb init`** — for OIDC providers the wizard will ask for your provider domain and client ID, and will fail without them.
 
 
 | Your IdP | Setup guide |
@@ -55,11 +44,12 @@ This guide covers the **AWS infrastructure** side of the deployment. It assumes 
 | **Auth0** | [Auth0 Setup Guide](assets/docs/providers/auth0-setup.md) |
 | **Google** | [Google Setup Guide](assets/docs/providers/google-oidc-setup.md) |
 | **AWS Cognito User Pool** | [Cognito User Pool Setup Guide](assets/docs/providers/cognito-user-pool-setup.md) |
+| **AWS IAM Identity Center** | [IAM Identity Center Setup Guide](assets/docs/providers/iam-identity-center-setup.md) |
 | **PingFederate, Keycloak, ForgeRock, or other generic OIDC** | [Generic OIDC Setup Guide](assets/docs/providers/generic-oidc-setup.md) |
 
-Each guide walks through creating the application, setting the redirect URI to `http://localhost:8400/callback`, enabling PKCE, and noting the two values you will need here: your **provider domain** and **client ID**.
+Each OIDC guide walks through creating the application, setting the redirect URI to `http://localhost:8400/callback`, enabling PKCE, and noting the two values you will need here: your **provider domain** and **client ID**. Using IAM Identity Center instead? There is no app registration — the wizard asks for your **start URL** and **SSO region** (see the IAM Identity Center guide).
 
-Once your IdP application is created and you have those two values, return here and continue from Step 1.
+Once your IdP is ready, return here and continue from Step 1.
 
 
 
@@ -91,8 +81,8 @@ This automatically routes requests across multiple AWS regions to ensure the bes
 
 ```bash
 # Clone the repository
-git clone https://github.com/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock
-cd guidance-for-claude-code-with-amazon-bedrock/source
+git clone https://github.com/cdharma/claude-with-bedrock
+cd claude-with-bedrock/source
 
 # Install dependencies
 poetry install
@@ -112,7 +102,7 @@ The wizard runs through three numbered steps plus optional features. Every quest
 
 The wizard collects:
 
-- OIDC provider configuration (domain, client ID)
+- Authentication method (OIDC, IAM Identity Center, or none) and provider details — OIDC domain and client ID, or Identity Center start URL and SSO region
 - AWS region selection for infrastructure
 - Amazon Bedrock cross-region inference configuration
 - Credential storage method (keyring or session files)
@@ -132,9 +122,9 @@ ccwb init
 │
 ├── Profile name → e.g. "CorpIT-Prod"
 │
-├── STEP 1: Enable SSO authentication? (Y/n)
+├── STEP 1: Select authentication method: (OIDC / IAM Identity Center / None)
 │   │
-│   ├── Yes (default) ──────────────────────────────────────────────┐
+│   ├── OIDC (default) ─────────────────────────────────────────────┐
 │   │                                                                │
 │   │   Provider domain? (e.g. company.okta.com)                    │
 │   │   Client ID?                                                   │
@@ -147,7 +137,13 @@ ccwb init
 │   │   ├── Credential storage: Keyring / Session Files              │
 │   │   └── Federation type: Direct STS / Cognito Identity Pool      │
 │   │                                                                │
-│   └── No → skips all auth questions, goes to Step 2 ─────────────┘
+│   ├── IAM Identity Center                                          │
+│   │   ├── Start URL (e.g. https://company.awsapps.com/start)       │
+│   │   ├── SSO region                                               │
+│   │   ├── AWS account ID for Bedrock access                        │
+│   │   └── Permission set name                                      │
+│   │                                                                │
+│   └── None → skips all auth questions, goes to Step 2 ────────────┘
 │
 ├── STEP 2: AWS Infrastructure
 │   ├── AWS region? (where CloudFormation stacks are deployed)
@@ -166,15 +162,18 @@ ccwb init
 │   │       ├── Enable analytics? (Athena + S3 data lake)
 │   │       └── Enable quota monitoring?
 │   │           └── Yes
-│   │               ├── Monthly token limit (millions)
-│   │               ├── Burst buffer % (5-25)
-│   │               ├── Custom daily limit (optional)
+│   │               ├── How do you want to limit usage?
+│   │               │   ├── Cost-based (default) → monthly budget (USD)
+│   │               │   │                          + daily budget (USD)
+│   │               │   └── Token-based → monthly token limit (millions)
+│   │               │       ├── Burst buffer % (5-25)
+│   │               │       └── Custom daily limit (optional)
 │   │               ├── Daily enforcement: alert / block
 │   │               ├── Monthly enforcement: alert / block
 │   │               └── Quota re-check interval (minutes)
 │   │
 │   ├── Enable Windows builds? (CodeBuild)
-│   ├── Generate CoWork 3P MDM config?
+│   ├── Enable Claude Desktop support?
 │   └── Distribution method?
 │       ├── Presigned S3 URLs
 │       ├── Authenticated Landing Page
@@ -248,20 +247,26 @@ poetry run ccwb init
 
 #### Step 1: Authentication Configuration
 
-**What it asks:** `Enable SSO authentication? (Y/n)`
+**What it asks:** `Select authentication method:`
 
-Choose whether developers will authenticate through an OIDC identity provider to reach Bedrock:
+```
+Select authentication method:
+❯ OIDC (Okta, Azure AD, Auth0, Cognito)
+  IAM Identity Center
+  None
+```
 
-| Answer | When to use |
+Choose how developers will authenticate to reach Bedrock:
+
+| Choice | When to use |
 |---|---|
-| **Yes** (default) | You have Okta, Azure AD, Auth0, or Cognito User Pool — full per-user attribution and quota enforcement |
-| **No** | Analytics-only deployment, or developers already have IAM/role access to Bedrock |
-
-> **Note:** AWS IAM Identity Center (SSO) integration is coming soon. If your org uses IAM IDC today, choose **No** for SSO and use your existing `aws sso login` credentials — the solution works with any valid AWS credentials that have Bedrock access.
+| **OIDC** (default) | You have Okta, Azure AD / Entra ID, Auth0, or a Cognito User Pool — full per-user attribution and quota enforcement |
+| **IAM Identity Center** | Your org uses AWS IAM Identity Center (AWS SSO) — per-user attribution and quota enforcement without an external OIDC provider |
+| **None** | Analytics-only deployment, or developers already have IAM/role access to Bedrock |
 
 ---
 
-##### If you answered Yes (SSO enabled)
+##### If you chose OIDC
 
 **Q: `Enter your OIDC provider domain:`**
 
@@ -325,10 +330,10 @@ Choose how the `credential-process` binary stores AWS temporary credentials on t
 
 | Option | What it does | When to use |
 |---|---|---|
-| **Keyring** | OS secure storage (macOS Keychain, Windows Credential Manager, Linux Secret Service) | Production, and recommended for CoWork 3P |
+| **Keyring** | OS secure storage (macOS Keychain, Windows Credential Manager, Linux Secret Service) | Production, and recommended for Claude Desktop (Cowork 3P) |
 | **Session Files** | Temp files in `~/.aws/credentials` and `~/.claude-code-session/` | Dev/testing — simpler, wiped on logout |
 
-Default is **Session Files**. Both modes work for Claude Code CLI. For **CoWork Desktop 3P**, Keyring is strongly recommended: CoWork resolves credentials through `inferenceBedrockProfile` → boto3's named-profile resolution, and boto3 reads `~/.aws/credentials` before the `credential_process` entry in `~/.aws/config`. In Session Files mode, that means boto3 uses whatever static credentials the last CLI invocation wrote to the file and will **not** auto-refresh them through `credential_process` once they expire — CoWork fails with `403 The security token included in the request is invalid` until the CLI is run again to repopulate the file. Keyring mode keeps `~/.aws/credentials` untouched, so boto3 falls through to `credential_process` and the binary handles refresh transparently. Keyring may show a one-time OS permission prompt on first use.
+Default is **Session Files**. Both modes work for Claude Code CLI. For **Claude Desktop (3P)**, Keyring is strongly recommended: Claude Desktop resolves credentials through `inferenceBedrockProfile` → boto3's named-profile resolution, and boto3 reads `~/.aws/credentials` before the `credential_process` entry in `~/.aws/config`. In Session Files mode, that means boto3 uses whatever static credentials the last CLI invocation wrote to the file and will **not** auto-refresh them through `credential_process` once they expire — Claude Desktop fails with `403 The security token included in the request is invalid` until the CLI is run again to repopulate the file. Keyring mode keeps `~/.aws/credentials` untouched, so boto3 falls through to `credential_process` and the binary handles refresh transparently. Keyring may show a one-time OS permission prompt on first use.
 
 ---
 
@@ -345,26 +350,48 @@ How the OIDC token is exchanged for AWS temporary credentials:
 
 ---
 
-##### If you answered No (SSO disabled)
+##### If you chose IAM Identity Center
+
+Set up Identity Center first — the [IAM Identity Center Setup Guide](assets/docs/providers/iam-identity-center-setup.md) covers the prerequisites (a permission set with Bedrock access, email-based session names) and the full walkthrough.
+
+The wizard asks four questions:
+
+**Q: `Enter your IAM Identity Center start URL:`**
+Your Identity Center portal URL, e.g. `https://company.awsapps.com/start`.
+
+**Q: `Enter your SSO region (where Identity Center is configured):`**
+The AWS region where IAM Identity Center is enabled — auto-suggested from the start URL when possible. This can differ from the region you deploy infrastructure to.
+
+**Q: `Enter the AWS account ID for Bedrock access:`**
+The 12-digit AWS account ID users will receive credentials for.
+
+**Q: `Enter the permission set name (IAM role users will assume):`**
+Default: `BedrockDeveloperAccess`. The permission set must grant Bedrock invoke access.
+
+Developers sign in with the standard AWS SSO device flow (browser approval, like `aws sso login`). Quota enforcement and per-user cost attribution both work with Identity Center: quota checks are SigV4-signed, and user identity comes from the IAM ARN session name.
+
+---
+
+##### If you chose None
 
 No authentication questions are asked. The wizard skips directly to Step 2.
 
-**What SSO disabled means in practice:**
+**What choosing None means in practice:**
 
 - **No auth infrastructure is deployed** — no IAM OIDC Provider, no Cognito Identity Pool, no IAM role for developers is created.
 - **No `credential_process` binary is distributed** — end users will not get an installer or auto-refreshing AWS credentials from this tool.
 - **You are responsible for giving developers Bedrock access** via whatever IAM mechanism already exists in your account (IAM users, existing roles, existing SSO, etc.).
 
-**When to choose No:**
+**When to choose None:**
 
-| Scenario | Why disabling SSO makes sense |
+| Scenario | Why choosing None makes sense |
 |---|---|
 | You only want the monitoring/analytics stack | Deploy dashboards without changing how developers authenticate |
 | Developers already have Bedrock access via existing roles | Adding another auth layer would be redundant |
-| Pilot/testing with a shared IAM user | Fastest way to test the monitoring stack before committing to full OIDC setup |
+| Pilot/testing with a shared IAM user | Fastest way to test the monitoring stack before committing to a full OIDC or Identity Center setup |
 | You will configure auth manually after deployment | Advanced users who want to customise the CloudFormation templates directly |
 
-> **Note:** Quota monitoring and per-user attribution require SSO enabled. With SSO disabled, the monitoring stack still collects aggregate metrics but cannot attribute usage to individual users.
+> **Note:** Quota monitoring and per-user attribution require OIDC or IAM Identity Center authentication. With **None**, the monitoring stack still collects aggregate metrics but cannot attribute usage to individual users.
 
 ---
 
@@ -403,7 +430,7 @@ Deploys an OpenTelemetry collector on ECS Fargate + CloudWatch dashboard showing
 - **Yes** → continues to VPC and HTTPS configuration below
 - **No** → skips all monitoring questions; auth infrastructure only
 
-> **Important:** If your VPC has no Internet Gateway (fully private environment), answer **No** here. The monitoring ALB is internet-facing by default. See [Known Limitations](#known-limitations) below.
+> **Important:** If your VPC has no Internet Gateway (fully private environment), answer **No** here. The monitoring ALB is internet-facing by default — see the VPC note under **VPC Configuration** below.
 
 ---
 
@@ -451,9 +478,28 @@ You can enable this later by re-running `ccwb init` and `ccwb deploy analytics`.
 
 **Q: `Enable quota monitoring?`**
 
-Enforces per-user monthly and daily token limits. Sends SNS alerts at 80%, 90%, and 100% of limits. Can block credential issuance when limits are exceeded.
+Enforces per-user monthly and daily usage limits. Sends SNS alerts at 80%, 90%, and 100% of limits. Can block credential issuance when limits are exceeded.
 
-If **Yes**, the wizard asks:
+If **Yes**, the wizard first asks how to measure usage:
+
+**Q: `How do you want to limit usage?`**
+
+| Option | How it works |
+|---|---|
+| **Cost-based ($ budget per user)** — default, recommended | Set monthly/daily budgets in USD; cost is calculated server-side from per-model Bedrock pricing rates |
+| **Token-based** | Set raw token-count limits per user |
+
+**If cost-based (the default):**
+
+**Q: `Monthly budget per user (USD):`**
+Default: `50`.
+
+**Q: `Daily budget per user (USD, 0 for no daily cap):`**
+Default: `0` (no daily cap).
+
+> Cost estimates use published on-demand Bedrock rates. Use AWS Cost Explorer for billing truth.
+
+**If token-based:**
 
 **Q: `Monthly token limit per user (in millions):`**
 Default: `225` (= 225,000,000 tokens/month). Adjust based on your team's expected usage.
@@ -466,6 +512,8 @@ Daily limit = (monthly ÷ 30) × (1 + buffer%). The buffer allows for legitimate
 
 **Q: `Custom daily limit:`**
 Press Enter to accept the calculated value, or enter a specific number.
+
+**Both limit types then ask:**
 
 **Q: `Daily limit enforcement:` and `Monthly limit enforcement:`**
 
@@ -495,11 +543,11 @@ Deploys an AWS CodeBuild project to compile the Windows `.exe` binary using Nuit
 
 ---
 
-##### Claude Cowork (Desktop) Support
+##### Claude Desktop Support
 
-**Q: `Generate CoWork 3P MDM configuration during packaging?`**
+**Q: `Enable Claude Desktop support?`**
 
-When **Yes**, every `ccwb package` run automatically produces MDM configuration files alongside the standard installer. These deploy Claude Desktop (Claude Cowork) pointing at Bedrock through the same credential infrastructure. No extra AWS resources required.
+When **Yes**, every `ccwb package` run automatically produces MDM configuration files alongside the standard installer. These deploy Claude Desktop (Cowork) pointing at Bedrock through the same credential infrastructure. No extra AWS resources required. (Exception: IDC zero-binary packages — IAM Identity Center auth without quota — skip MDM generation with a warning, because they intentionally ship no credential-process binary for Claude Desktop to invoke.)
 
 Output files in `dist/cowork-3p/`:
 - `cowork-3p.mobileconfig` — deploy via Jamf/Kandji/Mosyle (macOS). Unsigned profiles cannot auto-install: after delivery (or when `install.sh` runs), the user must approve the profile in **System Settings → Privacy & Security → Profiles**.
@@ -580,6 +628,8 @@ Deploy the AWS CloudFormation stacks:
 poetry run ccwb deploy
 ```
 
+> **Tip:** Add `--parallel` to deploy independent stacks concurrently — faster on full deployments (per-stack progress spinners are suppressed).
+
 This deploys in order based on what you configured in Step 2:
 
 **Auth stack** (always deployed):
@@ -628,8 +678,8 @@ poetry run ccwb status
 Build the package for end users:
 
 ```bash
-# Build all platforms using Go cross-compilation (recommended)
-poetry run ccwb package --go --target-platform all
+# Builds all 5 platforms via Go cross-compilation (the default)
+poetry run ccwb package
 
 # Creates ready-to-distribute packages for:
 # - macOS ARM64 (Apple Silicon) and Intel
@@ -638,65 +688,23 @@ poetry run ccwb package --go --target-platform all
 # All from a single command, any admin OS. Requires: Go 1.24+
 ```
 
-> **Note:** Running `ccwb package` without `--go` falls back to the legacy PyInstaller/CodeBuild pipeline which requires Docker and platform-specific toolchains. Use `--go` for all new deployments.
+> **Note:** Go cross-compilation is the default build mode — no Docker, CodeBuild, or platform-specific toolchains needed, and both macOS architectures are built regardless of your admin machine. If Go 1.24+ is not installed, `ccwb package` automatically falls back to the deprecated legacy PyInstaller/CodeBuild pipeline (see [Legacy build mode](#legacy-build-mode---legacy) below). The old `--go` flag is accepted for backwards compatibility but no longer changes anything.
 
-**Choosing macOS targets:**
-
-Before selecting, check your machine's architecture:
-
-```bash
-uname -m
-python3 -c "import platform; print(platform.machine())"
-poetry run python -c "import platform; print(platform.machine())"
-```
-
-All three should return the same value. The Poetry command is most important — it confirms what architecture PyInstaller will use when building the binary.
-
-- `arm64` → you are on Apple Silicon — select `macos-arm64`
-- `x86_64` → you are on Intel — select `macos-intel`
-
-The `ccwb package` command prompts you to select one or more platforms via a checkbox. **You must build for the architecture your developers are running** — ask your developers to run the same commands on their machines and tell you the output before you build:
-
-```bash
-uname -m
-python3 -c "import platform; print(platform.machine())"
-```
-
-Pick based on what your developers report:
-
-| Your developers report | Select |
-|------------------------|--------|
-| `arm64` (Apple Silicon) | `macos-arm64` |
-| `x86_64` (Intel) | `macos-intel` |
-| Both | `macos-arm64` + `macos-intel` |
-
-> **Note:** `macos-intel` binaries run on all Macs — natively on Intel, via Rosetta on Apple Silicon. If you have Intel Mac users in your org, build `macos-intel`. On Apple Silicon, this requires a universal2 Python (see [Cross-arch macOS Build Setup](assets/docs/CLI_REFERENCE.md#cross-arch-macos-build-setup-optional)).
+Use `--target-platform` to build a subset (comma-separated, e.g. `--target-platform macos-arm64,windows`); the default is `all`. The installer auto-detects each user's platform and architecture, so shipping all platforms is the simplest choice.
 
 **Package Workflow:**
 
-1. **Local builds**: macOS and Linux executables are built locally using PyInstaller. See the host-OS matrix below — PyInstaller cannot cross-compile across operating systems, so **macOS binaries must be built on macOS** and **Linux binaries must be built on Linux** (or on macOS via Docker).
-2. **Windows builds**: Trigger AWS CodeBuild for Windows executables (20+ minutes) - requires enabling CodeBuild during `init`
-3. **Check status**: Monitor build progress with `poetry run ccwb builds`
-4. **Create distribution**: Use `distribute` to upload and generate presigned URLs
-
-**Host-OS requirements for each target:**
-
-| Target binary | Build host must be | Tooling |
-|---|---|---|
-| `macos-arm64`, `macos-intel` | macOS | PyInstaller (native) |
-| `linux-x64`, `linux-arm64` | Linux, **or** macOS with Docker Desktop | PyInstaller (Docker container used when building from macOS) |
-| `windows` | any host with CodeBuild enabled | AWS CodeBuild (remote build) |
-
-> **Linux admins cannot build macOS binaries.** PyInstaller on Linux emits Linux ELF binaries regardless of the requested target architecture, and macOS cannot load ELF. If you run `ccwb package --target-platform=macos-arm64` on Linux, the build refuses with a clear error. To produce macOS binaries, use a macOS workstation or a CI macOS runner (e.g. GitHub Actions `macos-latest`) and collect the artifacts from there.
-
-> **Note**: Windows builds are optional and require CodeBuild to be enabled during the `init` process. If not enabled, the package command will skip Windows builds and continue with other platforms.
+1. **Build**: `poetry run ccwb package` cross-compiles native Go binaries for every selected platform locally — any admin OS, no Docker or CodeBuild
+2. **Check status**: `poetry run ccwb builds` (only needed for legacy-mode Windows CodeBuild builds)
+3. **Create distribution**: Use `distribute` to upload and generate presigned URLs
 
 The `dist/` folder will contain:
 
-- `credential-process-macos-arm64` - Authentication executable for macOS ARM64
-- `credential-process-macos-intel` - Authentication executable for macOS Intel (if built)
+- `credential-process-macos-arm64` - Authentication executable for macOS Apple Silicon
+- `credential-process-macos-intel` - Authentication executable for macOS Intel
+- `credential-process-linux-x64` - Authentication executable for Linux x64
+- `credential-process-linux-arm64` - Authentication executable for Linux ARM64
 - `credential-process-windows.exe` - Authentication executable for Windows
-- `credential-process-linux` - Authentication executable for Linux (if built on Linux)
 - `config.json` - Embedded configuration
 - `install.sh` - Installation script for Unix systems
 - `install.bat` - Installation script for Windows (launcher)
@@ -707,11 +715,25 @@ The `dist/` folder will contain:
 
 The package builder:
 
-- Builds binaries for the platforms your current host supports (see host-OS matrix above). On a macOS host that's macOS natively plus Linux via Docker; on a Linux host that's Linux only
-- Uses Docker to produce Linux binaries from a macOS host — **Docker Desktop must be installed and running**; if not present, Linux builds are skipped with a warning and other platforms continue unaffected
-- Refuses to attempt macOS targets from a non-macOS host (fails fast with a clear error rather than silently producing invalid binaries)
+- Cross-compiles every selected platform from any admin OS — no Docker, no macOS host, no CodeBuild required
 - Includes the OTEL helper for extracting user attributes from JWT tokens
 - Creates a unified installer that auto-detects the user's platform
+
+#### Legacy build mode (`--legacy`)
+
+The deprecated PyInstaller/Nuitka pipeline is still available with `poetry run ccwb package --legacy`, and is used automatically when Go 1.24+ is missing. Unlike the Go default, it has host-OS constraints:
+
+| Target binary | Build host must be | Tooling |
+|---|---|---|
+| `macos-arm64`, `macos-intel` | macOS | PyInstaller (native) |
+| `linux-x64`, `linux-arm64` | Linux, **or** macOS with Docker Desktop | PyInstaller (Docker container used when building from macOS) |
+| `windows` | any host with CodeBuild enabled | AWS CodeBuild (remote build, 20+ minutes) — requires enabling CodeBuild during `init`; skipped otherwise |
+
+> **In legacy mode, Linux admins cannot build macOS binaries.** PyInstaller on Linux emits Linux ELF binaries regardless of the requested target architecture, and macOS cannot load ELF — the build refuses with a clear error. To produce macOS binaries in legacy mode, use a macOS workstation or a CI macOS runner (e.g. GitHub Actions `macos-latest`) — or simply use the default Go build mode, which has none of these constraints.
+
+**Choosing macOS targets in legacy mode:** PyInstaller builds only for the host Mac's own architecture. Check what your developers run (`uname -m`: `arm64` = Apple Silicon → `macos-arm64`; `x86_64` = Intel → `macos-intel`). `macos-intel` binaries run on all Macs — natively on Intel, via Rosetta on Apple Silicon. Building the non-native architecture requires a universal2 Python (see [Cross-arch macOS Build Setup](assets/docs/CLI_REFERENCE.md#cross-arch-macos-build-setup-legacy-mode-only-optional)).
+
+**Docker (legacy mode):** producing Linux binaries from a macOS host requires Docker Desktop installed and running; if not present, Linux builds are skipped with a warning and other platforms continue unaffected. macOS and Windows builds have no dependency on Docker.
 
 ### Step 5: Test the Setup
 
@@ -724,10 +746,10 @@ poetry run ccwb test
 This will:
 
 - Simulate the end-user installation process
-- Test OIDC authentication
+- Test authentication
 - Verify AWS credential retrieval
 - Check Amazon Bedrock access
-- (Optional) Test actual API calls with `--api` flag
+- Test actual API calls — these run by default and make real Bedrock calls (minimal cost, ~$0.001). Add `--full` to test all allowed regions, or `--quota-only` to run only the quota monitoring checks
 
 ### Step 6: Distribute Packages to Users
 
@@ -790,24 +812,25 @@ See [Distribution Comparison](assets/docs/distribution/comparison.md) for detail
 
 ### Build Requirements
 
-- **Go 1.23+** (optional): Required for building the OpenTelemetry collector sidecar binary. If not installed, the sidecar build is skipped and packages are created without it. Install from https://go.dev/dl/
-- **Windows**: AWS CodeBuild with Nuitka (automated)
-- **macOS**: PyInstaller with architecture-specific builds
-  - ARM64: Native build on Apple Silicon Macs only — cannot run on Intel Macs
-  - Intel: Native build on Intel Macs — cross-arch from Apple Silicon requires universal2 Python (optional)
-  - Universal: Requires universal2 Python (optional)
-- **Linux**: Docker with PyInstaller (cross-compiled from macOS host)
-  - Requires [Docker Desktop](https://docs.docker.com/get-docker/) installed and running
-  - If Docker is not installed or its daemon is not running, Linux builds are skipped with a warning
-  - macOS and Windows builds have **no dependency on Docker**
+- **Go 1.24+** (default build mode): Cross-compiles the credential-process, OTEL helper, and (in sidecar monitoring mode) OTEL collector binaries for all 5 platforms from any admin OS. Install from https://go.dev/dl/
+- **Legacy mode (`--legacy`, deprecated)** — also the automatic fallback when Go 1.24+ is missing:
+  - **Windows**: AWS CodeBuild with Nuitka (automated)
+  - **macOS**: PyInstaller with architecture-specific builds
+    - ARM64: Native build on Apple Silicon Macs only — cannot run on Intel Macs
+    - Intel: Native build on Intel Macs — cross-arch from Apple Silicon requires universal2 Python (optional)
+    - Universal: Requires universal2 Python (optional)
+  - **Linux**: Docker with PyInstaller (cross-compiled from macOS host)
+    - Requires [Docker Desktop](https://docs.docker.com/get-docker/) installed and running
+    - If Docker is not installed or its daemon is not running, Linux builds are skipped with a warning
+    - macOS and Windows builds have **no dependency on Docker**
 
-### Optional: Cross-arch macOS Builds
+### Optional: Cross-arch macOS Builds (legacy mode only)
 
-By default, `ccwb package` builds only for your Mac's own architecture. If you need to also build for the other architecture (e.g. Intel on Apple Silicon), install a universal2 Python from python.org — `ccwb` will detect it automatically.
+In legacy mode, `ccwb package --legacy` builds only for your Mac's own architecture. If you need to also build for the other architecture (e.g. Intel on Apple Silicon), install a universal2 Python from python.org — `ccwb` will detect it automatically.
 
-See [CLI Reference - Cross-arch macOS Build Setup](assets/docs/CLI_REFERENCE.md#cross-arch-macos-build-setup-optional) for setup instructions.
+See [CLI Reference - Cross-arch macOS Build Setup](assets/docs/CLI_REFERENCE.md#cross-arch-macos-build-setup-legacy-mode-only-optional) for setup instructions.
 
-If not configured, cross-arch builds are skipped and the package command continues with other platforms. Intel (`macos-intel`) binaries cover all Macs via Rosetta, so admins on Intel Macs can skip this. Admins on Apple Silicon who have Intel Mac users in their org should install the universal2 Python to produce the Intel binary.
+If not configured, cross-arch builds are skipped and the package command continues with other platforms. Intel (`macos-intel`) binaries cover all Macs via Rosetta, so admins on Intel Macs can skip this. Admins on Apple Silicon who have Intel Mac users in their org should install the universal2 Python to produce the Intel binary. (The default Go build mode always produces both macOS architectures — none of this applies there.)
 
 ---
 
@@ -869,7 +892,7 @@ Force re-authentication after deployment:
 ~/claude-code-with-bedrock/credential-process --clear-cache
 ```
 
-If CoWork Desktop 3P fails with `403 The security token included in the request is invalid` and the user was previously on a session-files build, `~/.aws/credentials` may contain a stale `[<profile-name>]` stanza with literal `EXPIRED` values that shadows the current `credential_process` entry in `~/.aws/config`. Re-run `install.sh` / `install.bat` — it purges any such stanza before writing the new profile. Alternatively, remove the block by hand.
+If Claude Desktop (3P) fails with `403 The security token included in the request is invalid` and the user was previously on a session-files build, `~/.aws/credentials` may contain a stale `[<profile-name>]` stanza with literal `EXPIRED` values that shadows the current `credential_process` entry in `~/.aws/config`. Re-run `install.sh` / `install.bat` — it purges any such stanza before writing the new profile. Alternatively, remove the block by hand.
 
 ### Port Configuration
 
@@ -929,17 +952,14 @@ file ~/claude-code-with-bedrock/credential-process        # binary's CPU arch
 **Fix (admin) — rebuild with both macOS architectures:**
 
 ```bash
-# One-time setup: install Python universal2 from https://www.python.org/downloads/macos/
-# Download the "macOS 64-bit universal2 installer" for Python 3.12 and run it.
-# ccwb detects it automatically at /Library/Frameworks/Python.framework/
-
-# Rebuild — now produces both macos-arm64 and macos-intel
+# The default Go build mode produces both macos-arm64 and macos-intel
+# from any admin OS — no universal2 Python needed (requires Go 1.24+)
 poetry run ccwb package --target-platform all
 ```
 
 Redistribute the new package. The installer auto-detects architecture and installs the correct binary.
 
-> **Why this happens:** Without a universal2 Python, `ccwb package` builds only for the host Mac's architecture. An ARM64-only package has no Intel binary, so Intel Mac users get `exec format error` — ARM64 binaries cannot run on Intel Macs. Install a universal2 Python to also build the Intel binary, which covers all Mac users.
+> **Why this happens:** In the legacy (`--legacy`) build mode — also the fallback when Go is missing — `ccwb package` builds only for the host Mac's architecture unless a universal2 Python is installed. An ARM64-only package has no Intel binary, so Intel Mac users get `exec format error` — ARM64 binaries cannot run on Intel Macs. Rebuild with the default Go mode, or in legacy mode install the "macOS 64-bit universal2 installer" for Python 3.12 from https://www.python.org/downloads/macos/ (ccwb detects it automatically at `/Library/Frameworks/Python.framework/`) to also build the Intel binary.
 
 ### Windows `install.bat` — `-replace was unexpected at this time.`
 
