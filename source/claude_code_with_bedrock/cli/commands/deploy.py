@@ -1386,19 +1386,32 @@ class DeployCommand(Command):
                     subnet_ids = ",".join(vpc_config.get("subnet_ids", []))
                     params.append(f"SubnetIds={subnet_ids}")
                 else:
-                    # Get VPC outputs from networking stack
+                    # Get VPC outputs from networking stack. The otel-collector
+                    # template requires VpcId and SubnetIds (no defaults), so a
+                    # missing networking stack must fail here with a clear error
+                    # instead of an opaque CloudFormation parameter failure.
                     networking_stack_name = profile.stack_names.get(
                         "networking", f"{profile.identity_pool_name}-networking"
                     )
                     networking_outputs = get_stack_outputs(networking_stack_name, profile.aws_region)
 
-                    if networking_outputs:
-                        vpc_id = networking_outputs.get("VpcId", "")
-                        subnet_ids = networking_outputs.get("SubnetIds", "")
-                        if vpc_id:
-                            params.append(f"VpcId={vpc_id}")
-                        if subnet_ids:
-                            params.append(f"SubnetIds={subnet_ids}")
+                    if not networking_outputs:
+                        console.print(
+                            "[red]Error: Networking stack outputs not found. Deploy networking stack first.[/red]"
+                        )
+                        return 1
+
+                    vpc_id = networking_outputs.get("VpcId", "")
+                    subnet_ids = networking_outputs.get("SubnetIds", "")
+
+                    if not vpc_id or not subnet_ids:
+                        console.print("[red]Error: Missing required VPC/subnet outputs from networking stack.[/red]")
+                        console.print("[yellow]Expected: VpcId, SubnetIds[/yellow]")
+                        console.print(f"[yellow]Got: {list(networking_outputs.keys())}[/yellow]")
+                        return 1
+
+                    params.append(f"VpcId={vpc_id}")
+                    params.append(f"SubnetIds={subnet_ids}")
 
                 # Add HTTPS domain parameters if configured
                 monitoring_config = getattr(profile, "monitoring_config", {})
