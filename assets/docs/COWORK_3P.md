@@ -19,7 +19,7 @@ No additional AWS infrastructure is required — if you've already deployed this
 
 The following diagram from the [AWS Blog](https://aws.amazon.com/blogs/machine-learning/from-developer-desks-to-the-whole-organization-running-claude-cowork-in-amazon-bedrock/) illustrates the end-to-end flow for Claude Cowork with Amazon Bedrock:
 
-![Claude Cowork with Amazon Bedrock — Architecture](../../assets/images/cowork-3p-architecture.png)
+![Claude Cowork with Amazon Bedrock — Architecture](../images/cowork-3p-architecture.png)
 
 The application has three outbound paths: model inference to Amazon Bedrock in your configured regions, MCP server connections to endpoints you approve, and optional aggregate telemetry to Anthropic (which can be disabled).
 
@@ -83,7 +83,7 @@ Claude Desktop includes a built-in configuration interface for third-party infer
 3. Go to **Developer → Configure third-party inference**
 4. Select **Bedrock** as the inference provider
 
-![Claude Desktop - Configure third-party inference](../../assets/images/cowork-3p-setup-ui.png)
+![Claude Desktop - Configure third-party inference](../images/cowork-3p-setup-ui.png)
 
 In the **Bedrock Credentials** section, configure:
 - **AWS region**: Your Bedrock region (e.g., `us-west-2`)
@@ -96,7 +96,7 @@ Once configured, use **Export** to generate a `.mobileconfig` (macOS) or `.reg` 
 
 After applying the configuration, Claude Desktop will detect the Bedrock setup and present the option to continue:
 
-![Claude Desktop - Bedrock configuration detected](../../assets/images/cowork-3p-bedrock-detected.png)
+![Claude Desktop - Bedrock configuration detected](../images/cowork-3p-bedrock-detected.png)
 
 Select **Continue with Bedrock** to start using Claude with your organization's credentials.
 
@@ -440,7 +440,7 @@ Every Cowork 3P OTEL event includes a `user.id` attribute — an anonymous devic
 
 Per-device dashboard dimensions are planned — see [#585](https://github.com/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock/issues/585). Both central and sidecar monitoring modes are supported for Cowork telemetry.
 
-![Claude Cowork Dashboard](../../assets/images/ClaudeCoworkDashboard.png)
+![Claude Cowork Dashboard](../images/ClaudeCoworkDashboard.png)
 
 ## Quota Enforcement
 
