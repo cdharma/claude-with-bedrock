@@ -24,11 +24,11 @@ Windows binaries have special requirements to avoid Defender cloud ML (Wacatac.B
 
 | Path | Command | Requires | Runs on Windows admin? |
 |---|---|---|---|
-| **Go cross-compile via ccwb** (recommended) | `ccwb package --go` | Go 1.24+ installed | ✅ Yes, natively |
+| **Go cross-compile via ccwb** (default, recommended) | `ccwb package` | Go 1.24+ installed | ✅ Yes, natively |
 | **Go cross-compile via Makefile** | `cd source/go && make all` | Go 1.24+ and a Unix shell (Git Bash, WSL, or macOS/Linux) | ⚠️ **No** — see below |
-| **Legacy** (default when no flag) | `ccwb package` | PyInstaller + Docker (Linux builds) + CodeBuild (Windows builds) | ⚠️ Partial — native Windows Nuitka works; Linux builds need Docker |
+| **Legacy** (opt-in via `--legacy`, deprecated) | `ccwb package --legacy` | PyInstaller + Docker (Linux builds) + CodeBuild (Windows builds) | ⚠️ Partial — native Windows Nuitka works; Linux builds need Docker |
 
-**Pass `--go` explicitly to avoid the legacy path.** Bare `ccwb package` falls back to PyInstaller/Nuitka/Docker/CodeBuild, which is much heavier and more fragile. Most admins should standardize on `ccwb package --go`.
+**The Go build is the default.** Bare `ccwb package` builds with Go; it falls back to the legacy PyInstaller/Nuitka/Docker/CodeBuild path only if Go 1.24+ is not installed. Pass `--legacy` to opt into the deprecated path explicitly (the old `--go` flag still works and is a no-op).
 
 ### Building Windows binaries (cross-compile, any admin OS)
 
@@ -40,11 +40,11 @@ make all
 
 # Or build just Windows:
 CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build \
-  -ldflags "-X github.com/bluedoors/ccwb-binaries/internal/version.Version=2.0.0" \
+  -ldflags "-X ccwb-go/internal/version.Version=2.0.0" \
   -o bin/credential-process-windows.exe ./cmd/credential-process/
 
 CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build \
-  -ldflags "-X github.com/bluedoors/ccwb-binaries/internal/version.Version=2.0.0" \
+  -ldflags "-X ccwb-go/internal/version.Version=2.0.0" \
   -o bin/otel-helper-windows.exe ./cmd/otel-helper/
 ```
 
@@ -52,9 +52,9 @@ Verified working from macOS Apple Silicon: all 10 binaries (5 platforms × 2 bin
 
 ### Building on a Windows machine
 
-**`ccwb package --go` works natively on Windows** — Python subprocess calls `go build` directly and passes env vars as a dict (not shell syntax), with cross-platform `pathlib.Path` handling. Requires only Go 1.24+ installed and on `PATH`. **This is the recommended path for Windows admins.**
+**`ccwb package` works natively on Windows** — Python subprocess calls `go build` directly and passes env vars as a dict (not shell syntax), with cross-platform `pathlib.Path` handling. Requires only Go 1.24+ installed and on `PATH`. **This is the recommended path for Windows admins.**
 
-Bare `ccwb package` (no flag) falls back to the legacy PyInstaller/Nuitka/Docker/CodeBuild path, which on Windows requires CodeBuild to be enabled during `ccwb init` and takes 12-15 minutes per build.
+If Go 1.24+ is not installed, `ccwb package` falls back to the legacy PyInstaller/Nuitka/Docker/CodeBuild path, which on Windows requires CodeBuild to be enabled during `ccwb init` and takes 12-15 minutes per build. Installing Go avoids all of that.
 
 **`make all` does NOT work on native Windows cmd.exe or PowerShell.** The Makefile uses Unix-only shell constructs (`mkdir -p`, `rm -rf`). Options if you must use the Makefile on Windows:
 
@@ -67,16 +67,17 @@ cd source\go
 $env:CGO_ENABLED="0"
 $env:GOOS="windows"
 $env:GOARCH="amd64"
-go build -trimpath -ldflags "-s -w" -o bin\credential-process-windows.exe .\cmd\credential-process\
-go build -trimpath -ldflags "-s -w" -o bin\otel-helper-windows.exe .\cmd\otel-helper\
+# Windows binaries must NOT be stripped (no -s -w) — see the rule above
+go build -trimpath -o bin\credential-process-windows.exe .\cmd\credential-process\
+go build -trimpath -o bin\otel-helper-windows.exe .\cmd\otel-helper\
 
-# For other platforms, change $env:GOOS and $env:GOARCH:
+# For other platforms, change $env:GOOS and $env:GOARCH (stripping is fine off Windows):
 $env:GOOS="linux"; $env:GOARCH="amd64"
 go build -trimpath -ldflags "-s -w" -o bin\credential-process-linux-x64 .\cmd\credential-process\
 # ...etc
 ```
 
-**Recommended path for Windows admins**: always pass `ccwb package --go` explicitly. The Makefile is only needed if you want to build outside of the `ccwb` tooling.
+**Recommended path for Windows admins**: just run `ccwb package` (the Go build is the default). The Makefile is only needed if you want to build outside of the `ccwb` tooling.
 
 ### Verification
 

@@ -117,23 +117,43 @@ For a guided walkthrough of these plugins, see the companion workshop:
 ### Setup (Dynamic with plugins — recommended)
 
 ```bash
-ccwb init                      # Select "Dynamic with plugins" for CoWork delivery
-ccwb deploy --stack bootstrap  # Deploy bootstrap server
-ccwb plugins add --name my-plugin --repo https://github.com/org/plugins.git --path my-plugin
-ccwb plugins sync              # Push registry to server
+ccwb init              # Select "Dynamic with plugins" for Claude Desktop config delivery
+ccwb deploy bootstrap  # Deploy the bootstrap server
 ```
 
-Desktop receives `organizationPluginsUrl` in the bootstrap response and git-clones plugins automatically. Plugins with `"installationPreference": "required"` install without user confirmation.
+**Publishing the plugin registry:** there is no dedicated `ccwb` command for this yet — you author a registry JSON file and place it where the bootstrap server reads it. The bootstrap Lambda serves the registry from, in order:
 
-**How delivery works:** `ccwb plugins sync` uploads a registry JSON to the existing S3 bucket. The bootstrap Lambda reads it and serves it at `/plugins/index.json`. Each registry entry points to a git repo — Desktop clones directly from your repo, not through the bootstrap server.
+1. **S3 (recommended):** a `plugins-registry.json` object in the bucket set by the stack's `PluginsS3Bucket` parameter (`ccwb deploy bootstrap` points this at the deployment's shared artifacts bucket when its outputs are available). Upload or update the file directly — changes take effect on the next client fetch, with no stack redeploy:
+
+   ```bash
+   aws s3 cp plugins-registry.json s3://<plugins-bucket>/plugins-registry.json
+   ```
+
+2. **Inline fallback:** the `PluginsRegistryJson` stack parameter (requires a stack update to change).
+
+A minimal registry looks like:
+
+```json
+{
+  "plugins": [
+    {
+      "name": "org-security-policy",
+      "version": "1.0.0",
+      "url": "https://example.com/plugins/org-security-policy.zip"
+    }
+  ]
+}
+```
+
+**How delivery works:** Claude Desktop receives `organizationPluginsUrl` in the bootstrap response and fetches the registry from the bootstrap server. Each entry's `url` points at plugin content your organization hosts — Desktop downloads it directly from there, not through the bootstrap server.
 
 **IdP callback:** Add the bootstrap callback URL (printed after deploy) to your IdP's redirect URIs. Cognito configures this automatically.
 
 ### Setup (Dynamic config only)
 
 ```bash
-ccwb init                      # Select "Dynamic config only" for CoWork delivery
-ccwb deploy --stack bootstrap  # Deploy lightweight bootstrap (no DynamoDB)
+ccwb init              # Select "Dynamic config only" for Claude Desktop config delivery
+ccwb deploy bootstrap  # Deploy lightweight bootstrap server (no DynamoDB)
 ```
 
 Desktop receives config (region, models, session lifetime) but no plugins. Simpler infrastructure, no state.

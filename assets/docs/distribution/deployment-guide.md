@@ -18,7 +18,7 @@ Claude Code with Bedrock supports **two distribution methods** for sharing packa
 #### Presigned S3 Distribution
 
 ```
-Admin Machine → S3 Bucket → Presigned URL (7 days) → Users download directly
+Admin Machine → S3 Bucket → Presigned URL (48h default) → Users download directly
 ```
 
 - **Components**: S3 bucket + IAM user with presigned URL generation
@@ -137,7 +137,7 @@ poetry run ccwb distribute
 
 Output includes:
 
-- **Presigned URL**: Valid for 7 days (or custom expiry via `--expires-hours`)
+- **Presigned URL**: Valid for 48 hours by default (customize with `--expires-hours`, up to 168 hours / 7 days)
 - **SHA256 Checksum**: For package integrity verification
 - **Download Instructions**: For macOS/Linux and Windows
 - **File Size**: Package size information
@@ -150,7 +150,7 @@ Output includes:
 - Email
 - Internal documentation
 
-**URL expires after 7 days** - regenerate by running `ccwb distribute` again.
+**URL expires after 48 hours by default** (7-day maximum via `--expires-hours`) - regenerate by running `ccwb distribute` again.
 
 **Retrieve latest URL** without regenerating:
 
@@ -733,7 +733,7 @@ poetry run ccwb distribute
 **For presigned-s3**:
 
 - Uploads package to S3
-- Generates presigned URL (7-day expiry)
+- Generates presigned URL (48-hour default expiry)
 - Displays URL and download instructions
 - Admin shares URL with users
 
@@ -893,7 +893,7 @@ To publish new package versions:
 
 ### Distribution Type Comparison
 
-**Presigned-S3**: Time-limited URLs (7-day expiry), no authentication, suitable for internal trusted users only. URLs can be shared/leaked with no access revocation.
+**Presigned-S3**: Time-limited URLs (48-hour default expiry, 7-day maximum), no authentication, suitable for internal trusted users only. URLs can be shared/leaked with no access revocation.
 
 **Landing-Page**: IdP authentication required, short-lived presigned URLs (1-hour expiry), ALB access logs for audit trail, suitable for enterprise compliance.
 
@@ -910,9 +910,9 @@ To publish new package versions:
 
 - **Distribution Comparison**: [comparison.md](./comparison.md) - Detailed comparison of presigned-s3 vs landing-page
 - **IdP Provider Setup**: [../providers/](../providers/) - IdP-specific CLI authentication guides
-- **Main Deployment Guide**: [../../DEPLOYMENT.md](../../DEPLOYMENT.md) - Overall deployment documentation
-- **CLI Reference**: [../../CLI_REFERENCE.md](../../CLI_REFERENCE.md) - Complete command reference
-- **Architecture**: [../../ARCHITECTURE.md](../../ARCHITECTURE.md) - Technical architecture documentation
+- **Main Deployment Guide**: [../DEPLOYMENT.md](../DEPLOYMENT.md) - Overall deployment documentation
+- **CLI Reference**: [../CLI_REFERENCE.md](../CLI_REFERENCE.md) - Complete command reference
+- **Architecture**: [../ARCHITECTURE.md](../ARCHITECTURE.md) - Technical architecture documentation
 
 ---
 

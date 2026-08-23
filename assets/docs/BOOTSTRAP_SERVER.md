@@ -1,6 +1,6 @@
 # Bootstrap Server
 
-The CoWork Bootstrap Server delivers per-user configuration to Claude Desktop (CoWork) clients dynamically at sign-in. Instead of baking full configuration into static MDM profiles, administrators deploy a lightweight API endpoint that validates the user's OIDC token and returns their personalized settings — inference region, allowed models, OTEL endpoint, and session lifetime.
+The bootstrap server delivers per-user configuration to Claude Desktop (Cowork) clients dynamically at sign-in. Instead of baking full configuration into static MDM profiles, administrators deploy a lightweight API endpoint that validates the user's OIDC token and returns their personalized settings — inference region, allowed models, OTEL endpoint, and session lifetime.
 
 This enables organizations to change configuration centrally without re-deploying MDM profiles, support different config per user/group (future v2), and ensure configuration is only delivered to authenticated users with valid OIDC tokens.
 
@@ -8,7 +8,7 @@ This enables organizations to change configuration centrally without re-deployin
 
 ```
 ┌─────────────┐     1. Sign in (OIDC)      ┌──────────────┐
-│  CoWork     │ ──────────────────────────► │  OIDC IdP    │
+│  Cowork     │ ──────────────────────────► │  OIDC IdP    │
 │  (Client)   │ ◄────────────────────────── │  (Okta/Azure)│
 │             │     2. Receive token        └──────────────┘
 │             │
@@ -25,9 +25,9 @@ This enables organizations to change configuration centrally without re-deployin
 └─────────────┘                              └──────────────┘
 ```
 
-1. User signs into CoWork via OIDC (standard flow)
-2. CoWork receives an access/ID token from the IdP
-3. CoWork calls the bootstrap URL with the Bearer token
+1. User signs into Claude Desktop via OIDC (standard flow)
+2. Claude Desktop receives an access/ID token from the IdP
+3. Claude Desktop calls the bootstrap URL with the Bearer token
 4. Lambda validates the JWT signature against the IdP's JWKS
 5. Lambda returns per-user configuration JSON
 
@@ -37,15 +37,18 @@ The bootstrap server is configured during `ccwb init` and deployed with `ccwb de
 
 ### Init Wizard
 
-During `ccwb init`, after the CoWork 3P section:
+During `ccwb init`, after the Claude Desktop support section:
 
 ```
-CoWork configuration delivery:
+Claude Desktop config delivery:
   ❯ Static (default — MDM profile with inline config)
-    Dynamic (bootstrap server — per-user config at sign-in)
+    Dynamic with plugins (device-code auth — config + org plugins)
+    Dynamic config only (OIDC Bearer — config delivery, no plugins)
 ```
 
 ### CloudFormation Parameters
+
+These are the parameters of the "Dynamic config only" template (`bootstrap-oidc-bearer.yaml`). The "Dynamic with plugins" template (`bootstrap-device-code.yaml`) additionally takes OIDC endpoint and plugin-registry parameters — see the [Plugin Distribution Guide](PLUGINS.md#bootstrap-server-delivery-dynamic).
 
 | Parameter | Description | Default |
 |-----------|-------------|---------|
@@ -105,7 +108,7 @@ This replaces the need for a full static MDM profile with all inference settings
 ```bash
 # Initialize with dynamic config mode
 poetry run ccwb init
-# Select "Dynamic" when prompted for CoWork configuration delivery
+# Select one of the "Dynamic" modes when prompted for Claude Desktop config delivery
 
 # Deploy the bootstrap server stack
 poetry run ccwb deploy bootstrap

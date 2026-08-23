@@ -1,6 +1,6 @@
-# Claude Cowork with Third-Party Platforms (CoWork 3P)
+# Claude Desktop (Cowork 3P) on Amazon Bedrock
 
-This guide explains how to use this solution's credential helper with **Claude Cowork** (Claude Desktop) in third-party platform mode, enabling enterprise-managed Claude Desktop deployments that authenticate through your existing identity provider.
+This guide explains how to use this solution's credential helper with **Claude Desktop** (Cowork) in third-party platform mode, enabling enterprise-managed Claude Desktop deployments that authenticate through your existing identity provider.
 
 ## Overview
 
@@ -43,7 +43,7 @@ The workflow depends on whether you've already deployed this solution for Claude
 
 **New deployments** (starting from scratch):
 1. Follow the [Quick Start Guide](../../QUICK_START.md) to deploy authentication infrastructure
-2. Run `ccwb package` to build distribution packages — CoWork 3P configs are auto-generated alongside
+2. Run `ccwb package` to build distribution packages — Cowork 3P configs are auto-generated alongside (see the zero-binary exception below)
 3. Deploy MDM configuration files and distribute packages to users
 
 ## Configuration
@@ -70,7 +70,9 @@ poetry run ccwb cowork generate --profile Production
 
 Generated files are saved to `dist/cowork-3p/` by default. See [CLI Reference](CLI_REFERENCE.md#cowork-generate---generate-mdm-configuration) for all options.
 
-CoWork 3P configs are also auto-generated alongside distribution packages during `ccwb package` when enabled via `ccwb init`.
+Cowork 3P configs are also auto-generated alongside distribution packages during `ccwb package` when enabled via `ccwb init`.
+
+> **Exception — IDC zero-binary packages:** when auth is IAM Identity Center **without** quota monitoring, `ccwb package` builds a zero-binary package (no `credential-process` binary) and deliberately **skips** the Claude Desktop MDM config, with a warning — Claude Desktop authentication requires the credential-process binary. Enabling quota monitoring restores binary packaging and MDM generation.
 
 ### Option 2: Configure via Setup UI
 
@@ -125,7 +127,7 @@ For automated deployment at scale, create an MDM profile with the following esse
 | `inferenceBedrockAwsDir` | Path to the directory containing AWS config/credentials files (default: `~/.aws`) |
 | `inferenceModels` | JSON array of model entries. Supports simple aliases (`["opus", "sonnet", "haiku"]`) or object entries with tier tagging (see below). First entry is the default |
 
-> **Note:** The model aliases used by CoWork 3P (`opus`, `sonnet`, `haiku`) are resolved internally by Claude Desktop and may differ from the CRIS model IDs configured for Claude Code via `ANTHROPIC_MODEL`. The `ccwb cowork generate` command includes all available aliases by default. Use `--models` to customize the list for your organization.
+> **Note:** The model aliases used by Cowork 3P (`opus`, `sonnet`, `haiku`) are resolved internally by Claude Desktop and may differ from the CRIS model IDs configured for Claude Code via `ANTHROPIC_MODEL`. The `ccwb cowork generate` command includes all available aliases by default. Use `--models` to customize the list for your organization.
 
 #### Model Entries with Family Tier (v1.13576+)
 
@@ -166,7 +168,7 @@ Claude Desktop supports object entries in `inferenceModels` with `anthropicFamil
 
 ### How Credentials Flow
 
-This solution supports two credential modes for CoWork. The **credential helper** mode (default since v2.6.0) is recommended because it gives Claude Desktop direct control over credential lifecycle, eliminating the stale-credential bug that required manual app restarts.
+This solution supports two credential modes for Cowork. The **credential helper** mode (default since v2.6.0) is recommended because it gives Claude Desktop direct control over credential lifecycle, eliminating the stale-credential bug that required manual app restarts.
 
 #### Credential Helper Mode (Recommended)
 
@@ -184,7 +186,7 @@ The credential-process binary handles the `CLAUDE_HELPER_CONTEXT` environment va
 - `mid-session-refresh` → Silent refresh via cached refresh_token (no browser)
 - `background` / `setup-test` → Silent path only, exit non-zero if unavailable
 
-This mode resolves the known issue where CoWork doesn't automatically refresh AWS credentials after token expiry (affecting both IDC and OIDC/Azure AD federated auth users).
+This mode resolves the known issue where Cowork doesn't automatically refresh AWS credentials after token expiry (affecting both IDC and OIDC/Azure AD federated auth users).
 
 Ref: [Claude Desktop Credential Helper documentation](https://claude.com/docs/third-party/claude-desktop/credential-helper)
 
@@ -200,9 +202,9 @@ The legacy flow uses `inferenceBedrockProfile` instead:
 
 To use this mode, set `cowork_credential_mode = "profile"` in your deployment profile before running `ccwb cowork generate`.
 
-No wrapper script is required — CoWork reuses the same `credential-process` binary and `~/.aws/config` entry that `install.sh` / `install.bat` already configure for Claude Code CLI.
+No wrapper script is required — Cowork reuses the same `credential-process` binary and `~/.aws/config` entry that `install.sh` / `install.bat` already configure for Claude Code CLI.
 
-> ⚠️ **boto3 resolves `~/.aws/credentials` before `~/.aws/config`.** If `~/.aws/credentials` contains a `[<profile-name>]` block matching `inferenceBedrockProfile` — whether written by another tool or by this solution in session-storage mode — boto3 uses it directly and does **not** fall through to `credential_process` to refresh it. CoWork works as long as those static credentials remain valid, then fails with `403 The security token included in the request is invalid` the moment they expire (or immediately, if the block contains stale `EXPIRED` placeholders from a past logout). The installer shipped by `ccwb package` purges any such stanza before writing the new profile, and keyring-mode builds never write to `~/.aws/credentials` at all — which is why **Keyring is the recommended credential storage method when CoWork 3P is in scope**.
+> ⚠️ **boto3 resolves `~/.aws/credentials` before `~/.aws/config`.** If `~/.aws/credentials` contains a `[<profile-name>]` block matching `inferenceBedrockProfile` — whether written by another tool or by this solution in session-storage mode — boto3 uses it directly and does **not** fall through to `credential_process` to refresh it. Cowork works as long as those static credentials remain valid, then fails with `403 The security token included in the request is invalid` the moment they expire (or immediately, if the block contains stale `EXPIRED` placeholders from a past logout). The installer shipped by `ccwb package` purges any such stanza before writing the new profile, and keyring-mode builds never write to `~/.aws/credentials` at all — which is why **Keyring is the recommended credential storage method when Cowork 3P is in scope**.
 
 ## Deployment
 
@@ -298,22 +300,18 @@ Administrators often need to set additional MDM keys beyond the defaults generat
 | `disabledBuiltinTools` | Lock down specific tools |
 | `allowedWorkspaceFolders` | Restrict workspace access to approved directories |
 
-### Configuring via `ccwb init`
+### Enabling via `ccwb init`
 
-During the interactive `ccwb init` wizard, you'll be prompted to add custom MDM keys when CoWork 3P is enabled:
+The interactive `ccwb init` wizard asks whether to generate the MDM configuration during packaging:
 
 ```
-Claude Cowork (Desktop) Support
-Generate CoWork 3P MDM configuration during packaging? Yes
-Would you like to add custom MDM keys? Yes
-New MDM key name (empty to finish): coworkEgressAllowedHosts
-Value for 'coworkEgressAllowedHosts': ["*"]
-✓ MDM key: coworkEgressAllowedHosts=["*"]
-New MDM key name (empty to finish): coworkWebSearchEnabled
-Value for 'coworkWebSearchEnabled': true
-✓ MDM key: coworkWebSearchEnabled=true
-New MDM key name (empty to finish):
+Claude Desktop Support
+Generate MDM configuration for Claude Desktop with Amazon Bedrock
+Enable Claude Desktop support? Yes
+✓ Claude Desktop MDM config will be generated during packaging
 ```
+
+The wizard preserves any custom MDM keys already configured; to add or change them, edit the profile JSON directly as described below.
 
 ### Configuring via profile JSON
 
@@ -382,7 +380,7 @@ That mode reads the cached id_token and silently refreshes it via the stored ref
 - **Cost:** approximately **$7 per 1,000 queries**, billed to your AWS account.
 - **Identity providers:** works with the solution's OIDC providers (Amazon Cognito, Microsoft Entra ID, Okta, Auth0, Google, generic OIDC). Because the bearer is an id_token (`aud = clientId`) validated by `AllowedAudience`, **no provider-specific setup is required**. See [Microsoft Entra ID setup → web search](providers/microsoft-entra-id-setup.md#10-web-search-for-claude-cowork-entra-id-notes) for notes.
 
-> **Claude Code & joint documentation.** The equivalent web search capability for the **Claude Code CLI** (injected into `settings.json` via the credential helper) is delivered by a separate contribution and is **not** documented here yet. A single consolidated `WEB_SEARCH.md` covering both surfaces (Claude Code + Cowork) is planned once that work lands. Note: the merged CloudFormation template PR shipped the gateway template only — it did not include a standalone usage doc.
+> **Claude Code & joint documentation.** The equivalent web search capability for the **Claude Code CLI** (injected into `settings.json` via the credential helper) is delivered by a separate contribution and is **not** documented here yet. The gateway itself, its template parameters, and the Claude Desktop setup flow are documented in [WEB_SEARCH.md](WEB_SEARCH.md).
 
 
 ## Verification
@@ -413,65 +411,65 @@ Claude Cowork sends the following OTLP metrics to the collector:
 | `claude_code.cost.usage` | Estimated cost in USD (client-side approximation) |
 | `claude_code.session.count` | Number of active sessions |
 
-These are displayed in the **Claude CoWork Dashboard** in CloudWatch, which shows aggregate token usage, cost, sessions, model breakdown, and platform distribution.
+These are displayed in the **Claude Cowork Dashboard** in CloudWatch, which shows aggregate token usage, cost, sessions, model breakdown, and platform distribution.
 
 ### Per-device identity
 
-Every CoWork 3P OTEL event includes a `user.id` attribute — an anonymous device/installation UUID generated by Claude Desktop. This identifies each device uniquely and can be used for:
+Every Cowork 3P OTEL event includes a `user.id` attribute — an anonymous device/installation UUID generated by Claude Desktop. This identifies each device uniquely and can be used for:
 
 - Per-device cost attribution and chargeback
 - Identifying high-usage devices
-- Correlating CoWork usage with Claude Code quota data
+- Correlating Cowork usage with Claude Code quota data
 
 > **Note:** `user.id` is a device identifier, not a human identity. To map devices to users, maintain a device enrollment registry (e.g., populated during `ccwb package` distribution or MDM enrollment).
 
-> **Note:** `user.email`, `user.account_uuid`, and `organization.id` are only available in Claude.ai-managed CoWork deployments (not 3P).  
+> **Note:** `user.email`, `user.account_uuid`, and `organization.id` are only available in Claude.ai-managed Cowork deployments (not 3P).  
 
-Per-device dashboard dimensions are planned — see [#585](https://github.com/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock/issues/585). Both central and sidecar monitoring modes are supported for CoWork telemetry.
+Per-device dashboard dimensions are planned — see [#585](https://github.com/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock/issues/585). Both central and sidecar monitoring modes are supported for Cowork telemetry.
 
-![Claude CoWork Dashboard](../../assets/images/ClaudeCoworkDashboard.png)
+![Claude Cowork Dashboard](../../assets/images/ClaudeCoworkDashboard.png)
 
 ## Quota Enforcement
 
-CoWork 3P usage is subject to the same per-user quota enforcement as Claude Code. Here's how it works:
+Cowork 3P usage is subject to the same per-user quota enforcement as Claude Code. Here's how it works:
 
 ### How enforcement applies
 
-CoWork uses `credential-process` for credential refresh (via the `inferenceBedrockProfile` AWS named profile). The credential-process binary checks the quota API on every refresh cycle:
+Cowork uses `credential-process` for credential refresh (via the `inferenceBedrockProfile` AWS named profile). The credential-process binary checks the quota API on every refresh cycle:
 
-1. CoWork's AWS session token expires (~1 hour)
+1. Cowork's AWS session token expires (~1 hour)
 2. AWS SDK calls `credential-process --profile <name>` for fresh credentials
 3. `credential-process` calls the quota-check API (`GET /check`)
-4. If the user is over quota → credentials are denied → CoWork loses Bedrock access
-5. If under quota → fresh credentials issued → CoWork continues
+4. If the user is over quota → credentials are denied → Cowork loses Bedrock access
+5. If under quota → fresh credentials issued → Cowork continues
 
 **Enforcement granularity:** Per credential refresh (~1 hour). A user can exceed their quota within a session but will be blocked on the next refresh.
 
-### How CoWork usage is counted
+### How Cowork usage is counted
 
-CoWork sends OTLP **log events** (not metrics) to the collector. The monitoring pipeline processes them:
+Cowork sends OTLP **log events** (not metrics) to the collector. The monitoring pipeline processes them:
 
-1. CoWork sends `claude_code.api_request` log events to the OTEL collector
+1. Cowork sends `claude_code.api_request` log events to the OTEL collector
 2. Collector injects `user_email` from HTTP attribution headers
 3. Events are written to `/aws/claude-cowork/events` CloudWatch Logs
-4. MetricFilters extract per-user token counts into the `ClaudeCoWork` namespace (with `user_email` dimension)
-5. `quota_monitor` Lambda queries both `ClaudeCode` and `ClaudeCoWork` PromQL metrics
+4. MetricFilters extract per-user token counts into the Cowork CloudWatch metric namespace (with `user_email` dimension)
+5. `quota_monitor` Lambda queries both the Claude Code and Cowork metric namespaces
 6. Combined usage is aggregated into a single DynamoDB record per user
 
-**Result:** A user's total quota includes both Claude Code CLI and CoWork Desktop usage.
+**Result:** A user's total quota includes both Claude Code CLI and Cowork Desktop usage.
 
-### Requirements for per-user CoWork quota
+### Requirements for per-user Cowork quota
 
 - Monitoring stack deployed (central mode with custom domain + HTTPS, or sidecar mode with local proxy)
-- CoWork service token configured (`ccwb init` generates it)
+- Cowork service token configured (`ccwb init` generates it)
 - Attribution headers flowing (credential-process provides `x-user-email`)
-- CoWork dashboard stack deployed (`ccwb deploy --stack cowork-dashboard`)
+- Cowork dashboard stack deployed (`ccwb deploy cowork-dashboard`)
 
 ### Limitations
 
-- **No inline blocking:** CoWork calls Bedrock directly via AWS credentials. There is no per-request interception — enforcement happens at credential refresh boundaries only.
-- **Attribution required:** If `x-user-email` header is not configured, CoWork usage is aggregate-only and cannot be attributed to individual users for quota purposes.
-- **CoWork-native `user.id`:** The opaque hash in raw CoWork events cannot be mapped back to an email without a separate device registry.
+- **No inline blocking:** Cowork calls Bedrock directly via AWS credentials. There is no per-request interception — enforcement happens at credential refresh boundaries only.
+- **Attribution required:** If `x-user-email` header is not configured, Cowork usage is aggregate-only and cannot be attributed to individual users for quota purposes.
+- **Cowork-native `user.id`:** The opaque hash in raw Cowork events cannot be mapped back to an email without a separate device registry.
 
 ## Additional Resources
 

@@ -18,7 +18,7 @@ This guide helps you choose the right option for your organization.
 | **Best For**        | Small teams (< 20 users)           | Large teams (20-100 users)              |
 | **Authentication**  | None (URLs shared via Slack/email) | IdP (Okta/Azure/Auth0/Cognito)          |
 | **Setup Time**      | 5 minutes                          | 30 minutes                              |
-| **Security**        | URL expiry (7 days)                | IdP auth + URL expiry (1 hour)          |
+| **Security**        | URL expiry (48 hours by default)   | IdP auth + URL expiry (1 hour)          |
 | **Compliance**      | Basic                              | Enterprise-grade                        |
 | **User Experience** | Copy/paste URL                     | Navigate to URL, authenticate, download |
 | **Admin Overhead**  | Generate new URLs when needed      | Set up once, no maintenance             |
@@ -31,14 +31,14 @@ This guide helps you choose the right option for your organization.
 ### Presigned S3 URLs
 
 ```
-Admin Machine → S3 → Presigned URL (7 days) → User downloads directly
+Admin Machine → S3 → Presigned URL (48h default) → User downloads directly
 ```
 
 **How it works:**
 
 1. Admin runs `poetry run ccwb distribute`
 2. Package uploaded to S3
-3. Presigned URL generated (expires in 7 days)
+3. Presigned URL generated (expires in 48 hours by default; up to 7 days via `--expires-hours`)
 4. Admin shares URL via Slack/email
 5. Users download directly from S3 (no authentication)
 
@@ -51,7 +51,7 @@ Admin Machine → S3 → Presigned URL (7 days) → User downloads directly
 **Cons:**
 
 - URL can be shared with anyone
-- URLs expire after 7 days (need to regenerate)
+- URLs expire after 48 hours by default, 7 days maximum (need to regenerate)
 - No audit trail of who downloaded
 - Not suitable for compliance requirements
 
@@ -238,6 +238,5 @@ A: Landing page supports custom domains via Route53. Presigned-s3 uses S3 URLs d
 
 ## Next Steps
 
-- For setup instructions, see distribution setup guides
-- For publishing packages, see [Publishing Guide](publishing.md)
-- For user instructions, see [User Guide](user-guide.md)
+- For setup instructions, see the [Distribution Deployment Guide](deployment-guide.md)
+- For publishing packages, see [Publishing Packages](deployment-guide.md#publishing-packages)
