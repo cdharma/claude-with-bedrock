@@ -1906,6 +1906,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#per-user-telemetry-attribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Per-user telemetry attribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#per-device-identity" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2157,11 +2168,11 @@
 <p>There are three ways to create the MDM configuration. <strong>Option 1 (CLI)</strong> is recommended as it auto-generates from your deployment profile.</p>
 <h3 id="option-1-generate-via-cli-recommended">Option 1: Generate via CLI (Recommended)<a class="headerlink" href="#option-1-generate-via-cli-recommended" title="Permanent link">&para;</a></h3>
 <p>If you've deployed this solution, the <code>ccwb cowork generate</code> command auto-generates MDM configuration files from your existing deployment profile — no manual JSON editing required:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Generate all formats (JSON, macOS .mobileconfig, Windows .reg)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Generate every format</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>cowork<span class="w"> </span>generate
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Generate only macOS profile</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>cowork<span class="w"> </span>generate<span class="w"> </span>--format<span class="w"> </span>mobileconfig
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Just one format</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>cowork<span class="w"> </span>generate<span class="w"> </span>--format<span class="w"> </span>ps1
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># Custom model list</span>
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>cowork<span class="w"> </span>generate<span class="w"> </span>--models<span class="w"> </span>opus,sonnet,haiku
@@ -2169,7 +2180,45 @@
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># Specific deployment profile</span>
 <a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>cowork<span class="w"> </span>generate<span class="w"> </span>--profile<span class="w"> </span>Production
 </code></pre></div>
-<p>Generated files are saved to <code>dist/cowork-3p/</code> by default. See <a href="../CLI_REFERENCE/#cowork-generate---generate-mdm-configuration">CLI Reference</a> for all options.</p>
+<p>Generated files are saved to <code>dist/cowork-3p/</code> by default:</p>
+<table>
+<thead>
+<tr>
+<th><code>--format</code></th>
+<th>File</th>
+<th>Deploy with</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>json</code></td>
+<td><code>cowork-3p-config.json</code></td>
+<td>Any MDM that takes raw JSON policy</td>
+</tr>
+<tr>
+<td><code>mobileconfig</code></td>
+<td><code>cowork-3p.mobileconfig</code></td>
+<td>macOS MDM — Jamf, Kandji, Mosyle</td>
+</tr>
+<tr>
+<td><code>reg</code></td>
+<td><code>cowork-3p.reg</code></td>
+<td>Windows — <code>reg import</code> by hand, or push the keys via MDM</td>
+</tr>
+<tr>
+<td><code>ps1</code></td>
+<td><code>Set-CoworkPolicy.ps1</code></td>
+<td><strong>Intune → Devices → Scripts and remediations → Platform scripts</strong>, with <em>Run this script using the logged on credentials: </em><em>Yes</em>**</td>
+</tr>
+<tr>
+<td><code>admx</code></td>
+<td><code>ClaudeCowork3P.admx</code> + <code>.adml</code></td>
+<td>Group Policy, or Intune ADMX ingestion</td>
+</tr>
+</tbody>
+</table>
+<p><strong>For a Windows fleet, prefer <code>ps1</code>.</strong> Because Intune runs it in each user's own context, it resolves that user's home path and email (their Entra UPN) at run time — so one script gives the whole fleet correct <a href="#per-user-telemetry-attribution">per-user dashboard attribution</a> with nothing to maintain per person. The <code>.reg</code> route needs those values baked in ahead of time, which is why <code>install.bat</code> substitutes them on the user's own machine.</p>
+<p>See <a href="../CLI_REFERENCE/#cowork-generate---generate-mdm-configuration">CLI Reference</a> for all options.</p>
 <p>Cowork 3P configs are also auto-generated alongside distribution packages during <code>ccwb package</code> when enabled via <code>ccwb init</code>.</p>
 <blockquote>
 <p><strong>Exception — IDC zero-binary packages:</strong> when auth is IAM Identity Center <strong>without</strong> quota monitoring, <code>ccwb package</code> builds a zero-binary package (no <code>credential-process</code> binary) and deliberately <strong>skips</strong> the Claude Desktop MDM config, with a warning — Claude Desktop authentication requires the credential-process binary. Enabling quota monitoring restores binary packaging and MDM generation.</p>
@@ -2693,6 +2742,16 @@
 </tbody>
 </table>
 <p>These are displayed in the <strong>Claude Cowork Dashboard</strong> in CloudWatch, which shows aggregate token usage, cost, sessions, model breakdown, and platform distribution.</p>
+<h3 id="per-user-telemetry-attribution">Per-user telemetry attribution<a class="headerlink" href="#per-user-telemetry-attribution" title="Permanent link">&para;</a></h3>
+<p>Claude Desktop has no otel-helper, so it cannot attach a user identity to its own telemetry the way Claude Code does. Without one, every per-user dashboard widget stays empty and the metrics are aggregate-only. This solution supplies the identity as an <code>x-user-email</code> OTLP header, which the collector stamps onto each event as the <code>user_email</code> attribute the dashboard reads.</p>
+<p>The value is resolved automatically, in this order:</p>
+<ol>
+<li><code>CCWB_USER_EMAIL</code> environment variable, if set (explicit override for IT wrappers)</li>
+<li>The signed-in directory identity — <code>whoami /upn</code> on Windows (the Entra UPN), <code>dscl</code> on macOS</li>
+<li><code>unknown</code> — aggregate-only, so a widget never silently publishes nothing</li>
+</ol>
+<p>A value without <code>@</code> is rejected, so a machine-local account name never becomes a phantom dashboard user. Nothing prompts the user: <code>install.bat</code> and <code>install.sh</code> resolve it during install, and the Intune <code>ps1</code> script resolves it per user at deploy time. To pin it explicitly, pass <code>ccwb cowork generate --user-email someone@example.com</code>.</p>
+<p>On an Entra-federated Identity Center setup the UPN is the same address Identity Center reports, so Claude Desktop and Claude Code usage land on the same user — and against the same <a href="#quota-enforcement">spending limit</a>.</p>
 <h3 id="per-device-identity">Per-device identity<a class="headerlink" href="#per-device-identity" title="Permanent link">&para;</a></h3>
 <p>Every Cowork 3P OTEL event includes a <code>user.id</code> attribute — an anonymous device/installation UUID generated by Claude Desktop. This identifies each device uniquely and can be used for:</p>
 <ul>
@@ -2775,7 +2834,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="August 23, 2026 16:27:25 UTC"><span class="timeago" datetime="2026-08-23T16:27:25+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 23, 2026 16:27:25 UTC">2026-08-23</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="August 24, 2026 11:18:56 UTC"><span class="timeago" datetime="2026-08-24T11:18:56+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 24, 2026 11:18:56 UTC">2026-08-24</span>
   </span>
 
     
