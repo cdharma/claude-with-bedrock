@@ -218,6 +218,33 @@ def _write_cost_limits(
         )
 
 
+def _policy_limit_rows(policy) -> list[tuple[str, str]]:
+    """Label/value rows for a policy's limits — budget rows for cost-based
+    policies, token rows otherwise. A cost policy's token fields are 0 by
+    design; rendering only those showed a configured $20/$5 budget as 0."""
+    rows = []
+    if getattr(policy, "monthly_cost_limit", None):
+        rows.append(("Monthly Budget", f"${float(policy.monthly_cost_limit):,.2f}"))
+        if getattr(policy, "daily_cost_limit", None):
+            rows.append(("Daily Budget", f"${float(policy.daily_cost_limit):,.2f}"))
+        return rows
+    rows.append(("Monthly Token Limit", _format_tokens(policy.monthly_token_limit)))
+    if policy.daily_token_limit:
+        rows.append(("Daily Token Limit", _format_tokens(policy.daily_token_limit)))
+    rows.append(("Warning (80%)", _format_tokens(policy.warning_threshold_80)))
+    rows.append(("Critical (90%)", _format_tokens(policy.warning_threshold_90)))
+    return rows
+
+
+def _policy_limit_cells(policy) -> tuple[str, str]:
+    """(monthly, daily) table cells for `quota list`."""
+    if getattr(policy, "monthly_cost_limit", None):
+        daily = f"${float(policy.daily_cost_limit):,.2f}" if getattr(policy, "daily_cost_limit", None) else "-"
+        return f"${float(policy.monthly_cost_limit):,.2f}", daily
+    daily = _format_tokens(policy.daily_token_limit) if policy.daily_token_limit else "-"
+    return _format_tokens(policy.monthly_token_limit), daily
+
+
 class QuotaCommand(Command):
     """Manage quota policies."""
 
@@ -841,13 +868,13 @@ class QuotaListCommand(Command):
 
             for policy in sorted(policies, key=lambda p: (p.policy_type.value, p.identifier)):
                 status = "[green]Enabled[/green]" if policy.enabled else "[dim]Disabled[/dim]"
-                daily = _format_tokens(policy.daily_token_limit) if policy.daily_token_limit else "-"
+                monthly, daily = _policy_limit_cells(policy)
                 enforcement = "[red]block[/red]" if policy.enforcement_mode.value == "block" else "alert"
 
                 table.add_row(
                     policy.policy_type.value,
                     policy.identifier,
-                    _format_tokens(policy.monthly_token_limit),
+                    monthly,
                     daily,
                     enforcement,
                     status,
@@ -981,11 +1008,8 @@ class QuotaShowCommand(Command):
             table.add_column("Metric", style="bold")
             table.add_column("Limit", justify="right")
 
-            table.add_row("Monthly Token Limit", _format_tokens(policy.monthly_token_limit))
-            if policy.daily_token_limit:
-                table.add_row("Daily Token Limit", _format_tokens(policy.daily_token_limit))
-            table.add_row("Warning (80%)", _format_tokens(policy.warning_threshold_80))
-            table.add_row("Critical (90%)", _format_tokens(policy.warning_threshold_90))
+            for label, value in _policy_limit_rows(policy):
+                table.add_row(label, value)
 
             console.print(table)
 
