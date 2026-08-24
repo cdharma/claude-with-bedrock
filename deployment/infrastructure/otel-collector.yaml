@@ -589,9 +589,17 @@ Resources:
                   - key: user_email
                     from_context: metadata.x-user-email
                     action: upsert
-                  # Default so per-model/per-user metric filters still publish for
-                  # unattributed traffic (insert = fill-if-absent; a real header or
-                  # native event attribute wins).
+                  # Claude Desktop sends no identity header and emits no
+                  # user_email attribute — its own identity sits in enduser.id
+                  # (the signed-in OS/Entra account). Fill from there, then fall
+                  # back to "unknown". Without a resolvable value the dashboard's
+                  # metric filters publish NO datapoint at all (dimension
+                  # extraction failure), which is why every per-user and
+                  # per-model widget was empty. insert = fill-if-absent, so the
+                  # x-user-email header above always wins.
+                  - key: user_email
+                    from_attribute: enduser.id
+                    action: insert
                   - key: user_email
                     value: "unknown"
                     action: insert
@@ -779,9 +787,17 @@ Resources:
                   - key: user_email
                     from_context: metadata.x-user-email
                     action: upsert
-                  # Default so per-model/per-user metric filters still publish for
-                  # unattributed traffic (insert = fill-if-absent; a real header or
-                  # native event attribute wins).
+                  # Claude Desktop sends no identity header and emits no
+                  # user_email attribute — its own identity sits in enduser.id
+                  # (the signed-in OS/Entra account). Fill from there, then fall
+                  # back to "unknown". Without a resolvable value the dashboard's
+                  # metric filters publish NO datapoint at all (dimension
+                  # extraction failure), which is why every per-user and
+                  # per-model widget was empty. insert = fill-if-absent, so the
+                  # x-user-email header above always wins.
+                  - key: user_email
+                    from_attribute: enduser.id
+                    action: insert
                   - key: user_email
                     value: "unknown"
                     action: insert

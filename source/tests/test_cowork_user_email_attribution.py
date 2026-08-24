@@ -94,9 +94,25 @@ class TestPackagedPlaceholder:
 class TestCollectorDefaults:
     def test_both_config_variants_mirror_header_to_snake_case(self):
         text = TEMPLATE.read_text(encoding="utf-8")
-        assert text.count("- key: user_email") == 4, "each of the 2 config blocks needs upsert + insert"
+        assert text.count("- key: user_email") == 6, "each of the 2 config blocks needs upsert + 2 inserts"
         # upsert from the header, in both blocks
         assert text.count("key: user_email\n                    from_context: metadata.x-user-email") == 2
+
+    def test_enduser_id_fallback_precedes_unknown(self):
+        """Real Claude Desktop events carry identity at attributes.enduser.id and
+        no user_email at all — the dimension then fails to resolve and CloudWatch
+        publishes no datapoint, emptying every per-user and per-model widget."""
+        text = TEMPLATE.read_text(encoding="utf-8")
+        assert text.count("from_attribute: enduser.id") == 2, "both config variants need the fallback"
+        for block in text.split("- key: user_email\n                    from_attribute: enduser.id")[1:]:
+            nxt = block.find('value: "unknown"')
+            assert nxt != -1 and nxt < 400, "the unknown default must follow the enduser.id fallback"
+
+    def test_fallbacks_are_insert_so_the_header_wins(self):
+        text = TEMPLATE.read_text(encoding="utf-8")
+        for marker in ("from_attribute: enduser.id", 'value: "unknown"'):
+            for block in text.split(marker)[1:]:
+                assert block.lstrip().startswith("action: insert"), f"{marker} must be insert (fill-if-absent)"
 
     def test_unknown_default_uses_insert_not_upsert(self):
         """insert only fills the gap — a real header (or native attribute) must win."""
