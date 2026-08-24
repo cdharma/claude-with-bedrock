@@ -64,6 +64,19 @@ def _extract_azure_tenant_id(domain: str) -> str:
     return match.group(0) if match else domain
 
 
+def _auth_stack_description(profile) -> str:
+    """Honest deployment-plan label per auth mode.
+
+    A Cognito Identity Pool only exists on the OIDC/Cognito federation path;
+    IDC and Direct STS deployments were mislabeled "(Cognito + IAM)".
+    """
+    if profile.effective_auth_type == "idc":
+        return "Authentication Stack (IAM Identity Center)"
+    if getattr(profile, "federation_type", "cognito") == "direct":
+        return "Authentication Stack (OIDC + IAM)"
+    return "Authentication Stack (Cognito + IAM)"
+
+
 def _okta_issuer(profile) -> str:
     """Build the Okta issuer URL used for JWT validation (quota API, ALB, web search).
 
@@ -545,7 +558,7 @@ class DeployCommand(Command):
                     console.print("[yellow]Authentication stack is disabled for 'none' auth type.[/yellow]")
                     console.print("Enable authentication by running: [cyan]poetry run ccwb init[/cyan]")
                     return 1
-                stacks_to_deploy.append(("auth", "Authentication Stack (Cognito + IAM)"))
+                stacks_to_deploy.append(("auth", _auth_stack_description(profile)))
             elif stack_arg == "networking":
                 if not profile.monitoring_enabled:
                     console.print("[yellow]Monitoring is not enabled in your configuration.[/yellow]")
@@ -580,10 +593,10 @@ class DeployCommand(Command):
                     return 1
                 if getattr(profile, "monitoring_mode", "central") == "sidecar":
                     console.print(
-                        "[yellow]CoWork dashboard requires central monitoring mode (Cowork cannot export telemetry in sidecar mode).[/yellow]"
+                        "[yellow]Claude Desktop (Cowork) dashboard requires central monitoring mode (Cowork cannot export telemetry in sidecar mode).[/yellow]"
                     )
                     return 1
-                stacks_to_deploy.append(("cowork-dashboard", "CoWork CloudWatch Dashboard"))
+                stacks_to_deploy.append(("cowork-dashboard", "Claude Desktop (Cowork) Dashboard"))
             elif stack_arg == "analytics":
                 if profile.monitoring_enabled:
                     stacks_to_deploy.append(("analytics", "Analytics Pipeline (Kinesis Firehose + Athena)"))
@@ -818,7 +831,7 @@ class DeployCommand(Command):
         stacks_to_deploy = []
 
         if profile.effective_auth_type != "none":
-            stacks_to_deploy.append(("auth", "Authentication Stack (Cognito + IAM)"))
+            stacks_to_deploy.append(("auth", _auth_stack_description(profile)))
 
         monitoring_mode = getattr(profile, "monitoring_mode", "central")
         central_monitoring = profile.monitoring_enabled and monitoring_mode == "central"
@@ -841,14 +854,14 @@ class DeployCommand(Command):
                 stacks_to_deploy.append(("s3bucket", "S3 Bucket"))
                 stacks_to_deploy.append(("monitoring", "OpenTelemetry Collector"))
                 stacks_to_deploy.append(("dashboard", "CloudWatch Dashboard"))
-                stacks_to_deploy.append(("cowork-dashboard", "CoWork CloudWatch Dashboard"))
+                stacks_to_deploy.append(("cowork-dashboard", "Claude Desktop (Cowork) Dashboard"))
                 # Analytics defaults to True for backward compatibility.
                 if getattr(profile, "analytics_enabled", True):
                     stacks_to_deploy.append(("analytics", "Analytics Pipeline (Kinesis Firehose + Athena)"))
             else:
                 # Sidecar mode: metrics reach CloudWatch via the local collector,
                 # so the only server-side stack is the CloudWatch dashboard
-                # (PromQL). No networking/ECS, no Athena pipeline, and CoWork
+                # (PromQL). No networking/ECS, no Athena pipeline, and Cowork
                 # cannot export telemetry in this mode.
                 stacks_to_deploy.append(("dashboard", "CloudWatch Dashboard"))
 
@@ -1518,7 +1531,7 @@ class DeployCommand(Command):
                             "(re-run 'ccwb init' to fix them), then re-run 'ccwb deploy monitoring'.[/dim]"
                         )
 
-                # Pass CoWork service token for ALB auth bypass (if configured)
+                # Pass Cowork service token for ALB auth bypass (if configured)
                 cowork_token = getattr(profile, "cowork_service_token", "") or ""
                 if cowork_token:
                     params.append(f"CoWorkServiceToken={cowork_token}")
@@ -1597,7 +1610,9 @@ class DeployCommand(Command):
                 params = [
                     f"MetricsRegion={profile.aws_region}",
                 ]
-                return deploy_with_cf(template, stack_name, params, task_description="Deploying CoWork dashboard...")
+                return deploy_with_cf(
+                    template, stack_name, params, task_description="Deploying Claude Desktop (Cowork) dashboard..."
+                )
 
             elif stack_type == "analytics":
                 template = project_root / "deployment" / "infrastructure" / "analytics-pipeline.yaml"
@@ -2326,7 +2341,7 @@ class DeployCommand(Command):
             "networking": "VPC Networking",
             "monitoring": "OpenTelemetry Collector",
             "dashboard": "CloudWatch Dashboard",
-            "cowork-dashboard": "CoWork CloudWatch Dashboard",
+            "cowork-dashboard": "Claude Desktop (Cowork) Dashboard",
             "analytics": "Analytics Pipeline",
             "quota": "Quota Monitoring",
             "codebuild": "CodeBuild",
