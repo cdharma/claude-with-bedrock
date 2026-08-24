@@ -60,6 +60,14 @@ markdown_extensions:
   - toc:
       permalink: true
 
+# docs/CLAUDE.md holds instructions for AI coding agents, not end-user
+# documentation — mkdocs builds every .md it finds, so exclude it explicitly.
+exclude_docs: |
+  CLAUDE.md
+
+hooks:
+  - scripts/mkdocs_hooks.py
+
 plugins:
   - search
   - git-revision-date-localized:

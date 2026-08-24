@@ -909,7 +909,7 @@ To publish new package versions:
 ## Reference Links
 
 - **Distribution Comparison**: [comparison.md](./comparison.md) - Detailed comparison of presigned-s3 vs landing-page
-- **IdP Provider Setup**: [../providers/](../providers/) - IdP-specific CLI authentication guides
+- **IdP Provider Setup**: [Okta](../providers/okta-setup.md) · [Microsoft Entra ID](../providers/microsoft-entra-id-setup.md) · [Auth0](../providers/auth0-setup.md) · [Google](../providers/google-oidc-setup.md) · [Cognito](../providers/cognito-user-pool-setup.md) · [Generic OIDC](../providers/generic-oidc-setup.md) - IdP-specific setup guides
 - **Main Deployment Guide**: [../DEPLOYMENT.md](../DEPLOYMENT.md) - Overall deployment documentation
 - **CLI Reference**: [../CLI_REFERENCE.md](../CLI_REFERENCE.md) - Complete command reference
 - **Architecture**: [../ARCHITECTURE.md](../ARCHITECTURE.md) - Technical architecture documentation
