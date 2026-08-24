@@ -4204,6 +4204,13 @@ for /f %%p in ('powershell -NoProfile -Command "(Get-Content config.json | Conve
 >> "%LAUNCHER%" echo if "%%AWS_PROFILE%%"=="" set AWS_PROFILE=!FIRST_PROFILE!
 >> "%LAUNCHER%" echo "%CRED_PROC%" --login --profile %%AWS_PROFILE%%
 >> "%LAUNCHER%" echo if errorlevel 1 exit /b 1
+>> "%LAUNCHER%" echo where claude ^>nul 2^>^&1
+>> "%LAUNCHER%" echo if errorlevel 1 (
+>> "%LAUNCHER%" echo     echo You are signed in, but Claude Code is not installed on this machine.
+>> "%LAUNCHER%" echo     echo Install it with: npm install -g @anthropic-ai/claude-code
+>> "%LAUNCHER%" echo     echo Using Claude Desktop instead? You are done - open it and continue with Bedrock.
+>> "%LAUNCHER%" echo     exit /b 1
+>> "%LAUNCHER%" echo )
 >> "%LAUNCHER%" echo claude %%*
 echo   OK Created launcher: %LAUNCHER%
 
