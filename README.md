@@ -38,6 +38,46 @@ Pick one during setup — this is the only decision that changes the architectur
 
 All three support usage dashboards. Spending limits work with OIDC and Identity Center.
 
+### Sign-in flow: OIDC
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant App as Claude Code / Desktop
+    participant H as credential helper
+    participant IdP as Identity provider<br/>(Okta, Entra ID, ...)
+    participant AWS as AWS STS
+    App->>H: needs credentials
+    H->>IdP: opens browser — user signs in
+    IdP-->>H: ID token (via localhost callback)
+    Note over H: spending-limit check<br/>(if enabled) — over budget stops here
+    H->>AWS: AssumeRoleWithWebIdentity(ID token)
+    AWS-->>H: temporary AWS credentials
+    H-->>App: credentials → Amazon Bedrock
+```
+
+Repeat sign-ins are silent (refresh token); the browser only opens when the session truly expires.
+
+### Sign-in flow: IAM Identity Center
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant App as Claude Code / Desktop
+    participant H as credential helper
+    participant IDC as IAM Identity Center
+    App->>H: needs credentials
+    H->>IDC: start device authorization
+    IDC-->>H: verification URL + code
+    Note over H,IDC: user approves in a browser —<br/>on any device (headless-friendly)
+    H->>IDC: poll for approval
+    IDC-->>H: temporary credentials for the permission-set role
+    Note over H: spending-limit check<br/>(if enabled) — over budget, credentials are withheld
+    H-->>App: credentials → Amazon Bedrock
+```
+
+Because approval can happen on a different device, this flow works on servers and EC2 instances with no browser.
+
 ## For admins: deploying it
 
 **You need:** an AWS account with Bedrock model access enabled, Python 3.10+, Poetry, and the AWS CLI. (Go is optional — pre-built binaries are available.)
