@@ -1827,7 +1827,7 @@
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>distribute<span class="w">    </span><span class="c1"># uploads it and returns a download link to share</span>
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span><span class="nb">test</span><span class="w">          </span><span class="c1"># verifies the deployment end to end</span>
 </code></pre></div>
-<p>Plan for <strong>2–3 hours</strong> on the first setup (mostly identity-provider configuration). The full walkthrough is in <strong><a href="QUICK_START/">QUICK_START.md</a></strong>; every command is documented in the <a href="assets/docs/CLI_REFERENCE.md">CLI Reference</a>. If something misbehaves, <code>poetry run ccwb doctor</code> diagnoses installations and <a href="assets/docs/TROUBLESHOOTING.md">Troubleshooting</a> covers common issues.</p>
+<p>Plan for <strong>2–3 hours</strong> on the first setup (mostly identity-provider configuration). The full walkthrough is in <strong><a href="QUICK_START/">QUICK_START.md</a></strong>; every command is documented in the <a href="CLI_REFERENCE/">CLI Reference</a>. If something misbehaves, <code>poetry run ccwb doctor</code> diagnoses installations and <a href="TROUBLESHOOTING/">Troubleshooting</a> covers common issues.</p>
 <p>Works in any AWS region with Bedrock support, including GovCloud. During setup you pick the model (Opus, Sonnet, Haiku) and a cross-region inference profile (US, EU, or global) to control where inference runs for data-residency needs.</p>
 <h2 id="for-end-users-installing-it">For end users: installing it<a class="headerlink" href="#for-end-users-installing-it" title="Permanent link">&para;</a></h2>
 <p>Users receive a download link from their admin. Then:</p>
@@ -1837,15 +1837,15 @@
 </ul>
 <p>That's it — the installer configures everything, including the AWS profile Claude Code uses. Users need Claude Code or Claude Desktop installed, and nothing else — no Python, no AWS account of their own, no build tools.</p>
 <p><strong>First sign-in (once per session):</strong> the installer also creates a <code>claude-bedrock</code> launcher (<code>claude-bedrock.cmd</code> on Windows) in <code>~/claude-code-with-bedrock/</code>. Run it in a terminal — it prints a sign-in URL and code, you approve in a browser, and it starts Claude Code already authenticated. After that, credentials refresh silently until the session expires (Claude Desktop users: once signed in, just open the app and continue with Bedrock).</p>
-<p><strong>Claude Desktop</strong> is configured centrally instead of per-user: <code>poetry run ccwb cowork generate</code> produces ready-to-deploy MDM files (JSON, macOS <code>.mobileconfig</code>, Windows <code>.reg</code>) for Jamf, Intune, or Group Policy. For a manual/pilot Windows setup, run <code>install.bat</code> <strong>first</strong> (it bakes the user's home path into the <code>.reg</code>), then <code>reg import cowork-3p.reg</code>, then fully quit and restart Claude Desktop. See the <a href="assets/docs/COWORK_3P.md">Claude Desktop (Cowork 3P) Guide</a>. One deployment serves both surfaces, and a user's spending limit is shared across both.</p>
+<p><strong>Claude Desktop</strong> is configured centrally instead of per-user: <code>poetry run ccwb cowork generate</code> produces ready-to-deploy MDM files (JSON, macOS <code>.mobileconfig</code>, Windows <code>.reg</code>) for Jamf, Intune, or Group Policy. For a manual/pilot Windows setup, run <code>install.bat</code> <strong>first</strong> (it bakes the user's home path into the <code>.reg</code>), then <code>reg import cowork-3p.reg</code>, then fully quit and restart Claude Desktop. See the <a href="COWORK_3P/">Claude Desktop (Cowork 3P) Guide</a>. One deployment serves both surfaces, and a user's spending limit is shared across both.</p>
 <h2 id="watching-usage-per-user">Watching usage per user<a class="headerlink" href="#watching-usage-per-user" title="Permanent link">&para;</a></h2>
 <p>With monitoring enabled, three views come out of the box:</p>
 <ul>
 <li><strong>CloudWatch dashboards</strong> (Console → CloudWatch → Dashboards in your deployment region): <code>ClaudeCodeDashboard</code> for Claude Code and <code>ClaudeCoWorkDashboard</code> for Claude Desktop — tokens, cost, and sessions broken down by user email, near-real-time (a few minutes of pipeline delay is normal)</li>
 <li><strong><code>poetry run ccwb quota show &lt;email&gt;</code></strong> — a user's current consumption against their budget, the same numbers enforcement uses; <code>ccwb quota list</code> shows all policies</li>
-<li><strong>Cost Explorer</strong> — actual billed cost per user via <a href="assets/docs/COST_ATTRIBUTION.md">CUR 2.0 cost attribution</a> (authoritative, about a day behind)</li>
+<li><strong>Cost Explorer</strong> — actual billed cost per user via <a href="COST_ATTRIBUTION/">CUR 2.0 cost attribution</a> (authoritative, about a day behind)</li>
 </ul>
-<p>Details in the <a href="assets/docs/MONITORING.md">Monitoring</a> and <a href="assets/docs/QUOTA_MONITORING.md">Quota Monitoring</a> guides.</p>
+<p>Details in the <a href="MONITORING/">Monitoring</a> and <a href="QUOTA_MONITORING/">Quota Monitoring</a> guides.</p>
 <h2 id="optional-add-ons">Optional add-ons<a class="headerlink" href="#optional-add-ons" title="Permanent link">&para;</a></h2>
 <p>Everything below is opt-in during <code>ccwb init</code> and can be added later:</p>
 <table>
@@ -1860,31 +1860,31 @@
 <tr>
 <td><strong>Monitoring</strong></td>
 <td>CloudWatch dashboards: usage and cost per user, team, and model</td>
-<td><a href="assets/docs/MONITORING.md">Monitoring</a></td>
+<td><a href="MONITORING/">Monitoring</a></td>
 </tr>
 <tr>
 <td><strong>Spending limits</strong></td>
 <td>Per-user/per-team monthly and daily budgets (USD or tokens); warn at thresholds, block at the limit</td>
-<td><a href="assets/docs/QUOTA_MONITORING.md">Quota Monitoring</a></td>
+<td><a href="QUOTA_MONITORING/">Quota Monitoring</a></td>
 </tr>
 <tr>
 <td><strong>Analytics</strong></td>
 <td>Long-term usage history queryable with SQL (S3 + Athena)</td>
-<td><a href="assets/docs/ANALYTICS.md">Analytics</a></td>
+<td><a href="ANALYTICS/">Analytics</a></td>
 </tr>
 <tr>
 <td><strong>Distribution</strong></td>
 <td>Presigned download links, or a self-service download page behind your IdP</td>
-<td><a href="assets/docs/distribution/comparison.md">Distribution options</a></td>
+<td><a href="distribution/comparison/">Distribution options</a></td>
 </tr>
 <tr>
 <td><strong>Bootstrap server</strong></td>
-<td>Delivers per-user settings and <a href="assets/docs/PLUGINS.md">organization plugins</a> to Claude Desktop at sign-in — no MDM re-push for config changes</td>
-<td><a href="assets/docs/PLUGINS.md">Plugins</a></td>
+<td>Delivers per-user settings and <a href="PLUGINS/">organization plugins</a> to Claude Desktop at sign-in — no MDM re-push for config changes</td>
+<td><a href="PLUGINS/">Plugins</a></td>
 </tr>
 </tbody>
 </table>
-<p>Infrastructure running costs are modest and scale with team size — see <a href="assets/docs/COST_ESTIMATES.md">Cost Estimates</a>. Per-user Bedrock costs appear in Cost Explorer automatically via <a href="assets/docs/COST_ATTRIBUTION.md">CUR 2.0 cost attribution</a>.</p>
+<p>Infrastructure running costs are modest and scale with team size — see <a href="COST_ESTIMATES/">Cost Estimates</a>. Per-user Bedrock costs appear in Cost Explorer automatically via <a href="COST_ATTRIBUTION/">CUR 2.0 cost attribution</a>.</p>
 <h2 id="about-this-repository">About this repository<a class="headerlink" href="#about-this-repository" title="Permanent link">&para;</a></h2>
 <p>This is a maintained fork of the AWS Solutions guidance <a href="https://github.com/aws-solutions-library-samples/guidance-for-claude-code-with-amazon-bedrock">guidance-for-claude-code-with-amazon-bedrock</a>, carrying fixes (each with regression tests) for the IAM Identity Center, Windows, and non-<code>us-east-1</code> deployment paths. The upstream repository is in maintenance mode.</p>
 <details>
@@ -1897,11 +1897,11 @@ This project still covers ground the gateway does not yet: native AWS IAM Identi
 </details>
 
 <h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
-<p><strong>Getting started:</strong> <a href="QUICK_START/">Quick Start</a> · <a href="assets/docs/CLI_REFERENCE.md">CLI Reference</a> · <a href="assets/docs/TROUBLESHOOTING.md">Troubleshooting</a> · <a href="https://catalog.workshops.aws/claude-code-on-amazon-bedrock/en-US">Hands-on workshop</a></p>
-<p><strong>Identity provider setup:</strong> <a href="assets/docs/providers/okta-setup.md">Okta</a> · <a href="assets/docs/providers/microsoft-entra-id-setup.md">Microsoft Entra ID</a> · <a href="assets/docs/providers/auth0-setup.md">Auth0</a> · <a href="assets/docs/providers/google-oidc-setup.md">Google</a> · <a href="assets/docs/providers/cognito-user-pool-setup.md">Cognito</a> · <a href="assets/docs/providers/generic-oidc-setup.md">Generic OIDC</a></p>
-<p><strong>Going deeper:</strong> <a href="assets/docs/ARCHITECTURE.md">Architecture</a> · <a href="assets/docs/DEPLOYMENT.md">Advanced deployment</a> · <a href="assets/docs/LOCAL_TESTING.md">Local testing</a> · <a href="assets/docs/COWORK_3P.md">Claude Desktop (Cowork 3P)</a> · <a href="https://aws.amazon.com/blogs/machine-learning/claude-code-deployment-patterns-and-best-practices-with-amazon-bedrock/">Deployment patterns blog post</a></p>
+<p><strong>Getting started:</strong> <a href="QUICK_START/">Quick Start</a> · <a href="CLI_REFERENCE/">CLI Reference</a> · <a href="TROUBLESHOOTING/">Troubleshooting</a> · <a href="https://catalog.workshops.aws/claude-code-on-amazon-bedrock/en-US">Hands-on workshop</a></p>
+<p><strong>Identity provider setup:</strong> <a href="providers/okta-setup/">Okta</a> · <a href="providers/microsoft-entra-id-setup/">Microsoft Entra ID</a> · <a href="providers/auth0-setup/">Auth0</a> · <a href="providers/google-oidc-setup/">Google</a> · <a href="providers/cognito-user-pool-setup/">Cognito</a> · <a href="providers/generic-oidc-setup/">Generic OIDC</a></p>
+<p><strong>Going deeper:</strong> <a href="ARCHITECTURE/">Architecture</a> · <a href="DEPLOYMENT/">Advanced deployment</a> · <a href="LOCAL_TESTING/">Local testing</a> · <a href="COWORK_3P/">Claude Desktop (Cowork 3P)</a> · <a href="https://aws.amazon.com/blogs/machine-learning/claude-code-deployment-patterns-and-best-practices-with-amazon-bedrock/">Deployment patterns blog post</a></p>
 <h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
-<p>MIT — see <a href="LICENSE">LICENSE</a>.</p>
+<p>MIT — see <a href="https://github.com/cdharma/claude-with-bedrock/blob/main/LICENSE">LICENSE</a>.</p>
 
 
 

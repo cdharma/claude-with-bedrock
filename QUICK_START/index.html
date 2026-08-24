@@ -2197,7 +2197,7 @@
 <blockquote>
 <p><strong>End users</strong> need only Claude Code or Claude Desktop installed. No Python, Poetry, Go, or AWS account required — IT distributes pre-built packages.</p>
 </blockquote>
-<p><strong>macOS fleets:</strong> the default build produces both <code>macos-arm64</code> (Apple Silicon) and <code>macos-intel</code> binaries from any admin OS, and the installer picks the right one automatically. Intel binaries also run on Apple Silicon via Rosetta; ARM64 binaries do not run on Intel Macs. Only the deprecated <code>--legacy</code> build mode has host-architecture constraints — see <a href="assets/docs/CLI_REFERENCE.md#cross-arch-macos-build-setup-legacy-mode-only-optional">Cross-arch macOS Build Setup</a>.</p>
+<p><strong>macOS fleets:</strong> the default build produces both <code>macos-arm64</code> (Apple Silicon) and <code>macos-intel</code> binaries from any admin OS, and the installer picks the right one automatically. Intel binaries also run on Apple Silicon via Rosetta; ARM64 binaries do not run on Intel Macs. Only the deprecated <code>--legacy</code> build mode has host-architecture constraints — see <a href="../CLI_REFERENCE/#cross-arch-macos-build-setup-legacy-mode-only-optional">Cross-arch macOS Build Setup</a>.</p>
 <h3 id="aws-requirements">AWS Requirements<a class="headerlink" href="#aws-requirements" title="Permanent link">&para;</a></h3>
 <ul>
 <li>AWS account with appropriate IAM permissions to create:</li>
@@ -2221,31 +2221,31 @@
 <tbody>
 <tr>
 <td><strong>Okta</strong></td>
-<td><a href="assets/docs/providers/okta-setup.md">Okta Setup Guide</a></td>
+<td><a href="../providers/okta-setup/">Okta Setup Guide</a></td>
 </tr>
 <tr>
 <td><strong>Microsoft Entra ID (Azure AD)</strong></td>
-<td><a href="assets/docs/providers/microsoft-entra-id-setup.md">Microsoft Entra ID Setup Guide</a></td>
+<td><a href="../providers/microsoft-entra-id-setup/">Microsoft Entra ID Setup Guide</a></td>
 </tr>
 <tr>
 <td><strong>Auth0</strong></td>
-<td><a href="assets/docs/providers/auth0-setup.md">Auth0 Setup Guide</a></td>
+<td><a href="../providers/auth0-setup/">Auth0 Setup Guide</a></td>
 </tr>
 <tr>
 <td><strong>Google</strong></td>
-<td><a href="assets/docs/providers/google-oidc-setup.md">Google Setup Guide</a></td>
+<td><a href="../providers/google-oidc-setup/">Google Setup Guide</a></td>
 </tr>
 <tr>
 <td><strong>AWS Cognito User Pool</strong></td>
-<td><a href="assets/docs/providers/cognito-user-pool-setup.md">Cognito User Pool Setup Guide</a></td>
+<td><a href="../providers/cognito-user-pool-setup/">Cognito User Pool Setup Guide</a></td>
 </tr>
 <tr>
 <td><strong>AWS IAM Identity Center</strong></td>
-<td><a href="assets/docs/providers/iam-identity-center-setup.md">IAM Identity Center Setup Guide</a></td>
+<td><a href="../providers/iam-identity-center-setup/">IAM Identity Center Setup Guide</a></td>
 </tr>
 <tr>
 <td><strong>PingFederate, Keycloak, ForgeRock, or other generic OIDC</strong></td>
-<td><a href="assets/docs/providers/generic-oidc-setup.md">Generic OIDC Setup Guide</a></td>
+<td><a href="../providers/generic-oidc-setup/">Generic OIDC Setup Guide</a></td>
 </tr>
 </tbody>
 </table>
@@ -2548,7 +2548,7 @@ Choose <strong>Okta (or generic OIDC)</strong> for any standard OIDC provider no
 <p>If you choose <strong>certificate mode</strong>, the wizard will ask for two file paths:
 - <code>Path to certificate PEM file:</code> — enter <code>~/claude-code-with-bedrock/cert.pem</code> (works on all platforms)
 - <code>Path to private key PEM file:</code> — enter <code>~/claude-code-with-bedrock/key.pem</code></p>
-<p>Use <code>~/</code> relative paths — they resolve correctly on macOS, Linux and Windows. The cert files must exist at those paths on every user machine. See <a href="assets/docs/providers/microsoft-entra-id-setup.md#5-confidential-client-setup-enterprise">Certificate Setup</a> for how to generate and distribute them.</p>
+<p>Use <code>~/</code> relative paths — they resolve correctly on macOS, Linux and Windows. The cert files must exist at those paths on every user machine. See <a href="../providers/microsoft-entra-id-setup/#5-confidential-client-setup-enterprise">Certificate Setup</a> for how to generate and distribute them.</p>
 <hr />
 <p><strong>Q: <code>Select credential storage method:</code></strong></p>
 <p>Choose how the <code>credential-process</code> binary stores AWS temporary credentials on the user's machine:</p>
@@ -2604,7 +2604,7 @@ Choose <strong>Okta (or generic OIDC)</strong> for any standard OIDC provider no
 <p><strong>Default: Direct STS.</strong> Unless you have a specific reason for Cognito, use Direct STS.</p>
 <hr />
 <h5 id="if-you-chose-iam-identity-center">If you chose IAM Identity Center<a class="headerlink" href="#if-you-chose-iam-identity-center" title="Permanent link">&para;</a></h5>
-<p>Set up Identity Center first — the <a href="assets/docs/providers/iam-identity-center-setup.md">IAM Identity Center Setup Guide</a> covers the prerequisites (a permission set with Bedrock access, email-based session names) and the full walkthrough.</p>
+<p>Set up Identity Center first — the <a href="../providers/iam-identity-center-setup/">IAM Identity Center Setup Guide</a> covers the prerequisites (a permission set with Bedrock access, email-based session names) and the full walkthrough.</p>
 <p>The wizard asks four questions:</p>
 <p><strong>Q: <code>Enter your IAM Identity Center start URL:</code></strong>
 Your Identity Center portal URL, e.g. <code>https://company.awsapps.com/start</code>.</p>
@@ -2811,7 +2811,7 @@ How often quota is re-checked when credentials are cached.
 - <code>cowork-3p.reg</code> — deploy via Intune/Group Policy (Windows). Writes to <code>HKCU\SOFTWARE\Policies\Claude</code> (per-user, no admin elevation); do not redirect to <code>HKLM</code>.
 - <code>cowork-3p-config.json</code> — raw MDM JSON for the Claude Desktop Setup UI / manual review</p>
 <p>Claude Desktop authenticates via the <code>inferenceBedrockProfile</code> MDM key, which points at the AWS named profile that <code>install.sh</code> / <code>install.bat</code> writes to <code>~/.aws/config</code>. No per-user wrapper script is required. Users must run the installer <strong>before</strong> opening Claude Desktop — otherwise the named profile won't exist and Bedrock mode won't activate.</p>
-<p>See <a href="assets/docs/COWORK_3P.md">COWORK_3P.md</a> for MDM deployment instructions.</p>
+<p>See <a href="../COWORK_3P/">COWORK_3P.md</a> for MDM deployment instructions.</p>
 <hr />
 <h5 id="package-distribution">Package Distribution<a class="headerlink" href="#package-distribution" title="Permanent link">&para;</a></h5>
 <p><strong>Q: <code>Distribution method:</code></strong></p>
@@ -3084,7 +3084,7 @@ How often quota is re-checked when credentials are cached.
 <blockquote>
 <p><strong>In legacy mode, Linux admins cannot build macOS binaries.</strong> PyInstaller on Linux emits Linux ELF binaries regardless of the requested target architecture, and macOS cannot load ELF — the build refuses with a clear error. To produce macOS binaries in legacy mode, use a macOS workstation or a CI macOS runner (e.g. GitHub Actions <code>macos-latest</code>) — or simply use the default Go build mode, which has none of these constraints.</p>
 </blockquote>
-<p><strong>Choosing macOS targets in legacy mode:</strong> PyInstaller builds only for the host Mac's own architecture. Check what your developers run (<code>uname -m</code>: <code>arm64</code> = Apple Silicon → <code>macos-arm64</code>; <code>x86_64</code> = Intel → <code>macos-intel</code>). <code>macos-intel</code> binaries run on all Macs — natively on Intel, via Rosetta on Apple Silicon. Building the non-native architecture requires a universal2 Python (see <a href="assets/docs/CLI_REFERENCE.md#cross-arch-macos-build-setup-legacy-mode-only-optional">Cross-arch macOS Build Setup</a>).</p>
+<p><strong>Choosing macOS targets in legacy mode:</strong> PyInstaller builds only for the host Mac's own architecture. Check what your developers run (<code>uname -m</code>: <code>arm64</code> = Apple Silicon → <code>macos-arm64</code>; <code>x86_64</code> = Intel → <code>macos-intel</code>). <code>macos-intel</code> binaries run on all Macs — natively on Intel, via Rosetta on Apple Silicon. Building the non-native architecture requires a universal2 Python (see <a href="../CLI_REFERENCE/#cross-arch-macos-build-setup-legacy-mode-only-optional">Cross-arch macOS Build Setup</a>).</p>
 <p><strong>Docker (legacy mode):</strong> producing Linux binaries from a macOS host requires Docker Desktop installed and running; if not present, Linux builds are skipped with a warning and other platforms continue unaffected. macOS and Windows builds have no dependency on Docker.</p>
 <h3 id="step-5-test-the-setup">Step 5: Test the Setup<a class="headerlink" href="#step-5-test-the-setup" title="Permanent link">&para;</a></h3>
 <p>Verify everything works correctly:</p>
@@ -3130,7 +3130,7 @@ How often quota is re-checked when credentials are cached.
 <p>Users visit your landing page URL, authenticate with SSO, and download packages for their platform.</p>
 <p><strong>Best for:</strong> Self-service portal with compliance and audit requirements</p>
 <p><strong>Setup:</strong> Select "landing-page" distribution type during <code>ccwb init</code> (Step 2), then deploy distribution infrastructure</p>
-<p>See <a href="assets/docs/distribution/comparison.md">Distribution Comparison</a> for detailed feature comparison and setup guides.</p>
+<p>See <a href="../distribution/comparison/">Distribution Comparison</a> for detailed feature comparison and setup guides.</p>
 <hr />
 <h2 id="platform-builds">Platform Builds<a class="headerlink" href="#platform-builds" title="Permanent link">&para;</a></h2>
 <h3 id="build-requirements">Build Requirements<a class="headerlink" href="#build-requirements" title="Permanent link">&para;</a></h3>
@@ -3153,7 +3153,7 @@ How often quota is re-checked when credentials are cached.
 </ul>
 <h3 id="optional-cross-arch-macos-builds-legacy-mode-only">Optional: Cross-arch macOS Builds (legacy mode only)<a class="headerlink" href="#optional-cross-arch-macos-builds-legacy-mode-only" title="Permanent link">&para;</a></h3>
 <p>In legacy mode, <code>ccwb package --legacy</code> builds only for your Mac's own architecture. If you need to also build for the other architecture (e.g. Intel on Apple Silicon), install a universal2 Python from python.org — <code>ccwb</code> will detect it automatically.</p>
-<p>See <a href="assets/docs/CLI_REFERENCE.md#cross-arch-macos-build-setup-legacy-mode-only-optional">CLI Reference - Cross-arch macOS Build Setup</a> for setup instructions.</p>
+<p>See <a href="../CLI_REFERENCE/#cross-arch-macos-build-setup-legacy-mode-only-optional">CLI Reference - Cross-arch macOS Build Setup</a> for setup instructions.</p>
 <p>If not configured, cross-arch builds are skipped and the package command continues with other platforms. Intel (<code>macos-intel</code>) binaries cover all Macs via Rosetta, so admins on Intel Macs can skip this. Admins on Apple Silicon who have Intel Mac users in their org should install the universal2 Python to produce the Intel binary. (The default Go build mode always produces both macOS architectures — none of this applies there.)</p>
 <hr />
 <h2 id="cleanup">Cleanup<a class="headerlink" href="#cleanup" title="Permanent link">&para;</a></h2>
@@ -3282,14 +3282,14 @@ How often quota is re-checked when credentials are cached.
 <p>View stack status:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>poetry<span class="w"> </span>run<span class="w"> </span>ccwb<span class="w"> </span>status
 </code></pre></div>
-<p>For detailed troubleshooting, see <a href="assets/docs/DEPLOYMENT.md">Deployment Guide</a>.</p>
+<p>For detailed troubleshooting, see <a href="../DEPLOYMENT/">Deployment Guide</a>.</p>
 <hr />
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="assets/docs/ARCHITECTURE.md">Architecture Deep Dive</a> - Technical architecture details</li>
-<li><a href="assets/docs/MONITORING.md">Enable Monitoring</a> - Setup OpenTelemetry monitoring</li>
-<li><a href="assets/docs/ANALYTICS.md">Setup Analytics</a> - Configure S3 data lake and Athena queries</li>
-<li><a href="assets/docs/CLI_REFERENCE.md">CLI Reference</a> - Complete command reference</li>
+<li><a href="../ARCHITECTURE/">Architecture Deep Dive</a> - Technical architecture details</li>
+<li><a href="../MONITORING/">Enable Monitoring</a> - Setup OpenTelemetry monitoring</li>
+<li><a href="../ANALYTICS/">Setup Analytics</a> - Configure S3 data lake and Athena queries</li>
+<li><a href="../CLI_REFERENCE/">CLI Reference</a> - Complete command reference</li>
 </ul>
 
 
