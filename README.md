@@ -107,9 +107,21 @@ Users receive a download link from their admin. Then:
 - **Windows:** unzip, run `install.bat`
 - **macOS / Linux:** unzip, run `./install.sh`
 
-That's it — the installer configures everything, including the AWS profile Claude Code uses. First use opens a company sign-in; after that, credentials refresh automatically. Users need Claude Code or Claude Desktop installed, and nothing else — no Python, no AWS account of their own, no build tools.
+That's it — the installer configures everything, including the AWS profile Claude Code uses. Users need Claude Code or Claude Desktop installed, and nothing else — no Python, no AWS account of their own, no build tools.
 
-**Claude Desktop** is configured centrally instead of per-user: `poetry run ccwb cowork generate` produces ready-to-deploy MDM files (JSON, macOS `.mobileconfig`, Windows `.reg`) for Jamf, Intune, or Group Policy. See the [Claude Desktop (Cowork 3P) Guide](assets/docs/COWORK_3P.md). One deployment serves both surfaces, and a user's spending limit is shared across both.
+**First sign-in (once per session):** the installer also creates a `claude-bedrock` launcher (`claude-bedrock.cmd` on Windows) in `~/claude-code-with-bedrock/`. Run it in a terminal — it prints a sign-in URL and code, you approve in a browser, and it starts Claude Code already authenticated. After that, credentials refresh silently until the session expires (Claude Desktop users: once signed in, just open the app and continue with Bedrock).
+
+**Claude Desktop** is configured centrally instead of per-user: `poetry run ccwb cowork generate` produces ready-to-deploy MDM files (JSON, macOS `.mobileconfig`, Windows `.reg`) for Jamf, Intune, or Group Policy. For a manual/pilot Windows setup, run `install.bat` **first** (it bakes the user's home path into the `.reg`), then `reg import cowork-3p.reg`, then fully quit and restart Claude Desktop. See the [Claude Desktop (Cowork 3P) Guide](assets/docs/COWORK_3P.md). One deployment serves both surfaces, and a user's spending limit is shared across both.
+
+## Watching usage per user
+
+With monitoring enabled, three views come out of the box:
+
+- **CloudWatch dashboards** (Console → CloudWatch → Dashboards in your deployment region): `ClaudeCodeDashboard` for Claude Code and `ClaudeCoWorkDashboard` for Claude Desktop — tokens, cost, and sessions broken down by user email, near-real-time (a few minutes of pipeline delay is normal)
+- **`poetry run ccwb quota show <email>`** — a user's current consumption against their budget, the same numbers enforcement uses; `ccwb quota list` shows all policies
+- **Cost Explorer** — actual billed cost per user via [CUR 2.0 cost attribution](assets/docs/COST_ATTRIBUTION.md) (authoritative, about a day behind)
+
+Details in the [Monitoring](assets/docs/MONITORING.md) and [Quota Monitoring](assets/docs/QUOTA_MONITORING.md) guides.
 
 ## Optional add-ons
 
