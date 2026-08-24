@@ -829,6 +829,17 @@ def generate_intune_script(output_dir: Path, mdm_config: dict) -> Path:
     Returns the path to the generated .ps1 file.
     """
     keys = _mdm_keys_resolved(mdm_config, WEBSEARCH_HEADERS_HELPER_WINDOWS)
+    # Per-user attribution comes free on this path: the script runs as the
+    # logged-on user and resolves __CCWB_USER_EMAIL__ from their UPN at deploy
+    # time, so ensure the header is present even when --user-email wasn't given.
+    # (Only here — raw .reg/.mobileconfig outputs must never carry the
+    # placeholder, since nothing substitutes it on a direct MDM push.)
+    if "otlpHeaders" in keys:
+        headers = json.loads(keys["otlpHeaders"])
+        if "x-user-email" not in headers:
+            headers["x-user-email"] = "__CCWB_USER_EMAIL__"
+            keys = dict(keys)
+            keys["otlpHeaders"] = json.dumps(headers)
     # Convert the unix credential-helper path to the Windows form (keeps the
     # __CCWB_HOME__ placeholder, resolved at deploy time below).
     if "inferenceCredentialHelper" in keys:
@@ -862,6 +873,13 @@ def generate_intune_script(output_dir: Path, mdm_config: dict) -> Path:
         "# must be absolute. This script writes the literal (single-backslash) path.",
         "$ccwbHome = $env:USERPROFILE",
         "",
+        "# Resolve the signed-in user's email for per-user dashboard attribution.",
+        "# On Entra-joined machines 'whoami /upn' returns the Entra UPN — the same",
+        "# address IAM Identity Center sees for a federated directory. Fall back to",
+        "# 'unknown' (aggregate-only) rather than shipping a literal placeholder.",
+        "$ccwbUserEmail = (whoami /upn 2>$null | Select-Object -First 1)",
+        "if ([string]::IsNullOrWhiteSpace($ccwbUserEmail)) { $ccwbUserEmail = 'unknown' }",
+        "",
         "# Create registry key if it does not exist",
         "if (-not (Test-Path $regPath)) {",
         "    New-Item -Path $regPath -Force | Out-Null",
@@ -882,10 +900,11 @@ def generate_intune_script(output_dir: Path, mdm_config: dict) -> Path:
         # Values carrying the home placeholder are resolved at deploy time to the
         # user's absolute home ($ccwbHome). %USERPROFILE% would NOT work — Claude
         # reads the registry string literally.
+        value_expr = f"'{escaped}'"
         if CCWB_HOME_PLACEHOLDER in ps_value:
-            value_expr = f"'{escaped}'.Replace('{CCWB_HOME_PLACEHOLDER}', $ccwbHome)"
-        else:
-            value_expr = f"'{escaped}'"
+            value_expr += f".Replace('{CCWB_HOME_PLACEHOLDER}', $ccwbHome)"
+        if "__CCWB_USER_EMAIL__" in ps_value:
+            value_expr += ".Replace('__CCWB_USER_EMAIL__', $ccwbUserEmail)"
         lines.append(f"Set-ItemProperty -Path $regPath -Name '{key}' -Value {value_expr} -Type String")
 
     lines.extend(

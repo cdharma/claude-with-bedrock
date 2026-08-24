@@ -40,23 +40,46 @@ class TestPackagedPlaceholder:
         src = inspect.getsource(PackageCommand)
         assert 'user_email="__CCWB_USER_EMAIL__"' in src
 
-    def test_install_bat_prompts_and_defaults_to_unknown(self):
+    def test_install_bat_resolves_email_non_interactively(self):
+        """A silent (Intune) install must never block on input, so detection
+        happens inside the existing PowerShell call — no prompt, no batch
+        escaping."""
         from claude_code_with_bedrock.cli.commands import package
 
         src = inspect.getsource(package)
         bat = src[src.find('if exist "cowork-3p.reg"') :]
         bat = bat[: bat.find("cowork-credential-helper.cmd")]
-        assert "set /p CCWB_USER_EMAIL=" in bat, "installer must ask the user once"
-        assert 'set "CCWB_USER_EMAIL=unknown"' in bat, "empty answer must become unknown, never a literal placeholder"
+        assert "set /p" not in bat, "no interactive prompt — it would hang a silent install"
+        assert "$env:CCWB_USER_EMAIL" in bat, "an explicit env var must win"
+        assert "whoami /upn" in bat, "Entra UPN is the automatic source"
+        assert "'unknown'" in bat, "must fall back rather than ship a placeholder"
         assert "__CCWB_USER_EMAIL__" in bat, "the .reg substitution must cover the email placeholder"
 
-    def test_install_sh_prompts_and_defaults_to_unknown(self):
+    def test_install_bat_email_precedence_env_then_upn(self):
+        """Compare inside the PowerShell command itself — the REM comment above
+        it names both sources, so a whole-block index comparison is meaningless."""
+        from claude_code_with_bedrock.cli.commands import package
+
+        src = inspect.getsource(package)
+        line = next(line for line in src.splitlines() if "powershell -NoProfile" in line and "cowork-3p.reg" in line)
+        assert line.index("$env:CCWB_USER_EMAIL") < line.index("whoami /upn")
+
+    def test_install_bat_rejects_a_non_email_value(self):
+        """A machine-local account name is not an email; it must not become a
+        phantom dashboard user."""
+        from claude_code_with_bedrock.cli.commands import package
+
+        src = inspect.getsource(package)
+        assert "-notmatch '@'" in src
+
+    def test_install_sh_resolves_email_non_interactively(self):
         from claude_code_with_bedrock.cli.commands import package
 
         src = inspect.getsource(package)
         sh = src[src.find("Per-user dashboard attribution: Claude Desktop has no otel-helper") :]
         sh = sh[: sh.find("Resolved home directory")]
-        assert "read -r _ccwb_email" in sh
+        assert "read -r" not in sh, "no prompt — MDM installs run unattended"
+        assert "CCWB_USER_EMAIL" in sh, "explicit env var override"
         assert '_ccwb_email="unknown"' in sh
         assert "s|__CCWB_USER_EMAIL__|$_ccwb_email|g" in sh
 
@@ -89,3 +112,45 @@ class TestMdmConfigJsonStaysValid:
         headers = _otlp_headers("tok", "__CCWB_USER_EMAIL__")
         parsed = json.loads(json.dumps(headers))
         assert parsed["x-user-email"] == "__CCWB_USER_EMAIL__"
+
+
+class TestAutomaticIdentity:
+    """Fleet rollout must not depend on users typing their own email."""
+
+    def test_intune_script_resolves_upn_at_deploy_time(self):
+        import tempfile
+
+        from claude_code_with_bedrock.cli.utils.cowork_3p import build_mdm_config, generate_intune_script
+
+        cfg = build_mdm_config("ap-south-1", ["sonnet"])
+        cfg["otlpHeaders"] = json.dumps({"X-Cowork-Token": "tok"})
+        with tempfile.TemporaryDirectory() as d:
+            ps1 = generate_intune_script(Path(d), cfg)
+            text = ps1.read_text(encoding="utf-8")
+        assert "whoami /upn" in text
+        assert "$ccwbUserEmail = 'unknown'" in text, "must fall back, not ship a placeholder"
+        assert ".Replace('__CCWB_USER_EMAIL__', $ccwbUserEmail)" in text, "header value must be substituted"
+
+    def test_intune_script_injects_header_even_without_user_email_option(self):
+        """IT should get per-user attribution from the ps1 path with no extra flags."""
+        import tempfile
+
+        from claude_code_with_bedrock.cli.utils.cowork_3p import build_mdm_config, generate_intune_script
+
+        cfg = build_mdm_config("ap-south-1", ["sonnet"])
+        cfg["otlpHeaders"] = json.dumps({"X-Cowork-Token": "tok"})
+        with tempfile.TemporaryDirectory() as d:
+            text = generate_intune_script(Path(d), cfg).read_text(encoding="utf-8")
+        assert "x-user-email" in text
+
+    def test_explicit_user_email_is_not_overwritten(self):
+        import tempfile
+
+        from claude_code_with_bedrock.cli.utils.cowork_3p import build_mdm_config, generate_intune_script
+
+        cfg = build_mdm_config("ap-south-1", ["sonnet"])
+        cfg["otlpHeaders"] = json.dumps({"x-user-email": "real@example.com"})
+        with tempfile.TemporaryDirectory() as d:
+            text = generate_intune_script(Path(d), cfg).read_text(encoding="utf-8")
+        assert "real@example.com" in text
+        assert "__CCWB_USER_EMAIL__" not in text

@@ -3355,12 +3355,16 @@ fi
 # Per-user dashboard attribution: Claude Desktop has no otel-helper, so the
 # user's email travels as an OTLP header baked into the MDM file here. Empty
 # answer -> "unknown" (aggregate-only, but never a literal placeholder).
-_ccwb_email=""
-if grep -q "__CCWB_USER_EMAIL__" cowork-3p.mobileconfig cowork-3p-config.json 2>/dev/null; then
-    printf "Enter your work email (for usage dashboards, Enter to skip): "
-    read -r _ccwb_email </dev/tty || _ccwb_email=""
-    [ -z "$_ccwb_email" ] && _ccwb_email="unknown"
+# Precedence: explicit CCWB_USER_EMAIL env var, else the directory account's
+# email, else "unknown". Non-interactive so MDM/silent installs never block.
+_ccwb_email="${{CCWB_USER_EMAIL:-}}"
+if [ -z "$_ccwb_email" ] && command -v dscl >/dev/null 2>&1; then
+    _ccwb_email=$(dscl . -read "/Users/$ACTUAL_USER" EMailAddress 2>/dev/null | awk '{{print $2}}' | head -1)
 fi
+case "$_ccwb_email" in
+    *@*) ;;
+    *) _ccwb_email="unknown" ;;
+esac
 for _ccwb_mdm in "cowork-3p.mobileconfig" "cowork-3p-config.json"; do
     if [ -f "$_ccwb_mdm" ] && grep -qE "__CCWB_HOME__|__CCWB_USER_EMAIL__" "$_ccwb_mdm" 2>/dev/null; then
         sed -i.bak -e "s|__CCWB_HOME__|$ACTUAL_HOME|g" -e "s|__CCWB_USER_EMAIL__|$_ccwb_email|g" "$_ccwb_mdm" && rm -f "$_ccwb_mdm.bak"
@@ -4024,13 +4028,13 @@ REM (\\ -> \\\\) to match the .reg format; reg import un-escapes it back to a
 REM single backslash in the stored REG_SZ value.
 if exist "cowork-3p.reg" (
     echo Resolving home directory in cowork-3p.reg...
-    REM Per-user dashboard attribution: prompt once, bake the email into the
-    REM otlpHeaders of the .reg. Empty answer -> "unknown" so a literal
-    REM placeholder never reaches Claude Desktop.
-    set "CCWB_USER_EMAIL="
-    set /p CCWB_USER_EMAIL="Enter your work email (for usage dashboards, Enter to skip): "
-    if "!CCWB_USER_EMAIL!"=="" set "CCWB_USER_EMAIL=unknown"
-    powershell -NoProfile -Command "$h = $env:USERPROFILE.Replace('\\','\\\\'); (Get-Content 'cowork-3p.reg' -Raw).Replace('__CCWB_HOME__', $h).Replace('__CCWB_USER_EMAIL__', $env:CCWB_USER_EMAIL) | Set-Content 'cowork-3p.reg'"
+    REM Per-user dashboard attribution: bake the user's email into the
+    REM otlpHeaders of the .reg. Resolved inside the same PowerShell call that
+    REM resolves the home path — no batch escaping, and nothing interactive so
+    REM a silent (Intune) install never blocks. Order: an explicit
+    REM CCWB_USER_EMAIL env var wins, else the Entra UPN via 'whoami /upn',
+    REM else "unknown" (aggregate-only, never a literal placeholder).
+    powershell -NoProfile -Command "$h = $env:USERPROFILE.Replace('\\','\\\\'); $e = $env:CCWB_USER_EMAIL; if ([string]::IsNullOrWhiteSpace($e)) {{ $e = (whoami /upn 2>$null | Select-Object -First 1) }}; if ([string]::IsNullOrWhiteSpace($e) -or $e -notmatch '@') {{ $e = 'unknown' }}; Write-Host ('  Telemetry attribution: ' + $e); (Get-Content 'cowork-3p.reg' -Raw).Replace('__CCWB_HOME__', $h).Replace('__CCWB_USER_EMAIL__', $e) | Set-Content 'cowork-3p.reg'"
     echo OK Resolved home directory in cowork-3p.reg ^(import it with: reg import cowork-3p.reg, then fully restart Claude^)
 )
 
