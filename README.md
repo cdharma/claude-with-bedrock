@@ -88,6 +88,7 @@ The `ccwb` tool walks you through everything:
 
 ```bash
 cd source
+poetry install                # one-time: install the ccwb tool's dependencies
 poetry run ccwb init          # interactive wizard: sign-in method, region, models, limits
 poetry run ccwb deploy        # creates the AWS infrastructure (add --parallel to speed it up)
 poetry run ccwb package       # builds the installer package for your users
