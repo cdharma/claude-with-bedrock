@@ -615,6 +615,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#watching-usage-per-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Watching usage per user
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#optional-add-ons" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1824,8 +1835,17 @@
 <li><strong>Windows:</strong> unzip, run <code>install.bat</code></li>
 <li><strong>macOS / Linux:</strong> unzip, run <code>./install.sh</code></li>
 </ul>
-<p>That's it — the installer configures everything, including the AWS profile Claude Code uses. First use opens a company sign-in; after that, credentials refresh automatically. Users need Claude Code or Claude Desktop installed, and nothing else — no Python, no AWS account of their own, no build tools.</p>
-<p><strong>Claude Desktop</strong> is configured centrally instead of per-user: <code>poetry run ccwb cowork generate</code> produces ready-to-deploy MDM files (JSON, macOS <code>.mobileconfig</code>, Windows <code>.reg</code>) for Jamf, Intune, or Group Policy. See the <a href="assets/docs/COWORK_3P.md">Claude Desktop (Cowork 3P) Guide</a>. One deployment serves both surfaces, and a user's spending limit is shared across both.</p>
+<p>That's it — the installer configures everything, including the AWS profile Claude Code uses. Users need Claude Code or Claude Desktop installed, and nothing else — no Python, no AWS account of their own, no build tools.</p>
+<p><strong>First sign-in (once per session):</strong> the installer also creates a <code>claude-bedrock</code> launcher (<code>claude-bedrock.cmd</code> on Windows) in <code>~/claude-code-with-bedrock/</code>. Run it in a terminal — it prints a sign-in URL and code, you approve in a browser, and it starts Claude Code already authenticated. After that, credentials refresh silently until the session expires (Claude Desktop users: once signed in, just open the app and continue with Bedrock).</p>
+<p><strong>Claude Desktop</strong> is configured centrally instead of per-user: <code>poetry run ccwb cowork generate</code> produces ready-to-deploy MDM files (JSON, macOS <code>.mobileconfig</code>, Windows <code>.reg</code>) for Jamf, Intune, or Group Policy. For a manual/pilot Windows setup, run <code>install.bat</code> <strong>first</strong> (it bakes the user's home path into the <code>.reg</code>), then <code>reg import cowork-3p.reg</code>, then fully quit and restart Claude Desktop. See the <a href="assets/docs/COWORK_3P.md">Claude Desktop (Cowork 3P) Guide</a>. One deployment serves both surfaces, and a user's spending limit is shared across both.</p>
+<h2 id="watching-usage-per-user">Watching usage per user<a class="headerlink" href="#watching-usage-per-user" title="Permanent link">&para;</a></h2>
+<p>With monitoring enabled, three views come out of the box:</p>
+<ul>
+<li><strong>CloudWatch dashboards</strong> (Console → CloudWatch → Dashboards in your deployment region): <code>ClaudeCodeDashboard</code> for Claude Code and <code>ClaudeCoWorkDashboard</code> for Claude Desktop — tokens, cost, and sessions broken down by user email, near-real-time (a few minutes of pipeline delay is normal)</li>
+<li><strong><code>poetry run ccwb quota show &lt;email&gt;</code></strong> — a user's current consumption against their budget, the same numbers enforcement uses; <code>ccwb quota list</code> shows all policies</li>
+<li><strong>Cost Explorer</strong> — actual billed cost per user via <a href="assets/docs/COST_ATTRIBUTION.md">CUR 2.0 cost attribution</a> (authoritative, about a day behind)</li>
+</ul>
+<p>Details in the <a href="assets/docs/MONITORING.md">Monitoring</a> and <a href="assets/docs/QUOTA_MONITORING.md">Quota Monitoring</a> guides.</p>
 <h2 id="optional-add-ons">Optional add-ons<a class="headerlink" href="#optional-add-ons" title="Permanent link">&para;</a></h2>
 <p>Everything below is opt-in during <code>ccwb init</code> and can be added later:</p>
 <table>
@@ -1904,7 +1924,7 @@ This project still covers ground the gateway does not yet: native AWS IAM Identi
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="August 24, 2026 06:14:37 UTC"><span class="timeago" datetime="2026-08-24T06:14:37+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 24, 2026 06:14:37 UTC">2026-08-24</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="August 24, 2026 07:21:13 UTC"><span class="timeago" datetime="2026-08-24T07:21:13+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 24, 2026 07:21:13 UTC">2026-08-24</span>
   </span>
 
     
