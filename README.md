@@ -1,5 +1,7 @@
 # Claude Code and Claude Desktop for your organization, on Amazon Bedrock
 
+**📖 [Browse this documentation as a website](https://cdharma.github.io/claude-with-bedrock/)**
+
 This project lets a company give its developers **Claude Code** (the CLI) and **Claude Desktop** — running entirely against **Amazon Bedrock in the company's own AWS account** — with:
 
 - **Sign-in with company credentials** (Okta, Microsoft Entra ID, Auth0, Google, Amazon Cognito, or AWS IAM Identity Center) — no API keys to hand out or rotate
