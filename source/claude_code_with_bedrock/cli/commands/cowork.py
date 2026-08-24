@@ -22,6 +22,9 @@ from claude_code_with_bedrock.cli.utils.cowork_3p import (
 from claude_code_with_bedrock.config import Config
 from claude_code_with_bedrock.models import get_source_region_for_profile
 
+# Output formats for `cowork generate`. The option help is derived from this
+# list so a new format can never be accepted-but-undocumented (or vice versa).
+VALID_FORMATS = ["all", "json", "mobileconfig", "reg", "admx", "ps1"]
 
 class CoworkGenerateCommand(Command):
     """
@@ -50,7 +53,11 @@ class CoworkGenerateCommand(Command):
         option(
             "format",
             "f",
-            description="Output format: all, json, mobileconfig, reg (default: all)",
+            description=(
+                "Output format: " + ", ".join(VALID_FORMATS) + " (default: all). "
+                "reg = Windows registry file; admx = Group Policy template; "
+                "ps1 = Intune platform script (resolves each user's home and email at run time)"
+            ),
             flag=False,
             default="all",
         ),
@@ -99,9 +106,8 @@ class CoworkGenerateCommand(Command):
         output_dir.mkdir(parents=True, exist_ok=True)
 
         output_format = self.option("format")
-        valid_formats = ["all", "json", "mobileconfig", "reg", "admx", "ps1"]
-        if output_format not in valid_formats:
-            console.print(f"[red]Invalid format '{output_format}'. Must be one of: {', '.join(valid_formats)}[/red]")
+        if output_format not in VALID_FORMATS:
+            console.print(f"[red]Invalid format '{output_format}'. Must be one of: {', '.join(VALID_FORMATS)}[/red]")
             return 1
 
         # Determine Bedrock region

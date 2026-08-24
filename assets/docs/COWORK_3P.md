@@ -55,11 +55,11 @@ There are three ways to create the MDM configuration. **Option 1 (CLI)** is reco
 If you've deployed this solution, the `ccwb cowork generate` command auto-generates MDM configuration files from your existing deployment profile — no manual JSON editing required:
 
 ```bash
-# Generate all formats (JSON, macOS .mobileconfig, Windows .reg)
+# Generate every format
 poetry run ccwb cowork generate
 
-# Generate only macOS profile
-poetry run ccwb cowork generate --format mobileconfig
+# Just one format
+poetry run ccwb cowork generate --format ps1
 
 # Custom model list
 poetry run ccwb cowork generate --models opus,sonnet,haiku
@@ -68,7 +68,19 @@ poetry run ccwb cowork generate --models opus,sonnet,haiku
 poetry run ccwb cowork generate --profile Production
 ```
 
-Generated files are saved to `dist/cowork-3p/` by default. See [CLI Reference](CLI_REFERENCE.md#cowork-generate---generate-mdm-configuration) for all options.
+Generated files are saved to `dist/cowork-3p/` by default:
+
+| `--format` | File | Deploy with |
+|---|---|---|
+| `json` | `cowork-3p-config.json` | Any MDM that takes raw JSON policy |
+| `mobileconfig` | `cowork-3p.mobileconfig` | macOS MDM — Jamf, Kandji, Mosyle |
+| `reg` | `cowork-3p.reg` | Windows — `reg import` by hand, or push the keys via MDM |
+| `ps1` | `Set-CoworkPolicy.ps1` | **Intune → Devices → Scripts and remediations → Platform scripts**, with *Run this script using the logged on credentials: **Yes*** |
+| `admx` | `ClaudeCowork3P.admx` + `.adml` | Group Policy, or Intune ADMX ingestion |
+
+**For a Windows fleet, prefer `ps1`.** Because Intune runs it in each user's own context, it resolves that user's home path and email (their Entra UPN) at run time — so one script gives the whole fleet correct [per-user dashboard attribution](#per-user-telemetry-attribution) with nothing to maintain per person. The `.reg` route needs those values baked in ahead of time, which is why `install.bat` substitutes them on the user's own machine.
+
+See [CLI Reference](CLI_REFERENCE.md#cowork-generate---generate-mdm-configuration) for all options.
 
 Cowork 3P configs are also auto-generated alongside distribution packages during `ccwb package` when enabled via `ccwb init`.
 
@@ -425,6 +437,20 @@ Claude Cowork sends the following OTLP metrics to the collector:
 | `claude_code.session.count` | Number of active sessions |
 
 These are displayed in the **Claude Cowork Dashboard** in CloudWatch, which shows aggregate token usage, cost, sessions, model breakdown, and platform distribution.
+
+### Per-user telemetry attribution
+
+Claude Desktop has no otel-helper, so it cannot attach a user identity to its own telemetry the way Claude Code does. Without one, every per-user dashboard widget stays empty and the metrics are aggregate-only. This solution supplies the identity as an `x-user-email` OTLP header, which the collector stamps onto each event as the `user_email` attribute the dashboard reads.
+
+The value is resolved automatically, in this order:
+
+1. `CCWB_USER_EMAIL` environment variable, if set (explicit override for IT wrappers)
+2. The signed-in directory identity — `whoami /upn` on Windows (the Entra UPN), `dscl` on macOS
+3. `unknown` — aggregate-only, so a widget never silently publishes nothing
+
+A value without `@` is rejected, so a machine-local account name never becomes a phantom dashboard user. Nothing prompts the user: `install.bat` and `install.sh` resolve it during install, and the Intune `ps1` script resolves it per user at deploy time. To pin it explicitly, pass `ccwb cowork generate --user-email someone@example.com`.
+
+On an Entra-federated Identity Center setup the UPN is the same address Identity Center reports, so Claude Desktop and Claude Code usage land on the same user — and against the same [spending limit](#quota-enforcement).
 
 ### Per-device identity
 
