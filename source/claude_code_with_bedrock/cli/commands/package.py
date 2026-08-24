@@ -3352,9 +3352,18 @@ fi
 # on macOS does NOT expand ~ or env vars in MDM string values, and the
 # .mobileconfig is generated centrally, so the absolute paths (headersHelper,
 # inferenceCredentialHelper) must be substituted here on the user's machine.
+# Per-user dashboard attribution: Claude Desktop has no otel-helper, so the
+# user's email travels as an OTLP header baked into the MDM file here. Empty
+# answer -> "unknown" (aggregate-only, but never a literal placeholder).
+_ccwb_email=""
+if grep -q "__CCWB_USER_EMAIL__" cowork-3p.mobileconfig cowork-3p-config.json 2>/dev/null; then
+    printf "Enter your work email (for usage dashboards, Enter to skip): "
+    read -r _ccwb_email </dev/tty || _ccwb_email=""
+    [ -z "$_ccwb_email" ] && _ccwb_email="unknown"
+fi
 for _ccwb_mdm in "cowork-3p.mobileconfig" "cowork-3p-config.json"; do
-    if [ -f "$_ccwb_mdm" ] && grep -q "__CCWB_HOME__" "$_ccwb_mdm" 2>/dev/null; then
-        sed -i.bak "s|__CCWB_HOME__|$ACTUAL_HOME|g" "$_ccwb_mdm" && rm -f "$_ccwb_mdm.bak"
+    if [ -f "$_ccwb_mdm" ] && grep -qE "__CCWB_HOME__|__CCWB_USER_EMAIL__" "$_ccwb_mdm" 2>/dev/null; then
+        sed -i.bak -e "s|__CCWB_HOME__|$ACTUAL_HOME|g" -e "s|__CCWB_USER_EMAIL__|$_ccwb_email|g" "$_ccwb_mdm" && rm -f "$_ccwb_mdm.bak"
         if [ -n "$SUDO_USER" ]; then chown "$ACTUAL_USER" "$_ccwb_mdm"; fi
         echo "OK Resolved home directory in $_ccwb_mdm"
     fi
@@ -4015,7 +4024,13 @@ REM (\\ -> \\\\) to match the .reg format; reg import un-escapes it back to a
 REM single backslash in the stored REG_SZ value.
 if exist "cowork-3p.reg" (
     echo Resolving home directory in cowork-3p.reg...
-    powershell -NoProfile -Command "$h = $env:USERPROFILE.Replace('\\','\\\\'); (Get-Content 'cowork-3p.reg' -Raw).Replace('__CCWB_HOME__', $h) | Set-Content 'cowork-3p.reg'"
+    REM Per-user dashboard attribution: prompt once, bake the email into the
+    REM otlpHeaders of the .reg. Empty answer -> "unknown" so a literal
+    REM placeholder never reaches Claude Desktop.
+    set "CCWB_USER_EMAIL="
+    set /p CCWB_USER_EMAIL="Enter your work email (for usage dashboards, Enter to skip): "
+    if "!CCWB_USER_EMAIL!"=="" set "CCWB_USER_EMAIL=unknown"
+    powershell -NoProfile -Command "$h = $env:USERPROFILE.Replace('\\','\\\\'); (Get-Content 'cowork-3p.reg' -Raw).Replace('__CCWB_HOME__', $h).Replace('__CCWB_USER_EMAIL__', $env:CCWB_USER_EMAIL) | Set-Content 'cowork-3p.reg'"
     echo OK Resolved home directory in cowork-3p.reg ^(import it with: reg import cowork-3p.reg, then fully restart Claude^)
 )
 
@@ -4848,7 +4863,10 @@ Available metrics include:
             if getattr(profile, "cowork_inference_session_lifetime_sec", None):
                 mdm_config["inferenceSessionLifetimeSec"] = profile.cowork_inference_session_lifetime_sec
 
-            add_monitoring_config(mdm_config, profile, console)
+            # Placeholder: install.bat/install.sh prompt the end user for their email
+            # and substitute it (empty answer -> "unknown"), so packaged MDM files
+            # never ship a literal placeholder into a running Claude Desktop.
+            add_monitoring_config(mdm_config, profile, console, user_email="__CCWB_USER_EMAIL__")
             add_websearch_mcp_config(mdm_config, profile, console)
             generate_all(output_dir, mdm_config, console)
 

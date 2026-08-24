@@ -589,6 +589,12 @@ Resources:
                   - key: user_email
                     from_context: metadata.x-user-email
                     action: upsert
+                  # Default so per-model/per-user metric filters still publish for
+                  # unattributed traffic (insert = fill-if-absent; a real header or
+                  # native event attribute wins).
+                  - key: user_email
+                    value: "unknown"
+                    action: insert
                   - key: team_id
                     from_context: metadata.x-team-id
                     action: upsert
@@ -773,6 +779,12 @@ Resources:
                   - key: user_email
                     from_context: metadata.x-user-email
                     action: upsert
+                  # Default so per-model/per-user metric filters still publish for
+                  # unattributed traffic (insert = fill-if-absent; a real header or
+                  # native event attribute wins).
+                  - key: user_email
+                    value: "unknown"
+                    action: insert
                   - key: team_id
                     from_context: metadata.x-team-id
                     action: upsert

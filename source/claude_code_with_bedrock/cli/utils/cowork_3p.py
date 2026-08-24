@@ -293,8 +293,26 @@ def build_mdm_config(
     return config
 
 
-def add_monitoring_config(mdm_config: dict, profile, console: Console) -> None:
-    """Add OTLP endpoint to MDM config if monitoring stack is deployed."""
+def _otlp_headers(cowork_token: str | None, user_email: str | None) -> dict[str, str]:
+    """OTLP export headers: ALB service token + per-user attribution."""
+    headers: dict[str, str] = {}
+    if cowork_token:
+        headers["X-Cowork-Token"] = cowork_token
+    if user_email:
+        headers["x-user-email"] = user_email
+    return headers
+
+
+def add_monitoring_config(mdm_config: dict, profile, console: Console, user_email: str | None = None) -> None:
+    """Add OTLP endpoint to MDM config if monitoring stack is deployed.
+
+    user_email, when given, is sent as the x-user-email OTLP header. The
+    central collector stamps it onto every event as the user_email attribute
+    the per-user dashboard widgets key on; without it, Claude Desktop
+    telemetry is aggregate-only (Desktop has no otel-helper to attach
+    identity). Pass a real address for a per-user MDM profile, or the
+    __CCWB_USER_EMAIL__ placeholder that install.bat/install.sh substitute
+    at install time."""
     if not profile.monitoring_enabled:
         return
 
@@ -313,8 +331,9 @@ def add_monitoring_config(mdm_config: dict, profile, console: Console) -> None:
 
         # Add attribution headers if available (static, per-MDM-group)
         cowork_token = getattr(profile, "cowork_service_token", None)
-        if cowork_token:
-            mdm_config["otlpHeaders"] = json.dumps({"X-Cowork-Token": cowork_token})
+        headers = _otlp_headers(cowork_token, user_email)
+        if headers:
+            mdm_config["otlpHeaders"] = json.dumps(headers)
         return
 
     # Try to resolve collector endpoint from stack outputs first,
@@ -339,9 +358,13 @@ def add_monitoring_config(mdm_config: dict, profile, console: Console) -> None:
         # Add CoWork service token for ALB auth bypass (if configured).
         # CoWork cannot do OIDC — this static token header bypasses JWT validation.
         cowork_token = getattr(profile, "cowork_service_token", None)
-        if cowork_token:
-            mdm_config["otlpHeaders"] = json.dumps({"X-Cowork-Token": cowork_token})
-            console.print("[dim]CoWork auth token configured for ALB bypass[/dim]")
+        headers = _otlp_headers(cowork_token, user_email)
+        if headers:
+            mdm_config["otlpHeaders"] = json.dumps(headers)
+            if cowork_token:
+                console.print("[dim]CoWork auth token configured for ALB bypass[/dim]")
+            if user_email:
+                console.print(f"[dim]Per-user telemetry attribution: {user_email}[/dim]")
     else:
         console.print(
             "[yellow]⚠ Could not resolve monitoring endpoint for CoWork telemetry.[/yellow]\n"

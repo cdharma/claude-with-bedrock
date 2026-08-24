@@ -55,6 +55,12 @@ class CoworkGenerateCommand(Command):
             default="all",
         ),
         option(
+            "user-email",
+            description="Bake this user's email into otlpHeaders for per-user dashboard attribution (per-device MDM profiles)",
+            flag=False,
+            default=None,
+        ),
+        option(
             "models",
             "m",
             description="Comma-separated model aliases (default: auto-detect from profile)",
@@ -125,7 +131,7 @@ class CoworkGenerateCommand(Command):
         )
 
         # Add monitoring OTLP endpoint if available
-        add_monitoring_config(mdm_config, profile, console)
+        add_monitoring_config(mdm_config, profile, console, user_email=self.option("user-email"))
 
         # Add the AgentCore web search gateway as a managed MCP server (if enabled)
         add_websearch_mcp_config(mdm_config, profile, console)
